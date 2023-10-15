@@ -21,11 +21,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <!-- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> -->
-
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
@@ -217,7 +214,7 @@
 
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="store-information_index.html">門市資料</a></li>
+                            <li class="breadcrumb-item"><a href="3-store-information_index.html">門市資料</a></li>
                             <li class="breadcrumb-item active" aria-current="page">門市新增</li>
                         </ol>
                     </nav>
@@ -228,69 +225,62 @@
                         <form class="needs-validation">
                             <div class="row g-3">
                                 <div class="col-sm-6">
-                                    <label for="shop-ShopName" class="form-label">*門市名稱</label>
-                                    <input type="text" class="form-control" id="shop-ShopName" placeholder="" value=""
-                                        required="">
+                                    <label for="shop-storeName" class="form-label">*門市名稱</label>
+                                    <input type="text" class="form-control" id="shop-storeName" name="storeName">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="shop-manager" class="form-label">*店長</label>
-                                    <input type="text" class="form-control" id="shop-manager" placeholder="" value=""
-                                        required="">
+                                    <label for="shop-storeManager" class="form-label">*店長</label>
+                                    <input type="text" class="form-control" id="shop-storeManager" name="storeManager">
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-Type" class="form-label">*門市類型</label>
-                                    <select class="form-select" id="shop-Type" required="">
-                                        <option value="">請選擇</option>
-                                        <option>總部</option>
-                                        <option>分公司</option>
-                                        <option>加盟店</option>
+                                    <select class="form-select" id="shop-Type" name="storeType">
+                                        <option value="1">總部</option>
+                                        <option value="2">分公司</option>
+                                        <option value="3">加盟店</option>
+                                        <option value="4">同行</option>
                                     </select>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-ContactPerson" class="form-label">*聯絡人</label>
-                                    <input type="text" class="form-control" id="shop-ContactPerson" placeholder=""
-                                        value="" required="">
+                                    <input type="text" class="form-control" id="shop-ContactPerson"
+                                        name="contactPerson">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="shop-Tel" class="form-label">*電話</label>
-                                    <input type="tel" class="form-control" id="shop-Tel" placeholder="" value=""
-                                        required="">
+                                    <label for="shop-phoneNumber" class="form-label">*電話</label>
+                                    <input type="tel" class="form-control" id="shop-phoneNumber" name="phoneNumber">
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-FaxNumber" class="form-label">*傳真</label>
-                                    <input type="tel" class="form-control" id="shop-FaxNumber" placeholder="" value=""
-                                        required="">
+                                    <input type="text" class="form-control" id="shop-FaxNumber" name="fax">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="shop-UniformNumber" class="form-label">*統一編號</label>
-                                    <input type="tel" class="form-control" id="shop-UniformNumber" placeholder=""
-                                        value="" required="">
+                                    <label for="shop-TaxNumber" class="form-label">*統一編號</label>
+                                    <input type="text" class="form-control" id="shop-TaxNumber" name="taxId">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="state" class="form-label">*狀態</label>
-                                    <select class="form-select" id="state" required="">
-                                        <option value="">正常</option>
-                                        <option>停業</option>
+                                    <label for="shop-status" class="form-label">*狀態</label>
+                                    <select class="form-select" id="shop-status" name="status">
+                                        <option value="1">正常</option>
+                                        <option value="2">停業</option>
                                     </select>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-address" class="form-label">*住址</label>
-                                    <input type="tel" class="form-control" id="shop-address" placeholder="" value=""
-                                        required="">
+                                    <input type="text" class="form-control" id="shop-address" name="address">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="shop-sort" class="form-label">*排序</label>
-                                    <input type="tel" class="form-control" id="shop-sort" placeholder="" value=""
-                                        required="">
+                                    <label for="shop-order" class="form-label">*店號</label>
+                                    <input type="text" class="form-control" id="shop-order" name="storeOrder">
                                 </div>
 
                             </div>
@@ -299,24 +289,22 @@
                             <h4>系統資料</h4>
                             <div class="row g-3 mb-5">
                                 <div class="col-sm-4">
-                                    <label for="shop-BuildTime" class="form-label">建立時間</label>
-                                    <input type="text" class="form-control" id="shop-BuildTime" placeholder="" value=""
-                                        required="">
+                                    <label for="BuildTime" class="form-label">建立時間</label>
+                                    <input type="text" class="form-control" id="BuildTime" name="">
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="shop-EditTime" class="form-label">修改時間</label>
-                                    <input type="text" class="form-control" id="shop-EditTime" placeholder="" value=""
-                                        required="">
+                                    <label for="EditTime" class="form-label">修改時間</label>
+                                    <input type="text" class="form-control" id="EditTime" name="">
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="shop-EditAccount" class="form-label">修改帳號</label>
-                                    <input type="text" class="form-control" id="shop-EditAccount" placeholder=""
-                                        value="" required="">
+                                    <label for="EditAccount" class="form-label">修改帳號</label>
+                                    <input type="text" class="form-control" id="EditAccount" name="">
                                 </div>
                                 <div class="text-center w-100 pt-3">
-                                    <button class="w-25 btn btn-primary btn-md" type="submit">儲存</button>
+                                    <button id="saveButton" class="w-25 btn btn-primary btn-md"
+                                        type="submit">儲存</button>
                                 </div>
                             </div>
                         </form>
@@ -337,22 +325,131 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-    <!-- <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script> -->
+    <!--  Boostrap JavaScript Libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/uploadfile.js"></script>
+
+    <!-- 加載時間 -->
+    <script>
+        // 在页面加载后执行此函数
+        $(document).ready(function () {
+            // 创建一个新的日期对象
+            var currentDate = new Date();
+
+            // 获取当前的年、月、日、小时和分钟
+            var year = currentDate.getFullYear();
+            var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = currentDate.getDate().toString().padStart(2, '0');
+            var hours = currentDate.getHours().toString().padStart(2, '0');
+            var minutes = currentDate.getMinutes().toString().padStart(2, '0');
+
+            // 将日期时间格式化为 YYYY-MM-DD HH:MM
+            var formattedDateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+
+            // 将格式化后的时间设置到创立时间输入字段
+            $('#BuildTime').val(formattedDateTime);
+
+            var userData = localStorage.getItem('currentUser'); // 这里假设用户数据存储在名为'user'的localStorage键中
+
+            // 将userData JSON字符串解析为JavaScript对象
+            var user = JSON.parse(userData);
+
+            // 获取userName属性
+            const userName = user['userName'];
+
+            if (userName) {
+                $('#EditAccount').val(userName);
+            }
+        });
+    </script>
+
+
+    <script>
+
+        //上傳POST
+        $(document).ready(function () {
+            var formData = new FormData(); // 在外部定义 formData
+            $('#saveButton').click(function () {
+
+                //取值
+                var getstoreName = $('#shop-storeName').val();
+                var getstoreManager = $('#shop-storeManager').val();
+                var getstoreType = $('#shop-Type').val();
+                var getcontactPerson = $('#shop-ContactPerson').val();
+                var getphoneNumber = $('#shop-phoneNumber').val();
+                var getfax = $('#shop-FaxNumber').val();
+
+                var getfax = $('#shop-TaxNumber').val();
+                var gettaxId = $('#shop-TaxNumber').val();
+                var getstatus = $('#shop-status').val();
+                var getaddress = $('#shop-address').val();
+                var getstoreOrder = $('#shop-order').val();
+
+                var shopDataObject = {
+                    "storeName": getstoreName,
+                    "storeManager": getstoreManager,
+                    'storeType': getstoreType,
+                    "contactPerson": getcontactPerson,
+                    "phoneNumber": getphoneNumber,
+                    "fax": getfax,
+                    "taxId": gettaxId,
+                    'status': getstatus,
+                    "address": getaddress,
+                    "storeOrder": getstoreOrder
+                };
+
+
+                // 从localStorage中获取session_id和chsm
+                // 解析JSON字符串为JavaScript对象
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId
+
+                // 组装发送文件所需数据
+                // chsm = session_id+action+'HBAdminStoreApi'
+                var action = 'insertStoreDetail';
+                var chsmtoPostFile = user_session_id + action + 'HBAdminStoreApi';
+                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+                // 设置其他formData字段
+                formData.set('action', action);
+                formData.set('session_id', user_session_id);
+                formData.set('chsm', chsm);
+                formData.set('data', JSON.stringify(shopDataObject));
+
+                console.log(formData);
+
+                // 发送文件上传请求
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/store', // 替换为实际的上传端点 URL
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+
+                        console.log(response);
+                        showSuccessFileNotification()
+                        localStorage.removeItem('selectedStoreData');
+                        var newPageUrl = '3-store-information_index.html';
+                        window.location.href = newPageUrl;
+                    },
+                    error: function (error) {
+                        showErrorFileNotification()
+                    }
+                });
+
+            });
+        });
+    </script>
 </body>
 
 </html>

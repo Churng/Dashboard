@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>手冊管理 / 修改資料</title>
+    <title>手冊管理 / 新增資料</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -210,78 +210,59 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row  bg-light rounded p-3 mx-0">
 
-                    <h3>零件手冊修改</h3>
+                    <h3>品牌修改</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="2-manual-management_index.html">手冊管理</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">零件手冊資料 / 修改</li>
+                            <li class="breadcrumb-item"><a href="brand_index.html">品牌管理</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">品牌資料</li>
                         </ol>
                     </nav>
 
-
-                    <div class="py-4 my-2 input-fit">
-                        <div class="mb-3">
-                            <div class="custom-file">
-                                <input type="file" class="form-control" name="manual[]" id="fileInput" accept="image/*"
-                                    multiple>
-
-                                <!-- <label class="custom-file-upload-btn" for="fileInput">選擇文件</label> -->
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="block-first">
-                        <h4>零件手冊資料</h4>
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <label for="M-fileName" class="form-label">*檔案名稱</label>
-                                <input type="text" class="form-control" id="M-fileName" name="fileName" readonly>
+                        <h4>品牌資料</h4>
+                        <form class="needs-validation">
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label for="brand-Name" class="form-label">*品牌名稱</label>
+                                    <input type="text" class="form-control" id="brand-Name" name="brandName">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="brand-Order" class="form-label">*排序</label>
+                                    <input type="text" class="form-control" id="brand-Order" name="brandOrder">
+                                </div>
+
+                                <div class="col mb-3">
+                                    <label for="brandTextarea" class="form-label">備註</label>
+                                    <textarea class="form-control" id="brandTextarea" rows="3" name="remark"></textarea>
+                                </div>
                             </div>
 
-                            <div class="col-sm-6">
-                                <label for="M-BrandName" class="form-label">*廠牌</label>
-                                <input type="text" class="form-control" id="M-BrandName" name="brandName">
-                            </div>
+                            <hr class="my-4">
 
-                            <div class="col-sm-6">
-                                <label for="M-year" class="form-label">*年份</label>
-                                <input type="year" class="form-control" id="M-year" name="year">
-                            </div>
+                            <h4>系統資料</h4>
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="BuildTime" class="form-label">建立時間</label>
+                                    <input type="text" class="form-control" id="BuildTime" name="" readonly>
+                                </div>
 
-                            <div class="col-sm-6">
-                                <label for="M-applicableType" class="form-label">*適用車型</label>
-                                <input type="text" class="form-control" id="M-applicableType" name="applicableType">
-                            </div>
+                                <div class="col-sm-4">
+                                    <label for="EditTime" class="form-label">修改時間</label>
+                                    <input type="text" class="form-control" id="EditTime" name="" readonly>
+                                </div>
 
-
-                            <div class="col mb-3">
-                                <label for="M-remark" class="form-label">備註</label>
-                                <textarea class="form-control" id="M-remark" rows="3" name="remark"></textarea>
+                                <div class="col-sm-4">
+                                    <label for="EditAccount" class="form-label">修改帳號</label>
+                                    <input type="text" class="form-control" id="EditAccount" placeholder="" value=""
+                                        readonly>
+                                </div>
+                                <div class="text-center w-100 pt-3">
+                                    <button id="saveButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">儲存</button>
+                                </div>
                             </div>
-                        </div>
-
-                        <hr class="my-4">
-                        <h4>系統資料</h4>
-                        <div class="row g-3 mb-5">
-                            <div class="col-sm-4">
-                                <label for="BuildTime" class="form-label">建立時間</label>
-                                <input type="text" class="form-control" id="BuildTime">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label for="EditTime" class="form-label">修改時間</label>
-                                <input type="text" class="form-control" id="EditTime">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label for="EditAccount" class="form-label">修改帳號</label>
-                                <input type="text" class="form-control" id="EditAccount" placeholder="" value="">
-                            </div>
-                            <div class="text-center w-100 pt-3">
-                                <button id="updateButton" class="w-25 btn btn-primary btn-md" type="button">儲存</button>
-                            </div>
-                        </div>
-
+                        </form>
                     </div>
 
                 </div>
@@ -312,7 +293,6 @@
     <script src="js/main.js"></script>
 
     <script>
-
         // 取得詳細資料
         $(document).ready(function () {
 
@@ -330,16 +310,17 @@
             const user_session_id = gertuserData.sessionId
 
 
-            // chsm = session_id+action+'HBAdminManualApi'
+            // chsm = session_id+action+'HBAdminBrandApi'
             // 组装所需数据
-            var action = 'getManualDetail'
-            var chsmtoGetManualDetail = user_session_id + action + 'HBAdminManualApi';
+            var action = 'getBrandDetail'
+            var chsmtoGetManualDetail = user_session_id + action + 'HBAdminBrandApi';
             var chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
+
 
             // 发送POST请求
             $.ajax({
                 type: 'POST',
-                url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual',
+                url: 'https://88bakery.tw/HBAdmin/index.php?/api/brand',
                 data: {
                     action: action,
                     session_id: user_session_id,
@@ -347,27 +328,20 @@
                     data: IdPost
                 },
                 success: function (responseData) {
-
-                    console.log(responseData);
                     if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-                        const manualData = responseData.returnData[0];
-                        $('#M-fileName').val(manualData.fileName);
-                        $('#M-BrandName').val(manualData.brandName);
-                        $('#M-year').val(manualData.year);
-                        $('#M-applicableType').val(manualData.applicableType);
-                        $('#M-remark').val(manualData.remark);
+                        const brandData = responseData.returnData[0];
+                        $('#brand-Name').val(brandData.brandName);
+                        $('#brandTextarea1').val(brandData.remark);
+                        $('#brand-Order').val(brandData.brandOrder);
 
-                        $('#BuildTime').val(manualData.createTime);
-                        $('#EditTime').val(manualData.updateTime);
-                        $('#EditAccount').val(manualData.updateOperator);
+                        $('#BuildTime').val(brandData.createTime);
+                        $('#EditTime').val(brandData.updateTime);
+                        $('#EditAccount').val(brandData.updateOperator);
 
-                        if (manualData.fileName == '') {
-                            showWarningNotification()
-                        }
                         // 填充完毕后隐藏加载中的spinner
                         $('#spinner').hide();
                     } else {
-                        showErrorNotification()
+                        showWarningContentNotification()
                     }
                 },
                 error: function (error) {
@@ -376,86 +350,68 @@
             });
         });
 
-        // 上傳更新檔案
+        // 上傳POST
         $(document).ready(function () {
-            var formData = new FormData();
-
-
-            $('#updateButton').click(function () {
+            var formData = new FormData(); // 在外部定义 formData
+            $('#saveButton').click(function () {
                 const urlParams = new URLSearchParams(window.location.search);
                 const partId = urlParams.get('id');
+                const dataId = { id: partId };
+                const IdPost = JSON.stringify(dataId);
 
-                var fileInput = document.getElementById('fileInput'); // 通过ID获取文件输入元素
-                fileInput.addEventListener('change', function () {
-                    if (fileInput.files.length > 0) {
-                        updateData.fileName = fileInput.files[0].name;
-                        console.log('上传的文件名是: ' + fupdateData.fileName);
-                    } else {
-                        console.log('没有选择文件');
-                    }
-                });
-
-
-                var getBrandName = $('#M-BrandName').val();
-                var getyear = $('#M-year').val();
-                var getapplicableType = $('#M-applicableType').val();
-                var getremark = $('#M-remark').val();
-
+                //取值
+                var getbrandName = $('#brand-Name').val();
+                var getbrandOrder = $('#brand-Order').val();
+                var getremark = $('#brandTextarea').val();
 
                 var updateData = {
                     "id": partId,
-                    "BrandName": getBrandName,
-                    "year": getyear,
-                    "applicableType": getapplicableType,
-                    "remark": getremark,
-                    "fileName": ''
+                    "brandName": getbrandName,
+                    "brandOrder": getbrandOrder,
+                    "remark": getremark
                 }
 
-
-
-
-                console.log(updateData);
-
-                var updateDataJSON = JSON.stringify(updateData);
-
-
-
-                // 获取ID
+                // 从localStorage中获取session_id和chsm
+                // 解析JSON字符串为JavaScript对象
                 const jsonStringFromLocalStorage = localStorage.getItem("userData");
                 const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-                const user_session_id = gertuserData.sessionId;
+                const user_session_id = gertuserData.sessionId
 
-                // 组装上传更新文件的数据
-                var action = 'updateManualDetail';
-                var chsmtoUpdateFile = user_session_id + action + 'HBAdminManualApi';
-                var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
+                // 组装发送文件所需数据
+                // chsm = session_id+action+'HBAdminBrandApi'
+                var action = 'updateBrandDetail';
+                var chsmtoPostFile = user_session_id + action + 'HBAdminBrandApi';
+                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
 
+                // 设置其他formData字段
                 formData.set('action', action);
                 formData.set('session_id', user_session_id);
                 formData.set('chsm', chsm);
                 formData.set('data', JSON.stringify(updateData));
 
 
-                // 发送上传更新文件的请求
+                // 发送文件上传请求
                 $.ajax({
                     type: 'POST',
-                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/brand', // 替换为实际的上传端点 URL
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        console.warn(response);
-                        showSuccessFileNotification();
-                        var newPageUrl = '2-manual-management_index.html';
+
+                        console.log(response);
+                        showSuccessFileNotification()
+                        localStorage.removeItem('selectedBrandData');
+                        var newPageUrl = 'brand_index.html';
                         window.location.href = newPageUrl;
                     },
                     error: function (error) {
-                        showErrorFileNotification();
+                        showErrorFileNotification()
                     }
                 });
+
             });
         });
-
     </script>
 </body>
 
