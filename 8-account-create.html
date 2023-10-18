@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>帳號管理-新增帳號</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container-fluid position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary">進銷存後台</h3>
+                </a>
+                <div class="navbar-nav w-100">
+
+                    <!-- 1. 倉庫管理 -->
+                    <!-- 入庫單-> 查看媒合清單，modal跳窗顯示 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-laptop me-2"></i>倉庫管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
+                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
+                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
+                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
+                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
+                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
+                        </div>
+                    </div>
+
+                    <!-- 2. 零件手冊管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="manualList.html" class="dropdown-item">零件手冊查詢</a>
+                            <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
+                            <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
+                        </div>
+                    </div>
+
+
+                    <!-- 3. 門市管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>門市管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="storeList.html" class="dropdown-item">門市列表</a>
+                            <a href="3-store-information_create.html" class="dropdown-item">門市資料新增</a>
+                            <a href="3-store-information_update.html" class="dropdown-item">門市資料修改</a>
+                        </div>
+                    </div>
+
+
+                    <!-- 4. 訂單管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="far fa-file-alt me-2"></i>訂單管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
+                            <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
+                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
+                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
+                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
+                            <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
+                        </div>
+                    </div>
+
+                    <!-- 5. 零件管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="far fa-folder me-2"></i>零件管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
+                            <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
+                        </div>
+                    </div>
+
+
+                    <!-- 6. 零件採購管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="far fa-folder me-2"></i>零件採購管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
+                            <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
+                        </div>
+                    </div>
+
+                    <!-- 7. 盤點管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fas fa-table me-2"></i>盤點管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
+                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
+                        </div>
+                    </div>
+
+                    <!-- 8. 帳號管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-th me-2"></i>帳號管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="8-role-list.html" class="dropdown-item">角色列表</a>
+                            <a href="8-role-authorization.html" class="dropdown-item">權限控管</a>
+                            <a href="8-account-list.html" class="dropdown-item">帳號列表</a>
+                        </div>
+                    </div>
+
+                    <!-- 9. 系統管理 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>系統管理</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="9-account-information.html" class="dropdown-item">帳號資料</a>
+                        </div>
+                    </div>
+                    <!-- 0.其他 -->
+                    <div class="nav-item dropdown">
+                        <a href="javascript:void(0);" class="nav-link dropdown-toggle active"
+                            data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="signin.html" class="dropdown-item">Sign In</a>
+                            <a href="404.html" class="dropdown-item">404 Error</a>
+                            <a href="blank.html" class="dropdown-item active">Blank Page</a><a
+                                href="0-notify-page.html">通知列表</a>
+                            <a href="table.測試.html">table</a>
+                        </div>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <div class="navbar-nav align-items-center ms-auto">
+
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fa fa-bell me-lg-2"></i>
+                        </a>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
+                        </a>
+                        <div
+                            class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Blank Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row  bg-light rounded p-3 mx-0">
+
+                    <h3>帳號新增</h3>
+
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="8-account-list.html">資料管理</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">帳號新增</li>
+                        </ol>
+                    </nav>
+
+
+                    <div class="block-first mt-5">
+                        <h4>基本資料</h4>
+                        <form class="needs-validation">
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label for="A-account" class="form-label">*帳號</label>
+                                    <input type="text" class="form-control" id="A-account" name="account">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="A-password" class="form-label">*密碼</label>
+                                    <input type="password" class="form-control" id="A-password" name="password">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="A-userName" class="form-label">*姓名</label>
+                                    <input type="text" class="form-control" id="A-userName" name="userName">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="A-storeName" class="form-label">*所屬門市</label>
+                                    <select id="A-storeName" class="form-select" name="storeName"></select>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-6">
+                                    <label for="A-email" class="form-label">*Email</label>
+                                    <input type="email" class="form-control" id="A-email" name="email">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="A-phoneNumber" class="form-label">*手機</label>
+                                    <input type="tel" class="form-control" id="A-phoneNumber" name="phoneNumber">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="A-authorizeName" class="form-label">*角色</label>
+                                    <select class="form-select" id="A-authorizeName" name="authorizeName">
+                                    </select>
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="A-status" class="form-label">*狀態</label>
+                                    <select class="form-select" id="A-status" name="status">
+                                        <option value="1">正常</option>
+                                        <option value="0">停業</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+                            <h4>系統資料</h4>
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="BuildTime" class="form-label">建立時間</label>
+                                    <input type="text" class="form-control" id="BuildTime">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="EditTime" class="form-label">修改時間</label>
+                                    <input type="text" class="form-control" id="EditTime">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="EditAccount" class="form-label">修改帳號</label>
+                                    <input type="text" class="form-control" id="EditAccount">
+                                </div>
+                                <div class="text-center w-100 pt-3">
+                                    <button id="saveButton" class="w-25 btn btn-primary btn-md"
+                                        type="submit">儲存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!--  Boostrap JavaScript Libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- 加載時間 -->
+    <script src="js/Public/create_showInfo.js"></script>
+    <script src="js/Store/Store_create.js"></script>
+
+    <script>
+
+        // 列表取得：取商店ID製作選單
+        $(document).ready(function () {
+            // 从localStorage中获取session_id和chsm
+            // 解析JSON字符串为JavaScript对象
+            const jsonStringFromLocalStorage = localStorage.getItem("userData");
+            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+            const user_session_id = gertuserData.sessionId;
+
+            // chsm = session_id+action+'HBAdminStoreApi'
+            // 組裝菜單所需資料
+            var action = "getStoreList";
+            var chsmtoGetManualList = user_session_id + action + "HBAdminStoreApi";
+            var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+            // 发送API请求以获取数据
+            $.ajax({
+                type: "POST",
+                url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
+                data: { session_id: user_session_id, action: action, chsm: chsm },
+                success: function (responseData) {
+
+                    const storeList = document.getElementById("A-storeName");
+
+
+                    const defaultOption = document.createElement("option");
+                    defaultOption.text = "請選擇門市";
+                    storeList.appendChild(defaultOption);
+
+                    for (let i = 0; i < responseData.returnData.length; i++) {
+                        const store = responseData.returnData[i];
+                        const storeName = store.storeName;
+                        const storeId = store.id
+                        const option = document.createElement("option");
+                        option.text = storeName;
+                        option.value = storeId;
+
+                        storeList.appendChild(option);
+                    }
+                },
+                error: function (error) {
+                    showErrorNotification();
+                },
+            });
+        });
+
+
+        // 列表取得：取AuthID\Name製作角色選單
+        $(document).ready(function () {
+            // 从localStorage中获取session_id和chsm
+            // 解析JSON字符串为JavaScript对象
+            const jsonStringFromLocalStorage = localStorage.getItem("userData");
+            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+            const user_session_id = gertuserData.sessionId;
+
+            // chsm = session_id+action+'HBAdminAuthorizeApi'
+            // 組裝菜單所需資料
+            var action = "getAuthorizeList";
+            var chsmtoGetManualList = user_session_id + action + 'HBAdminAuthorizeApi';
+            var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+            // 发送API请求以获取数据
+            $.ajax({
+                type: "POST",
+                url: "https://88bakery.tw/HBAdmin/index.php?/api/authorize",
+                data: { session_id: user_session_id, action: action, chsm: chsm },
+                success: function (responseData) {
+
+                    const rolleList = document.getElementById("A-authorizeName");
+
+                    const defaultOption = document.createElement("option");
+                    defaultOption.text = "請選擇角色";
+                    rolleList.appendChild(defaultOption);
+
+                    for (let i = 0; i < responseData.returnData.length; i++) {
+                        const roll = responseData.returnData[i];
+                        const rollName = roll.authorizeName;
+                        const rollId = roll.id
+                        const option = document.createElement("option");
+
+                        option.text = rollName;
+                        option.value = rollId;
+
+
+                        rolleList.appendChild(option);
+                    }
+                },
+                error: function (error) {
+                    showErrorNotification();
+                },
+            });
+        });
+
+        //上傳POST
+        $(document).ready(function () {
+            var formData = new FormData(); // 在外部定义 formData
+            $("#saveButton").click(function () {
+                //取值
+                var getaccount = $("#A-account").val();
+                var getpassword = $("#A-password").val();
+                var getuserName = $("#A-userName").val();
+                var getstoreName = $("#A-storeName").find(':selected').val();
+                var getemail = $("#A-email").val();
+                var getphoneNumber = $("#A-phoneNumber").val();
+                var getauthorizeName = $("#A-authorizeName").find(':selected').val();
+                var getstatus = $("#A-status").val();
+
+                var getcreateTime = $("#BuildTime").val();
+
+                console.log(getstoreName, getauthorizeName);
+                var accountDataObject = {
+                    account: getaccount,
+                    password: getpassword,
+                    storeName: getstoreName,
+                    userName: getuserName,
+                    email: getemail,
+                    phoneNumber: getphoneNumber,
+                    authorizeName: getauthorizeName,
+                    status: getstatus,
+                    createTime: getcreateTime,
+                };
+
+                // 从localStorage中获取session_id和chsm
+                // 解析JSON字符串为JavaScript对象
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId;
+
+                // 组装发送文件所需数据
+                // chsm = session_id+action+'HBAdminAccountApi'
+                var action = "insertAccountDetail";
+                var chsmtoPostFile = user_session_id + action + 'HBAdminAccountApi';
+                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+                // 设置其他formData字段
+                formData.set("action", action);
+                formData.set("session_id", user_session_id);
+                formData.set("chsm", chsm);
+                formData.set("data", JSON.stringify(accountDataObject));
+
+                console.log(formData);
+
+                // 发送文件上传请求
+                $.ajax({
+                    type: "POST",
+                    url: "https://88bakery.tw/HBAdmin/index.php?/api/account", // 替换为实际的上传端点 URL
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log(response);
+                        showSuccessFileNotification();
+
+                        var newPageUrl = "8-account-list.html";
+                        window.location.href = newPageUrl;
+                    },
+                    error: function (error) {
+                        showErrorFileNotification();
+                    },
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
