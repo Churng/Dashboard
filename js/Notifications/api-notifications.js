@@ -1,8 +1,30 @@
-function handleLoginExpiration(apiResponse) {
-	if (apiResponse.returnCode === "003") {
-		toastr.warning(apiResponse.returnMessage);
-		setTimeout(function () {
-			window.location.href = "0-signin.html"; // 重定向到登录页面的URL
-		}, 1000);
+function handleApiResponse(apiResponse) {
+	const codeHandlers = {
+		1: () => {
+			console.log();
+		},
+		"003": () => {
+			showErrorReLoginNotification();
+			setTimeout(function () {
+				window.location.href = "0-signin.html";
+			}, 1000);
+		},
+		"001": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"005": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"006": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+	};
+
+	if (apiResponse.returnCode in codeHandlers) {
+		codeHandlers[apiResponse.returnCode]();
+	} else {
+		console.error("Unrecognized returnCode:", apiResponse.returnCode);
 	}
 }
+
+// handleApiResponse(apiResponse1)

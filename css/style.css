@@ -366,3 +366,7 @@ th {
 .custom-file-upload-btn:hover {
 	background-color: #0056b3;
 }
+
+.dataTables_wrapper .dataTables_paginate {
+	display: none;
+}

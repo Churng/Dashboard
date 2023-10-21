@@ -25,13 +25,15 @@
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> -->
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/toastr.min.css">
+
+    <!-- DataTable Stylesheet -->
+    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <script src="js/crypto-js.js"></script>
-    <script src="js/Login/Authlogin.js"></script>
+
 
 </head>
 
@@ -53,92 +55,92 @@
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary">進銷存後台</h3>
                 </a>
-                <div class="navbar-nav w-100">
+                <div class="navbar-nav w-100" id="dynamicMenu">
 
                     <!-- 1. 倉庫管理 -->
                     <!-- 入庫單-> 查看媒合清單，modal跳窗顯示 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <!-- <div class="nav-item sidebar-nav-item  dropdown">
+                        <a href="javascript:void(0);" class="s-nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-laptop me-2"></i>倉庫管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="1-warehousemanagement_stock-in-index.html" class="dropdown-item">入庫單列表</a>
-                            <a href="1-warehousemanagement_stock-in.html" class="dropdown-item">入庫單</a>
-                            <a href="1-warehousemanagement_stock-out.html" class="dropdown-item">出庫申請單</a>
-                            <a href="1-warehousemanagement_stock-out-index.html" class="dropdown-item">出庫申請單列表</a>
-                            <a href="1-warehousemanagement_stockroom.html" class="dropdown-item">倉庫列表</a>
-                            <a href="1-warehousemanagement_parts.html" class="dropdown-item">零件資料</a>
+                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
+                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
+                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
+                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
+                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
+                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- 2. 零件手冊管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="partsManualLink"
                             data-bs-toggle="dropdown"><i class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="2-manual-management_index.html" class="dropdown-item"
+                            <a href="manualList.html" class="dropdown-item"
                                 id="partsManualSearchLink">零件手冊查詢</a>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <!-- 3. 門市管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>門市管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="3-store-information_index.html" class="dropdown-item">門市列表</a>
+                            <a href="storeList.html" class="dropdown-item">門市列表</a>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <!-- 4. 訂單管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-file-alt me-2"></i>訂單管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
                             <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
-                            <a href="4-order_refund_index.html" class="dropdown-item">退貨單列表</a>
-                            <a href="4-order_refund_page.html" class="dropdown-item">退貨單</a>
-                            <a href="4-order_searchparts.html" class="dropdown-item">搜尋零件</a>
+                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
+                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
+                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
                             <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- 5. 零件管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="5-partsmanagement_index.html" class="dropdown-item">零件定義列表</a>
-                            <a href="brand_index.html" class="dropdown-item">品牌管理列表</a>
+                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
+                            <a href="brandList.html" class="dropdown-item">品牌管理列表</a>
                             <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <!-- 6. 零件採購管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件採購管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="6-parts-order_index.html" class="dropdown-item">零件採購列表</a>
+                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
                             <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- 7. 盤點管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-table me-2"></i>盤點管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="7-inventory_index.html" class="dropdown-item">盤點列表</a>
-                            <a href="7-inventory_create.html" class="dropdown-item">盤點資料</a>
+                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
+                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- 8. 帳號管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-th me-2"></i>帳號管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -146,18 +148,18 @@
                             <a href="8-role-authorization.html" class="dropdown-item">權限控管</a>
                             <a href="8-account-list.html" class="dropdown-item">帳號列表</a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- 9. 系統管理 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>系統管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="9-account-information.html" class="dropdown-item">帳號資料</a>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- 0.其他 -->
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle active"
                             data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -167,7 +169,7 @@
                                 href="0-notify-page.html">通知列表</a>
                             <a href="table.測試.html">table</a>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </nav>
@@ -240,34 +242,88 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
 
     <script>
-        $(document).ready(function () {
-            if (typeof (Storage) !== "undefined") {
-                var userData = localStorage.getItem("currentUser");
 
-                if (userData) {
-                    var userObject = JSON.parse(userData);
+        document.addEventListener('DOMContentLoaded', function () {
+            // 從本地儲存中獲取選單資料
+            var currentData = localStorage.getItem('currentUser');
+            var currentData = JSON.parse(currentData);
+            var menuData = currentData.userretrunData;
 
-                    var userName = userObject.userName;
-                    var userPhoto = userObject.userPhoto;
+            // 獲取選單容器
+            var menuContainer = document.querySelector('.navbar-nav');
 
-                } else {
-                    console.log("在localStorage中未找到個人資料。");
+            // 建立一個物件來保存第一層選單項目
+            var firstLevelMenu = {};
+
+            // 遍歷選單資料
+            menuData.forEach(function (menuItem) {
+                if (menuItem.type === null) {
+                    // 如果 menuItem.type 為 null，則不處理
+                    return;
                 }
-            } else {
-                console.log("瀏覽器不支持localStorage。");
-            }
 
-            window.onload = function () {
-                var userNameElement = document.getElementById("userName");
-                userNameElement.textContent = userName;
+                // 建立選單項目
+                var dropdownItem = document.createElement('div');
+                dropdownItem.className = 'nav-item';
 
-                var imgElement = document.querySelector(".userImg");
-                imgElement.src = userPhoto;
-            }
+                // 建立連結元素
+                var dropdownLink = document.createElement('a');
+                dropdownLink.href = menuItem.url || 'javascript:void(0)';
+                dropdownLink.className = 'nav-link';
+                dropdownLink.textContent = menuItem.name;
 
-        })
+                // 將連結元素添加到選單項目中
+                dropdownItem.appendChild(dropdownLink);
+
+                if (menuItem.type === "1st") {
+                    // 如果是第一層選單，設置下拉選單的相關屬性
+                    dropdownItem.className += ' dropdown';
+                    dropdownLink.className += ' dropdown-toggle';
+                    dropdownLink.setAttribute('data-bs-toggle', 'dropdown');
+                    dropdownLink.setAttribute('role', 'button');
+
+                    // 建立一個空的下拉選單容器供第一層選單使用
+                    var dropdownMenu = document.createElement('div');
+                    dropdownMenu.className = 'dropdown-menu bg-transparent border-0';
+
+                    // 將第一層選單項目加入到下拉選單容器中
+                    dropdownItem.appendChild(dropdownMenu);
+
+                    // 儲存第一層選單項目以便後續引用
+                    firstLevelMenu[menuItem.id] = dropdownMenu;
+                }
+
+                if (menuItem.auth && menuItem.type === "2st") {
+                    // 如果是第二層選單且具有權限，將其添加到適當的第一層選單中
+                    var parentDropdown = firstLevelMenu[menuItem.mainCategoryId];
+                    if (parentDropdown) {
+                        var dropdownItemChild = document.createElement('a');
+                        dropdownItemChild.href = menuItem.url || 'javascript:void(0)';
+                        dropdownItemChild.className = 'dropdown-item';
+                        dropdownItemChild.textContent = menuItem.name;
+                        parentDropdown.appendChild(dropdownItemChild);
+                    }
+                } else {
+                    // 如果不是第二層選單，則直接將其添加到選單容器中
+                    menuContainer.appendChild(dropdownItem);
+                }
+
+                if (menuItem.auth && menuItem.auth.includes("read")) {
+                    // 如果具有 "read" 權限，則顯示選單項目
+                    dropdownItem.style.display = 'block';
+                } else {
+                    // 如果不具有 "read" 權限，則隱藏選單項目
+                    dropdownItem.style.display = 'none';
+                }
+
+                // 將連結元素添加到選單項目中
+                dropdownItem.appendChild(dropdownLink);
+            });
+        });
+
     </script>
 
 </body>

@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -57,12 +58,12 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-laptop me-2"></i>倉庫管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="1-warehousemanagement_stock-in-index.html" class="dropdown-item">入庫單列表</a>
-                            <a href="1-warehousemanagement_stock-in.html" class="dropdown-item">入庫單</a>
-                            <a href="1-warehousemanagement_stock-out.html" class="dropdown-item">出庫申請單</a>
-                            <a href="1-warehousemanagement_stock-out-index.html" class="dropdown-item">出庫申請單列表</a>
-                            <a href="1-warehousemanagement_stockroom.html" class="dropdown-item">倉庫列表</a>
-                            <a href="1-warehousemanagement_parts.html" class="dropdown-item">零件資料</a>
+                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
+                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
+                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
+                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
+                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
+                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
                         </div>
                     </div>
 
@@ -71,7 +72,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="2-manual-management_index.html" class="dropdown-item">零件手冊查詢</a>
+                            <a href="manualList.html" class="dropdown-item">零件手冊查詢</a>
                             <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
                             <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
                         </div>
@@ -83,7 +84,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>門市管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="3-store-information_index.html" class="dropdown-item">門市列表</a>
+                            <a href="storeList.html" class="dropdown-item">門市列表</a>
                             <a href="3-store-information_create.html" class="dropdown-item">門市資料新增</a>
                             <a href="3-store-information_update.html" class="dropdown-item">門市資料修改</a>
                         </div>
@@ -97,9 +98,9 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
                             <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
-                            <a href="4-order_refund_index.html" class="dropdown-item">退貨單列表</a>
-                            <a href="4-order_refund_page.html" class="dropdown-item">退貨單</a>
-                            <a href="4-order_searchparts.html" class="dropdown-item">搜尋零件</a>
+                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
+                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
+                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
                             <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
                         </div>
                     </div>
@@ -109,7 +110,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="5-partsmanagement_index.html" class="dropdown-item">零件定義列表</a>
+                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
                             <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
                         </div>
                     </div>
@@ -120,7 +121,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件採購管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="6-parts-order_index.html" class="dropdown-item">零件採購列表</a>
+                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
                             <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
                         </div>
                     </div>
@@ -130,8 +131,8 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-table me-2"></i>盤點管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="7-inventory_index.html" class="dropdown-item">盤點列表</a>
-                            <a href="7-inventory_create.html" class="dropdown-item">盤點資料</a>
+                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
+                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
                         </div>
                     </div>
 
@@ -193,15 +194,15 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
                                 style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -221,71 +222,296 @@
                         </nav>
 
                         <div class="block-first">
-                            <form class="needs-validation">
-                                <div class="row g-3">
-                                    <div class="col-sm-4">
-                                        <label for="file-Name" class="form-label">*角色名稱</label>
-                                        <input type="text" class="form-control" id="file-Name" placeholder="" value=""
-                                            required="">
-                                    </div>
+                            <div class="row g-3">
+                                <div class="col-sm-4">
+                                    <label for="file-Name" class="form-label">*角色名稱</label>
+                                    <input type="text" class="form-control" id="file-Name" placeholder="" value=""
+                                        required="">
+                                </div>
 
-                                    <div class="col-sm-4">
-                                        <label for="parts-order-ShopName" class="form-label">*可用門市</label>
-                                        <select class="form-select" id="parts-order-ShopName" required="">
-                                            <option value="">請選擇</option>
-                                            <option>Test</option>
-                                            <option>Test1</option>
-                                        </select>
-                                    </div>
+                                <div class="col-sm-4">
+                                    <label for="parts-order-ShopName" class="form-label">*可用門市</label>
+                                    <select class="form-select" id="parts-order-ShopName" required="">
+                                        <option>請選擇</option>
+                                        <option value="0">所有門市</option>
+                                        <option value="1">限所屬門市</option>
+                                    </select>
+                                </div>
 
-                                    <div class="col-sm-4">
-                                        <label for="parts-order-ShopName" class="form-label">*可用品牌</label>
-                                        <select class="form-select" id="parts-order-ShopName" required="">
-                                            <option value="">請選擇</option>
-                                            <option>Test</option>
-                                            <option>Test1</option>
-                                        </select>
-                                    </div>
+                                <!-- 可以複選 -->
+                                <div class="col-sm-4">
+                                    <label for="parts-order-ShopName" class="form-label">*可用品牌</label>
+                                    <select class="form-select" id="parts-order-ShopName" data-size="3"
+                                        data-live-search="true" required multiple>
+                                        <option value="">請選擇</option>
+                                        <option>Test</option>
+                                        <option>Test1</option>
+                                    </select>
+                                </div>
 
-                                    <div class="col mb-3">
-                                        <label for="exampleFormControlTextarea1" class="form-label">描述</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1"
-                                            rows="3"></textarea>
+                                <div class="col-sm-3 mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">描述</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        style="width: 300px;"></textarea>
+                                </div>
+                            </div>
+
+                            <nav>
+                                <div class=" nav nav-tabs" id="tableTabs" role="tablist">
+                                    <a class="nav-link active" id="tab-1" data-bs-toggle="tab" href="#table-1"
+                                        role="tab" aria-controls="table-1" aria-selected="true">帳號管理</a>
+
+                                    <a class="nav-link" id="tab-2" data-bs-toggle="tab" href="#table-2" role="tab"
+                                        aria-controls="table-2" aria-selected="false">通知管理</a>
+
+                                    <a class="nav-link" id="tab-3" data-bs-toggle="tab" href="#table-3" role="tab"
+                                        aria-controls="table-3" aria-selected="false">門市管理</a>
+
+                                    <a class="nav-link" id="tab-4" data-bs-toggle="tab" href="#table-4" role="tab"
+                                        aria-controls="table-4" aria-selected="false">零件管理</a>
+
+                                    <a class="nav-link" id="tab-5" data-bs-toggle="tab" href="#table-5" role="tab"
+                                        aria-controls="table-5" aria-selected="false">零件採購管理</a>
+
+                                    <a class="nav-link" id="tab-6" data-bs-toggle="tab" href="#table-6" role="tab"
+                                        aria-controls="table-6" aria-selected="false">訂單管理</a>
+
+                                    <a class="nav-link" id="tab-7" data-bs-toggle="tab" href="#table-7" role="tab"
+                                        aria-controls="table-7" aria-selected="false">出入庫管理</a>
+
+                                    <a class="nav-link" id="tab-8" data-bs-toggle="tab" href="#table-8" role="tab"
+                                        aria-controls="table-8" aria-selected="false">盤點作業</a>
+
+                                    <a class="nav-link" id="tab-9" data-bs-toggle="tab" href="#table-9" role="tab"
+                                        aria-controls="table-9" aria-selected="false">零件手冊</a>
+
+                                    <a class="nav-link" id="tab-10" data-bs-toggle="tab" href="#table-10" role="tab"
+                                        aria-controls="table-10" aria-selected="false">報表管理</a>
+                                    <!-- 添加更多页签 -->
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="tableTabContent">
+                                <div class="tab-pane fade show active" id="table-1" role="tabpanel"
+                                    aria-labelledby="tab-1">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 帳號管理 -->
+                                            <h4 class="mt-5">帳號管理</h4>
+                                            <table id="authorize-management-1" class="table">
+                                                <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <hr class="my-4">
-                                <h4>系統資料</h4>
-                                <div class="row g-3 mb-5">
-                                    <div class="col-sm-3">
-                                        <label for="file-Year" class="form-label">*排序</label>
-                                        <input type="year" class="form-control" id="file-Year" placeholder="" value=""
-                                            required="">
+                                <div class="tab-pane fade" id="table-2" role="tabpanel" aria-labelledby="tab-2">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 帳號管理 -->
+                                            <h4 class="mt-5">通知管理</h4>
+                                            <table id="authorize-management-2" class="table">
+                                                <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row g-3 mb-5">
-                                    <div class="col-sm-4">
-                                        <label for="file-BuildTime" class="form-label">建立時間</label>
-                                        <input type="text" class="form-control" id="file-BuildTime" placeholder=""
-                                            value="" required="">
-                                    </div>
 
-                                    <div class="col-sm-4">
-                                        <label for="file-EditTime" class="form-label">修改時間</label>
-                                        <input type="text" class="form-control" id="file-EditTime" placeholder=""
-                                            value="" required="">
-                                    </div>
+                                <div class="tab-pane fade" id="table-3" role="tabpanel" aria-labelledby="tab-3">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 帳號管理 -->
+                                            <h4 class="mt-5">門市管理</h4>
+                                            <table id="authorize-management-3" class="table">
+                                                <thead>
+                                                    <tr>
 
-                                    <div class="col-sm-4">
-                                        <label for="file-EditAccount" class="form-label">修改帳號</label>
-                                        <input type="text" class="form-control" id="file-EditAccount" placeholder=""
-                                            value="" required="">
-                                    </div>
-                                    <div class="text-center w-100 pt-3">
-                                        <button class="w-25 btn btn-primary btn-md" type="submit">儲存</button>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+
+                                <div class="tab-pane fade" id="table-4" role="tabpanel" aria-labelledby="tab-4">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 零件管理 -->
+                                            <h4 class="mt-5">零件管理</h4>
+                                            <table id="authorize-management-4" class="table">
+                                                <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="table-5" role="tabpanel" aria-labelledby="tab-5">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 零件採購管理 -->
+                                            <h4 class="mt-5">零件採購管理</h4>
+                                            <table id="authorize-management-5" class="table">
+                                                <thead>
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="table-6" role="tabpanel" aria-labelledby="tab-6">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 訂單管理 -->
+                                            <h4 class="mt-5">訂單管理</h4>
+                                            <table id="authorize-management-6" class="table">
+                                                <thead>
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="table-7" role="tabpanel" aria-labelledby="tab-7">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <h4 class="mt-5">出入庫管理</h4>
+                                            <table id="authorize-management-7" class="table">
+                                                <thead>
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="table-8" role="tabpanel" aria-labelledby="tab-8">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 盤點作業 -->
+                                            <h4 class="mt-5">盤點作業</h4>
+                                            <table id="authorize-management-8" class="table">
+                                                <thead>
+                                                    <tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="table-9" role="tabpanel" aria-labelledby="tab-9">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 零件手冊 -->
+                                            <h4 class="mt-5">零件手冊</h4>
+                                            <table id="authorize-management-9" class="table">
+                                                <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="table-10" role="tabpanel" aria-labelledby="tab-10">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 報表管理 -->
+                                            <h4 class="mt-5">報表管理</h4>
+                                            <table id="authorize-management-10" class="table">
+                                                <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="roleOrder" class="form-label">排序</label>
+                                    <input type="text" class="form-control" id="roleOrder">
+                                </div>
+                            </div>
+
+                            <h4>系統資料</h4>
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="BuildTime" class="form-label">建立時間</label>
+                                    <input type="text" class="form-control" id="BuildTime">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="EditTime" class="form-label">修改時間</label>
+                                    <input type="text" class="form-control" id="EditTime">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="EditAccount" class="form-label">修改帳號</label>
+                                    <input type="text" class="form-control" id="EditAccount" placeholder="" value="">
+                                </div>
+                                <div class="text-center w-100 pt-3">
+                                    <button id="saveButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">儲存</button>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -304,21 +530,704 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-    <!-- <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script> -->
+    <!--  Boostrap JavaScript Libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
+
+    <!-- Datatable Libraries -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <!-- <script src="js/dataTables.bootstrap5.js"></script> -->
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Data1
+            var columnsData1 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' }
+            ];
+
+            var columns1 = [];
+
+            columnsData1.forEach(function (column) {
+                columns1.push({ data: column.data, title: column.title });
+            });
+
+            var table1Data = [
+                {
+                    empty: '帳號列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '帳號資料',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '角色列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '角色權限',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />'
+                }
+            ];
+
+            // Data2
+            var columnsData2 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: "notification_lowestInventory", title: "通知列表最低庫存量不足" },
+                { data: "notification_purchase_requisition", title: "通知列表採購申請中" },
+                { data: "notification_order_new_component", title: "通知列表訂單新零件到貨" },
+                { data: "notification_ship_requisition", title: "通知列表申請出庫中" },
+                { data: "notification_shipped_wait_for_get", title: "通知列表出庫等待領取" }
+            ];
+
+            var columns2 = [];
+
+            columnsData2.forEach(function (column) {
+                columns2.push({ data: column.data, title: column.title });
+            });
+
+            var table2Data = [
+                {
+                    empty: '通知列表',
+                    id: 5,
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    notification_lowestInventory: '<input type="checkbox" name="rowCheckbox" />',
+                    notification_purchase_requisition: '<input type="checkbox" name="rowCheckbox" />',
+                    notification_order_new_component: '<input type="checkbox" name="rowCheckbox" />',
+                    notification_ship_requisition: '<input type="checkbox" name="rowCheckbox" />',
+                    notification_shipped_wait_for_get: '<input type="checkbox" name="rowCheckbox" />'
+                }
+            ];
+
+            //Data3
+            var columnsData3 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' }
+            ];
+
+            var table3Data = [
+                {
+                    empty: '門市列表',
+                    id: 6,
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '門市資料',
+                    id: 7,
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />'
+                },
+            ]
+
+            var columns3 = [];
+
+            columnsData3.forEach(function (column) {
+                columns3.push({ data: column.data, title: column.title });
+            });
+
+
+            //Data4
+            var columnsData4 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: "price", title: "訂價" },
+                { data: "wholesalePrice", title: "批發價" },
+                { data: "lowestWholesalePrice", title: "最低批發價" },
+                { data: "cost", title: "成本" },
+            ];
+
+            var table4Data = [
+                {
+                    empty:
+                        '零件品牌列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty:
+                        '零件品牌資料',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '零件定義列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '零件定義',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                }
+            ]
+
+
+            var columns4 = [];
+
+            columnsData4.forEach(function (column) {
+                columns4.push({ data: column.data, title: column.title });
+            });
+
+
+            //Data5
+            var columnsData5 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: "price", title: "訂價" },
+                { data: "wholesalePrice", title: "批發價" },
+                { data: "lowestWholesalePrice", title: "最低批發價" },
+                { data: "cost", title: "成本" },
+            ];
+
+            var table5Data = [
+                {
+                    empty: '零件採購列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+            ]
+
+            var columns5 = [];
+
+            columnsData5.forEach(function (column) {
+                columns5.push({ data: column.data, title: column.title });
+            });
+
+
+            //Data6
+            var columnsData6 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: 'price', title: '訂價' },
+                { data: 'wholesalePrice', title: '批發價' },
+                { data: 'lowestWholesalePrice', title: '最低批發價' },
+                { data: 'cost', title: '成本' },
+                { data: 'order_execute_ship', title: '訂單執行出庫' },
+                { data: 'order_delete_component', title: '訂單刪除零件' },
+                { data: 'order_unsubscribe', title: '訂單退貨' },
+                { data: 'order_complete', title: '訂單訂單完成' }
+            ];
+
+            var table6Data = [
+                {
+                    empty: '搜尋零件',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    order_execute_ship: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_delete_component: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_unsubscribe: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_complete: '<input type="checkbox" name="rowCheckbox" disabled/>'
+                },
+                {
+                    empty: '訂單列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    order_execute_ship: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_delete_component: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_unsubscribe: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_complete: '<input type="checkbox" name="rowCheckbox" disabled/>'
+                },
+                {
+                    empty: '訂單資料',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    order_execute_ship: '<input type="checkbox" name="rowCheckbox" />',
+                    order_delete_component: '<input type="checkbox" name="rowCheckbox" />',
+                    order_unsubscribe: '<input type="checkbox" name="rowCheckbox" />',
+                    order_complete: '<input type="checkbox" name="rowCheckbox" />'
+
+                },
+                {
+                    empty: '退貨單列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    order_execute_ship: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_delete_component: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_unsubscribe: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_complete: '<input type="checkbox" name="rowCheckbox" disabled/>'
+                },
+                {
+                    empty: '退貨單',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    order_execute_ship: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_delete_component: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_unsubscribe: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    order_complete: '<input type="checkbox" name="rowCheckbox" disabled/>'
+                },
+            ]
+
+            var columns6 = [];
+
+            columnsData6.forEach(function (column) {
+                columns6.push({ data: column.data, title: column.title });
+            });
+
+            //Data7
+
+            var columnsData7 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: 'ship_ship_requisition', title: '出庫單申請出庫' },
+                { data: 'ship_ship_approve', title: '出庫單同意出庫' },
+                { data: 'ship_ship_receive', title: '出庫單領取零件' },
+                { data: 'ship_ship_cancel', title: '出庫單取消出庫' }
+            ];
+
+            var table7Data = [
+                {
+                    empty: '倉庫列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_requisition: '<input type="checkbox" name="rowCheckbox"  disabled/>',
+                    ship_ship_approve: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    ship_ship_receive: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    ship_ship_cancel: '<input type="checkbox" name="rowCheckbox"  disabled/>'
+                },
+                {
+                    empty: '零件資料',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_requisition: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_approve: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_receive: '<input type="checkbox" name="rowCheckbox" disabled />',
+                    ship_ship_cancel: '<input type="checkbox" name="rowCheckbox" disabled/>'
+                },
+                {
+                    empty: '入庫單列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_requisition: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_approve: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_receive: '<input type="checkbox" name="rowCheckbox"disabled />',
+                    ship_ship_cancel: '<input type="checkbox" name="rowCheckbox"disabled />'
+                },
+                {
+                    empty: '入庫單',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_requisition: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_approve: '<input type="checkbox" name="rowCheckbox"disabled />',
+                    ship_ship_receive: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_cancel: '<input type="checkbox" name="rowCheckbox" disabled />'
+                },
+                {
+                    empty: '出庫申請單列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_requisition: '<input type="checkbox" name="rowCheckbox"disabled />',
+                    ship_ship_approve: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_receive: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    ship_ship_cancel: '<input type="checkbox" name="rowCheckbox" disabled/>'
+                },
+                {
+                    empty: '出庫申請單',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_requisition: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_approve: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_receive: '<input type="checkbox" name="rowCheckbox" />',
+                    ship_ship_cancel: '<input type="checkbox" name="rowCheckbox" />'
+                }
+
+            ]
+
+            var columns7 = [];
+
+            columnsData7.forEach(function (column) {
+                columns7.push({ data: column.data, title: column.title });
+            });
+
+
+            //Data8
+
+            var columnsData8 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: "cost", title: "成本" },
+                { data: "inventory_ship", title: "盤點內容盤點入庫" },
+                { data: "inventory_loss", title: "盤點內容列入盤點損失" }
+            ];
+            var table8Data = [
+                {
+                    empty: '盤點列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    inventory_ship: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                    inventory_loss: '<input type="checkbox" name="rowCheckbox" disabled/>',
+                },
+                {
+                    empty: '盤點資料',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />',
+                    inventory_ship: '<input type="checkbox" name="rowCheckbox" />',
+                    inventory_loss: '<input type="checkbox" name="rowCheckbox" />',
+                },
+            ]
+
+            var columns8 = [];
+
+            columnsData8.forEach(function (column) {
+                columns8.push({ data: column.data, title: column.title });
+            });
+
+            //Data9
+            var columnsData9 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: "download", title: "零件手冊僅查詢下載" }
+            ];
+
+            var table9Data = [
+                {
+                    empty: '零件手冊列表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    download: '<input type="checkbox" name="rowCheckbox" disabled />'
+                },
+                {
+                    empty: '零件手冊資料',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    download: '<input type="checkbox" name="rowCheckbox" />'
+                },
+            ]
+            var columns9 = [];
+
+            columnsData9.forEach(function (column) {
+                columns9.push({ data: column.data, title: column.title });
+            });
+
+            //Data10
+            var columnsData10 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' },
+                { data: "price", title: "訂價" },
+                { data: "wholesalePrice", title: "批發價" },
+                { data: "lowestWholesalePrice", title: "最低批發價" },
+                { data: "cost", title: "成本" },
+            ];
+            var table10Data = [
+                {
+                    empty: '倉庫清單',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '訂單報表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '採購單報表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '購物車',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '入庫單報表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '出庫單報表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+                {
+                    empty: '退貨單報表',
+                    read: '<input type="checkbox" name="rowCheckbox" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" />',
+                    update: '<input type="checkbox" name="rowCheckbox" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" />',
+                    price: '<input type="checkbox" name="rowCheckbox" />',
+                    wholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    lowestWholesalePrice: '<input type="checkbox" name="rowCheckbox" />',
+                    cost: '<input type="checkbox" name="rowCheckbox" />'
+                },
+            ]
+            var columns10 = [];
+
+            columnsData10.forEach(function (column) {
+                columns10.push({ data: column.data, title: column.title });
+            });
+
+
+            // 初始
+            var table1 = $('#authorize-management-1').DataTable({
+                data: table1Data,
+                columns: columns1,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+            var table2 = $('#authorize-management-2').DataTable({
+                data: table2Data,
+                columns: columns2,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+            var table3 = $('#authorize-management-3').DataTable({
+                data: table3Data,
+                columns: columns3,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+            var table4 = $('#authorize-management-4').DataTable({
+                data: table4Data,
+                columns: columns4,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+            var table5 = $('#authorize-management-5').DataTable({
+                data: table5Data,
+                columns: columns5,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+            var table6 = $('#authorize-management-6').DataTable({
+                data: table6Data,
+                columns: columns6,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+            var table7 = $('#authorize-management-7').DataTable({
+                data: table7Data,
+                columns: columns7,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+            var table8 = $('#authorize-management-8').DataTable({
+                data: table8Data,
+                columns: columns8,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+            var table9 = $('#authorize-management-9').DataTable({
+                data: table9Data,
+                columns: columns9,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+            var table10 = $('#authorize-management-10').DataTable({
+                data: table10Data,
+                columns: columns10,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+        });
+    </script>
+
+
+
 </body>
 
 </html>

@@ -227,46 +227,48 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="A-account" class="form-label">*帳號</label>
-                                    <input type="text" class="form-control" id="A-account" name="account">
+                                    <input type="text" class="form-control" id="A-account" name="account" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-password" class="form-label">*密碼</label>
-                                    <input type="password" class="form-control" id="A-password" name="password">
+                                    <input type="password" class="form-control" id="A-password" name="password"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-userName" class="form-label">*姓名</label>
-                                    <input type="text" class="form-control" id="A-userName" name="userName">
+                                    <input type="text" class="form-control" id="A-userName" name="userName" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-storeName" class="form-label">*所屬門市</label>
-                                    <select id="A-storeName" class="form-select" name="storeName"></select>
+                                    <select id="A-storeName" class="form-select" name="storeName" required></select>
                                     </select>
                                 </div>
 
 
                                 <div class="col-sm-6">
                                     <label for="A-email" class="form-label">*Email</label>
-                                    <input type="email" class="form-control" id="A-email" name="email">
+                                    <input type="email" class="form-control" id="A-email" name="email" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-phoneNumber" class="form-label">*手機</label>
-                                    <input type="tel" class="form-control" id="A-phoneNumber" name="phoneNumber">
+                                    <input type="tel" class="form-control" id="A-phoneNumber" name="phoneNumber"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-authorizeName" class="form-label">*角色</label>
-                                    <select class="form-select" id="A-authorizeName" name="authorizeName">
+                                    <select class="form-select" id="A-authorizeName" name="authorizeName" required>
                                     </select>
 
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-status" class="form-label">*狀態</label>
-                                    <select class="form-select" id="A-status" name="status">
+                                    <select class="form-select" id="A-status" name="status" required>
                                         <option value="1">正常</option>
                                         <option value="0">停業</option>
                                     </select>
@@ -353,7 +355,7 @@
                 url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
-
+                    console.log(responseData, '門市');
                     const storeList = document.getElementById("A-storeName");
 
 
@@ -400,7 +402,7 @@
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
 
-                    // console.log("成功响应：", responseData);
+                    console.log(responseData, '角色');
 
                     const rolleList = document.getElementById("A-authorizeName");
 
@@ -496,13 +498,14 @@
 
         //上傳POST
         $(document).ready(function () {
-            var formData = new FormData(); // 在外部定义 formData
 
+            var formData = new FormData(); // 在外部定义 formData
             const urlParams = new URLSearchParams(window.location.search);
             const partId = urlParams.get("id");
 
 
             $("#saveButton").click(function () {
+                event.preventDefault();
                 //取值
                 var getaccount = $("#A-account").val();
                 var getpassword = $("#A-password").val();
@@ -519,11 +522,11 @@
                     id: partId,
                     account: getaccount,
                     password: getpassword,
-                    storeName: getstoreName,
+                    storeId: getstoreName,
                     userName: getuserName,
                     email: getemail,
                     phoneNumber: getphoneNumber,
-                    authorizeName: getauthorizeName,
+                    authorizeId: getauthorizeName,
                     status: getstatus,
                     createTime: getcreateTime,
                 };
@@ -546,7 +549,11 @@
                 formData.set("chsm", chsm);
                 formData.set("data", JSON.stringify(accountDataObject));
 
-                console.log(formData);
+                var form = document.querySelector(".needs-validation");
+                if (!form.checkValidity()) {
+                    event.preventDefault(); // 阻止默认提交行为
+                }
+                form.classList.add("was-validated");
 
                 // 发送文件上传请求
                 $.ajax({
@@ -557,7 +564,10 @@
                     contentType: false,
                     success: function (response) {
                         console.log(response);
-                        showSuccessFileNotification();
+
+                        setTimeout(function () {
+                            showSuccessFileNotification();
+                        }, 1000);
 
                         var newPageUrl = "8-account-list.html";
                         window.location.href = newPageUrl;

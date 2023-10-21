@@ -29,17 +29,4 @@
 		$(".sidebar, .content").toggleClass("open");
 		return false;
 	});
-
-	// log-out
-	$(function () {
-		// 登出按鈕的点击事件处理
-		$("#logout").on("click", function () {
-			// 移除 localStorage 中的用户数据
-			localStorage.removeItem("userData");
-			localStorage.removeItem("currentUser");
-			window.history.replaceState({}, document.title, "0-signin.html");
-
-			window.location.href = "0-signin.html";
-		});
-	});
 })(jQuery);

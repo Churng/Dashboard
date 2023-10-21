@@ -227,22 +227,31 @@
 
                             <div class="col-sm-3">
                                 <label for="selectBrand" class="form-label">*請選擇品牌</label>
-                                <select class="form-select" id="selectBrand" required=""> </select>
+                                <select class="form-select" id="selectBrand" required> </select>
                             </div>
 
                             <div class="col-sm-3">
-                                <label for="shop-Type" class="form-label">倉庫現貨</label>
-                                <select class="form-select" id="shop-Type" required="">
+                                <label for="selectInventory" class="form-label">倉庫現貨</label>
+                                <select class="form-select" id="selectInventory" required>
                                     <option>全部</option>
                                     <option value="1">有</option>
-                                    <option value="2">無</option>
+                                    <option value="0">無</option>
                                 </select>
                             </div>
 
+
+                            <div class="col-sm-3 pt-sm-4">
+                                <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                            </div>
+
                             <div class="col-sm-6">
-                                <label for="file-BuildTime" class="form-label">搜尋（零件料號、零件名稱、通用車型）</label>
-                                <input type="text" class="form-control" id="file-BuildTime" placeholder="" value=""
-                                    required="">
+                                <label for="SearchInput" class="form-label">搜尋（僅可用零件料號、零件名稱、通用車型作為查詢）</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="SearchInput" placeholder="" value=""
+                                        required>
+                                    <button id="searchInputBtn" type="button" class="btn btn-success">查詢</button>
+                                </div>
                             </div>
 
                         </div>
@@ -285,7 +294,6 @@
                             </div>
                         </div>
 
-                        TODO 查看購物車：進入購物車
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start my-3">
                             <button class="btn btn-primary" type="button">
@@ -314,6 +322,8 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
@@ -356,8 +366,6 @@
                 success: function (responseData) {
                     const brandList = document.getElementById("selectBrand");
 
-                    console.log(responseData);
-
                     const defaultOption = document.createElement("option");
                     defaultOption.text = "請選擇品牌";
                     brandList.appendChild(defaultOption);
@@ -382,7 +390,7 @@
 
 
         // depot-列表取得
-        $(document).ready(function () {
+        function fetchAccountList() {
             // 从localStorage中获取session_id和chsm
             // 解析JSON字符串为JavaScript对象
             const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -404,14 +412,13 @@
                 url: "https://88bakery.tw/HBAdmin/index.php?/api/depot",
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
-                    console.log(responseData);
                     updatePageWithData(responseData);
                 },
                 error: function (error) {
                     showErrorNotification();
                 },
             });
-        });
+        }
 
         // 表格填充
         function updatePageWithData(responseData) {
@@ -436,16 +443,17 @@
                     downloadButtonHtml = '<button class="btn btn-primary" disabled>無法下載</button>';
                 }
 
-                var buttonsHtml = '<a href="4-order_searchparts_shopcar.html?id=' + data.id + '" class="add-shopCar btn btn-primary text-white">加入購物車</a>';
-                var buttonsHtml = '<a href="4-order_searchparts_shopcar.html?id=' + data.id +
-                    '" class="add-shopCar btn btn-primary text-white" data-id="' + data.id +
-                    '" data-componentName="' + data.componentName +
-                    '" data-componentId="' + data.componentId +
+                var buttonsHtml = '<button class="add-shopCar btn btn-primary text-white"' +
+                    ' data-componentName="' + data.componentName +
                     '" data-componentNumber="' + data.componentNumber +
-                    '" data-componentSupplier="' + data.componentSupplier +
-                    '" data-cost="' + data.cost +
-                    '">加入購物車</a>';
+                    '" data-brandId="' + data.brandId +
+                    '" data-amount="1"' +
+                    '" data-componentId="' + data.id +
+                    '">加入購物車</button>';
 
+
+
+                // componentId componentName componentNumber brandId amount->數量
 
 
                 dataTable.row
@@ -501,7 +509,6 @@
                 url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
-                    console.log(responseData);
                     updatePageWithData(responseData);
                 },
                 error: function (error) {
@@ -511,8 +518,205 @@
         }
 
         // 加入購物車
+        $(document).ready(function () {
+            var formData = new FormData();
+            $(".tableList").on("click", ".add-shopCar", function () {
+                // 获取按钮上的 data 属性值
+                var componentName = $(this).data('componentname');
+                var componentId = $(this).data('componentid');
+                var componentNumber = $(this).data('componentnumber');
+                var brandId = $(this).data('brandid');
+                var amount = 1; // 这里使用1，你可以根据需要更改
 
-        // 在文档准备好后绑定事件监听器
+                // 构建包含要发送的数据的对象
+                var postData = {
+                    componentName: componentName,
+                    componentId: componentId,
+                    componentNumber: componentNumber,
+                    brandId: brandId,
+                    amount: amount
+                };
+
+                // 解析JSON字符串为JavaScript对象
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId;
+
+                // 组装发送文件所需数据
+                // chsm = session_id+action+'HBAdminShoppingCartApi'
+                var action = "insertShoppingCartDetail";
+                var chsmtoPostFile = user_session_id + action + 'HBAdminShoppingCartApi';
+                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+                // 设置其他formData字段
+                formData.set("action", action);
+                formData.set("session_id", user_session_id);
+                formData.set("chsm", chsm);
+                formData.set("data", JSON.stringify(postData));
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.returnCode === '1') {
+                            showSuccessAddToCarNotification();
+                        } else {
+                            handleApiResponse(response);
+                        }
+
+                    },
+                    error: function (error) {
+                        showErrorNotification()
+                    }
+                });
+            });
+        });
+
+        // 監聽欄位變動
+        $(document).ready(function () {
+            var selectedBrandId, selectInventoryId, selectedsearchValue;
+
+            // 監聽品牌
+            $('#selectBrand').on('change', function () {
+                selectedBrandId = $('#selectBrand').val();
+            });
+
+            // 監聽倉庫庫存
+            $('#selectInventory').on('change', function () {
+                selectInventoryId = $('#selectInventory').val();
+            });
+
+            // 監聽欄位填寫
+            $('#SearchInput').on('input', function () {
+                // 获取输入框的值
+                selectedsearchValue = $(this).val().trim();
+            });
+
+
+            // 点击搜索按钮时触发API请求
+            $('#searchBtn').on('click', function () {
+                // 创建筛选数据对象
+                var filterData = {};
+
+                if (selectedBrandId) {
+                    filterData.BrandId = selectedBrandId;
+                }
+
+                if (selectInventoryId) {
+                    filterData.InventroyId = selectInventoryId;
+                }
+
+                if (selectedsearchValue) {
+                    filterData.searchValue = selectedsearchValue;
+                }
+
+                // 发送API请求以获取数据
+                sendApiRequest(filterData);
+            });
+
+            // 创建一个函数，发送API请求以获取数据
+            function sendApiRequest(filterData) {
+                // 获取用户数据
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId;
+
+                // 设置API请求数据
+                var action = "getDepotList";
+                var chsmtoGetManualList = user_session_id + action + 'HBAdminDepotApi';
+                var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+                var filterDataJSON = JSON.stringify(filterData);
+                var postData = filterDataJSON;
+
+                $("#searchParts").DataTable();
+                // 发送API请求以获取数据
+                $.ajax({
+                    type: "POST",
+                    url: "https://88bakery.tw/HBAdmin/index.php?/api/depot",
+                    data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+                    success: function (responseData) {
+                        // 处理成功响应
+                        updatePageWithData(responseData);
+                    },
+                    error: function (error) {
+                        showErrorNotification();
+                    },
+                });
+            }
+        });
+
+        // 監聽填寫欄位變動
+        $(document).ready(function () {
+            var selectedsearchValue;
+
+            // 監聽欄位填寫
+            $('#SearchInput').on('input', function () {
+                // 获取输入框的值
+                selectedsearchValue = $(this).val().trim();
+            });
+
+
+            // 点击搜索按钮时触发API请求
+            $('#searchInputBtn').on('click', function () {
+                // 创建筛选数据对象
+                var filterData = {};
+
+                if (selectedsearchValue) {
+                    filterData.componentNumber = selectedsearchValue;
+                    filterData.componentName = selectedsearchValue;
+                    filterData.suitableCarModel = selectedsearchValue;
+                }
+
+                // 发送API请求以获取数据
+                sendApiRequest(filterData);
+            });
+
+            // 创建一个函数，发送API请求以获取数据
+            function sendApiRequest(filterData) {
+                // 获取用户数据
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId;
+
+                // 设置API请求数据
+                var action = "getDepotList";
+                var chsmtoGetManualList = user_session_id + action + 'HBAdminDepotApi';
+                var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+                var filterDataJSON = JSON.stringify(filterData);
+                var postData = filterDataJSON;
+
+                $("#searchParts").DataTable();
+                // 发送API请求以获取数据
+                $.ajax({
+                    type: "POST",
+                    url: "https://88bakery.tw/HBAdmin/index.php?/api/depot",
+                    data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+                    success: function (responseData) {
+                        // 处理成功响应
+                        updatePageWithData(responseData);
+                    },
+                    error: function (error) {
+                        showErrorNotification();
+                    },
+                });
+            }
+        });
+
+        // 加载时调用在页面 fetchAccountList
+        $(document).ready(function () {
+            fetchAccountList();
+        });
+
+        // 或者在点击按钮时调用 fetchAccountList
+        $('#allBtn').on('click', function () {
+            fetchAccountList();
+        });
 
     </script>
 </body>

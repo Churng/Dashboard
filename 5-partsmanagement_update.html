@@ -20,15 +20,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <!-- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" /> -->
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
+    <!-- DataTable Stylesheet -->
+    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -57,12 +58,12 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-laptop me-2"></i>倉庫管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="1-warehousemanagement_stock-in-index.html" class="dropdown-item">入庫單列表</a>
-                            <a href="1-warehousemanagement_stock-in.html" class="dropdown-item">入庫單</a>
-                            <a href="1-warehousemanagement_stock-out.html" class="dropdown-item">出庫申請單</a>
-                            <a href="1-warehousemanagement_stock-out-index.html" class="dropdown-item">出庫申請單列表</a>
-                            <a href="1-warehousemanagement_stockroom.html" class="dropdown-item">倉庫列表</a>
-                            <a href="1-warehousemanagement_parts.html" class="dropdown-item">零件資料</a>
+                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
+                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
+                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
+                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
+                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
+                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
                         </div>
                     </div>
 
@@ -71,7 +72,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="2-manual-management_index.html" class="dropdown-item">零件手冊查詢</a>
+                            <a href="manualList.html" class="dropdown-item">零件手冊查詢</a>
                             <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
                             <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
                         </div>
@@ -83,7 +84,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>門市管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="3-store-information_index.html" class="dropdown-item">門市列表</a>
+                            <a href="storeList.html" class="dropdown-item">門市列表</a>
                             <a href="3-store-information_create.html" class="dropdown-item">門市資料新增</a>
                             <a href="3-store-information_update.html" class="dropdown-item">門市資料修改</a>
                         </div>
@@ -97,9 +98,9 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
                             <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
-                            <a href="4-order_refund_index.html" class="dropdown-item">退貨單列表</a>
-                            <a href="4-order_refund_page.html" class="dropdown-item">退貨單</a>
-                            <a href="4-order_searchparts.html" class="dropdown-item">搜尋零件</a>
+                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
+                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
+                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
                             <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
                         </div>
                     </div>
@@ -109,7 +110,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="5-partsmanagement_index.html" class="dropdown-item">零件定義列表</a>
+                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
                             <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
                         </div>
                     </div>
@@ -120,7 +121,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件採購管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="6-parts-order_index.html" class="dropdown-item">零件採購列表</a>
+                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
                             <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
                         </div>
                     </div>
@@ -130,8 +131,8 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-table me-2"></i>盤點管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="7-inventory_index.html" class="dropdown-item">盤點列表</a>
-                            <a href="7-inventory_create.html" class="dropdown-item">盤點資料</a>
+                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
+                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
                         </div>
                     </div>
 
@@ -193,15 +194,15 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
                                 style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -216,154 +217,145 @@
                         <h3>零件資料</h3>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">倉庫列表 / 零件資料</li>
+                                <li class="breadcrumb-item"><a href="componentList.html">零件列表</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">修改零件資料</li>
                             </ol>
                         </nav>
 
 
-                        <div class="my-5">
-                            <div class="custom-file w-25">
-                                <input type="file" class="form-control" name="component[]" id="fileInput"
-                                    accept="image/*" multiple>
-                                <!-- <label class="custom-file-upload-btn" for="fileInput">選擇圖片</label> -->
-                            </div>
-                            <!-- <button type="button" class="btn btn-primary my-4" id="uploadButton">上傳</button>
-                                <p id="uploadMessage"></p> -->
-                        </div>
-
-
-                        <h4>預設資料設定</h4>
-
-                        <div class="row g-3 mb-5">
-                            <div class="col-sm-3">
-                                <label for="C-componentNumber" class="form-label">*零件料號</label>
-                                <input type="text" class="form-control" id="C-componentNumber" name="componentNumber"
-                                    required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-brandId" class="form-label">*品牌</label>
-                                <input type="text" class="form-control" id="C-brandId" name="brandId" required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-componentName" class="form-label">*零件名稱</label>
-                                <input type="text" class="form-control" id="C-componentName" name="componentName"
-                                    required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-purchaseAmount" class="form-label">採購中數量</label>
-                                <input type="text" class="form-control" id="C-purchaseAmount" name="purchaseAmount"
-                                    required="">
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="C-depotAmount" class="form-label">倉庫數量</label>
-                                <input type="text" class="form-control" id="C-depotAmount" name="depotAmount"
-                                    required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-depotPosition" class="form-label">倉庫位置</label>
-                                <input type="text" class="form-control" id="C-depotPosition" name="depotPosition"
-                                    required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-Price" class="form-label">*零件訂價</label>
-                                <input type="text" class="form-control" id="C-Price" name="price" required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-Cost" class="form-label">零件成本</label>
-                                <input type="text" class="form-control" id="C-Cost" name="cost" required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-WholesalePrice" class="form-label">*零件批發價</label>
-                                <input type="text" class="form-control" id="C-WholesalePrice" name="wholesalePrice"
-                                    required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-lowestWholesalePrice" class="form-label">*零件最低批發價</label>
-                                <input type="text" class="form-control" id="C-lowestWholesalePrice"
-                                    name="lowestWholesalePrice" required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-supplier" class="form-label">*零件供應商</label>
-                                <input type="text" class="form-control" id="C-supplier" name="componentSupplier"
-                                    required="">
-                            </div>
-
-
-                            <div class="col-sm-3">
-                                <label for="C-workingHour" class="form-label">*工時（小時）</label>
-                                <input type="text" class="form-control" id="C-workingHour" name="workingHour"
-                                    required="">
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label for="C-suitableModel" class="form-label">*適用車型</label>
-                                <input type="text" class="form-control" id="C-suitableModel" name="suitableCarModel"
-                                    required="">
-                            </div>
-
-                            <hr class="my-4">
-
-                            <div class="col-sm-6">
-                                <label for="C-description" class="form-label">零件描述</label>
-                                <textarea class="form-control" id="C-description" rows="3"
-                                    name="description"></textarea>
-                            </div>
-
-                            <div class="col-sm-6 mb-3">
-                                <label for="C-precautions" class="form-label">注意事項</label>
-                                <textarea class="form-control" id="C-precautions" rows="3"
-                                    name="precautions"></textarea>
+                        <div class="py-4 my-2 input-fit">
+                            <div class="mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="form-control" name="component[]" id="fileInput"
+                                        accept="image/*" multiple>
+                                </div>
                             </div>
                         </div>
 
+                        <div class="block-first">
+                            <h4>預設資料設定</h4>
+                            <form id="uploadForm" class="needs-validation" novalidate>
+                                <div class="row g-3 mb-5">
+                                    <div class="col-sm-3">
+                                        <label for="C-componentNumber" class="form-label">*零件料號</label>
+                                        <input type="text" class="form-control" id="C-componentNumber"
+                                            name="componentNumber" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-brandId" class="form-label">*品牌</label>
+                                        <input type="text" class="form-control" id="C-brandId" name="brandId"
+                                            required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-componentName" class="form-label">*零件名稱</label>
+                                        <input type="text" class="form-control" id="C-componentName"
+                                            name="componentName" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-depotPosition" class="form-label">倉庫位置</label>
+                                        <input type="text" class="form-control" id="C-depotPosition"
+                                            name="depotPosition" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-Price" class="form-label">*零件訂價</label>
+                                        <input type="text" class="form-control" id="C-Price" name="price" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-Cost" class="form-label">零件成本</label>
+                                        <input type="text" class="form-control" id="C-Cost" name="cost" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-WholesalePrice" class="form-label">*零件批發價</label>
+                                        <input type="text" class="form-control" id="C-WholesalePrice"
+                                            name="wholesalePrice" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-lowestWholesalePrice" class="form-label">*零件最低批發價</label>
+                                        <input type="text" class="form-control" id="C-lowestWholesalePrice"
+                                            name="lowestWholesalePrice" required="">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label for="C-supplier" class="form-label">*零件供應商</label>
+                                        <input type="text" class="form-control" id="C-supplier" name="componentSupplier"
+                                            required="">
+                                    </div>
 
 
-                        <h4>警示設定</h4>
+                                    <div class="col-sm-3">
+                                        <label for="C-workingHour" class="form-label">*工時（小時）</label>
+                                        <input type="text" class="form-control" id="C-workingHour" name="workingHour"
+                                            required="">
+                                    </div>
 
-                        <div class="row g-3 mb-5">
-                            <div class="col-sm-4">
-                                <label for="C-lowestInventory" class="form-label">最低庫存量</label>
-                                <input type="text" class="form-control" id="C-lowestInventory" name="lowestInventory"
-                                    required="">
-                            </div>
+                                    <div class="col-sm-3">
+                                        <label for="C-suitableModel" class="form-label">*適用車型</label>
+                                        <input type="text" class="form-control" id="C-suitableModel"
+                                            name="suitableCarModel" required="">
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <div class="col-sm-6">
+                                        <label for="C-description" class="form-label">零件描述</label>
+                                        <textarea class="form-control" id="C-description" rows="3" name="description"
+                                            placeholder="若無請填N/A" required></textarea>
+                                    </div>
+
+                                    <div class="col-sm-6 mb-3">
+                                        <label for="C-precautions" class="form-label">注意事項</label>
+                                        <textarea class="form-control" id="C-precautions" rows="3" name="precautions"
+                                            placeholder="若無請填N/A" required></textarea>
+                                    </div>
+                                </div>
+
+
+                                <h4>警示設定</h4>
+
+                                <div class="row g-3 mb-5">
+                                    <div class="col-sm-4">
+                                        <label for="C-lowestInventory" class="form-label">最低庫存量</label>
+                                        <input type="text" class="form-control" id="C-lowestInventory"
+                                            name="lowestInventory" required="">
+                                    </div>
+                                </div>
+
+
+                                <hr class="my-4">
+
+                                <h4>系統資料</h4>
+                                <div class="row g-3 mb-5">
+                                    <div class="col-sm-4">
+                                        <label for="BuildTime" class="form-label">建立時間</label>
+                                        <input type="text" class="form-control" id="BuildTime" required=""
+                                            name="createTime">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label for="EditTime" class="form-label">修改時間</label>
+                                        <input type="text" class="form-control" id="EditTime" name="updateTime">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label for="EditAccount" class="form-label">修改帳號</label>
+                                        <input type="text" class="form-control" id="EditAccount" required=""
+                                            name="updateOperator">
+                                    </div>
+
+                                    <div class="text-center w-100 pt-3">
+                                        <button id="updateButton" class="w-25 btn btn-primary btn-md"
+                                            type="submit">修改儲存</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-
-                        <hr class="my-4">
-
-                        <h4>系統資料</h4>
-                        <div class="row g-3 mb-5">
-                            <div class="col-sm-4">
-                                <label for="C-BuildTime" class="form-label">建立時間</label>
-                                <input type="text" class="form-control" id="C-BuildTime" required="" name="createTime">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label for="C-EditTime" class="form-label">修改時間</label>
-                                <input type="text" class="form-control" id="C-EditTime" name="updateTime">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label for="C-EditAccount" class="form-label">修改帳號</label>
-                                <input type="text" class="form-control" id="C-EditAccount" required=""
-                                    name="updateOperator">
-                            </div>
-
-                            <div class="text-center w-100 pt-3">
-                                <button id="updateButton" class="w-25 btn btn-primary btn-md"
-                                    type="submit">修改儲存</button>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -383,198 +375,16 @@
     <!--  Boostrap JavaScript Libraries -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
     <script src="js/Notifications/toastr-options.js"></script>
 
-
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-
-    <script>
-        // 取得詳細資料
-        $(document).ready(function () {
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const partId = urlParams.get('id');
-            const dataId = { id: partId };
-
-            // 将 JavaScript 对象转换为 JSON 格式的字符串
-            const IdPost = JSON.stringify(dataId);
-
-            // 从localStorage中获取session_id和chsm
-            // 解析JSON字符串为JavaScript对象
-            const jsonStringFromLocalStorage = localStorage.getItem("userData");
-            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-            const user_session_id = gertuserData.sessionId
-
-
-            // chsm = session_id+action+'HBAdminComponentApi'
-            // 组装所需数据
-            var action = 'getComponentDetail'
-            var chsmtoGetComponentDetail = user_session_id + action + 'HBAdminComponentApi';
-            var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
-
-            // 发送POST请求
-            $.ajax({
-                type: 'POST',
-                url: 'https://88bakery.tw/HBAdmin/index.php?/api/component',
-                data: {
-                    action: action,
-                    session_id: user_session_id,
-                    chsm: chsm,
-                    data: IdPost
-                },
-                success: function (responseData) {
-
-                    console.log(responseData);
-                    if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-                        const componentData = responseData.returnData[0];
-                        $('#C-componentName').val(componentData.componentName);
-                        $('#C-componentNumber').val(componentData.componentNumber);
-                        $('#C-brandId').val(componentData.brandId);
-
-                        $('#C-purchaseAmount').val(componentData.purchaseAmount);
-                        $('#C-depotAmount').val(componentData.depotAmount);
-                        $('#C-depotPosition').val(componentData.depotPosition);
-
-                        $('#C-Price').val(componentData.price);
-                        $('#C-Cost').val(componentData.cost);
-                        $('#C-WholesalePrice').val(componentData.wholesalePrice);
-                        $('#C-lowestWholesalePrice').val(componentData.lowestWholesalePrice);
-                        $('#C-supplier').val(componentData.componentSupplier);
-                        $('#C-workingHour').val(componentData.workingHour);
-                        $('#C-suitableModel').val(componentData.suitableCarModel);
-                        $('#C-description').val(componentData.description);
-                        $('#C-precautions').val(componentData.precautions);
-                        $('#C-lowestInventory').val(componentData.lowestInventory);
-
-                        $('#C-BuildTime').val(componentData.createTime);
-                        $('#C-EditTime').val(componentData.updateTime);
-                        $('#C-EditAccount').val(componentData.getupdateOperator);
-
-
-                        if (componentData.fileName == '') {
-                            showWarningNotification()
-                        }
-                        // 填充完毕后隐藏加载中的spinner
-                        $('#spinner').hide();
-                    } else {
-                        showWarningNotification()
-                    }
-                },
-                error: function (error) {
-                    showErrorNotification()
-                }
-            });
-        });
-
-
-        // 上傳POST
-        $(document).ready(function () {
-            var formData = new FormData();
-            $('#updateButton').click(function () {
-
-                const urlParams = new URLSearchParams(window.location.search);
-                const partId = urlParams.get('id');
-
-
-                //取值
-                var getComponentName = $('#C-componentName').val();
-                var getComponentNumber = $('#C-componentNumber').val();
-                var getbrandId = $('#C-brandId').val();
-                var getpurchaseAmount = $('#C-purchaseAmount').val();
-                var getdepotAmount = $('#C-depotAmount').val();
-                var getdepotPosition = $('#C-depotPosition').val();
-                var getprice = $('#C-Price').val();
-                var getcost = $('#C-Cost').val();
-                var getwholesalePrice = $('#C-WholesalePrice').val();
-                var getlowestWholesalePrice = $('#C-lowestWholesalePrice').val();
-                var getcomponentSupplier = $('#C-supplier').val();
-                var getworkingHour = $('#C-workingHour').val();
-                var getsuitableCarModel = $('#C-suitableModel').val();
-                var getdescription = $('#C-description').val();
-                var getprecautions = $('#C-precautions').val();
-                var getlowestInventory = $('#C-lowestInventory').val();
-
-                var getcreateTime = $('#C-BuildTime').val();
-                var getupdateTime = $('#C-EditTime').val();
-                var getupdateOperator = $('#C-EditAccount').val();
-
-
-                var updateData = {
-                    "id": partId,
-                    "componentNumber": getComponentNumber,
-                    "brandId": getbrandId,
-                    "componentName": getComponentName,
-                    "purchaseAmount": getpurchaseAmount,
-                    "depotAmount": getdepotAmount,
-                    "depotPosition": getdepotPosition,
-                    "price": getprice,
-                    "cost": getcost,
-                    "wholesalePrice": getwholesalePrice,
-                    "lowestWholesalePrice": getlowestWholesalePrice,
-                    "componentSupplier": getcomponentSupplier,
-                    "workingHour": getworkingHour,
-                    "suitableCarModel": getsuitableCarModel,
-                    "description": getdescription,
-                    "precautions": getprecautions,
-                    "lowestInventory": getlowestInventory,
-                    "createTime": getcreateTime,
-                    "updateTime": getupdateTime,
-                    "updateOperator": getupdateOperator
-                };
-
-                // 将updateData转换成JSON字符串
-                var updateDataJSON = JSON.stringify(updateData);
-
-
-                // 从localStorage中获取session_id和chsm
-                // 解析JSON字符串为JavaScript对象
-                const jsonStringFromLocalStorage = localStorage.getItem("userData");
-                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-                const user_session_id = gertuserData.sessionId
-
-                // 组装发送文件所需数据
-                // chsm = session_id+action+'HBAdminComponentApi'
-                var action = 'updateComponentDetail';
-                var chsmtoPostFile = user_session_id + action + 'HBAdminComponentApi';
-                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-                // 设置其他formData字段
-                formData.set('action', action);
-                formData.set('session_id', user_session_id);
-                formData.set('chsm', chsm);
-                formData.set('data', JSON.stringify(updateData));
-
-                console.log(formData);
-
-                // 发送文件上传请求
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/component',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-
-                        console.log(response);
-                        showSuccessFileNotification()
-                        localStorage.removeItem('selectedStoreData');
-                        var newPageUrl = '5-partsmanagement_index.html';
-                        window.location.href = newPageUrl;
-                    },
-                    error: function (error) {
-                        showErrorFileNotification()
-                    }
-                });
-
-            });
-        });
-    </script>
-
+    <script src="js/Component-management/component_update.js"></script>
 
 </body>
 

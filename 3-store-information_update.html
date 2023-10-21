@@ -26,6 +26,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -54,12 +55,12 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-laptop me-2"></i>倉庫管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="1-warehousemanagement_stock-in-index.html" class="dropdown-item">入庫單列表</a>
-                            <a href="1-warehousemanagement_stock-in.html" class="dropdown-item">入庫單</a>
-                            <a href="1-warehousemanagement_stock-out.html" class="dropdown-item">出庫申請單</a>
-                            <a href="1-warehousemanagement_stock-out-index.html" class="dropdown-item">出庫申請單列表</a>
-                            <a href="1-warehousemanagement_stockroom.html" class="dropdown-item">倉庫列表</a>
-                            <a href="1-warehousemanagement_parts.html" class="dropdown-item">零件資料</a>
+                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
+                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
+                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
+                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
+                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
+                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
                         </div>
                     </div>
 
@@ -68,7 +69,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="2-manual-management_index.html" class="dropdown-item">零件手冊查詢</a>
+                            <a href="manualList.html" class="dropdown-item">零件手冊查詢</a>
                             <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
                             <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
                         </div>
@@ -80,7 +81,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>門市管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="3-store-information_index.html" class="dropdown-item">門市列表</a>
+                            <a href="storeList.html" class="dropdown-item">門市列表</a>
                             <a href="3-store-information_create.html" class="dropdown-item">門市資料新增</a>
                             <a href="3-store-information_update.html" class="dropdown-item">門市資料修改</a>
                         </div>
@@ -94,9 +95,9 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
                             <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
-                            <a href="4-order_refund_index.html" class="dropdown-item">退貨單列表</a>
-                            <a href="4-order_refund_page.html" class="dropdown-item">退貨單</a>
-                            <a href="4-order_searchparts.html" class="dropdown-item">搜尋零件</a>
+                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
+                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
+                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
                             <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
                         </div>
                     </div>
@@ -106,7 +107,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="5-partsmanagement_index.html" class="dropdown-item">零件定義列表</a>
+                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
                             <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
                         </div>
                     </div>
@@ -117,7 +118,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件採購管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="6-parts-order_index.html" class="dropdown-item">零件採購列表</a>
+                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
                             <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
                         </div>
                     </div>
@@ -127,8 +128,8 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-table me-2"></i>盤點管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="7-inventory_index.html" class="dropdown-item">盤點列表</a>
-                            <a href="7-inventory_create.html" class="dropdown-item">盤點資料</a>
+                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
+                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
                         </div>
                     </div>
 
@@ -190,15 +191,15 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
                                 style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -214,7 +215,7 @@
 
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="3-store-information_index.html">門市資料</a></li>
+                            <li class="breadcrumb-item"><a href="storeList.html">門市資料</a></li>
                             <li class="breadcrumb-item active" aria-current="page">門市修改</li>
                         </ol>
                     </nav>
@@ -222,21 +223,23 @@
 
                     <div class="block-first mt-5">
                         <h4>門市資料</h4>
-                        <form class="needs-validation">
+                        <form id="uploadForm" class="needs-validation" novalidate>
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="shop-storeName" class="form-label">*門市名稱</label>
-                                    <input type="text" class="form-control" id="shop-storeName" name="storeName">
+                                    <input type="text" class="form-control" id="shop-storeName" name="storeName"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-storeManager" class="form-label">*店長</label>
-                                    <input type="text" class="form-control" id="shop-storeManager" name="storeManager">
+                                    <input type="text" class="form-control" id="shop-storeManager" name="storeManager"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-Type" class="form-label">*門市類型</label>
-                                    <select class="form-select" id="shop-Type" name="storeType">
+                                    <select class="form-select" id="shop-Type" name="storeType" required>
                                         <option value="1">總部</option>
                                         <option value="2">分公司</option>
                                         <option value="3">加盟店</option>
@@ -246,28 +249,29 @@
 
                                 <div class="col-sm-6">
                                     <label for="shop-ContactPerson" class="form-label">*聯絡人</label>
-                                    <input type="text" class="form-control" id="shop-ContactPerson"
-                                        name="contactPerson">
+                                    <input type="text" class="form-control" id="shop-ContactPerson" name="contactPerson"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-phoneNumber" class="form-label">*電話</label>
-                                    <input type="tel" class="form-control" id="shop-phoneNumber" name="phoneNumber">
+                                    <input type="tel" class="form-control" id="shop-phoneNumber" name="phoneNumber"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-FaxNumber" class="form-label">*傳真</label>
-                                    <input type="text" class="form-control" id="shop-FaxNumber" name="fax">
+                                    <input type="text" class="form-control" id="shop-FaxNumber" name="fax" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-TaxNumber" class="form-label">*統一編號</label>
-                                    <input type="text" class="form-control" id="shop-TaxNumber" name="taxId">
+                                    <input type="text" class="form-control" id="shop-TaxNumber" name="taxId" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-status" class="form-label">*狀態</label>
-                                    <select class="form-select" id="shop-status" name="status">
+                                    <select class="form-select" id="shop-status" name="status" required>
                                         <option value="1">正常</option>
                                         <option value="2">停業</option>
                                     </select>
@@ -275,12 +279,12 @@
 
                                 <div class="col-sm-6">
                                     <label for="shop-address" class="form-label">*住址</label>
-                                    <input type="text" class="form-control" id="shop-address" name="address">
+                                    <input type="text" class="form-control" id="shop-address" name="address" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="shop-order" class="form-label">*店號</label>
-                                    <input type="text" class="form-control" id="shop-order" name="storeOrder">
+                                    <input type="text" class="form-control" id="shop-order" name="storeOrder" required>
                                 </div>
 
                             </div>
@@ -328,6 +332,7 @@
     <!--  Boostrap JavaScript Libraries -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
@@ -336,168 +341,8 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/Store/Store_update.js"></script>
 
-    <script>
-        // 取得詳細資料
-        $(document).ready(function () {
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const partId = urlParams.get('id');
-            const dataId = { id: partId };
-            const IdPost = JSON.stringify(dataId);
-
-
-            // 从localStorage中获取session_id和chsm
-            // 解析JSON字符串为JavaScript对象
-            const jsonStringFromLocalStorage = localStorage.getItem("userData");
-            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-            const user_session_id = gertuserData.sessionId
-
-
-            // chsm = session_id+action+'HBAdminStoreApi'
-            // 组装所需数据
-            var action = 'getStoreDetail'
-            var chsmtoGetManualDetail = user_session_id + action + 'HBAdminStoreApi';
-            var chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
-
-            // 发送POST请求
-            $.ajax({
-                type: 'POST',
-                url: 'https://88bakery.tw/HBAdmin/index.php?/api/store',
-                data: {
-                    action: action,
-                    session_id: user_session_id,
-                    chsm: chsm,
-                    data: IdPost
-                },
-                success: function (responseData) {
-                    console.log(responseData);
-                    if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-                        const shopData = responseData.returnData[0];
-                        console.log(shopData.storeName, shopData.storeManager, shopData.storeType);
-                        $('#shop-storeName').val(shopData.storeName);
-                        $('#shop-storeManager').val(shopData.storeManager);
-                        $('#shop-Type').val(shopData.storeType);
-
-                        $('#shop-ContactPerson').val(shopData.contactPerson);
-                        $('#shop-phoneNumber').val(shopData.phoneNumber);
-                        $('#shop-FaxNumber').val(shopData.fax);
-                        $('#shop-TaxNumber').val(shopData.taxId);
-
-                        $('#shop-status').val(shopData.status);
-                        $('#shop-address').val(shopData.address);
-                        $('#shop-order').val(shopData.storeOrder);
-
-
-                        $('#BuildTime').val(shopData.createTime);
-                        $('#EditTime').val(shopData.updateTime);
-                        $('#EditAccount').val(shopData.updateOperator);
-
-                        var storeTypeValue = shopData.storeType;
-                        var shopTypeSelect = $('#shop-Type');
-                        shopTypeSelect.val(storeTypeValue);
-
-                        // 填充完毕后隐藏加载中的spinner
-                        $('#spinner').hide();
-                    } else {
-                        showWarningContentNotification()
-                        var listPageUrl = '3-store-information_index.html';
-                        window.location.href = listPageUrl;
-                    }
-                },
-                error: function (error) {
-                    showErrorNotification()
-
-                }
-            });
-        });
-
-        // 上傳POST
-        $(document).ready(function () {
-            var formData = new FormData(); // 在外部定义 formData
-            $('#updateButton').click(function () {
-
-                const urlParams = new URLSearchParams(window.location.search);
-                const partId = urlParams.get('id');
-
-                // 构建更新数据对象
-
-                //取值
-                var getstoreName = $('#shop-storeName').val();
-                var getstoreManager = $('#shop-storeManager').val();
-                var getstoreType = $('#shop-Type').val();
-                var getcontactPerson = $('#shop-ContactPerson').val();
-                var getphoneNumber = $('#shop-phoneNumber').val();
-                var getfax = $('#shop-FaxNumber').val();
-
-                var getfax = $('#shop-TaxNumber').val();
-                var gettaxId = $('#shop-TaxNumber').val();
-                var getstatus = $('#shop-status').val();
-                var getaddress = $('#shop-address').val();
-                var getstoreOrder = $('#shop-order').val();
-
-                var updateData = {
-                    "id": JSON.stringify(partId),
-                    "storeName": getstoreName,
-                    "storeManager": getstoreManager,
-                    'storeType': getstoreType,
-                    "contactPerson": getcontactPerson,
-                    "phoneNumber": getphoneNumber,
-                    "fax": getfax,
-                    "taxId": gettaxId,
-                    'status': getstatus,
-                    "address": getaddress,
-                    "storeOrder": getstoreOrder
-                };
-
-                // 将updateData转换成JSON字符串
-                var updateDataJSON = JSON.stringify(updateData);
-
-
-                // 从localStorage中获取session_id和chsm
-                // 解析JSON字符串为JavaScript对象
-                const jsonStringFromLocalStorage = localStorage.getItem("userData");
-                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-                const user_session_id = gertuserData.sessionId
-
-                // 组装发送文件所需数据
-                // chsm = session_id+action+'HBAdminStoreApi'
-                var action = 'updateStoreDetail';
-                var chsmtoPostFile = user_session_id + action + 'HBAdminStoreApi';
-                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-                // 设置其他formData字段
-                formData.set('action', action);
-                formData.set('session_id', user_session_id);
-                formData.set('chsm', chsm);
-                formData.set('data', JSON.stringify(updateDataJSON));
-
-                console.log(formData);
-
-                // 发送文件上传请求
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/store',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-
-                        console.log(response);
-                        showSuccessFileNotification()
-
-                        var newPageUrl = '3-store-information_index.html';
-                        window.location.href = newPageUrl;
-                    },
-                    error: function (error) {
-                        showErrorFileNotification()
-
-                    }
-                });
-
-            });
-        });
-    </script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script src="js/Login/Authlogin.js"></script>
 </head>
 
 <body>
@@ -54,12 +55,12 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-laptop me-2"></i>倉庫管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="1-warehousemanagement_stock-in-index.html" class="dropdown-item">入庫單列表</a>
-                            <a href="1-warehousemanagement_stock-in.html" class="dropdown-item">入庫單</a>
-                            <a href="1-warehousemanagement_stock-out.html" class="dropdown-item">出庫申請單</a>
-                            <a href="1-warehousemanagement_stock-out-index.html" class="dropdown-item">出庫申請單列表</a>
-                            <a href="1-warehousemanagement_stockroom.html" class="dropdown-item">倉庫列表</a>
-                            <a href="1-warehousemanagement_parts.html" class="dropdown-item">零件資料</a>
+                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
+                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
+                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
+                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
+                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
+                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
                         </div>
                     </div>
 
@@ -68,7 +69,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="2-manual-management_index.html" class="dropdown-item">零件手冊查詢</a>
+                            <a href="manualList.html" class="dropdown-item">零件手冊查詢</a>
                             <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
                             <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
                         </div>
@@ -80,7 +81,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fa fa-laptop me-2"></i>門市管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="3-store-information_index.html" class="dropdown-item">門市列表</a>
+                            <a href="storeList.html" class="dropdown-item">門市列表</a>
                             <a href="3-store-information_create.html" class="dropdown-item">門市資料新增</a>
                             <a href="3-store-information_update.html" class="dropdown-item">門市資料修改</a>
                         </div>
@@ -94,9 +95,9 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
                             <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
-                            <a href="4-order_refund_index.html" class="dropdown-item">退貨單列表</a>
-                            <a href="4-order_refund_page.html" class="dropdown-item">退貨單</a>
-                            <a href="4-order_searchparts.html" class="dropdown-item">搜尋零件</a>
+                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
+                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
+                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
                             <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
                         </div>
                     </div>
@@ -106,7 +107,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="5-partsmanagement_index.html" class="dropdown-item">零件定義列表</a>
+                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
                             <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
                         </div>
                     </div>
@@ -117,7 +118,7 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="far fa-folder me-2"></i>零件採購管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="6-parts-order_index.html" class="dropdown-item">零件採購列表</a>
+                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
                             <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
                         </div>
                     </div>
@@ -127,8 +128,8 @@
                         <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                 class="fas fa-table me-2"></i>盤點管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="7-inventory_index.html" class="dropdown-item">盤點列表</a>
-                            <a href="7-inventory_create.html" class="dropdown-item">盤點資料</a>
+                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
+                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
                         </div>
                     </div>
 
@@ -190,15 +191,15 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
                                 style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -213,7 +214,7 @@
                     <h3>品牌修改</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="brand_index.html">品牌管理</a></li>
+                            <li class="breadcrumb-item"><a href="brandList.html">品牌管理</a></li>
                             <li class="breadcrumb-item active" aria-current="page">品牌資料</li>
                         </ol>
                     </nav>
@@ -291,128 +292,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <script>
-        // 取得詳細資料
-        $(document).ready(function () {
-
-            var updateFormData = new FormData(); // 在外部定義更新資料
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const partId = urlParams.get('id');
-            const dataId = { id: partId };
-            const IdPost = JSON.stringify(dataId);
-
-            // 从localStorage中获取session_id和chsm
-            // 解析JSON字符串为JavaScript对象
-            const jsonStringFromLocalStorage = localStorage.getItem("userData");
-            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-            const user_session_id = gertuserData.sessionId
-
-
-            // chsm = session_id+action+'HBAdminBrandApi'
-            // 组装所需数据
-            var action = 'getBrandDetail'
-            var chsmtoGetManualDetail = user_session_id + action + 'HBAdminBrandApi';
-            var chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
-
-
-            // 发送POST请求
-            $.ajax({
-                type: 'POST',
-                url: 'https://88bakery.tw/HBAdmin/index.php?/api/brand',
-                data: {
-                    action: action,
-                    session_id: user_session_id,
-                    chsm: chsm,
-                    data: IdPost
-                },
-                success: function (responseData) {
-                    if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-                        const brandData = responseData.returnData[0];
-                        $('#brand-Name').val(brandData.brandName);
-                        $('#brandTextarea1').val(brandData.remark);
-                        $('#brand-Order').val(brandData.brandOrder);
-
-                        $('#BuildTime').val(brandData.createTime);
-                        $('#EditTime').val(brandData.updateTime);
-                        $('#EditAccount').val(brandData.updateOperator);
-
-                        // 填充完毕后隐藏加载中的spinner
-                        $('#spinner').hide();
-                    } else {
-                        showWarningContentNotification()
-                    }
-                },
-                error: function (error) {
-                    showErrorNotification()
-                }
-            });
-        });
-
-        // 上傳POST
-        $(document).ready(function () {
-            var formData = new FormData(); // 在外部定义 formData
-            $('#saveButton').click(function () {
-                const urlParams = new URLSearchParams(window.location.search);
-                const partId = urlParams.get('id');
-                const dataId = { id: partId };
-                const IdPost = JSON.stringify(dataId);
-
-                //取值
-                var getbrandName = $('#brand-Name').val();
-                var getbrandOrder = $('#brand-Order').val();
-                var getremark = $('#brandTextarea').val();
-
-                var updateData = {
-                    "id": partId,
-                    "brandName": getbrandName,
-                    "brandOrder": getbrandOrder,
-                    "remark": getremark
-                }
-
-                // 从localStorage中获取session_id和chsm
-                // 解析JSON字符串为JavaScript对象
-                const jsonStringFromLocalStorage = localStorage.getItem("userData");
-                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-                const user_session_id = gertuserData.sessionId
-
-                // 组装发送文件所需数据
-                // chsm = session_id+action+'HBAdminBrandApi'
-                var action = 'updateBrandDetail';
-                var chsmtoPostFile = user_session_id + action + 'HBAdminBrandApi';
-                var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-                // 设置其他formData字段
-                formData.set('action', action);
-                formData.set('session_id', user_session_id);
-                formData.set('chsm', chsm);
-                formData.set('data', JSON.stringify(updateData));
-
-
-                // 发送文件上传请求
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/brand', // 替换为实际的上传端点 URL
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-
-                        console.log(response);
-                        showSuccessFileNotification()
-                        localStorage.removeItem('selectedBrandData');
-                        var newPageUrl = 'brand_index.html';
-                        window.location.href = newPageUrl;
-                    },
-                    error: function (error) {
-                        showErrorFileNotification()
-                    }
-                });
-
-            });
-        });
-    </script>
+    <script src="js/Brand/brand_update.js"></script>
 </body>
 
 </html>
