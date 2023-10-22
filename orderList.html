@@ -105,7 +105,7 @@
                         </nav>
 
                         <!-- 進入搜尋零件 -->
-                        <div class="py-1 mb-5">
+                        <div class="my-4">
                             <button type="button" class="btn btn btn-primary me-2">
                                 <a href="searchComponent.html" class="remove-link-decoration text-white">搜尋零件</a>
                             </button>
@@ -120,9 +120,18 @@
                                 <p>結束日期</p>
                                 <input type="date" class="form-control" id="endDate">
                             </div>
+                        </div>
+
+
+                        <div class="row mb-4">
                             <div class="col-sm-3">
                                 <label for="status" class="form-label">單據狀態</label>
-                                <input type="text" class="form-control" id="status" required>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="1">全部</option>
+                                    <option value="2">進行中</option>
+                                    <option value="3">可出庫</option>
+                                    <option value="4">訂單完成</option>
+                                </select>
                             </div>
                             <div class="col-sm-3 pt-4">
                                 <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
@@ -200,7 +209,7 @@
 
     <script>
         // 列表取得
-        $(document).ready(function () {
+        function fetchAccountList() {
             // 从localStorage中获取session_id和chsm
             // 解析JSON字符串为JavaScript对象
             const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -229,7 +238,7 @@
                     showErrorNotification();
                 },
             });
-        });
+        }
 
         // 表格填充
         function updatePageWithData(responseData) {
@@ -244,17 +253,10 @@
 
                 var modifyButtonHtml = '<a href="orderDetail.html" data-orderno="' + data.orderNo + '" data-id="' + data.id + '" data-createTime="' + data.createTime + '" data-createOperator="' + data.createOperator + '" data-storeName="' + data.storeName + '" data-brandName="' + data.brandName + '" data-remark="' + data.remark + '" data-amount="' + data.amount + '" data-statusName="' + data.statusName + '" data-updatetime="' + data.updateTime + '" data-updateoperator="' + data.updateOperator + '" class="btn btn-primary text-white modify-button">修改</a>';
 
-                var deleteButtonHtml =
-                    '<button class="btn btn-danger delete-button" data-id="' +
-                    data.id +
-                    '" data-filename="' +
-                    data.fileName +
-                    '">刪除</button>';
-                var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
                 dataTable.row
                     .add([
-                        buttonsHtml,
+                        modifyButtonHtml,
                         data.orderNo,
                         data.createTime,
                         data.createOperator,
@@ -402,6 +404,99 @@
 
 
         // 日期、狀態取得
+        // {"status":1,"stime":"2023-09-13","etime":"2023-10-20"}
+
+
+        // 監聽欄位變動
+        $(document).ready(function () {
+            var sdateValue, edateValue, statusValue;
+
+            // 監聽起始日期
+            $("#startDate").on("change", function () {
+                sdateValue = $(this).val();
+            });
+
+            // 監聽結束日期
+            $("#endDate").on("change", function () {
+                edateValue = $(this).val();
+            });
+
+            // 監聽狀態
+            $('#status').on('change', function () {
+                statusValue = $(this).val();
+            });
+
+
+            // 点击搜索按钮时触发API请求
+            $('#searchBtn').on('click', function () {
+                // 创建筛选数据对象
+                var filterData = {};
+
+                if (sdateValue) {
+                    filterData.stime = sdateValue;
+                }
+
+                if (edateValue) {
+                    filterData.etime = edateValue;
+                }
+
+                if (statusValue) {
+                    filterData.status = statusValue;
+                }
+
+                sendApiRequest(filterData);
+            });
+
+            function sendApiRequest(filterData) {
+
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId;
+
+                // console.log(user_session_id);
+                // chsm = session_id+action+'HBAdminOrderApi'
+                // 組裝菜單所需資料
+                var action = "getOrderList";
+                var chsmtoGetManualList = user_session_id + action + 'HBAdminOrderApi';
+                var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+                var filterDataJSON = JSON.stringify(filterData);
+
+                var postData = filterDataJSON;
+
+                $("#orderIndex").DataTable();
+                // 发送API请求以获取数据
+                $.ajax({
+                    type: "POST",
+                    url: "https://88bakery.tw/HBAdmin/index.php?/api/order",
+                    data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+                    success: function (responseData) {
+                        // 处理成功响应
+                        updatePageWithData(responseData);
+                        clearDateFields();
+                    },
+                    error: function (error) {
+                        showErrorNotification();
+                    },
+                });
+            }
+        });
+
+        // 加载时调用在页面 fetchAccountList
+        $(document).ready(function () {
+            fetchAccountList();
+        });
+
+        // 或者在点击按钮时调用 fetchAccountList
+        $('#allBtn').on('click', function () {
+            fetchAccountList();
+        });
+
+        function clearDateFields() {
+            $("#startDate").val("");
+            $("#endDate").val("");
+        }
+
+
     </script>
 </body>
 
