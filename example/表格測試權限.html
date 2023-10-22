@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>權限列表</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
+
+    <!-- DataTable Stylesheet -->
+    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container-fluid position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary">進銷存後台</h3>
+                </a>
+                <div class="navbar-nav w-100" id="dynamicMenu">
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <div class="navbar-nav align-items-center ms-auto">
+
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fa fa-bell me-lg-2"></i>
+                        </a>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
+                        </a>
+                        <div
+                            class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Blank Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row bg-light rounded p-3 mx-0">
+                    <div class="">
+                        <h3>角色權限</h3>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">帳號管理 / 角色權限</li>
+                            </ol>
+                        </nav>
+
+                        <div class="block-first">
+                            <div class="row g-3">
+                                <div class="col-sm-4">
+                                    <label for="file-Name" class="form-label">*角色名稱</label>
+                                    <input type="text" class="form-control" id="file-Name" placeholder="" value=""
+                                        required="">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="parts-order-ShopName" class="form-label">*可用門市</label>
+                                    <select class="form-select" id="parts-order-ShopName" required="">
+                                        <option>請選擇</option>
+                                        <option value="0">所有門市</option>
+                                        <option value="1">限所屬門市</option>
+                                    </select>
+                                </div>
+
+                                <!-- 可以複選 -->
+                                <div class="col-sm-4 pt-sm-4">
+                                    <div class="custom-multi-select dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button"
+                                            id="customMultiSelectDropdown" data-bs-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            可用品牌（複選）
+                                        </button>
+                                        <ul class="dropdown-menu" style="padding: 5px;"
+                                            aria-labelledby="customMultiSelectDropdown">
+                                            <li class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="customOption1">
+                                                <label class="form-check-label" for="customOption1">
+                                                    Option 1
+                                                </label>
+                                            </li>
+                                            <li class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="customOption2">
+                                                <label class="form-check-label" for="customOption2">
+                                                    Option 2
+                                                </label>
+                                            </li>
+                                            <li class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="customOption3">
+                                                <label class="form-check-label" for="customOption3">
+                                                    Option 3
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-3 mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">描述</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        style="width: 300px;"></textarea>
+                                </div>
+                            </div>
+
+                            <nav>
+                                <div class=" nav nav-tabs" id="tableTabs" role="tablist">
+                                    <a class="nav-link active" id="tab-1" data-bs-toggle="tab" href="#table-1"
+                                        role="tab" aria-controls="table-1" aria-selected="true">帳號管理</a>
+
+
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="tableTabContent">
+                                <div class="tab-pane fade show active" id="table-1" role="tabpanel"
+                                    aria-labelledby="tab-1">
+                                    <div class="tableList">
+                                        <div class="table-responsive">
+                                            <!-- 帳號管理 -->
+                                            <h4 class="mt-5">帳號管理</h4>
+                                            <table id="authorize-management-1" class="table">
+                                                <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 这里没有数据，将在 JavaScript 中填充 -->
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="roleOrder" class="form-label">排序</label>
+                                    <input type="text" class="form-control" id="roleOrder">
+                                </div>
+                            </div>
+
+                            <h4>系統資料</h4>
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="BuildTime" class="form-label">建立時間</label>
+                                    <input type="text" class="form-control" id="BuildTime">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="EditTime" class="form-label">修改時間</label>
+                                    <input type="text" class="form-control" id="EditTime">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="EditAccount" class="form-label">修改帳號</label>
+                                    <input type="text" class="form-control" id="EditAccount" placeholder="" value="">
+                                </div>
+                                <div class="text-center w-100 pt-3">
+                                    <button id="saveButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">儲存</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!--  Boostrap JavaScript Libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
+
+    <!-- Datatable Libraries -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <!-- <script src="js/dataTables.bootstrap5.js"></script> -->
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script src="js/Public/munu.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Data1
+            var columnsData1 = [
+                { data: 'empty', title: '#' },
+                { data: 'read', title: '查看' },
+                { data: 'insert', title: '編輯' },
+                { data: 'update', title: '修改' },
+                { data: 'delete', title: '刪除' }
+            ];
+
+            var columns1 = [];
+
+            columnsData1.forEach(function (column) {
+                columns1.push({ data: column.data, title: column.title });
+            });
+
+            var table1Data = [
+                {
+                    empty: '帳號管理',
+                    id: 31,
+                    read: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="read" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="insert" />',
+                    update: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="update" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="delete" />'
+                },
+                {
+                    empty: '帳號列表',
+                    id: 32,
+                    read: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="read" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="insert" />',
+                    update: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="update" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="delete" />'
+                },
+                {
+                    empty: '帳號資料',
+                    id: 33,
+                    read: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="read" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="insert" />',
+                    update: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="update" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="delete" />'
+                },
+                {
+                    empty: '角色列表',
+                    id: 34,
+                    read: '<input type="checkbox" name="rowCheckbox" data-id="34" data-column="read" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" data-id="34" data-column="insert" />',
+                    update: '<input type="checkbox" name="rowCheckbox" data-id="34" data-column="update" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" data-id="34" data-column="delete" />'
+                },
+                {
+                    empty: '角色權限',
+                    id: 35,
+                    read: '<input type="checkbox" name="rowCheckbox" data-id="35" data-column="read" />',
+                    insert: '<input type="checkbox" name="rowCheckbox" data-id="35" data-column="insert" />',
+                    update: '<input type="checkbox" name="rowCheckbox" data-id="35" data-column="update" />',
+                    delete: '<input type="checkbox" name="rowCheckbox" data-id="35" data-column="delete" />'
+                }
+            ];
+
+
+            // 初始
+            var table1 = $('#authorize-management-1').DataTable({
+                data: table1Data,
+                columns: columns1,
+                paging: false,
+                searching: false,
+                scrollX: false,
+                info: false,
+            });
+
+        });
+
+
+
+
+        // 選取checkbox 整理打包
+        $(document).ready(function () {
+            var selectedData = {};
+
+            $('input[name="rowCheckbox"]').on('change', function () {
+                var checkbox = $(this);
+                var id = checkbox.closest('tr').find('input[name="rowCheckbox"]').data('id');
+                var column = checkbox.data('column');
+
+                if (typeof id !== 'undefined' && typeof column !== 'undefined') {
+                    if (checkbox.is(':checked')) {
+                        // 复选框被选中
+                        if (!selectedData[id]) {
+                            selectedData[id] = [];
+                        }
+                        selectedData[id].push(column);
+                    } else {
+                        // 复选框被取消选中
+                        if (selectedData[id]) {
+                            var columnIndex = selectedData[id].indexOf(column);
+                            if (columnIndex !== -1) {
+                                selectedData[id].splice(columnIndex, 1);
+                            }
+                        }
+                    }
+
+                    // 将选中数据组装成指定的格式
+                    var formattedData = {};
+                    for (var id in selectedData) {
+                        if (selectedData.hasOwnProperty(id)) {
+                            formattedData[id] = selectedData[id];
+                        }
+                    }
+
+                    // 使用 jQuery 将对象转换为 JSON 字符串
+                    var jsonData = JSON.stringify(formattedData);
+                    console.log(jsonData);
+                    // 在这里可以将 jsonData 发送到后端
+                }
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>简单登录示例</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <link rel="stylesheet" href="css/toastr.min.css">
+
+</head>
+
+<body>
+    <h1>POST API请求-手冊列表https://88bakery.tw/HBAdmin/index.php?/api/manual</h1>
+    <button id="postButton">点击发送POST请求</button>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>表格示例</title>
+    </head>
+
+    <body>
+        <h1>项目列表</h1>
+
+        <table border="1">
+            <tr>
+                <th>选择</th>
+                <th>项目1</th>
+                <th>项目2</th>
+                <th>项目3</th>
+                <th>项目4</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>子项1</td>
+                <td>子项2</td>
+                <td>子项3</td>
+                <td>子项4</td>
+            </tr>
+        </table>
+
+    </body>
+
+    </html>
+
+
+    <!-- 手冊上傳資料 -->
+    <h1>POST API 手冊詳細資料</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="file">选择文件：</label>
+        <input type="file" name="file" id="file"><br>
+
+        <button type="button" id="uploadButton">上传文件</button>
+    </form>
+    <div id="uploadMessage"></div>
+
+    <!-- 刪除 -->
+    <button id="deleteButton">刪除</button>
+    <div id="deleteMessage"></div>
+
+    <!-- 修改 -->
+    <form id="updateForm" enctype="multipart/form-data">
+        <label for="updateFile">选择文件：</label>
+        <input type="file" name="updateFile" id="updateFile"><br>
+        <button type="button" id="updateButton">上传更新文件</button>
+    </form>
+    <div id="updateMessage"></div>
+
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
+    <!-- 手冊列表 -->
+    <script>
+        $(document).ready(function () {
+            $('#postButton').click(function () {
+                // 从localStorage中获取session_id和chsm
+                // 解析JSON字符串为JavaScript对象
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId
+
+                console.log(user_session_id);
+
+                // console.log(user_session_id);
+                // chsm = session_id+action+'HBAdminAuthorizeApi'
+                // 組裝菜單所需資料
+                var action = 'getAuthorizeDetail'
+                var chsmtoGetManualList = user_session_id + action + 'HBAdminAuthorizeApi';
+                var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+                console.log(chsm);
+                // 发送POST请求到API
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/authorize',
+                    data: { session_id: user_session_id, action: action, chsm: chsm },
+                    success: function (response) {
+                        // 处理成功响应
+                        console.log('成功响应：', response);
+                        // 可以在这里执行其他操作
+
+
+                        // // 模拟从数据源获取的数据
+                        // var responseData = {
+                        //     returnCode: response.returnCode,
+                        //     returnMessage: response.returnMessage,
+                        //     returnDataTotalAmount: response.returnDataTotalAmount,
+                        //     returnData: response.returnData
+                        // };
+
+                        // // 获取表格元素
+                        // var table = $('table');
+
+                        // // 填充数据到表格
+                        // for (var i = 0; i < responseData.returnData.length; i++) {
+                        //     var data = responseData.returnData[i];
+
+                        //     // 创建新的表格行
+                        //     var row = $('<tr>');
+
+                        //     // 创建复选框单元格
+                        //     var checkboxCell = $('<td>').append($('<input>').attr('type', 'checkbox'));
+                        //     row.append(checkboxCell);
+
+                        //     // 创建其他数据单元格
+                        //     var idCell = $('<td>').text(data.id);
+                        //     var fileNameCell = $('<td>').text(data.fileName);
+                        //     var brandNameCell = $('<td>').text(data.brandName);
+                        //     var yearCell = $('<td>').text(data.year);
+
+                        //     row.append(idCell, fileNameCell, brandNameCell, yearCell);
+
+                        //     // 将行添加到表格
+                        //     table.append(row);
+
+                        //     // 绑定点击事件，存储选中项目的ID
+                        //     row.click(function () {
+                        //         selectedItemId = $(this).find('td:eq(1)').text(); // 获取第二列（ID列）的文本
+                        //         selectedFileName = $(this).find('td:eq(2)').text(); // 获取第三列（fileName列）的文本
+
+                        //         // 存储选中的ID和fileName到localStorage
+                        //         // 组合成 JSON 对象
+                        //         var selectedData = { "fileName": selectedFileName, "id": selectedItemId };
+
+                        //         // 将 JSON 对象转换为字符串
+                        //         var selectedDataString = JSON.stringify(selectedData);
+
+                        //         // 存储在 localStorage 中
+                        //         localStorage.setItem('selectedData', selectedDataString);
+
+                        //         // 从localStorage中获取session_id和chsm
+                        //         // 解析JSON字符串为JavaScript对象
+                        //         const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                        //         const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                        //         const user_session_id = gertuserData.sessionId
+
+                        //         // console.log(user_session_id);
+                        //         // chsm = session_id+action+'HBAdminManualApi'
+                        //         // 組裝菜單所需資料
+                        //         var action = 'getManualDetail'
+                        //         var chsmtoGetManualDetail = user_session_id + action + 'HBAdminManualApi';
+                        //         var chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
+                        //         var id = { "id": parseInt(selectedItemId) }
+
+                        //         // // 将 id 对象转换为 JSON 字符串
+                        //         // var currentDetailId = JSON.stringify(id);
+
+                        //         // // 将 JSON 字符串存储在本地存储中
+                        //         // localStorage.setItem('id', currentDetailId);
+                        //         // console.log(id);
+
+                        //         $.ajax({
+                        //             type: 'POST',
+                        //             url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual',
+                        //             data: { action: action, session_id: user_session_id, chsm: chsm, data: JSON.stringify(id) },
+                        //             success: function (response) {
+                        //                 console.log('成功响应：', response);
+                        //                 // 处理第二个API的响应
+                        //                 // window.location.href = "檔案上傳測試.html";
+                        //             },
+                        //             error: function (error) {
+                        //                 // 处理错误响应
+                        //                 console.error('错误响应：', error);
+                        //                 // 可以在这里执行错误处理逻辑
+                        //             }
+                        //         });
+                        //     });
+                        // }
+
+                    },
+                    error: function (error) {
+                        // 处理错误响应
+                        console.error('错误响应：', error);
+                        // 可以在这里执行错误处理逻辑
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <!-- 上傳 -->
+    <script>
+        $(document).ready(function () {
+            var formData = new FormData(); // 在外部定义 formData
+
+            $('#uploadButton').click(function () {
+                // 获取文件输入字段的值
+                var fileInput = $('#file')[0];
+
+                // 检查是否有选择文件
+                if (fileInput.files.length > 0) {
+                    for (var i = 0; i < fileInput.files.length; i++) {
+                        var file = fileInput.files[i];
+                        formData.append('manual[]', file, file.name);
+
+                        // 设置文件名作为数据字段
+                        formData.set('data', JSON.stringify({ "fileName": file.name }));
+                    }
+
+                    // 从localStorage中获取session_id和chsm
+                    // 解析JSON字符串为JavaScript对象
+                    const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                    const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                    const user_session_id = gertuserData.sessionId
+
+                    // 组装发送文件所需数据
+                    // chsm = session_id+action+'HBAdminManualApi'
+                    var action = 'insertManualDetail';
+                    var chsmtoPostFile = user_session_id + action + 'HBAdminManualApi';
+                    var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+                    // 设置其他formData字段
+                    formData.set('action', action);
+                    formData.set('session_id', user_session_id);
+                    formData.set('chsm', chsm);
+
+                    console.log(formData);
+
+                    // 发送文件上传请求
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual', // 替换为实际的上传端点 URL
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            // 文件上传成功后的操作
+                            $('#uploadMessage').text('文件上传成功！');
+                        },
+                        error: function (error) {
+                            // 文件上传失败后的操作
+                            $('#uploadMessage').text('文件上传失败：' + error.statusText);
+                        }
+                    });
+                } else {
+                    console.log('没有选择文件');
+                }
+            });
+        });
+    </script>
+
+    <!-- 修改 -->
+    <script>
+        $(document).ready(function () {
+            // 在外部定义 formData
+
+            // 创建用于刷新表格数据的函数
+            function refreshDataList() {
+                // 清空表格数据
+                $('table tbody').empty();
+
+                // 从localStorage中获取session_id和chsm
+                // 解析JSON字符串为JavaScript对象
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId
+
+                // 组装发送获取手册列表数据所需数据
+                var action = 'getManualList';
+                var chsmtoGetManualList = user_session_id + action + 'HBAdminManualApi';
+                var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+                // 发送获取手册列表数据的请求
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual',
+                    data: { session_id: user_session_id, action: action, chsm: chsm },
+                    success: function (response) {
+                        // 处理成功响应
+                        console.log('成功响应：', response);
+                        // 可以在这里执行其他操作
+
+                        // 模拟从数据源获取的数据
+                        var responseData = {
+                            returnCode: response.returnCode,
+                            returnMessage: response.returnMessage,
+                            returnDataTotalAmount: response.returnDataTotalAmount,
+                            returnData: response.returnData
+                        };
+
+                        // 获取表格元素
+                        var table = $('table');
+
+                        // 填充数据到表格
+                        for (var i = 0; i < responseData.returnData.length; i++) {
+                            var data = responseData.returnData[i];
+
+                            // 创建新的表格行
+                            var row = $('<tr>');
+
+                            // 创建复选框单元格
+                            var checkboxCell = $('<td>').append($('<input>').attr('type', 'checkbox'));
+                            row.append(checkboxCell);
+
+                            // 创建其他数据单元格
+                            var idCell = $('<td>').text(data.id);
+                            var fileNameCell = $('<td>').text(data.fileName);
+                            var brandNameCell = $('<td>').text(data.brandName);
+                            var yearCell = $('<td>').text(data.year);
+
+                            row.append(idCell, fileNameCell, brandNameCell, yearCell);
+
+                            // 将行添加到表格
+                            table.append(row);
+
+                            // 绑定点击事件，存储选中项目的ID
+                            row.click(function () {
+                                selectedItemId = $(this).find('td:eq(1)').text(); // 获取第二列（ID列）的文本
+                                selectedFileName = $(this).find('td:eq(2)').text(); // 获取第三列（fileName列）的文本
+
+                                // 存储选中的ID和fileName到localStorage
+                                // 组合成 JSON 对象
+                                var selectedData = { "fileName": selectedFileName, "id": selectedItemId };
+
+                                // 将 JSON 对象转换为字符串
+                                var selectedDataString = JSON.stringify(selectedData);
+
+                                // 存储在 localStorage 中
+                                localStorage.setItem('selectedData', selectedDataString);
+
+                                console.log('选中的项目ID：' + selectedItemId);
+                                console.log('选中的文件名：' + selectedFileName);
+
+                                // 从localStorage中获取session_id和chsm
+                                // 解析JSON字符串为JavaScript对象
+                                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                                const user_session_id = gertuserData.sessionId
+
+                                // console.log(user_session_id);
+                                // chsm = session_id+action+'HBAdminManualApi'
+                                // 組裝菜單所需資料
+                                var action = 'getManualDetail'
+                                var chsmtoGetManualDetail = user_session_id + action + 'HBAdminManualApi';
+                                var chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
+                                var id = { "id": parseInt(selectedItemId) }
+
+                                // 将 id 对象转换为 JSON 字符串
+                                var currentDetailId = JSON.stringify(id);
+
+                                // 将 JSON 字符串存储在本地存储中
+                                localStorage.setItem('id', currentDetailId);
+                                console.log(id);
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual',
+                                    data: { action: action, session_id: user_session_id, chsm: chsm, data: JSON.stringify(id) },
+                                    success: function (response) {
+                                        console.log('成功响应：', response);
+                                        // 处理第二个API的响应
+                                        // window.location.href = "檔案上傳測試.html";
+                                    },
+                                    error: function (error) {
+                                        // 处理错误响应
+                                        console.error('错误响应：', error);
+                                        // 可以在这里执行错误处理逻辑
+                                    }
+                                });
+                            });
+                        }
+
+                    },
+                    error: function (error) {
+                        // 处理错误响应
+                        console.error('错误响应：', error);
+                        // 可以在这里执行错误处理逻辑
+                    }
+                });
+            }
+            $('#updateButton').click(function () {
+                // 获取选中的文件
+                var updateFileInput = $('#updateFile')[0];
+
+                if (updateFileInput.files.length > 0) {
+                    var updateFile = updateFileInput.files[0];
+                    updateFormData.append('manual[]', updateFile, updateFile.name); // 添加文件
+
+                    // 获取文件名
+                    var selectedDataString = localStorage.getItem('selectedData');
+                    var selectedData = JSON.parse(selectedDataString);
+                    selectedData.fileName = updateFile.name; // 更新文件名
+                    localStorage.setItem('selectedData', JSON.stringify(selectedData)); // 存回本地存储
+
+                    // 获取会话 ID
+                    const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                    const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                    const user_session_id = gertuserData.sessionId
+
+                    // 组装上传更新文件的数据
+                    var action = 'updateManualDetail';
+                    var chsmtoUpdateFile = user_session_id + action + 'HBAdminManualApi';
+                    var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
+
+                    // 添加文件名字段
+                    updateFormData.set('action', action);
+                    updateFormData.set('session_id', user_session_id);
+                    updateFormData.set('chsm', chsm);
+                    updateFormData.set('data', JSON.stringify(selectedData));
+
+                    // 发送上传更新文件的请求
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual', // 替换为实际的上传端点 URL
+                        data: updateFormData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            // 文件上传成功后的操作
+                            $('#updateMessage').text('文件更新成功！');
+                            // 更新表格数据
+                            refreshDataList();
+                        },
+                        error: function (error) {
+                            // 文件上传失败后的操作
+                            $('#updateMessage').text('文件更新失败：' + error.statusText);
+                        }
+                    });
+                } else {
+                    console.log('没有选择文件');
+                }
+            });
+        });
+    </script>
+
+    <!-- 下載 -->
+
+
+    <!-- 刪除 -->
+    <script>
+        $(document).ready(function () {
+            var formData = new FormData(); // 在外部定义 formData
+            // 删除按钮点击事件
+            $("#deleteButton").click(function () {
+                // 获取本地存储中的ID
+                // 从localStorage中获取session_id和chsm
+                // 解析JSON字符串为JavaScript对象
+                const jsonStringFromLocalStorage = localStorage.getItem("userData");
+                const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+                const user_session_id = gertuserData.sessionId
+
+                // 组装发送文件所需数据
+                // chsm = session_id+action+'HBAdminManualApi'
+                var action = 'deleteManualDetail';
+                var chsmtoDeleteFile = user_session_id + action + 'HBAdminManualApi';
+                var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+
+                // 取得localstorage資料
+                // 将 JSON 字符串解析为 JSON 对象
+                var selectedDataString = localStorage.getItem('selectedData');
+                // var selectedData = JSON.parse(selectedDataString);
+
+                // 设置其他formData字段
+                formData.set('action', action);
+                formData.set('session_id', user_session_id);
+                formData.set('chsm', chsm);
+                formData.set('data', selectedDataString)
+
+
+                // 发送删除请求
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#deleteMessage').text('文件刪除！');
+                        // 处理成功响应
+                        // 更新表格数据
+                    },
+                    error: function (error) {
+                        // 处理错误响应
+                    }
+                });
+            });
+        })
+
+    </script>
+</body>
+
+</html>

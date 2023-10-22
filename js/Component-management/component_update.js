@@ -53,6 +53,7 @@ $(document).ready(function () {
 				$("#EditTime").val(componentData.updateTime);
 				$("#EditAccount").val(componentData.getupdateOperator);
 
+				displayFileNameInInput(componentData.file);
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
@@ -64,6 +65,24 @@ $(document).ready(function () {
 		},
 	});
 });
+
+// 顯示已上傳檔案
+function displayFileNameInInput(fileName) {
+	const fileInput = document.getElementById("fileInput");
+
+	if (fileName) {
+		const dataTransfer = new DataTransfer();
+
+		const blob = new Blob([""], { type: "application/octet-stream" });
+		const file = new File([blob], fileName);
+
+		dataTransfer.items.add(file);
+
+		const fileList = dataTransfer.files;
+
+		fileInput.files = fileList;
+	}
+}
 
 // 上傳POST
 $(document).ready(function () {

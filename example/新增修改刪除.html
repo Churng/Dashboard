@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>简单登录示例</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+</head>
+<!-- 修改 -->
+<!-- <form id="updateForm">
+    <h1>修改</h1>
+    <button type="button" id="submitButton">提交</button>
+</form>
+
+<div id="message"></div> -->
+
+<!-- 刪除 -->
+<h1>刪除</h1>
+<button type="button" id="submitButton">刪除</button>
+<!-- 修改Manual -->
+<!-- <script>
+    $(document).ready(function () {
+        $('#submitButton').click(function () {
+            // 发送 POST 请求到 API 获取文件数据
+
+            // 从localStorage中获取session_id和chsm
+            // 解析JSON字符串为JavaScript对象
+            const jsonStringFromLocalStorage = localStorage.getItem("userData");
+            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+            const user_session_id = gertuserData.sessionId
+            console.log(user_session_id);
+            // 組裝傳送文件所需資料
+            // chsm = session_id+action+'HBAdminManualApi'
+
+            var action = 'updateManualDetail'
+            var fileName = '123456.png'
+            var chsmtoUpdateManual = user_session_id + action + 'HBAdminManualApi';
+            var chsm = CryptoJS.MD5(chsmtoUpdateManual).toString().toLowerCase();
+            console.log(chsm);
+
+            // 创建要发送的数据对象
+            var updataManualData = {
+                action: action,
+                session_id: user_session_id,
+                chsm: chsm,
+                data: { "fileName": "test567", "id": "7" }
+            };
+
+
+            $.ajax({
+                type: 'POST',
+                url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual/updateManualDetail', // 替换为实际的 POST API 端点
+                data: updataManualData,
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    // 处理错误情况
+                    console.error('失败：', error);
+                }
+            });
+        });
+    });
+</script> -->
+
+<!-- 刪除 -->
+<script>
+    $(document).ready(function () {
+        $('#submitButton').click(function () {
+            // 发送 POST 请求到 API 获取文件数据
+
+            // 从localStorage中获取session_id和chsm
+            // 解析JSON字符串为JavaScript对象
+            const jsonStringFromLocalStorage = localStorage.getItem("userData");
+            const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+            const user_session_id = gertuserData.sessionId
+            console.log(user_session_id);
+
+            // 組裝傳送文件所需資料
+            // chsm = session_id+action+'HBAdminManualApi'
+            var action = 'deleteManualDetail'
+            var chsmtoDeleteManual = user_session_id + action + 'HBAdminManualApi';
+            var chsm = CryptoJS.MD5(chsmtoDeleteManual).toString().toLowerCase();
+            console.log(chsm);
+
+            // 创建要发送的数据对象
+            var updataManualData = {
+                action: action,
+                session_id: user_session_id,
+                chsm: chsm,
+                data: { "fileName": "test567", "id": "7" }
+            };
+
+
+            $.ajax({
+                type: 'POST',
+                url: 'https://88bakery.tw/HBAdmin/index.php?/api/manual/deleteManualDetail', // 替换为实际的 POST API 端点
+                data: updataManualData,
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    // 处理错误情况
+                    console.error('失败：', error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+
+</html>

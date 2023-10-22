@@ -42,6 +42,8 @@ $(document).ready(function () {
 				if (manualData.fileName == "") {
 					showWarningNotification();
 				}
+				displayFileNameInInput(manualData.file);
+
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
@@ -53,6 +55,24 @@ $(document).ready(function () {
 		},
 	});
 });
+
+// 顯示已上傳檔案
+function displayFileNameInInput(fileName) {
+	const fileInput = document.getElementById("fileInput");
+
+	if (fileName) {
+		const dataTransfer = new DataTransfer();
+
+		const blob = new Blob([""], { type: "application/octet-stream" });
+		const file = new File([blob], fileName);
+
+		dataTransfer.items.add(file);
+
+		const fileList = dataTransfer.files;
+
+		fileInput.files = fileList;
+	}
+}
 
 // 上傳更新檔案
 $(document).ready(function () {
@@ -69,6 +89,7 @@ $(document).ready(function () {
 			event.preventDefault();
 			var partId = localStorage.getItem("partId");
 
+			var getfileNameField = $("#fileNameField").val();
 			var getBrandName = $("#M-BrandName").val();
 			var getyear = $("#M-year").val();
 			var getapplicableType = $("#M-applicableType").val();
@@ -82,11 +103,11 @@ $(document).ready(function () {
 			if (fileInput.files.length > 0) {
 				var updateData = {
 					id: partId,
+					fileName: getfileNameField,
 					brandName: getBrandName,
 					year: getyear,
 					applicableType: getapplicableType,
 					remark: getremark,
-					fileName: fileInput.files[0].name,
 					file: fileInput.files[0].name,
 				};
 				const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -126,22 +147,5 @@ $(document).ready(function () {
 			// 获取ID
 		}
 		uploadForm.classList.add("was-validated");
-	});
-});
-
-$(document).ready(function () {
-	// 获取文件输入字段和文件名显示字段的引用
-	var fileInput = document.getElementById("fileInput");
-	var fileNameField = document.getElementById("fileNameField");
-
-	// 监听文件输入字段的变化事件
-	fileInput.addEventListener("change", function () {
-		if (fileInput.files.length > 0) {
-			// 选择了文件，显示文件名
-			fileNameField.value = fileInput.files[0].name;
-		} else {
-			// 未选择文件，清空文件名字段
-			fileNameField.value = "";
-		}
 	});
 });

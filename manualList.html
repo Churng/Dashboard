@@ -52,246 +52,132 @@
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary">進銷存後台</h3>
                 </a>
-                <div class="navbar-nav w-100">
-
-                    <!-- 1. 倉庫管理 -->
-                    <!-- 入庫單-> 查看媒合清單，modal跳窗顯示 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-laptop me-2"></i>倉庫管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="wareHouseList.html" class="dropdown-item">入庫單列表</a>
-                            <a href="wareHouseDetail.html" class="dropdown-item">入庫單</a>
-                            <a href="shipDetail.html" class="dropdown-item">出庫申請單</a>
-                            <a href="shipList.html" class="dropdown-item">出庫申請單列表</a>
-                            <a href="depotList.html" class="dropdown-item">倉庫列表</a>
-                            <a href="depotComponentDetail.html" class="dropdown-item">零件資料</a>
-                        </div>
-                    </div>
-
-                    <!-- 2. 零件手冊管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="2-manual-management_index.html" class="dropdown-item"
-                                data-menu-item="2-manual-management_index">零件手冊查詢</a>
-                            <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
-                            <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
-                        </div>
-                    </div>
-
-
-                    <!-- 3. 門市管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fa fa-laptop me-2"></i>門市管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="storeList.html" class="dropdown-item">門市列表</a>
-                            <a href="3-store-information_create.html" class="dropdown-item">門市資料新增</a>
-                            <a href="3-store-information_update.html" class="dropdown-item">門市資料修改</a>
-                        </div>
-                    </div>
-
-
-                    <!-- 4. 訂單管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="far fa-file-alt me-2"></i>訂單管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="4-order_index.html" class="dropdown-item">訂單列表</a>
-                            <a href="4-order_details.html" class="dropdown-item">訂單資料</a>
-                            <a href="unsubscribeList.html" class="dropdown-item">退貨單列表</a>
-                            <a href="unsubscribeDetail.html" class="dropdown-item">退貨單</a>
-                            <a href="searchComponent.html" class="dropdown-item">搜尋零件</a>
-                            <a href="4-order_searchparts_shopcar.html" class="dropdown-item">購物車</a>
-                        </div>
-                    </div>
-
-                    <!-- 5. 零件管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="far fa-folder me-2"></i>零件管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="componentList.html" class="dropdown-item">零件定義列表</a>
-                            <a href="5-partsmanagement_create.html" class="dropdown-item">零件定義</a>
-                        </div>
-                    </div>
-
-
-                    <!-- 6. 零件採購管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="far fa-folder me-2"></i>零件採購管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="orderList.html" class="dropdown-item">零件採購列表</a>
-                            <a href="6-parts-order_create.html" class="dropdown-item">零件採購單</a>
-                        </div>
-                    </div>
-
-                    <!-- 7. 盤點管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fas fa-table me-2"></i>盤點管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="inventoryList.html" class="dropdown-item">盤點列表</a>
-                            <a href="inventoryDetail.html" class="dropdown-item">盤點資料</a>
-                        </div>
-                    </div>
-
-                    <!-- 8. 帳號管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fa fa-th me-2"></i>帳號管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="8-role-list.html" class="dropdown-item">角色列表</a>
-                            <a href="8-role-authorization.html" class="dropdown-item">權限控管</a>
-                            <a href="8-account-list.html" class="dropdown-item">帳號列表</a>
-                        </div>
-                    </div>
-
-                    <!-- 9. 系統管理 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                                class="fa fa-laptop me-2"></i>系統管理</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="9-account-information.html" class="dropdown-item">帳號資料</a>
-                        </div>
-                    </div>
-                    <!-- 0.其他 -->
-                    <div class="nav-item dropdown">
-                        <a href="javascript:void(0);" class="nav-link dropdown-toggle active"
-                            data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item active">Blank Page</a><a
-                                href="0-notify-page.html">通知列表</a>
-                            <a href="table.測試.html">table</a>
-                        </div>
-                    </div>
-
+                <div id="dynamicMenu" class="navbar-nav w-100">
                 </div>
-            </nav>
+
         </div>
-        <!-- Sidebar End -->
+        </nav>
+    </div>
+    <!-- Sidebar End -->
 
 
-        <!-- Content Start -->
-        <div class="content">
-            <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-                </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0">
-                    <i class="fa fa-bars"></i>
-                </a>
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
 
-                <div class="navbar-nav align-items-center ms-auto">
+            <div class="navbar-nav align-items-center ms-auto">
 
-                    <div class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-bell me-lg-2"></i>
-                        </a>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
-                                style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
-                        </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-bell me-lg-2"></i>
+                    </a>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">My Profile</a>
+                        <a href="#" class="dropdown-item">Settings</a>
+                        <a href="#" class="dropdown-item" id="logout">Log Out</a>
                     </div>
                 </div>
-            </nav>
-            <!-- Navbar End -->
-
-
-            <!-- Blank Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 bg-light rounded p-3 mx-0">
-                    <div class="">
-                        <h3>零件手冊查詢</h3>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">零件手冊管理 / 零件手冊查詢</li>
-                            </ol>
-                        </nav>
-                        <!-- 進入零件手冊資料 -->
-                        <div class="py-1 mb-5">
-                            <button type="button" id="addButton" class="btn btn btn-primary my-4">
-                                <a href="2-manual-management_create.html" class="text-white text-decoration-none">新增</a>
-                            </button>
-
-                            <div class="tableList">
-                                <div class="table-responsive">
-                                    <table id="manual-management" class="display  table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">檔案下載</th>
-                                                <th scope="col">選取項目</th>
-                                                <th scope="col">檔案名稱</th>
-                                                <th scope="col">廠牌</th>
-                                                <th scope="col">年份</th>
-                                                <th scope="col">適用車型</th>
-                                                <th scope="col">備註</th>
-                                                <th scope="col">更新時間</th>
-                                                <th scope="col">更新帳號</th>
-                                                <th scope="col">建立時間</th>
-                                                <th scope="col">建立帳號</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Blank End -->
-
-
-                <!-- Footer Start -->
-                <!-- Footer End -->
             </div>
-            <!-- Content End -->
+        </nav>
+        <!-- Navbar End -->
 
 
-            <!-- Back to Top -->
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Blank Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row vh-100 bg-light rounded p-3 mx-0">
+                <div class="">
+                    <h3>零件手冊查詢</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">零件手冊管理 / 零件手冊查詢</li>
+                        </ol>
+                    </nav>
+                    <!-- 進入零件手冊資料 -->
+                    <div class="py-1 mb-5">
+                        <button type="button" id="addButton" class="btn btn btn-primary my-4">
+                            <a href="2-manual-management_create.html" class="text-white text-decoration-none">新增</a>
+                        </button>
+
+                        <div class="tableList">
+                            <div class="table-responsive">
+                                <table id="manual-management" class="display  table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">檔案下載</th>
+                                            <th scope="col">選取項目</th>
+                                            <th scope="col">檔案名稱</th>
+                                            <th scope="col">廠牌</th>
+                                            <th scope="col">年份</th>
+                                            <th scope="col">適用車型</th>
+                                            <th scope="col">備註</th>
+                                            <th scope="col">更新時間</th>
+                                            <th scope="col">更新帳號</th>
+                                            <th scope="col">建立時間</th>
+                                            <th scope="col">建立帳號</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <!-- Footer End -->
         </div>
-
-        <!--  Boostrap JavaScript Libraries -->
-        <script src="js/jquery-3.7.1.min.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/Login/Authlogin.js"></script>
-        <script src="js/Notifications/api-notifications.js"></script>
-        <script src="js/crypto-js.js"></script>
-        <script src="js/toastr.min.js"></script>
-        <script src="js/Notifications/notifications.js"></script>
-        <script src="js/Notifications/toastr-options.js"></script>
+        <!-- Content End -->
 
 
-        <!-- Datatable Libraries -->
-        <script src="js/jquery.dataTables.min.js"></script>
-        <script src="js/dataTables.bootstrap5.js"></script>
-        <script>
-            $(document).ready(function () {
-                new DataTable('#manual-management');
-            });
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
 
-        </script>
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-        <script src="js/Public/downloadFile.js"></script>
-        <script src="js/Manual/Manal_index.js"></script>
+    <!--  Boostrap JavaScript Libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
+
+    <!-- Datatable Libraries -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            new DataTable('#manual-management');
+        });
+
+    </script>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script src="js/Public/downloadFile.js"></script>
+    <script src="js/Manual/Manal_index.js"></script>
+    <script src="js/Public/munu.js"></script>
+
 </body>
 
 </html>

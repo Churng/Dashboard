@@ -268,7 +268,7 @@
     </script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/Public/menu.js"></script>
+    <script src="js/Public/munu.js"></script>
 
 
     <script>
@@ -362,7 +362,7 @@
 
             // 填充API数据到表格，包括下载链接
             responseData.returnData.forEach(function (data) {
-                var modifyButtonHtml = '<a href="4-order_update.html" data-orderno="' + data.orderNo + '" data-id="' + data.id + '" class="btn btn-primary text-white modify-button">修改</a>';
+                var modifyButtonHtml = '<a href="orderDetail.html" data-orderno="' + data.orderNo + '" data-id="' + data.id + '" class="btn btn-primary text-white modify-button">修改</a>';
 
                 var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' +
                     data.id +

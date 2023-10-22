@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>简单登录示例</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+</head>
+
+<body>
+    <h1>简单登录示例</h1>
+    <form id="loginForm" action="#">
+        <label for="username">用户名：</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">密码：</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button type="submit" id="login-button" class="btn btn-primary py-3 w-100 mb-4" value="登入">登入</button>
+        <!-- <input type="submit" value="登录"> -->
+    </form>
+
+    <div id="loginResult"></div>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#loginForm').submit(function (event) {
+                event.preventDefault(); // 阻止表单的默认提交行为
+
+                // 获取表单数据
+                var account = $('#username').val();
+                var password = $('#password').val();
+                var cobineChsm = account + password + 'HBAdminLoginApi';
+                var chsm = CryptoJS.MD5(cobineChsm).toString().toLowerCase();
+
+                // 发送POST请求
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/adminLogin', // 替换为实际的服务器端处理脚本
+                    data: { account: account, password: password, chsm: chsm },
+                    success: function (response) {
+                        $('#loginResult').html('服务器响应：' + response);
+
+                        const returnCode = response.returnCode;
+                        const returnMessage = response.returnMessage;
+                        const returnData = response.returnData.sessionId;
+
+                        const userData = {
+                            returnCode: returnCode,
+                            returnMessage: returnMessage,
+                            sessionId: returnData,
+                        };
+
+                        // 将用户信息转换为JSON字符串
+                        const jsonString = JSON.stringify(userData);
+
+                        // 存储JSON字符串在LocalStorage中
+                        localStorage.setItem("userData", jsonString);
+
+                    },
+                    error: function () {
+                        $('#loginResult').html('发生错误');
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
