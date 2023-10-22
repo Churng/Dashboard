@@ -16,14 +16,14 @@ if (typeof Storage !== "undefined") {
 }
 
 //Authlogin
-function auth() {
+$(function () {
 	var userData = localStorage.getItem("userData");
 	var currentUser = localStorage.getItem("currentUser");
 
 	if (!userData || !currentUser) {
 		window.location.href = "0-signin.html";
 	}
-}
+});
 
 // 使用者名稱、圖片
 window.onload = function () {
@@ -46,14 +46,3 @@ $(function () {
 		window.location.href = "0-signin.html";
 	});
 });
-
-// 003超時登出
-
-function handleLoginExpiration(responseData) {
-	if (responseData.returnCode === "003") {
-		toastr.warning(responseData.returnMessage);
-		setTimeout(function () {
-			window.location.href = "0-signin.html";
-		}, 2000);
-	}
-}
