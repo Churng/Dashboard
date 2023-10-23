@@ -153,13 +153,14 @@
                         <div class="row g-3 mb-5">
                             <div class="col-sm-6">
                                 <label for="orderNote" class="form-label">訂單註記</label>
-                                <input type="text" class="form-control" id="orderNote" placeholder="" value=""
-                                    required="">
+                                <input type="text" class="form-control" id="orderNote" placeholder="若無請填N/A" value=""
+                                    required>
                             </div>
 
                             <div class="col-sm-6 mb-3">
                                 <label for="orderRemark" class="form-label">單據備註</label>
-                                <textarea class="form-control" id="orderRemark" rows="3"></textarea>
+                                <textarea class="form-control" id="orderRemark" rows="3"
+                                    placeholder="若無請填N/A"></textarea>
                             </div>
                         </div>
 
@@ -170,6 +171,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">選擇出庫</th>
+                                            <th scope="col">動作操作</th>
                                             <th scope="col">零件序號</th>
                                             <th scope="col">零件料號</th>
                                             <th scope="col">零件名稱</th>
@@ -194,8 +196,8 @@
                                 執行出庫</button>
                             <button class="btn btn-primary" type="button">訂單完成</button>
                             <button class="btn btn-primary" type="button">查看出庫單</button>
-                            <button class="btn btn-primary btn-md" type="submit">刪除零件</button>
-                            <button class="btn btn-primary" type="button">退貨</button>
+                            <!-- <button class="btn btn-primary btn-md" type="submit">刪除零件</button>
+                            <button class="btn btn-primary" type="button">退貨</button> -->
                         </div>
 
 
@@ -336,6 +338,7 @@
             // var partId = JSON.parse(partId);
             const orderData = responseData.orderData
 
+
             var orderId = orderData.id
             var orderNo = orderData.orderNo;
             var statusName = orderData.statusName;
@@ -345,7 +348,7 @@
             var brandName = orderData.brandName;
             var orderNote = orderData.orderNote
             var orderRemark = orderData.orderRemark;
-            var amount = orderData.amount;
+            var totalPrice = responseData.totalPrice
 
             var updateTime = orderData.updateTime;
             var updateOperator = orderData.updateOperator
@@ -356,7 +359,7 @@
             $("#createOperator").val(createOperator);
             $("#storeName").val(storeName);
             $("#statusName").val(statusName);
-            $("#orderAmount").val(amount);
+            $("#orderAmount").val(totalPrice);
             $("#brandName").val(brandName);
             $("#orderNote").val(orderNote);
             $("#orderRemark").val(orderRemark);
@@ -379,23 +382,32 @@
             var dataTable = $("#orderDetail").DataTable();
             dataTable.clear().draw();
 
+
             // 填充API数据到表格，包括下载链接
             responseData.returnData.forEach(function (data) {
 
                 var checkboxHtml = '<input type="checkbox" class="your-checkbox-class" data-id="' + data.id + '">';
 
-                var modifyButtonHtml = '<a href="orderDetail.html" data-orderno="' + data.orderNo + '" data-id="' + data.id + '" class="btn btn-primary text-white modify-button">修改</a>';
+                var buttonsHtml = '';
 
-                var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' +
-                    data.id +
-                    '" data-filename="' +
-                    data.fileName +
-                    '">刪除</button>';
-                var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+                if (data.status == 1 || data.status == 2 || data.status == 3) {
+                    console.log(data.if_order_delete_component);
+                    if (data.if_order_delete_component === true) {
+                        buttonsHtml += '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除零件</button>';
+                    }
+                }
+
+                if (data.status == 5) {
+                    if (data.if_order_unsubscribe === true) {
+                        buttonsHtml += '<button class="btn btn-warning unsubscribe-button" data-id="' + data.id + '">退貨</button>';
+                    }
+                }
+
 
                 dataTable.row
                     .add([
                         checkboxHtml,
+                        buttonsHtml,
                         data.componentId,
                         data.componentNumber,
                         data.componentName,
