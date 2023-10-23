@@ -24,7 +24,6 @@ $(document).ready(function () {
 			console.log("成功响应：", responseData);
 			// 可以在这里执行其他操作
 			updatePageWithData(responseData);
-			handleLoginExpiration(responseData);
 		},
 		error: function (error) {
 			showErrorNotification();

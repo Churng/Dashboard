@@ -188,6 +188,7 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
@@ -251,8 +252,7 @@
             for (var i = 0; i < responseData.returnData.length; i++) {
                 var data = responseData.returnData[i];
 
-                var modifyButtonHtml = '<a href="orderDetail.html" data-orderno="' + data.orderNo + '" data-id="' + data.id + '" data-createTime="' + data.createTime + '" data-createOperator="' + data.createOperator + '" data-storeName="' + data.storeName + '" data-brandName="' + data.brandName + '" data-remark="' + data.remark + '" data-amount="' + data.amount + '" data-statusName="' + data.statusName + '" data-updatetime="' + data.updateTime + '" data-updateoperator="' + data.updateOperator + '" class="btn btn-primary text-white modify-button">修改</a>';
-
+                var modifyButtonHtml = '<a href="orderDetail.html" data-orderno="' + data.orderNo + '" class="btn btn-primary text-white modify-button">修改</a>';
 
                 dataTable.row
                     .add([
@@ -275,23 +275,10 @@
 
         // 修改按鈕事件
         $(document).on("click", ".modify-button", function () {
-            var orderId = $(this).data("orderNo");
-
-            var dataToStore = {
-                orderId: $(this).data("orderno"),
-                statusName: $(this).data("statusname"),
-                createTime: $(this).data("createtime"),
-                createOperator: $(this).data("createoperator"),
-                storeName: $(this).data("storename"),
-                brandName: $(this).data("brandname"),
-                remark: $(this).data("remark"),
-                amount: $(this).data("amount"),
-                updateTime: $(this).data("updatetime"),
-                updateOperator: $(this).data("updateoperator")
-            };
-
+            var orderId = $(this).data("orderno");
+            console.log(orderId);
             // 存储整个数据对象到 localStorage
-            localStorage.setItem("orderData", JSON.stringify(dataToStore));
+            localStorage.setItem("orderNo", JSON.stringify(orderId));
         });
 
         //更新數據

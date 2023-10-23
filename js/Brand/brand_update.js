@@ -1,7 +1,5 @@
 // 取得詳細資料
 $(document).ready(function () {
-	var updateFormData = new FormData(); // 在外部定義更新資料
-
 	const urlParams = new URLSearchParams(window.location.search);
 	const partId = urlParams.get("id");
 	const dataId = { id: partId };
@@ -30,11 +28,13 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const brandData = responseData.returnData[0];
 				$("#brand-Name").val(brandData.brandName);
 				$("#brandTextarea1").val(brandData.remark);
 				$("#brand-Order").val(brandData.brandOrder);
+				$("brand-Status").val(brandData.status);
 
 				$("#BuildTime").val(brandData.createTime);
 				$("#EditTime").val(brandData.updateTime);
@@ -54,60 +54,74 @@ $(document).ready(function () {
 
 // 上傳POST
 $(document).ready(function () {
-	var formData = new FormData(); // 在外部定义 formData
-	$("#saveButton").click(function () {
-		const urlParams = new URLSearchParams(window.location.search);
-		const partId = urlParams.get("id");
-		const dataId = { id: partId };
-		const IdPost = JSON.stringify(dataId);
+	var formData = new FormData();
+	var uploadForm = document.getElementById("uploadForm");
 
-		//取值
-		var getbrandName = $("#brand-Name").val();
-		var getbrandOrder = $("#brand-Order").val();
-		var getremark = $("#brandTextarea").val();
+	// 添加表单提交事件监听器
+	uploadForm.addEventListener("submit", function (event) {
+		if (uploadForm.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+			showWarningfillFormNotification();
+		} else {
+			// 处理表单提交
+			event.preventDefault();
 
-		var updateData = {
-			id: partId,
-			brandName: getbrandName,
-			brandOrder: getbrandOrder,
-			remark: getremark,
-		};
+			const urlParams = new URLSearchParams(window.location.search);
+			const partId = urlParams.get("id");
+			const dataId = { id: partId };
+			const IdPost = JSON.stringify(dataId);
 
-		// 从localStorage中获取session_id和chsm
-		// 解析JSON字符串为JavaScript对象
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
+			//取值
+			var getbrandName = $("#brand-Name").val();
+			var getbrandOrder = $("#brand-Order").val();
+			var getremark = $("#brandTextarea").val();
+			var getbrandStatus = $("brandStatus").val();
 
-		// 组装发送文件所需数据
-		// chsm = session_id+action+'HBAdminBrandApi'
-		var action = "updateBrandDetail";
-		var chsmtoPostFile = user_session_id + action + "HBAdminBrandApi";
-		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+			var updateData = {
+				id: partId,
+				brandName: getbrandName,
+				brandOrder: getbrandOrder,
+				brandStatus: getbrandStatus,
+				remark: getremark,
+			};
 
-		// 设置其他formData字段
-		formData.set("action", action);
-		formData.set("session_id", user_session_id);
-		formData.set("chsm", chsm);
-		formData.set("data", JSON.stringify(updateData));
+			// 从localStorage中获取session_id和chsm
+			// 解析JSON字符串为JavaScript对象
+			const jsonStringFromLocalStorage = localStorage.getItem("userData");
+			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+			const user_session_id = gertuserData.sessionId;
 
-		// 发送文件上传请求
-		$.ajax({
-			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/brand", // 替换为实际的上传端点 URL
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				console.log(response);
-				showSuccessFileNotification();
-				localStorage.removeItem("selectedBrandData");
-				var newPageUrl = "brandList.html";
-				window.location.href = newPageUrl;
-			},
-			error: function (error) {
-				showErrorFileNotification();
-			},
-		});
+			// 组装发送文件所需数据
+			// chsm = session_id+action+'HBAdminBrandApi'
+			var action = "updateBrandDetail";
+			var chsmtoPostFile = user_session_id + action + "HBAdminBrandApi";
+			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+			// 设置其他formData字段
+			formData.set("action", action);
+			formData.set("session_id", user_session_id);
+			formData.set("chsm", chsm);
+			formData.set("data", JSON.stringify(updateData));
+
+			$.ajax({
+				type: "POST",
+				url: "https://88bakery.tw/HBAdmin/index.php?/api/brand", // 替换为实际的上传端点 URL
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					console.log(response);
+					showSuccessFileNotification();
+					localStorage.removeItem("selectedBrandData");
+					var newPageUrl = "brandList.html";
+					window.location.href = newPageUrl;
+				},
+				error: function (error) {
+					showErrorFileNotification();
+				},
+			});
+		}
+		uploadForm.classList.add("was-validated");
 	});
 });

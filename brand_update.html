@@ -26,7 +26,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <script src="js/Login/Authlogin.js"></script>
 </head>
 
 <body>
@@ -104,22 +103,30 @@
 
                     <div class="block-first">
                         <h4>品牌資料</h4>
-                        <form class="needs-validation">
+                        <form id="uploadForm" class="needs-validation" novalidate>
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="brand-Name" class="form-label">*品牌名稱</label>
-                                    <input type="text" class="form-control" id="brand-Name" name="brandName">
+                                    <input type="text" class="form-control" id="brand-Name" name="brandName" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="brand-Order" class="form-label">*排序</label>
-                                    <input type="text" class="form-control" id="brand-Order" name="brandOrder">
+                                    <input type="text" class="form-control" id="brand-Order" name="brandOrder" required>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="brand-Status" class="form-label">*狀態</label>
+                                    <select class="form-select" id="brand-Status" name="status" required>
+                                        <option value="1">正常</option>
+                                        <option value="2">停用</option>
+                                    </select>
                                 </div>
 
                                 <div class="col mb-3">
                                     <label for="brandTextarea" class="form-label">備註</label>
                                     <textarea class="form-control" id="brandTextarea" rows="3" name="remark"
-                                        placeholder="若無請填N/A"></textarea>
+                                        placeholder="若無請填N/A" required></textarea>
                                 </div>
                             </div>
 
@@ -143,7 +150,7 @@
                                 </div>
                                 <div class="text-center w-100 pt-3">
                                     <button id="saveButton" class="w-25 btn btn-primary btn-md"
-                                        type="button">儲存</button>
+                                        type="submit">儲存</button>
                                 </div>
                             </div>
                         </form>
@@ -169,6 +176,8 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>

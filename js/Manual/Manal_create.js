@@ -69,20 +69,20 @@ $(document).ready(function () {
 	});
 });
 
-//填入檔案名稱欄位
-$(document).ready(function () {
-	// 获取文件输入字段和文件名显示字段的引用
-	var fileInput = document.getElementById("fileInput");
-	var fileNameField = document.getElementById("fileNameField");
+// //填入檔案名稱欄位
+// $(document).ready(function () {
+// 	// 获取文件输入字段和文件名显示字段的引用
+// 	var fileInput = document.getElementById("fileInput");
+// 	var fileNameField = document.getElementById("fileNameField");
 
-	// 监听文件输入字段的变化事件
-	fileInput.addEventListener("change", function () {
-		if (fileInput.files.length > 0) {
-			// 选择了文件，显示文件名
-			fileNameField.value = fileInput.files[0].name;
-		} else {
-			// 未选择文件，清空文件名字段
-			fileNameField.value = "";
-		}
-	});
-});
+// 	// 监听文件输入字段的变化事件
+// 	fileInput.addEventListener("change", function () {
+// 		if (fileInput.files.length > 0) {
+// 			// 选择了文件，显示文件名
+// 			fileNameField.value = fileInput.files[0].name;
+// 		} else {
+// 			// 未选择文件，清空文件名字段
+// 			fileNameField.value = "";
+// 		}
+// 	});
+// });

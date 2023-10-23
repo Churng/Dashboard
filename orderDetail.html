@@ -105,14 +105,14 @@
 
                         <div class="row g-3 mb-5">
                             <div class="col-sm-3">
-                                <label for="orderNumber" class="form-label">訂單序號</label>
-                                <input type="text" class="form-control" id="orderNumber" placeholder="" value=""
+                                <label for="orderNo" class="form-label">訂單序號</label>
+                                <input type="text" class="form-control" id="orderNo" placeholder="" value=""
                                     required="">
                             </div>
 
                             <div class="col-sm-3">
-                                <label for="orderNo" class="form-label">單據序號</label>
-                                <input type="text" class="form-control" id="orderNo" placeholder="" value=""
+                                <label for="orderId" class="form-label">單據序號</label>
+                                <input type="text" class="form-control" id="orderId" placeholder="" value=""
                                     required="">
                             </div>
 
@@ -152,14 +152,14 @@
 
                         <div class="row g-3 mb-5">
                             <div class="col-sm-6">
-                                <label for="orderRemark" class="form-label">訂單備註</label>
-                                <input type="text" class="form-control" id="orderRemark" placeholder="" value=""
+                                <label for="orderNote" class="form-label">訂單註記</label>
+                                <input type="text" class="form-control" id="orderNote" placeholder="" value=""
                                     required="">
                             </div>
 
                             <div class="col-sm-6 mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">單據備註</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <label for="orderRemark" class="form-label">單據備註</label>
+                                <textarea class="form-control" id="orderRemark" rows="3"></textarea>
                             </div>
                         </div>
 
@@ -190,11 +190,12 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
-                            <button class="btn btn-primary" type="button">執行出庫</button>
+                            <button class="btn btn-primary " type="button" id="redirectButton">
+                                執行出庫</button>
                             <button class="btn btn-primary" type="button">訂單完成</button>
-                            <button class="btn btn-primary" type="button">退貨</button>
-                            <button class="btn btn-primary" type="button">查看出貨單</button>
+                            <button class="btn btn-primary" type="button">查看出庫單</button>
                             <button class="btn btn-primary btn-md" type="submit">刪除零件</button>
+                            <button class="btn btn-primary" type="button">退貨</button>
                         </div>
 
 
@@ -251,6 +252,8 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
@@ -271,13 +274,22 @@
     <script src="js/Public/munu.js"></script>
 
 
+
+    <script>
+
+        const redirectButton = document.getElementById("redirectButton");
+
+        redirectButton.addEventListener("click", function () {
+            const targetPageUrl = "shipList.html";
+            window.location.href = targetPageUrl;
+        });
+    </script>
     <script>
         // 取得詳細資料
         $(document).ready(function () {
-            var partId = localStorage.getItem("orderData");
+            var partId = localStorage.getItem("orderNo");
             var orderData = JSON.parse(partId);
-            var getorderId = orderData.orderId;
-            const dataId = { orderNo: getorderId };
+            const dataId = { orderNo: orderData };
             const IdPost = JSON.stringify(dataId);
 
             // 从localStorage中获取session_id和chsm
@@ -303,6 +315,7 @@
                     data: IdPost,
                 },
                 success: function (responseData) {
+                    console.log(responseData);
                     if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
                         updateData(responseData);
                         updatePageWithData(responseData);
@@ -318,29 +331,35 @@
 
         //表單內資料：單據詳細資料
         function updateData(responseData) {
-            var partId = localStorage.getItem("orderData");
-            var orderData = JSON.parse(partId);
+            console.log(responseData);
+            // var partId = localStorage.getItem("orderNo");
+            // var partId = JSON.parse(partId);
+            const orderData = responseData.orderData
 
-            var orderId = orderData.orderId;
+            var orderId = orderData.id
+            var orderNo = orderData.orderNo;
             var statusName = orderData.statusName;
             var createTime = orderData.createTime;
             var createOperator = orderData.createOperator;
             var storeName = orderData.storeName;
             var brandName = orderData.brandName;
-            var remark = orderData.remark;
+            var orderNote = orderData.orderNote
+            var orderRemark = orderData.orderRemark;
             var amount = orderData.amount;
+
             var updateTime = orderData.updateTime;
             var updateOperator = orderData.updateOperator
 
             // 填充表单元素的值
-            $("#orderNumber").val(orderId);
-            $("#orderNo").val(orderId);
+            $("#orderId").val(orderId);
+            $("#orderNo").val(orderNo);
             $("#createOperator").val(createOperator);
             $("#storeName").val(storeName);
             $("#statusName").val(statusName);
             $("#orderAmount").val(amount);
             $("#brandName").val(brandName);
-            $("#orderRemark").val(remark);
+            $("#orderNote").val(orderNote);
+            $("#orderRemark").val(orderRemark);
 
             $("#BuildTime").val(createTime);
             $("#EditTime").val(updateTime);
@@ -355,13 +374,16 @@
         //底下表格內資料：購物單零件們
         function updatePageWithData(responseData) {
 
-            console.log(responseData);
+            // console.log(responseData);
             // 清空表格数据
             var dataTable = $("#orderDetail").DataTable();
             dataTable.clear().draw();
 
             // 填充API数据到表格，包括下载链接
             responseData.returnData.forEach(function (data) {
+
+                var checkboxHtml = '<input type="checkbox" class="your-checkbox-class" data-id="' + data.id + '">';
+
                 var modifyButtonHtml = '<a href="orderDetail.html" data-orderno="' + data.orderNo + '" data-id="' + data.id + '" class="btn btn-primary text-white modify-button">修改</a>';
 
                 var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' +
@@ -373,8 +395,8 @@
 
                 dataTable.row
                     .add([
-                        buttonsHtml,
-                        data.createTime,
+                        checkboxHtml,
+                        data.componentId,
                         data.componentNumber,
                         data.componentName,
                         data.suitableCarModel,
@@ -384,7 +406,7 @@
                         data.cost,
                         data.workingHour,
                         data.depotPosition,
-                        data.description
+                        data.statusName
                     ])
                     .draw(false);
             });

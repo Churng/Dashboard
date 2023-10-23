@@ -118,6 +118,14 @@
                                     <input type="text" class="form-control" id="brand-Order" name="brandOrder" required>
                                 </div>
 
+                                <div class="col-sm-6">
+                                    <label for="brand-Status" class="form-label">*狀態</label>
+                                    <select class="form-select" id="brand-Status" name="status" required>
+                                        <option value="1">正常</option>
+                                        <option value="2">停用</option>
+                                    </select>
+                                </div>
+
                                 <div class="col mb-3">
                                     <label for="brandTextarea" class="form-label">備註</label>
                                     <textarea class="form-control" id="brandTextarea" rows="3" name="remark"
@@ -170,6 +178,7 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
     <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>

@@ -16,7 +16,7 @@ if (typeof Storage !== "undefined") {
 }
 
 //Authlogin
-$(function () {
+$(document).ready(function () {
 	var userData = localStorage.getItem("userData");
 	var currentUser = localStorage.getItem("currentUser");
 

@@ -5,9 +5,14 @@ var menuData = currentData.userretrunData;
 // 获取要放置菜单项的父元素
 const dynamicMenu = document.getElementById("dynamicMenu");
 
-// 递归函数用于生成菜单
+function compareMenuOrder(a, b) {
+	return a.menuOrder - b.menuOrder;
+}
+
 function generateMenu(data, parentId) {
-	const parentItems = data.filter((item) => item.mainCategoryId === parentId && item.type === "1st");
+	const parentItems = data
+		.filter((item) => item.mainCategoryId === parentId && item.type === "1st")
+		.sort(compareMenuOrder);
 
 	const titleToIconMap = {
 		手冊管理: "fa fa-tachometer-alt me-2",
@@ -52,7 +57,9 @@ function generateMenu(data, parentId) {
 }
 
 function generateSubMenu(data, parentId, parentDropdownMenu) {
-	const subItems = data.filter((item) => item.mainCategoryId === parentId && item.type === "2st");
+	const subItems = data
+		.filter((item) => item.mainCategoryId === parentId && item.type === "2st")
+		.sort(compareMenuOrder);
 
 	subItems.forEach((subItem) => {
 		const subMenuItem = document.createElement("a");
@@ -67,3 +74,5 @@ function generateSubMenu(data, parentId, parentDropdownMenu) {
 	});
 }
 generateMenu(menuData, null);
+
+// 分隔線

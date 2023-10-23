@@ -110,7 +110,8 @@
                         <div class="row g-3 mb-5">
                             <div class="col-sm-3">
                                 <label for="selectBrand" class="form-label">*品牌</label>
-                                <input type="text" placeholder="品牌名稱" class="form-control" id="disabledInput" disabled>
+                                <input type="text" placeholder="尚未選取零件無法顯示" class="form-control" id="selectBrand"
+                                    disabled>
                             </div>
                         </div>
 
@@ -211,6 +212,8 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
@@ -327,6 +330,7 @@
             var dataTable = $("#partsCar").DataTable();
             dataTable.clear().draw();
 
+            console.log(responseData);
             var totalPriceElement = document.getElementById("totalPrice");
             var totalPriceValue = responseData.totalPrice;
             totalPriceElement.value = totalPriceValue;
@@ -334,6 +338,12 @@
             var totalPriceAmountElement = document.getElementById("returnDataTotalAmount");
             var totalPriceAmountValue = responseData.returnDataTotalAmount;
             totalPriceAmountElement.textContent = totalPriceAmountValue;
+
+            var selectBrandElement = document.getElementById("selectBrand");
+            var selectBrandValue = responseData.brandName;
+            selectBrandElement.value = selectBrandValue;
+
+
 
             // 填充API数据到表格，包括下载链接
             for (var i = 0; i < responseData.returnData.length; i++) {

@@ -14,15 +14,13 @@ $(document).ready(function () {
 			var getbrandName = $("#brand-Name").val();
 			var getbrandOrder = $("#brand-Order").val();
 			var getbrandTextarea = $("#brandTextarea").val();
-
-			var getstatus = $("#shop-status").val();
-			var getaddress = $("#shop-address").val();
-			var getstoreOrder = $("#shop-order").val();
+			var getbrandStatus = $("#brand-Status").val();
 
 			var brandDataObject = {
 				brandName: getbrandName,
 				brandOrder: getbrandOrder,
 				brandTextarea: getbrandTextarea,
+				status: getbrandStatus,
 			};
 
 			// 从localStorage中获取session_id和chsm
