@@ -1,3 +1,46 @@
+// 取得品牌資料
+$(document).ready(function () {
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminBrandApi'
+	// 組裝菜單所需資料
+	var action = "getBrandList";
+	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
+	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			const brandList = document.getElementById("C-brandId");
+			const defaultOption = document.createElement("option");
+			defaultOption.text = "請選擇品牌";
+			brandList.appendChild(defaultOption);
+
+			for (let i = 0; i < responseData.returnData.length; i++) {
+				const brand = responseData.returnData[i];
+				const brandName = brand.brandName;
+				const brandId = brand.id;
+
+				const option = document.createElement("option");
+				option.text = brandName;
+				option.value = brandId;
+
+				brandList.appendChild(option);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+});
+
 // 取得詳細資料
 $(document).ready(function () {
 	var partId = localStorage.getItem("partId");
@@ -30,6 +73,7 @@ $(document).ready(function () {
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const componentData = responseData.returnData[0];
+
 				$("#C-componentName").val(componentData.componentName);
 				$("#C-componentNumber").val(componentData.componentNumber);
 				$("#C-brandId").val(componentData.brandId);
@@ -54,6 +98,10 @@ $(document).ready(function () {
 				$("#EditAccount").val(componentData.getupdateOperator);
 
 				displayFileNameInInput(componentData.file);
+
+				const myButton = document.getElementById("downloadBtn");
+				myButton.setAttribute("data-file", componentData.file);
+
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
@@ -189,4 +237,61 @@ $(document).ready(function () {
 		}
 		uploadForm.classList.add("was-validated");
 	});
+});
+
+//顯示圖片
+function showFile(fileName) {
+	const apiName = "manual";
+	const formData = new FormData();
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	const chsmtoDeleteFile = user_session_id + apiName + fileName + "HBAdminGetFileApi";
+	const chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+
+	formData.set("apiName", apiName);
+	formData.set("session_id", user_session_id);
+	formData.set("chsm", chsm);
+	formData.set("fileName", fileName);
+
+	$.ajax({
+		type: "POST",
+		url: "https://88bakery.tw/HBAdmin/index.php?/api/getFile",
+		data: formData,
+		processData: false,
+		contentType: false,
+		xhrFields: {
+			responseType: "blob",
+		},
+		success: function (response) {
+			const imageBinaryData = response;
+
+			const imageType = "image/jpeg"; // 根據圖像類型設置
+			const imageBlob = new Blob([imageBinaryData], { type: imageType });
+			const imageUrl = URL.createObjectURL(imageBlob);
+
+			const imageElement = document.createElement("img");
+			imageElement.src = imageUrl;
+			imageElement.alt = fileName;
+
+			const viewer = window.open("");
+			viewer.document.body.appendChild(imageElement);
+		},
+		error: function (error) {
+			showAPIErrorNotification();
+		},
+	});
+}
+
+//下載檔案
+$(document).on("click", ".file-download", function () {
+	var fileName = $(this).data("file");
+	var apiName = "component";
+	if (fileName) {
+		downloadFile(apiName, fileName);
+		showFile(fileName);
+	} else {
+		showErrorFileNotification();
+	}
 });

@@ -144,7 +144,6 @@ $(document).ready(function () {
 			} else {
 				return;
 			}
-			// 获取ID
 		}
 		uploadForm.classList.add("was-validated");
 	});

@@ -1,5 +1,53 @@
-// 列表取得
+//取得品牌清單、做權限篩選
 $(document).ready(function () {
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminBrandApi'
+	// 組裝菜單所需資料
+	var action = "getBrandList";
+	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
+	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			const brandList = document.getElementById("selectBrand");
+
+			const defaultOption = document.createElement("option");
+			defaultOption.text = "請選擇品牌";
+			brandList.appendChild(defaultOption);
+
+			for (let i = 0; i < responseData.returnData.length; i++) {
+				const brand = responseData.returnData[i];
+				const brandName = brand.brandName;
+				const brandId = brand.id;
+
+				const option = document.createElement("option");
+				option.text = brandName;
+				option.value = brandId;
+
+				brandList.appendChild(option);
+			}
+
+			if (responseData.returnData.length > 0) {
+				brandList.selectedIndex = 1;
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+});
+
+// 列表取得
+function fetchAccountList() {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -24,13 +72,12 @@ $(document).ready(function () {
 			console.log("成功响应：", responseData);
 			// 可以在这里执行其他操作
 			updatePageWithData(responseData);
-			handleLoginExpiration(responseData);
 		},
 		error: function (error) {
 			showErrorNotification();
 		},
 	});
-});
+}
 
 // 表格填充
 function updatePageWithData(responseData) {
@@ -70,25 +117,19 @@ function updatePageWithData(responseData) {
 			.add([
 				goInventory,
 				buttonsHtml,
-				data.componentName,
 				data.componentNumber,
-				data.brandId,
-				data.componentSupplier,
+				data.componentName,
+				data.brandName,
 				data.suitableCarModel,
 				data.price,
-				data.cost,
 				data.wholesalePrice,
 				data.lowestWholesalePrice,
-				data.purchaseAmount,
-				data.depotPosition,
-				data.depotAmount,
-				data.lowestInventory,
 				data.workingHour,
-				data.description,
-				data.updateTime,
-				data.updateOperator,
+				data.purchaseAmount,
+				data.depotAmount,
+				data.totalCost,
+				data.lowestInventory,
 				data.createTime,
-				data.createOperator,
 			])
 			.draw(false);
 	}
@@ -212,6 +253,7 @@ function refreshDataList() {
 // 	});
 // });
 
+//刪除按鈕:外部function
 $(document).on("click", ".delete-button", function () {
 	var deleteButton = $(this);
 	var itemId = deleteButton.data("id");
@@ -248,54 +290,74 @@ $(document).on("click", ".file-download", function () {
 	}
 });
 
-// $(document).on("click", ".file-download", function () {
-// 	var fileName = $(this).data("file");
-// 	var formData = new FormData(); // 在外部定义 formData
+// 監聽欄位變動
+$(document).ready(function () {
+	var selectedBrandId;
 
-// 	console.log($(this).data("file"));
+	// 監聽品牌
+	$("#selectBrand").on("change", function () {
+		selectedBrandId = $("#selectBrand").val();
+	});
 
-// 	if (fileName) {
-// 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-// 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-// 		const user_session_id = gertuserData.sessionId;
+	// 点击搜索按钮时触发API请求
+	$("#searchBtn").on("click", function () {
+		// 创建筛选数据对象
+		var filterData = {};
 
-// 		// 组装发送文件所需数据
-// 		// session_id+apiName+fileName+'HBAdminGetFileApi'
-// 		var apiName = "manual";
-// 		var chsmtoDeleteFile = user_session_id + apiName + "HBAdminGetFileApi";
-// 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+		if (selectedBrandId) {
+			filterData.brandId = selectedBrandId;
+		}
 
-// 		console.log(fileName);
-// 		// 设置其他formData字段
-// 		formData.set("apiName", apiName);
-// 		formData.set("session_id", user_session_id);
-// 		formData.set("chsm", chsm);
-// 		formData.set("fileName", fileName);
+		// 发送API请求以获取数据
+		sendApiRequest(filterData);
+	});
 
-// 		$.ajax({
-// 			type: "POST",
-// 			url: "https://88bakery.tw/HBAdmin/index.php?/api/getFile",
-// 			data: formData,
-// 			processData: false,
-// 			contentType: false,
-// 			success: function (response) {
-// 				console.log(response);
+	// 创建一个函数，发送API请求以获取数据
+	function sendApiRequest(filterData) {
+		// 获取用户数据
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
 
-// 				if (response.returnCode === 1) {
-// 					setTimeout(function () {
-// 						showSuccessFileDownloadNotification();
-// 					}, 1000);
+		// chsm = session_id+action+'HBAdminComponentApi'
+		// 組裝菜單所需資料
+		var action = "getComponentList";
+		var chsmtoGetComponentList = user_session_id + action + "HBAdminComponentApi";
+		var chsm = CryptoJS.MD5(chsmtoGetComponentList).toString().toLowerCase();
 
-// 					refreshDataList();
-// 				} else {
-// 					handleAlertExpiration(response);
-// 				}
-// 			},
-// 			error: function (error) {
-// 				showErrorNotification();
-// 			},
-// 		});
-// 	} else {
-// 		showWarningFileNotification();
-// 	}
-// });
+		var filterDataJSON = JSON.stringify(filterData);
+		var postData = filterDataJSON;
+
+		$("#partsManagement").DataTable();
+		// 发送API请求以获取数据
+		$.ajax({
+			type: "POST",
+			url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+			success: function (responseData) {
+				// 处理成功响应
+				console.log("成功响应：", responseData);
+				// 可以在这里执行其他操作
+				updatePageWithData(responseData);
+			},
+			error: function (error) {
+				showErrorNotification();
+			},
+		});
+	}
+});
+
+// 加载时调用在页面 fetchAccountList
+$(document).ready(function () {
+	fetchAccountList();
+});
+
+// 或者在点击按钮时调用 fetchAccountList
+$("#allBtn").on("click", function () {
+	fetchAccountList();
+});
+
+//權限控制
+$(document).ready(function () {
+	handlePermissionControl();
+});

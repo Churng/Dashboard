@@ -21,14 +21,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
 
     <!-- DataTable Stylesheet -->
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <script src="js/Login/Authlogin.js"></script>
 </head>
 
 <body>
@@ -103,178 +103,192 @@
                             </ol>
                         </nav>
 
-                        TODO 進入零件採購單
-                        <div class="py-1 mb-5">
+
+                        <!-- <div class="py-1 mb-5">
                             <button type="button" class="btn btn-sm btn-primary me-2">
                                 <a href="parts-order_create.html" class="text-white text-decoration-none">新增零件採購單</a>
                             </button>
-                        </div>
+                        </div> -->
 
                         <div class="container">
+                            <div class="row g-3 mb-4">
+                                <div class="col-sm-3">
+                                    <p>開始日期</p>
+                                    <input type="date" class="form-control" id="startDate">
+                                </div>
+                                <div class="col-sm-3">
+                                    <p>結束日期</p>
+                                    <input type="date" class="form-control" id="endDate">
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <label for="parts-order-Time" class="form-label">單據時間</label>
-                                    <input type="date" class="form-control" id="parts-order-Time" placeholder=""
-                                        value="" required="">
-                                </div>
+                                    <label for="purchaseStore" class="form-label">*填寫門市</label>
+                                    <select class="form-select" id="purchaseStore" required="">
 
-                                <div class="col-sm-4">
-                                    <label for="parts-order-ShopName" class="form-label">*填寫門市</label>
-                                    <select class="form-select" id="parts-order-ShopName" required="">
-                                        <option value="">請選擇</option>
-                                        <option>鴻寶新北 新莊門市</option>
-                                        <option>鴻寶桃園 八德門市</option>
                                     </select>
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="parts-order-State" class="form-label">*採購單狀態</label>
-                                    <select class="form-select" id="parts-order-State" required="">
-                                        <option value="">申請採購中</option>
-                                        <option>採購中</option>
-                                        <option>採購完成</option>
-                                        <option>取消採購</option>
+                                    <label for="purchaseStatus" class="form-label">*採購單狀態</label>
+                                    <select class="form-select" id="purchaseStatus" required="">
+                                        <option value="1">申請採購中</option>
+                                        <option value="2">採購中</option>
+                                        <option value="3">採購完成</option>
+                                        <option value="4">取消採購</option>
                                     </select>
                                 </div>
-                            </div>
 
-                            <!-- <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="input-fit my-4">
-                                        <div class="mb-3">
-                                            <label for="Search-item" class="form-label">搜尋</label>
-                                            <input type="text" class="form-control" id="Search-item"
-                                                placeholder="列表欄位之關鍵字">
-                                        </div>
-                                        <button type="submit" class="btn btn-sm btn-primary">查詢</button>
-                                    </div>
+
+                                <div class="col-sm-3 pt-4" style="margin-top: 5px;">
+                                    <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
+                                    <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
                                 </div>
-                            </div> -->
-                        </div>
-
-
-                        <div class="tableList mt-5">
-                            <div class="table-responsive parts-order-table">
-                                <table id="partsOrder" class="display table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>詳細</th>
-                                            <th class="text-center">單據序號</th>
-                                            <th>單據時間</th>
-                                            <th>填寫人員</th>
-                                            <th>填寫門市</th>
-                                            <th>單據狀態</th>
-                                            <th>訂單序號</th>
-                                            <th>零件序號</th>
-                                            <th>零件料號</th>
-                                            <th>零件名稱</th>
-                                            <th>品牌</th>
-                                            <th>適用車型</th>
-                                            <th>訂價</th>
-                                            <th>批發價</th>
-                                            <th>最低批發價</th>
-                                            <th>成本</th>
-                                            <th>工時（小時）</th>
-                                            <th>採購單狀態</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>8000</td>
-                                            <td>5000</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>8000</td>
-                                            <td>5000</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>8000</td>
-                                            <td>5000</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
-
                     </div>
+
+
+                    <div class="tableList mt-5">
+                        <div class="table-responsive parts-order-table">
+                            <table id="partsOrder" class="display table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">選取動作</th>
+                                        <th scope="col">單據序號</th>
+                                        <th scope="col">單據時間</th>
+                                        <th scope="col">填寫人員</th>
+                                        <th scope="col">填寫門市</th>
+                                        <th scope="col">單據狀態</th>
+                                        <th scope="col">訂單序號</th>
+                                        <th scope="col">零件序號</th>
+                                        <th scope="col">零件料號</th>
+                                        <th scope="col">零件名稱</th>
+                                        <th scope="col">品牌</th>
+                                        <th scope="col">適用車型</th>
+                                        <th scope="col">訂價</th>
+                                        <th scope="col">批發價</th>
+                                        <th scope="col">最低批發價</th>
+                                        <th scope="col">成本</th>
+                                        <th scope="col">工時（小時）</th>
+                                        <th scope="col">採購單狀態</th>
+                                    </tr>
+                                </thead>
+                                <!-- <tbody>
+                                        <tr>
+                                            <th scope="row">[詳細]</th>
+                                            <td>1</td>
+                                            <td>2022/01/01 12:01:01</td>
+                                            <td>洪老闆</td>
+                                            <td>鴻寶桃園 八德門市</td>
+                                            <td>採購中</td>
+                                            <td>2</td>
+                                            <td>771</td>
+                                            <td>5GJ-11456-02</td>
+                                            <td>鏈條</td>
+                                            <td>YAMAHA</td>
+                                            <td>TMAX2002</td>
+                                            <td>11000</td>
+                                            <td>9000</td>
+                                            <td>8000</td>
+                                            <td>5000</td>
+                                            <td>0.5</td>
+                                            <td>採購中</td>
+                                        </tr>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">[詳細]</th>
+                                            <td>1</td>
+                                            <td>2022/01/01 12:01:01</td>
+                                            <td>洪老闆</td>
+                                            <td>鴻寶桃園 八德門市</td>
+                                            <td>採購中</td>
+                                            <td>2</td>
+                                            <td>771</td>
+                                            <td>5GJ-11456-02</td>
+                                            <td>鏈條</td>
+                                            <td>YAMAHA</td>
+                                            <td>TMAX2002</td>
+                                            <td>11000</td>
+                                            <td>9000</td>
+                                            <td>8000</td>
+                                            <td>5000</td>
+                                            <td>0.5</td>
+                                            <td>採購中</td>
+                                        </tr>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">[詳細]</th>
+                                            <td>1</td>
+                                            <td>2022/01/01 12:01:01</td>
+                                            <td>洪老闆</td>
+                                            <td>鴻寶桃園 八德門市</td>
+                                            <td>採購中</td>
+                                            <td>2</td>
+                                            <td>771</td>
+                                            <td>5GJ-11456-02</td>
+                                            <td>鏈條</td>
+                                            <td>YAMAHA</td>
+                                            <td>TMAX2002</td>
+                                            <td>11000</td>
+                                            <td>9000</td>
+                                            <td>8000</td>
+                                            <td>5000</td>
+                                            <td>0.5</td>
+                                            <td>採購中</td>
+                                        </tr>
+                                    </tbody> -->
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <!-- Blank End -->
-
-
-            <!-- Footer Start -->
-            <!-- Footer End -->
         </div>
-        <!-- Content End -->
+        <!-- Blank End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Footer Start -->
+        <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
+
     <!--  Boostrap JavaScript Libraries -->
-    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
 
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#partsOrder');
+
+        $(document).ready(function () {
+            new DataTable('#partsOrder');
+        });
+
     </script>
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/Public/munu.js"></script>
+    <script src="js/Public/menu.js"></script>
+    <script src="js/Order/purchase/purchaseList.js"></script>
+
+
 </body>
 
 </html>

@@ -999,7 +999,6 @@ $(document).ready(function () {
 
 	// 添加表单提交事件监听器
 	uploadForm.addEventListener("submit", function (event) {
-		console.log(jsonData);
 		if (uploadForm.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -1013,9 +1012,11 @@ $(document).ready(function () {
 			var getremarkAuth = $("#remarkAuth").val();
 			var getroleOrder = $("#roleOrder").val();
 
+			console.log(getstoreType);
+
 			var AuthDataObject = {
 				authorizeName: getroleName,
-				storeTypeName: getstoreType,
+				storeType: getstoreType,
 				roleOrder: getroleOrder,
 				remark: getremarkAuth,
 			};

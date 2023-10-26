@@ -105,12 +105,9 @@
                             </ol>
                         </nav>
                         <div class="py-1 mb-5">
-                            <button type="button" class="btn btn btn-primary me-2">
+                            <button type="button" class="btn btn btn-primary me-2" id="addButton">
                                 <a href="3-store-information_create.html" class="text-white text-decoration-none">新增</a>
                             </button>
-                            <!-- <button type="button" class="btn btn-sm btn-primary m-2">
-                                <a href="3-store-information_update.html" class="text-white text-decoration-none">修改</a>
-                            </button> -->
                         </div>
                         <div class="input-fit mb-3">
                             <label for="searchStoreType" class="form-label">門市型態</label>
@@ -134,19 +131,12 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">選取動作</th>
-                                            <th scope="col">店號</th>
                                             <th scope="col">門市名稱</th>
-                                            <th scope="col">門市型態</th>
+                                            <th scope="col">門市類型</th>
                                             <th scope="col">店長</th>
                                             <th scope="col">電話</th>
                                             <th scope="col">地址</th>
-                                            <th scope="col">傳真</th>
-                                            <th scope="col">聯絡人</th>
                                             <th scope="col">狀態</th>
-                                            <th scope="col">更新時間</th>
-                                            <th scope="col">更新帳號</th>
-                                            <th scope="col">建立時間</th>
-                                            <th scope="col">建立帳號</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -195,8 +185,9 @@
     </script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/Public/permissionControl.js"></script>
     <script src="js/Store/Store_index.js"></script>
-    <script src="js/Public/munu.js"></script>
+    <script src="js/Public/menu.js"></script>
 
 </body>
 

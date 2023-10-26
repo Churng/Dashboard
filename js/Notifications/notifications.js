@@ -73,3 +73,7 @@ function showSuccessAddToOrderNotification() {
 function showErrorNotification() {
 	toastr.error("Error", "錯誤");
 }
+
+function showErrorAuthNotification() {
+	toastr.error("你沒有權限觀看此頁面", "提醒");
+}

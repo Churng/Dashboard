@@ -108,13 +108,21 @@
 
 
                     <div class="py-1 my-3">
-                        <button type="button" class="btn btn btn-primary me-2">
+                        <button type="button" class="btn btn btn-primary me-2" id="addButton">
                             <a href="5-partsmanagement_create.html" class="text-white text-decoration-none">新增</a>
                         </button>
-                        <!-- <button type="button" class="btn btn-sm btn-primary m-2">
-                            <a href="5-partsmanagement_update.html" class="text-white text-decoration-none">修改</a>
-                        </button> -->
-                        <!-- <button type="button" class="btn btn-sm btn-primary m-2">刪除</button> -->
+                    </div>
+
+                    <div class="row g-3 mb-5">
+                        <div class="col-sm-3">
+                            <label for="selectBrand" class="form-label">*請選擇品牌</label>
+                            <select class="form-select" id="selectBrand" required> </select>
+                        </div>
+
+                        <div class="col-sm-3 pt-sm-4" style="margin-top:22px">
+                            <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
+                            <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                        </div>
                     </div>
 
                     <div class="tableList">
@@ -124,25 +132,21 @@
                                     <tr>
                                         <th scope="col">查看倉庫</th>
                                         <th scope="col">選取項目</th>
-                                        <th scope="col">零件名稱</th>
                                         <th scope="col">零件料號</th>
+                                        <th scope="col">零件名稱</th>
                                         <th scope="col">品牌</th>
-                                        <th scope="col">零件供應商</th>
                                         <th scope="col">適用車型</th>
                                         <th scope="col">訂價</th>
-                                        <th scope="col">成本</th>
                                         <th scope="col">批發價</th>
+
                                         <th scope="col">最低批發價</th>
-                                        <th scope="col">採購中數量</th>
-                                        <th scope="col">倉庫位置</th>
-                                        <th scope="col">庫存數量</th>
-                                        <th scope="col">最低庫存量</th>
                                         <th scope="col">工時（小時）</th>
-                                        <th scope="col">描述</th>
-                                        <th scope="col">更新時間</th>
-                                        <th scope="col">更新帳號</th>
+                                        <th scope="col">採購中數量</th>
+                                        <th scope="col">庫存數量</th>
+                                        <th scope="col">倉庫總成本</th>
+
+                                        <th scope="col">最低庫存量</th>
                                         <th scope="col">建立時間</th>
-                                        <th scope="col">建立帳號</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -187,10 +191,11 @@
     </script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/Public/permissionControl.js"></script>
     <script src="js/Public/delete_function.js"></script>
     <script src="js/Public/downloadFile.js"></script>
     <script src="js/Component-management/component_index.js"></script>
-    <script src="js/Public/munu.js"></script>
+    <script src="js/Public/menu.js"></script>
 
 
 </body>

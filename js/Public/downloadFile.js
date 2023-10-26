@@ -26,7 +26,7 @@ function downloadFile(apiName, fileName) {
 			handleDownloadResponse(response, fileName, apiName);
 		},
 		error: function (error) {
-			showAPIErrorNotification();
+			showErrorFileNotification();
 		},
 	});
 }

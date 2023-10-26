@@ -40,7 +40,7 @@ function updatePageWithData(responseData) {
 		var data = responseData.returnData[i];
 
 		var modifyButtonHtml =
-			'<a href="3-store-information_update.html" class="btn btn-primary text-white modify-button" data-id="' +
+			'<a href="3-store-information_update.html" class="btn btn-primary text-white modify-button update-button" data-id="' +
 			data.id +
 			'">修改</a>';
 
@@ -49,19 +49,12 @@ function updatePageWithData(responseData) {
 		dataTable.row
 			.add([
 				modifyButtonHtml,
-				data.storeOrder,
 				data.storeName,
 				data.storeTypeName,
 				data.storeManager,
 				data.phoneNumber,
 				data.address,
-				data.fax,
-				data.contactPerson,
 				statusText,
-				data.updateTime,
-				data.updateOperator,
-				data.createTime,
-				data.createOperator,
 			])
 			.draw(false);
 	}
@@ -85,7 +78,7 @@ $(document).ready(function () {
 		var filterData = {};
 
 		if (selectedShopId) {
-			filterData.storeId = selectedShopId;
+			filterData.storeType = selectedShopId;
 		}
 		sendApiRequest(filterData);
 	});
@@ -126,4 +119,9 @@ $(document).ready(function () {
 // 點擊按鈕時使用 fetchAccountList
 $("#allBtn").on("click", function () {
 	fetchAccountList();
+});
+
+//權限控制
+$(document).ready(function () {
+	handlePermissionControl();
 });

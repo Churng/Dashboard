@@ -105,7 +105,7 @@
                             </ol>
                         </nav>
 
-
+                        <!-- 資料填寫 -->
                         <div class="py-4 my-2 input-fit">
                             <div class="mb-3">
                                 <div class="custom-file">
@@ -113,6 +113,7 @@
                                         accept="image/*" multiple>
                                 </div>
                             </div>
+                            <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
                         </div>
 
                         <div class="block-first">
@@ -126,9 +127,8 @@
                                     </div>
 
                                     <div class="col-sm-3">
-                                        <label for="C-brandId" class="form-label">*品牌</label>
-                                        <input type="text" class="form-control" id="C-brandId" name="brandId"
-                                            required="">
+                                        <label for="C-brandId" class="form-label">*請選擇品牌</label>
+                                        <select class="form-select" id="C-brandId" required> </select>
                                     </div>
 
                                     <div class="col-sm-3">
@@ -241,19 +241,25 @@
                             </form>
                         </div>
                     </div>
+
+
                 </div>
+
+
             </div>
-            <!-- Blank End -->
-
-
-            <!-- Footer Start -->
-            <!-- Footer End -->
         </div>
-        <!-- Content End -->
+    </div>
+    <!-- Blank End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <!-- Footer Start -->
+    <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!--  Boostrap JavaScript Libraries -->
@@ -269,8 +275,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/Public/downloadFile.js"></script>
     <script src="js/Component-management/component_update.js"></script>
-    <script src="js/Public/munu.js"></script>
+    <script src="js/Public/menu.js"></script>
 
 </body>
 

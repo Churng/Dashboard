@@ -4,7 +4,7 @@ function handleApiResponse(apiResponse) {
 			console.log();
 		},
 		"003": () => {
-			showErrorReLoginNotification();
+			toastr.warning(apiResponse.returnMessage);
 			setTimeout(function () {
 				window.location.href = "0-signin.html";
 			}, 1000);

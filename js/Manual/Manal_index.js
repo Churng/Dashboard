@@ -67,15 +67,13 @@ function updatePageWithData(responseData) {
 
 		dataTable.row
 			.add([
-				downloadButtonHtml,
 				buttonsHtml,
+				downloadButtonHtml,
 				data.fileName,
 				data.brandName,
 				data.year,
 				data.applicableType,
 				data.remark,
-				data.updateTime,
-				data.updateOperator,
 				data.createTime,
 				data.createOperator,
 			])
@@ -212,4 +210,9 @@ $(document).on("click", ".file-download", function () {
 	} else {
 		showWarningFileNotification();
 	}
+});
+
+//權限控制
+$(document).ready(function () {
+	handlePermissionControl();
 });

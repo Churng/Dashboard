@@ -40,7 +40,8 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
-		var modifyButtonHtml = '<a href="brand_update.html?id=' + data.id + '" class="btn btn-primary text-white">修改</a>';
+		var modifyButtonHtml =
+			'<a href="brand_update.html?id=' + data.id + '" class="btn btn-primary text-white update-button">修改</a>';
 		var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
 		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
@@ -161,4 +162,9 @@ $(document).on("click", ".delete-button", function () {
 			},
 		});
 	});
+});
+
+//權限控制
+$(document).ready(function () {
+	handlePermissionControl();
 });
