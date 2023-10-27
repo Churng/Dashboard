@@ -1,4 +1,4 @@
-function downloadFile(apiName, fileName) {
+function downloadPdfFile(apiName, fileName) {
 	const formData = new FormData();
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
@@ -22,11 +22,8 @@ function downloadFile(apiName, fileName) {
 			responseType: "blob",
 		},
 		success: function (response) {
-			if (isImageFile(fileName)) {
-				openImageInNewTab(response, fileName);
-			} else {
-				downloadFileLocally(response, fileName);
-			}
+			console.log(response);
+			openInNewTab(response, fileName);
 		},
 		error: function (error) {
 			showErrorFileNotification();
@@ -34,31 +31,19 @@ function downloadFile(apiName, fileName) {
 	});
 }
 
-// 判断文件是否是图像类型
-function isImageFile(fileName) {
-	const imageExtensions = ["jpg", "jpeg", "png", "gif"];
+// 在新标签页中打开文件
+function openInNewTab(blob, fileName) {
 	const fileExtension = getFileExtension(fileName).toLowerCase();
-	return imageExtensions.includes(fileExtension);
-}
 
-// 在新标签页中打开图像
-function openImageInNewTab(blob, fileName) {
-	const url = URL.createObjectURL(blob);
-	const newTab = window.open();
-	const imageElement = document.createElement("img");
-	imageElement.src = url;
-	newTab.document.body.appendChild(imageElement);
-}
-
-// 下载文件到本地
-function downloadFileLocally(blob, fileName) {
-	const url = URL.createObjectURL(blob);
-	const a = document.createElement("a");
-	a.href = url;
-	a.download = fileName;
-	document.body.appendChild(a);
-	a.click();
-	window.URL.revokeObjectURL(url);
+	// 只支持 PDF 文件扩展名
+	if (fileExtension === "pdf") {
+		const url = URL.createObjectURL(blob);
+		const newTab = window.open();
+		newTab.document.write('<iframe width="100%" height="100%" src="' + url + '"></iframe>');
+	} else {
+		// 不支持的文件类型
+		showErrorFileNotification();
+	}
 }
 
 // 获取文件扩展名

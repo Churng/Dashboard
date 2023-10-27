@@ -1,11 +1,3 @@
-// 零件修改更新按鈕啟用
-$(document).ready(function () {
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-		return new bootstrap.Tooltip(tooltipTriggerEl);
-	});
-});
-
 // 取得詳細資料：purcase
 $(document).ready(function () {
 	var getpurchase = localStorage.getItem("purchaseId");
@@ -257,168 +249,193 @@ $(document).on("click", ".file-download", function () {
 	}
 });
 
-//更新零件定義
-$(document).ready(function () {
-	// 送出採購
-	$("#agreePurchase").click(function (event) {
-		var formData1 = new FormData();
-		event.preventDefault(); // 阻止按钮的默认行为
-		const orderNoteValue = document.getElementById("orderNote");
+// 取消訂購：僅更新單據備註
+var form = document.getElementById("uploadForm");
+var button = document.getElementById("onlyNotePost");
 
-		var orderNote = $("#orderNote").val();
-		if (orderNoteValue.value.trim() === "") {
-			orderNoteValue.classList.add("is-invalid");
-			const additionalScrollPixels = 300;
-
-			const targetScrollPosition = orderNoteValue.offsetTop - additionalScrollPixels;
-
-			window.scroll({
-				top: targetScrollPosition,
-				behavior: "smooth",
-			});
-
-			event.preventDefault();
-			showWarningContentNotification();
+button.addEventListener("click", function (event) {
+	sendFormDataToAPI(function (response) {
+		if (response.success) {
+			// 验证通过且API请求成功，手动提交表单
+			form.submit();
+			showSuccessFileNotification();
 		} else {
-			orderNoteValue.classList.remove("is-invalid");
-			var getpurchase = localStorage.getItem("purchaseId");
-			var orderNote = $("#orderNote").val();
+			showErrorSubmitNotification();
+		}
+	});
+});
 
-			var updateData = {
-				id: getpurchase,
-				orderNote: orderNote,
-			};
+// 取消零件訂購：僅有單據備註更改
+function sendFormDataToAPI(event) {
+	var formData = new FormData();
+	var getpurchase = localStorage.getItem("purchaseId");
+	const purchaseRemarkValue = document.getElementById("purchaseRemark");
 
-			const jsonStringFromLocalStorage = localStorage.getItem("userData");
-			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-			const user_session_id = gertuserData.sessionId;
+	if (purchaseRemarkValue.value.trim() === "") {
+		purchaseRemarkValue.classList.add("is-invalid");
+		const additionalScrollPixels = 300;
 
-			// 组装发送文件所需数据
-			// chsm = session_id+action+'HBAdminPurchaseApi'
-			var action = "updatePurchaseDetail";
-			var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
-			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+		const targetScrollPosition = purchaseRemarkValue.offsetTop - additionalScrollPixels;
 
-			formData1.set("action", action);
-			formData1.set("session_id", user_session_id);
-			formData1.set("chsm", chsm);
-			formData1.set("data", JSON.stringify(updateData));
+		window.scroll({
+			top: targetScrollPosition,
+			behavior: "smooth",
+		});
 
-			$.ajax({
-				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/purchase",
-				data: formData1,
-				processData: false,
-				contentType: false,
-				success: function (response) {
+		event.preventDefault();
+		showWarningContentNotification();
+	} else {
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		var purchaseRemark = $("#purchaseRemark").val();
+
+		var updateData = {
+			id: getpurchase,
+			purchaseRemark: purchaseRemark,
+		};
+
+		// 组装发送文件所需数据
+		// chsm = session_id+action+'HBAdminPurchaseApi'
+		var action = "updatePurchaseDetail";
+		var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
+		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		$.ajax({
+			type: "POST",
+			url: "https://88bakery.tw/HBAdmin/index.php?/api/purchase",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				console.log(response);
+				handleApiResponse(response.returnCode);
+				showSuccessFileNotification();
+				localStorage.removeItem("purchaseId");
+
+				setTimeout(function () {
+					var newPageUrl = "purchaseList.html";
+					window.location.href = newPageUrl;
+				}, 3000);
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
+	}
+}
+
+// 取消訂購：僅更新單據備註
+var formData = new FormData();
+var button = document.getElementById("allPost");
+
+button.addEventListener("click", function (event) {
+	console.log(event);
+	sendAgreeDataToAPI(function (response) {
+		if (response.success) {
+			form.submit();
+			showSuccessFileNotification();
+		} else {
+			showErrorSubmitNotification();
+		}
+	});
+});
+
+// 同意零件訂購：單據備註更改、零件更新
+function sendAgreeDataToAPI(event) {
+	var formData = new FormData();
+	// var getpurchase = localStorage.getItem("purchaseId");
+	var getcompoent = localStorage.getItem("componentId");
+
+	var getComponentName = $("#componentName").val();
+	var getComponentNumber = $("#componentNumber").val();
+	var getbrandId = $("#brandId").val();
+	// var getpurchaseAmount = $("#purchaseAmount").val();
+	// var getdepotAmount = $("#depotAmount").val();
+	var getdepotPosition = $("#depotPosition").val();
+	var getprice = $("#Price").val();
+	var getcost = $("#Cost").val();
+	var getwholesalePrice = $("#WholesalePrice").val();
+	var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
+	var getcomponentSupplier = $("#supplier").val();
+	var getworkingHour = $("#workingHour").val();
+	var getsuitableCarModel = $("#suitableModel").val();
+	var getdescription = $("#description").val();
+	var getprecautions = $("#precautions").val();
+	var getlowestInventory = $("#lowestInventory").val();
+	var fileInput = document.getElementById("fileInput");
+
+	if (fileInput.files.length > 0) {
+		var updateData = {
+			id: getcompoent,
+			componentNumber: getComponentNumber,
+			brandId: getbrandId,
+			componentName: getComponentName,
+			// purchaseAmount: getpurchaseAmount,
+			// depotAmount: getdepotAmount,
+			depotPosition: getdepotPosition,
+			price: getprice,
+			cost: getcost,
+			wholesalePrice: getwholesalePrice,
+			lowestWholesalePrice: getlowestWholesalePrice,
+			componentSupplier: getcomponentSupplier,
+			workingHour: getworkingHour,
+			suitableCarModel: getsuitableCarModel,
+			description: getdescription,
+			precautions: getprecautions,
+			lowestInventory: getlowestInventory,
+			fileName: fileInput.files[0].name,
+			file: fileInput.files[0].name,
+		};
+
+		// 从localStorage中获取session_id和chsm
+		// 解析JSON字符串为JavaScript对象
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		// 组装发送文件所需数据
+		// chsm = session_id+action+'HBAdminComponentApi'
+		var action = "updateComponentDetail";
+		var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
+		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+		// 设置其他formData字段
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		$.ajax({
+			type: "POST",
+			url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				console.log(response);
+
+				if (response.returnCode == "1") {
+					sendFormDataToAPI(event);
+
 					handleApiResponse(response.returnCode);
 					showSuccessFileNotification();
 					localStorage.removeItem("purchaseId");
-
-					setTimeout(function () {
-						var newPageUrl = "purchaseList.html";
-						window.location.href = newPageUrl;
-					}, 3000);
-				},
-				error: function (error) {
-					showErrorFileNotification();
-				},
-			});
-		}
-	});
-
-	var formData2 = new FormData();
-	var uploadForm2 = document.getElementById("uploadForm2");
-
-	uploadForm2.addEventListener("submit", function (event) {
-		if (uploadForm2.checkValidity() === false) {
-			event.preventDefault();
-			event.stopPropagation();
-		} else {
-			// 处理表单提交
-
-			event.preventDefault();
-			var getcompoent = localStorage.getItem("componentId");
-			//取值
-			var getComponentName = $("#componentName").val();
-			var getComponentNumber = $("#componentNumber").val();
-			var getbrandId = $("#brandId").val();
-			// var getpurchaseAmount = $("#purchaseAmount").val();
-			// var getdepotAmount = $("#depotAmount").val();
-			var getdepotPosition = $("#depotPosition").val();
-			var getprice = $("#Price").val();
-			var getcost = $("#Cost").val();
-			var getwholesalePrice = $("#WholesalePrice").val();
-			var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
-			var getcomponentSupplier = $("#supplier").val();
-			var getworkingHour = $("#workingHour").val();
-			var getsuitableCarModel = $("#suitableModel").val();
-			var getdescription = $("#description").val();
-			var getprecautions = $("#precautions").val();
-			var getlowestInventory = $("#lowestInventory").val();
-			var fileInput = document.getElementById("fileInput");
-
-			if (fileInput.files.length > 0) {
-				var updateData = {
-					id: getcompoent,
-					componentNumber: getComponentNumber,
-					brandId: getbrandId,
-					componentName: getComponentName,
-					// purchaseAmount: getpurchaseAmount,
-					// depotAmount: getdepotAmount,
-					depotPosition: getdepotPosition,
-					price: getprice,
-					cost: getcost,
-					wholesalePrice: getwholesalePrice,
-					lowestWholesalePrice: getlowestWholesalePrice,
-					componentSupplier: getcomponentSupplier,
-					workingHour: getworkingHour,
-					suitableCarModel: getsuitableCarModel,
-					description: getdescription,
-					precautions: getprecautions,
-					lowestInventory: getlowestInventory,
-					fileName: fileInput.files[0].name,
-					file: fileInput.files[0].name,
-				};
-
-				// 从localStorage中获取session_id和chsm
-				// 解析JSON字符串为JavaScript对象
-				const jsonStringFromLocalStorage = localStorage.getItem("userData");
-				const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-				const user_session_id = gertuserData.sessionId;
-
-				// 组装发送文件所需数据
-				// chsm = session_id+action+'HBAdminComponentApi'
-				var action = "updateComponentDetail";
-				var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
-				var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-				// 设置其他formData字段
-				formData2.set("action", action);
-				formData2.set("session_id", user_session_id);
-				formData2.set("chsm", chsm);
-				formData2.set("data", JSON.stringify(updateData));
-
-				// 发送上传更新文件的请求
-				$.ajax({
-					type: "POST",
-					url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
-					data: formData2,
-					processData: false,
-					contentType: false,
-					success: function (response) {
-						handleApiResponse(response);
-						showSuccessFileNotification();
-						localStorage.removeItem("componentId");
-					},
-					error: function (error) {
-						showErrorFileNotification();
-					},
-				});
-			} else {
-				showWarningNotification();
-			}
-		}
-		uploadForm2.classList.add("was-validated");
-	});
-});
+				} else {
+					return;
+				}
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
+	} else {
+		showWarningNotification();
+	}
+}

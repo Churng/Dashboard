@@ -84,10 +84,21 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
+		// 縮圖
+		// if (data.file) {
+		// 	// 如果有文件，显示图像
+		// 	var imageElement = document.createElement("img");
+		// 	imageElement.src = "URL_TO_YOUR_IMAGE"; // 替换为您的图像URL
+		// 	imageContainer.appendChild(imageElement);
+		// } else {
+		// 	// 如果没有文件，保留该区域为空
+		// 	imageContainer.innerHTML = "";
+		// }
+
 		var downloadButtonHtml = "";
 		if (data.file) {
 			downloadButtonHtml =
-				'<button download class="btn btn-primary file-download" data-file="' +
+				'<button  class="btn btn-primary file-download" data-file="' +
 				data.file +
 				'" data-fileName="' +
 				data.fileName +
@@ -356,4 +367,15 @@ $(document).ready(function () {
 // 或者在点击按钮时调用 fetchAccountList
 $("#allBtn").on("click", function () {
 	fetchAccountList();
+});
+
+//下載檔案
+$(document).on("click", ".file-download", function () {
+	var fileName = $(this).data("file");
+	var apiName = "component";
+	if (fileName) {
+		downloadFile(apiName, fileName);
+	} else {
+		showErrorFileNotification();
+	}
 });

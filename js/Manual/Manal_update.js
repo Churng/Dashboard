@@ -44,6 +44,9 @@ $(document).ready(function () {
 				}
 				displayFileNameInInput(manualData.file);
 
+				const myButton = document.getElementById("downloadBtn");
+				myButton.setAttribute("data-file", manualData.file);
+
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
@@ -75,6 +78,7 @@ function displayFileNameInInput(fileName) {
 }
 
 // 上傳更新檔案
+
 $(document).ready(function () {
 	var formData = new FormData();
 	var uploadForm = document.getElementById("uploadForm");
@@ -147,4 +151,16 @@ $(document).ready(function () {
 		}
 		uploadForm.classList.add("was-validated");
 	});
+});
+
+// 下载檔案
+$(document).on("click", ".file-download", function (e) {
+	e.preventDefault(); // 阻止默认链接行为
+	var fileName = $(this).data("file");
+	var apiName = "manual";
+	if (fileName) {
+		downloadPdfFile(apiName, fileName);
+	} else {
+		showErrorFileNotification();
+	}
 });
