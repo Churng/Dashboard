@@ -111,7 +111,8 @@
                         <div class="py-1 mb-5">
                             <button type="button" class="btn btn btn-primary me-2" data-bs-toggle="modal"
                                 data-bs-target="#createModal">
-                                <a href="wareHouseDetail.html" class="text-white text-decoration-none">新增入庫單</a>
+                                料號查詢
+
                             </button>
 
                             <!-- Modal -->
@@ -125,12 +126,18 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            ...
+
+                                            <div class="col-auto">
+                                                <label for="componentNum" class="visually-hidden">料號</label>
+                                                <input type="text" class="form-control" id="componentNum"
+                                                    placeholder="請輸入料號查詢">
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                data-bs-dismiss="modal">取消</button>
+                                            <button id="confirm" type="button" class="btn btn-primary">確認查詢</button>
                                         </div>
                                     </div>
                                 </div>
@@ -138,21 +145,25 @@
                         </div>
 
 
-                        <div class="row mb-5">
+                        <!-- 進入搜尋零件 -->
+
+                        <div class="row g-3 mb-4">
                             <div class="col-sm-3">
-                                <label for="file-EditTime" class="form-label">單據時間</label>
-                                <input type="text" class="form-control" id="file-EditTime" placeholder="" value=""
-                                    required="">
+                                <p>開始日期</p>
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+                            <div class="col-sm-3">
+                                <p>結束日期</p>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+
+                            <div class="col-sm-3 pt-sm-4" style="margin-top: 32px;">
+                                <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
                             </div>
                         </div>
-                        <!-- 
-                        <div class="input-fit mb-5">
-                            <div class="mb-3">
-                                <label for="Search-item" class="form-label">搜尋</label>
-                                <input type="text" class="form-control" id="Search-item" placeholder="關鍵字模糊查詢">
-                            </div>
-                            <button type="submit" class="btn btn-sm btn-primary">確認</button>
-                        </div> -->
+
+
                         <!-- 表格 -->
                         <div class="tableList mt-5">
                             <div class="table-responsive parts-order-table">

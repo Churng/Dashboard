@@ -1,6 +1,6 @@
 // 取得詳細資料
 $(document).ready(function () {
-	var stockValue = localStorage.getItem("componentValue");
+	var stockValue = localStorage.getItem("wareHouseId");
 	var IdPost = JSON.stringify({ id: stockValue });
 
 	// 从localStorage中获取session_id和chsm
@@ -161,6 +161,6 @@ $(document).ready(function () {
 	$("#BackList").click(function () {
 		localStorage.removeItem("componentValue");
 		localStorage.removeItem("partId");
-		window.location.href = "wareHouseList.html"; // 替换为下一页的 URL
+		window.location.href = "wareHouseList.html";
 	});
 });

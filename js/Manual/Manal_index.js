@@ -62,12 +62,12 @@ function updatePageWithData(responseData) {
 		}
 
 		var modifyButtonHtml =
-			'<a href="2-manual-management_update.html" style="display:block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="2-manual-management_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
 		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button"  style="display:none" data-id="' +
+			'<button class="btn btn-danger"  style="display:none" data-button-type="delete" data-id="' +
 			data.id +
 			'" data-filename="' +
 			data.fileName +
@@ -227,66 +227,3 @@ $(document).on("click", ".file-download", function (e) {
 		showErrorFileNotification();
 	}
 });
-
-// 權限設定
-
-function handlePagePermissions(currentUser, currentUrl) {
-	if (currentUser.userretrunData) {
-		for (var i = 0; i < currentUser.userretrunData.length; i++) {
-			var page = currentUser.userretrunData[i];
-			if (currentUrl.includes(page.url) && Array.isArray(page.auth)) {
-				if (page.auth.includes("read")) {
-					hideButton(document.getElementById("addButton"));
-					var readButtons = document.querySelectorAll("[data-button-type='read']");
-					for (var j = 0; j < readButtons.length; j++) {
-						readButtons[j].style.display = "inline-block";
-					}
-
-					var readButtons = document.querySelectorAll("[data-button-type='download']");
-					for (var j = 0; j < readButtons.length; j++) {
-						readButtons[j].style.display = "block";
-					}
-				}
-
-				if (
-					page.auth.includes("read") &&
-					page.auth.includes("insert") &&
-					page.auth.includes("update") &&
-					page.auth.includes("delete")
-				) {
-					showButton(document.getElementById("addButton"));
-
-					var readButtons = document.querySelectorAll("[data-button-type='read']");
-					for (var j = 0; j < readButtons.length; j++) {
-						readButtons[j].style.display = "none";
-					}
-
-					var readButtons = document.querySelectorAll("[data-button-type='download']");
-					for (var j = 0; j < readButtons.length; j++) {
-						readButtons[j].style.display = "block";
-					}
-				}
-			}
-		}
-	}
-}
-
-// 创建一个函数，根据元素隐藏
-function hideButton(element) {
-	if (element) {
-		element.style.display = "none";
-	}
-}
-
-// 创建一个函数，根据按钮ID来显示按钮
-function showButton(element) {
-	if (element) {
-		element.style.display = "block";
-	}
-}
-
-// 调用权限控制函数
-var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-var currentUrl = window.location.href;
-
-// handlePagePermissions(currentUser, currentUrl);

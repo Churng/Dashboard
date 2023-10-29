@@ -21,6 +21,9 @@ function handleApiResponse(apiResponse) {
 		"007": () => {
 			toastr.warning(apiResponse.returnMessage);
 		},
+		"008": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
 	};
 
 	if (apiResponse.returnCode in codeHandlers) {
