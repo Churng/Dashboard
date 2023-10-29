@@ -168,71 +168,75 @@ $(document).ready(function () {
 			var getupdateTime = $("#EditTime").val();
 			var getupdateOperator = $("#EditAccount").val();
 
+			var updateData = {};
 			if (fileInput.files.length > 0) {
-				var updateData = {
-					id: partId,
-					componentNumber: getComponentNumber,
-					brandId: getbrandId,
-					componentName: getComponentName,
-					// purchaseAmount: getpurchaseAmount,
-					// depotAmount: getdepotAmount,
-					depotPosition: getdepotPosition,
-					price: getprice,
-					cost: getcost,
-					wholesalePrice: getwholesalePrice,
-					lowestWholesalePrice: getlowestWholesalePrice,
-					componentSupplier: getcomponentSupplier,
-					workingHour: getworkingHour,
-					suitableCarModel: getsuitableCarModel,
-					description: getdescription,
-					precautions: getprecautions,
-					lowestInventory: getlowestInventory,
-					createTime: getcreateTime,
-					updateTime: getupdateTime,
-					updateOperator: getupdateOperator,
-					fileName: fileInput.files[0].name,
-					file: fileInput.files[0].name,
-				};
-
-				// 从localStorage中获取session_id和chsm
-				// 解析JSON字符串为JavaScript对象
-				const jsonStringFromLocalStorage = localStorage.getItem("userData");
-				const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-				const user_session_id = gertuserData.sessionId;
-
-				// 组装发送文件所需数据
-				// chsm = session_id+action+'HBAdminComponentApi'
-				var action = "updateComponentDetail";
-				var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
-				var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-				// 设置其他formData字段
-				formData.set("action", action);
-				formData.set("session_id", user_session_id);
-				formData.set("chsm", chsm);
-				formData.set("data", JSON.stringify(updateData));
-
-				// 发送上传更新文件的请求
-				$.ajax({
-					type: "POST",
-					url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
-					data: formData,
-					processData: false,
-					contentType: false,
-					success: function (response) {
-						console.log(response);
-						showSuccessFileNotification();
-						localStorage.removeItem("partId");
-						var newPageUrl = "componentList.html";
-						window.location.href = newPageUrl;
-					},
-					error: function (error) {
-						showErrorFileNotification();
-					},
-				});
+				for (var i = 0; i < fileInput.files.length; i++) {
+					formData.append("component[]", fileInput.files[i]);
+				}
+				updateData.fileName = fileInput.files[0].name;
+				updateData.file = fileInput.files[0].name;
 			} else {
-				return;
+				updateData.fileName = "";
+				updateData.file = "";
 			}
+
+			updateData.id = partId;
+			updateData.componentNumber = getComponentNumber;
+			updateData.brandId = getbrandId;
+			updateData.componentName = getComponentName;
+			// purchaseAmount: getpurchaseAmount,
+			// depotAmount: getdepotAmount,
+			updateData.depotPosition = getdepotPosition;
+			updateData.price = getprice;
+			updateData.cost = getcost;
+			updateData.wholesalePrice = getwholesalePrice;
+			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+			updateData.componentSupplier = getcomponentSupplier;
+			updateData.workingHour = getworkingHour;
+			updateData.suitableCarModel = getsuitableCarModel;
+			updateData.description = getdescription;
+			updateData.precautions = getprecautions;
+			updateData.lowestInventory = getlowestInventory;
+			updateData.createTime = getcreateTime;
+			updateData.updateTime = getupdateTime;
+			updateData.updateOperator = getupdateOperator;
+
+			// 从localStorage中获取session_id和chsm
+			// 解析JSON字符串为JavaScript对象
+			const jsonStringFromLocalStorage = localStorage.getItem("userData");
+			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+			const user_session_id = gertuserData.sessionId;
+
+			// 组装发送文件所需数据
+			// chsm = session_id+action+'HBAdminComponentApi'
+			var action = "updateComponentDetail";
+			var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
+			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+			// 设置其他formData字段
+			formData.set("action", action);
+			formData.set("session_id", user_session_id);
+			formData.set("chsm", chsm);
+			formData.set("data", JSON.stringify(updateData));
+
+			// 发送上传更新文件的请求
+			$.ajax({
+				type: "POST",
+				url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					console.log(response);
+					showSuccessFileNotification();
+					localStorage.removeItem("partId");
+					var newPageUrl = "componentList.html";
+					window.location.href = newPageUrl;
+				},
+				error: function (error) {
+					showErrorFileNotification();
+				},
+			});
 		}
 		uploadForm.classList.add("was-validated");
 	});

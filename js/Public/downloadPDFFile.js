@@ -23,26 +23,34 @@ function downloadPdfFile(apiName, fileName) {
 		},
 		success: function (response) {
 			console.log(response);
-			openInNewTab(response, fileName);
+
+			downloadFile(response, fileName);
 		},
 		error: function (error) {
-			showErrorFileNotification();
+			showErrorFileNotification(); // 使用正确的错误通知函数
 		},
 	});
 }
 
 // 在新标签页中打开文件
-function openInNewTab(blob, fileName) {
+function downloadFile(blob, fileName) {
 	const fileExtension = getFileExtension(fileName).toLowerCase();
 
 	// 只支持 PDF 文件扩展名
 	if (fileExtension === "pdf") {
 		const url = URL.createObjectURL(blob);
-		const newTab = window.open();
-		newTab.document.write('<iframe width="100%" height="100%" src="' + url + '"></iframe>');
+
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = fileName;
+		link.style.display = "none";
+		document.body.appendChild(link);
+
+		link.click();
+
+		document.body.removeChild(link);
 	} else {
-		// 不支持的文件类型
-		showErrorFileNotification();
+		showErrorTypeNotification();
 	}
 }
 

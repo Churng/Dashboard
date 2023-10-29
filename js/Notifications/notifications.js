@@ -77,3 +77,7 @@ function showErrorNotification() {
 function showErrorAuthNotification() {
 	toastr.error("你沒有權限觀看此頁面", "提醒");
 }
+
+function showErrorTypeNotification() {
+	toastr.error("檔案類型非Pdf副檔名", "錯誤");
+}

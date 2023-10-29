@@ -41,13 +41,19 @@ function isImageFile(fileName) {
 	return imageExtensions.includes(fileExtension);
 }
 
-// 在新标签页中打开图像
+// 在新標籤開啟圖像
 function openImageInNewTab(blob, fileName) {
 	const url = URL.createObjectURL(blob);
 	const newTab = window.open();
 	const imageElement = document.createElement("img");
 	imageElement.src = url;
 	newTab.document.body.appendChild(imageElement);
+
+	const a = newTab.document.createElement("a");
+	a.href = url;
+	a.download = fileName;
+	a.innerText = "Download";
+	newTab.document.body.appendChild(a);
 }
 
 // 下载文件到本地
@@ -61,7 +67,6 @@ function downloadFileLocally(blob, fileName) {
 	window.URL.revokeObjectURL(url);
 }
 
-// 获取文件扩展名
 function getFileExtension(fileName) {
 	return fileName.split(".").pop();
 }

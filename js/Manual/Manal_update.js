@@ -104,50 +104,56 @@ $(document).ready(function () {
 			var updateTime = $("#EditTime").val();
 			var updateOperator = $("#EditAccount").val();
 
+			var updateData = {};
 			if (fileInput.files.length > 0) {
-				var updateData = {
-					id: partId,
-					fileName: getfileNameField,
-					brandName: getBrandName,
-					year: getyear,
-					applicableType: getapplicableType,
-					remark: getremark,
-					file: fileInput.files[0].name,
-				};
-				const jsonStringFromLocalStorage = localStorage.getItem("userData");
-				const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-				const user_session_id = gertuserData.sessionId;
-
-				// 组装上传更新文件的数据
-				var action = "updateManualDetail";
-				var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
-				var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
-
-				formData.set("action", action);
-				formData.set("session_id", user_session_id);
-				formData.set("chsm", chsm);
-				formData.set("data", JSON.stringify(updateData));
-
-				// 发送上传更新文件的请求
-				$.ajax({
-					type: "POST",
-					url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
-					data: formData,
-					processData: false,
-					contentType: false,
-					success: function (response) {
-						console.warn(response);
-						showSuccessFileNotification();
-						var newPageUrl = "manualList.html";
-						window.location.href = newPageUrl;
-					},
-					error: function (error) {
-						showErrorFileNotification();
-					},
-				});
+				for (var i = 0; i < fileInput.files.length; i++) {
+					formData.append("manual[]", fileInput.files[i]);
+				}
+				updateData.fileName = fileInput.files[0].name;
+				updateData.file = fileInput.files[0].name;
 			} else {
-				return;
+				updateData.fileName = "";
+				updateData.file = "";
 			}
+			updateData.id = partId;
+			updateData.fileName = getfileNameField;
+			updateData.brandName = getBrandName;
+			updateData.year = getyear;
+			updateData.applicableType = getapplicableType;
+			updateData.remark = getremark;
+			updateData.file = fileInput.files[0].name;
+
+			const jsonStringFromLocalStorage = localStorage.getItem("userData");
+			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+			const user_session_id = gertuserData.sessionId;
+
+			// 组装上传更新文件的数据
+			var action = "updateManualDetail";
+			var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
+			var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
+
+			formData.set("action", action);
+			formData.set("session_id", user_session_id);
+			formData.set("chsm", chsm);
+			formData.set("data", JSON.stringify(updateData));
+
+			// 发送上传更新文件的请求
+			$.ajax({
+				type: "POST",
+				url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					console.warn(response);
+					showSuccessFileNotification();
+					var newPageUrl = "manualList.html";
+					window.location.href = newPageUrl;
+				},
+				error: function (error) {
+					showErrorFileNotification();
+				},
+			});
 		}
 		uploadForm.classList.add("was-validated");
 	});

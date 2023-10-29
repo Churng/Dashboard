@@ -32,9 +32,9 @@ $(document).ready(function () {
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const brandData = responseData.returnData[0];
 				$("#brand-Name").val(brandData.brandName);
-				$("#brandTextarea1").val(brandData.remark);
+				$("#brandTextarea").val(brandData.remark);
 				$("#brand-Order").val(brandData.brandOrder);
-				$("brand-Status").val(brandData.status);
+				$("#brand-Status").val(brandData.status);
 
 				$("#BuildTime").val(brandData.createTime);
 				$("#EditTime").val(brandData.updateTime);
@@ -69,20 +69,18 @@ $(document).ready(function () {
 
 			const urlParams = new URLSearchParams(window.location.search);
 			const partId = urlParams.get("id");
-			const dataId = { id: partId };
-			const IdPost = JSON.stringify(dataId);
 
 			//取值
 			var getbrandName = $("#brand-Name").val();
 			var getbrandOrder = $("#brand-Order").val();
 			var getremark = $("#brandTextarea").val();
-			var getbrandStatus = $("brandStatus").val();
+			var getbrandStatus = $("#brand-Status").val();
 
 			var updateData = {
 				id: partId,
 				brandName: getbrandName,
 				brandOrder: getbrandOrder,
-				brandStatus: getbrandStatus,
+				status: getbrandStatus,
 				remark: getremark,
 			};
 

@@ -21,13 +21,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
 
     <!-- DataTable Stylesheet -->
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 
 
 </head>
@@ -104,11 +107,36 @@
                             </ol>
                         </nav>
 
+                        <!-- Button trigger modal -->
                         <div class="py-1 mb-5">
-                            <button type="button" class="btn btn-sm btn-primary me-2">
+                            <button type="button" class="btn btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#createModal">
                                 <a href="wareHouseDetail.html" class="text-white text-decoration-none">新增入庫單</a>
                             </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="createLabel">掃描料號</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
 
                         <div class="row mb-5">
                             <div class="col-sm-3">
@@ -131,98 +159,27 @@
                                 <table id="stockIn" class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>詳細</th>
-                                            <th class="text-center">單據序號</th>
-                                            <th>單據時間</th>
-                                            <th>填寫人員</th>
-                                            <th>填寫門市</th>
-                                            <th>單據狀態</th>
-                                            <th>訂單序號</th>
-                                            <th>訂單註記</th>
-                                            <th>零件序號</th>
-                                            <th>零件供應商</th>
-                                            <th>零件料號</th>
-                                            <th>零件名稱</th>
-                                            <th>品牌</th>
-                                            <th>適用車型</th>
-                                            <th>訂價</th>
-                                            <th>批發價</th>
-                                            <th>最低批發價</th>
-                                            <th>成本</th>
-                                            <th>工時（小時）</th>
-                                            <th>單據狀態</th>
+                                            <th scope="col">項目操作</th>
+                                            <th scope="col">單據序號</th>
+                                            <th scope="col">單據時間</th>
+                                            <th scope="col">填寫人員</th>
+                                            <th scope="col">訂單序號</th>
+                                            <th scope="col">填寫門市</th>
+                                            <th scope="col">訂單註記</th>
+                                            <th scope="col">零件序號</th>
+                                            <th scope="col">零件供應商</th>
+                                            <th scope="col">零件料號</th>
+                                            <th scope="col">零件名稱</th>
+                                            <th scope="col">品牌</th>
+                                            <th scope="col">適用車型</th>
+                                            <th scope="col">訂價</th>
+                                            <th scope="col">批發價</th>
+                                            <th scope="col">最低批發價</th>
+                                            <th scope="col">成本</th>
+                                            <th scope="col">工時（小時）</th>
+                                            <th scope="col">單據狀態</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>3</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>8000</td>
-                                            <td>5000</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>8000</td>
-                                            <td>5000</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>2</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>8000</td>
-                                            <td>5000</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                            <td>0.5</td>
-                                            <td>採購中</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -243,20 +200,36 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
+
     <!--  Boostrap JavaScript Libraries -->
-    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
 
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#stockIn');
+        $(document).ready(function () {
+            new DataTable('#stockIn');
+        });
+
     </script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/Public/downloadPdfFile.js"></script>
+    <script src="js/WareHouse/wareHouseList.js"></script>
+    <!-- <script src="js/Public/downloadFile.js"></script> -->
     <script src="js/Public/menu.js"></script>
+    <script src="js/Public/permissionControl.js"></script>
+
 </body>
 
 </html>

@@ -19,7 +19,7 @@ $(document).ready(function () {
 			var brandDataObject = {
 				brandName: getbrandName,
 				brandOrder: getbrandOrder,
-				brandTextarea: getbrandTextarea,
+				remark: getbrandTextarea,
 				status: getbrandStatus,
 			};
 

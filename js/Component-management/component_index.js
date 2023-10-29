@@ -38,6 +38,11 @@ $(document).ready(function () {
 
 			if (responseData.returnData.length > 0) {
 				brandList.selectedIndex = 1;
+				// 获取选中的品牌ID
+				selectedBrandId = brandList.value;
+
+				// 触发API请求
+				sendApiRequest({ brandId: selectedBrandId });
 			}
 		},
 		error: function (error) {
@@ -46,7 +51,7 @@ $(document).ready(function () {
 	});
 });
 
-// 列表取得
+// 列表取得：ALL
 function fetchAccountList() {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -177,82 +182,6 @@ function refreshDataList() {
 	});
 }
 
-//刪除檔案
-// $(document).on("click", ".delete-button", function () {
-// 	var formData = new FormData();
-// 	var deleteButton = $(this);
-// 	var itemId = deleteButton.data("id");
-
-// 	var data = {
-// 		id: JSON.stringify(itemId),
-// 	};
-
-// 	var jsonData = JSON.stringify(data);
-
-// 	$(document).off("click", ".confirm-delete");
-
-// 	toastr.options = {
-// 		closeButton: true, // 显示关闭按钮
-// 		timeOut: 0, // 不自动关闭
-// 		extendedTimeOut: 0, // 不自动关闭
-// 		positionClass: "toast-top-center", // 设置提示位置
-// 	};
-
-// 	toastr.warning(
-// 		"確定要刪除所選文件嗎？<br/><br><button class='btn btn-danger confirm-delete'>删除</button>",
-// 		"確定刪除",
-// 		{
-// 			allowHtml: true,
-// 		}
-// 	);
-
-// 	// 在此處註冊點擊事件以確認刪除
-// 	$(document).on("click", ".confirm-delete", function () {
-// 		// 从localStorage中获取session_id和chsm
-// 		// 解析JSON字符串为JavaScript对象
-// 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-// 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-// 		const user_session_id = gertuserData.sessionId;
-
-// 		// 组装发送文件所需数据
-// 		// chsm = session_id+action+'HBAdminComponentApi'
-// 		var action = "deleteComponentDetail";
-// 		var chsmtoDeleteFile = user_session_id + action + "HBAdminComponentApi";
-// 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
-
-// 		// 取得localstorage資料
-// 		// 将 JSON 字符串解析为 JSON 对象
-// 		var selectedDataString = localStorage.getItem("selectedData");
-// 		// var selectedData = JSON.parse(selectedDataString);
-
-// 		// 设置其他formData字段
-// 		formData.set("action", action);
-// 		formData.set("session_id", user_session_id);
-
-// 		formData.set("chsm", chsm);
-// 		formData.set("data", jsonData);
-
-// 		// 发送删除请求
-// 		$.ajax({
-// 			type: "POST",
-// 			url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
-// 			data: formData,
-// 			processData: false,
-// 			contentType: false,
-// 			success: function (response) {
-// 				setTimeout(function () {
-// 					showSuccessFileDeleteNotification();
-// 				}, 1000);
-
-// 				refreshDataList();
-// 			},
-// 			error: function (error) {
-// 				showErrorNotification();
-// 			},
-// 		});
-// 	});
-// });
-
 //刪除按鈕:外部function
 $(document).on("click", ".delete-button", function () {
 	var deleteButton = $(this);
@@ -301,63 +230,58 @@ $(document).ready(function () {
 
 	// 点击搜索按钮时触发API请求
 	$("#searchBtn").on("click", function () {
+		var dataTable = $("#partsManagement").DataTable();
+		dataTable.clear().draw();
+
 		// 创建筛选数据对象
 		var filterData = {};
 
-		if (selectedBrandId) {
-			filterData.brandId = selectedBrandId;
+		var selectedBrand = $("#selectBrand").val();
+
+		if (selectedBrand) {
+			filterData.brandId = selectedBrand;
 		}
 
 		// 发送API请求以获取数据
 		sendApiRequest(filterData);
 	});
-
-	// 创建一个函数，发送API请求以获取数据
-	function sendApiRequest(filterData) {
-		// 获取用户数据
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
-
-		// chsm = session_id+action+'HBAdminComponentApi'
-		// 組裝菜單所需資料
-		var action = "getComponentList";
-		var chsmtoGetComponentList = user_session_id + action + "HBAdminComponentApi";
-		var chsm = CryptoJS.MD5(chsmtoGetComponentList).toString().toLowerCase();
-
-		var filterDataJSON = JSON.stringify(filterData);
-		var postData = filterDataJSON;
-
-		$("#partsManagement").DataTable();
-		// 发送API请求以获取数据
-		$.ajax({
-			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
-			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
-			success: function (responseData) {
-				// 处理成功响应
-				console.log("成功响应：", responseData);
-				// 可以在这里执行其他操作
-				updatePageWithData(responseData);
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	}
 });
 
-// 加载时调用在页面 fetchAccountList
-$(document).ready(function () {
-	fetchAccountList();
-});
+// 创建一个函数，发送API请求以获取数据
+function sendApiRequest(filterData) {
+	// 获取用户数据
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminComponentApi'
+	// 組裝菜單所需資料
+	var action = "getComponentList";
+	var chsmtoGetComponentList = user_session_id + action + "HBAdminComponentApi";
+	var chsm = CryptoJS.MD5(chsmtoGetComponentList).toString().toLowerCase();
+
+	var filterDataJSON = JSON.stringify(filterData);
+	var postData = filterDataJSON;
+
+	$("#partsManagement").DataTable();
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+		data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+		success: function (responseData) {
+			// 处理成功响应
+			console.log("成功响应：", responseData);
+			// 可以在这里执行其他操作
+			updatePageWithData(responseData);
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}
 
 // 或者在点击按钮时调用 fetchAccountList
 $("#allBtn").on("click", function () {
 	fetchAccountList();
-});
-
-//權限控制
-$(document).ready(function () {
-	handlePermissionControl();
 });

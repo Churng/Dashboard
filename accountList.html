@@ -212,7 +212,7 @@
     <script src="js/main.js"></script>
     <script src="js/Public/menu.js"></script>
 
-    TODO 三個列表各自帶給後端在取值
+
     <script>
 
         //取得商店資料、存取ID
@@ -434,7 +434,8 @@
             for (var i = 0; i < responseData.returnData.length; i++) {
                 var data = responseData.returnData[i];
 
-                var modifyButtonHtml = '<a href="8-account-update.html?id=' + data.id + '" class="btn btn-primary text-white">修改</a>';
+                var modifyButtonHtml = '<a href="8-account-update.html" class="btn btn-primary text-white modify-button" data-id="' + data.id + '">修改</a>';
+
                 var statusText = data.status === '0' ? '停用' : '正常';
 
                 dataTable.row
@@ -452,6 +453,11 @@
                     .draw(false);
             }
         }
+
+        $(document).on("click", ".modify-button", function () {
+            var id = $(this).data("id");
+            localStorage.setItem("partId", id);
+        });
     </script>
 </body>
 

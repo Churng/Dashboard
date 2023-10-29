@@ -91,18 +91,13 @@ $(document).on("click", ".delete-button", function () {
 
 	var deleteButton = $(this); // 保存删除按钮元素的引用
 	var itemId = deleteButton.data("id");
-	console.log(itemId);
 
 	var data = {
 		id: JSON.stringify(itemId),
 	};
 
-	console.log(data);
-
 	// 将对象转换为 JSON 字符串
 	var jsonData = JSON.stringify(data);
-
-	console.log(jsonData);
 
 	// 解绑之前的点击事件处理程序
 	$(document).off("click", ".confirm-delete");
@@ -122,9 +117,7 @@ $(document).on("click", ".delete-button", function () {
 		}
 	);
 
-	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-delete", function () {
-		// 获取本地存储中的ID
 		// 从localStorage中获取session_id和chsm
 		// 解析JSON字符串为JavaScript对象
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -162,9 +155,4 @@ $(document).on("click", ".delete-button", function () {
 			},
 		});
 	});
-});
-
-//權限控制
-$(document).ready(function () {
-	handlePermissionControl();
 });

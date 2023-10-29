@@ -37,13 +37,22 @@ function updatePageWithData(responseData) {
 	var dataTable = $("#manual-management").DataTable();
 	dataTable.clear().draw();
 
-	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
+
+		// 權限設定 //
+
+		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		var currentUrl = window.location.href;
+		handlePagePermissions(currentUser, currentUrl);
+
+		// 按鈕設定//
+
 		var downloadButtonHtml = "";
+		var isButtonDisabled = true;
 		if (data.file) {
 			downloadButtonHtml =
-				'<button download class="btn btn-primary file-download " id="download-button" data-file="' +
+				'<button download class="btn btn-primary file-download " data-button-type="download" id="download-button" data-file="' +
 				data.file +
 				'" data-fileName="' +
 				data.fileName +
@@ -53,12 +62,12 @@ function updatePageWithData(responseData) {
 		}
 
 		var modifyButtonHtml =
-			'<a href="2-manual-management_update.html"  class="btn btn-primary text-white modify-button" data-id="' +
+			'<a href="2-manual-management_update.html" style="display:block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
 		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button"  data-id="' +
+			'<button class="btn btn-danger delete-button"  style="display:none" data-id="' +
 			data.id +
 			'" data-filename="' +
 			data.fileName +
@@ -208,55 +217,76 @@ $(document).on("click", ".delete-button", function () {
 
 //下載檔案
 
-$(document).on("click", ".file-download", function () {
+$(document).on("click", ".file-download", function (e) {
+	e.preventDefault(); // 阻止默认链接行为
 	var fileName = $(this).data("file");
-	var apiName = "manual"; // 或其他你需要的 apiName
+	var apiName = "manual";
 	if (fileName) {
-		downloadFile(apiName, fileName);
+		downloadPdfFile(apiName, fileName);
 	} else {
-		showWarningFileNotification();
+		showErrorFileNotification();
 	}
 });
 
 // 權限設定
-// $(document).ready(function () {
-// 	var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-// 	function handlePagePermissions(currentUser, currentUrl) {
-// 		if (currentUser.userretrunData) {
-// 			for (var i = 0; i < currentUser.userretrunData.length; i++) {
-// 				var page = currentUser.userretrunData[i];
-// 				if (currentUrl.includes(page.url) && Array.isArray(page.auth)) {
-// 					if (page.auth.includes("read")) {
-// 						hideButton(document.getElementById("addButton"));
-// 						var readButtons = document.querySelectorAll("[data-button-type='read']");
-// 						for (var i = 0; i < readButtons.length; i++) {
-// 							readButtons[i].style.display = "block"; // 隐藏"read"按钮
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
+function handlePagePermissions(currentUser, currentUrl) {
+	if (currentUser.userretrunData) {
+		for (var i = 0; i < currentUser.userretrunData.length; i++) {
+			var page = currentUser.userretrunData[i];
+			if (currentUrl.includes(page.url) && Array.isArray(page.auth)) {
+				if (page.auth.includes("read")) {
+					hideButton(document.getElementById("addButton"));
+					var readButtons = document.querySelectorAll("[data-button-type='read']");
+					for (var j = 0; j < readButtons.length; j++) {
+						readButtons[j].style.display = "inline-block";
+					}
 
-// 	// 创建一个函数，根据元素隐藏
-// 	function hideButton(element) {
-// 		if (element) {
-// 			element.style.display = "none";
-// 		}
-// 	}
+					var readButtons = document.querySelectorAll("[data-button-type='download']");
+					for (var j = 0; j < readButtons.length; j++) {
+						readButtons[j].style.display = "block";
+					}
+				}
 
-// 	// 创建一个函数，根据按钮ID来显示按钮
-// 	function showButton(buttonId) {
-// 		var button = document.getElementsByClassName(buttonId);
-// 		if (button) {
-// 			button.style.display = "block";
-// 		}
-// 	}
+				if (
+					page.auth.includes("read") &&
+					page.auth.includes("insert") &&
+					page.auth.includes("update") &&
+					page.auth.includes("delete")
+				) {
+					showButton(document.getElementById("addButton"));
 
-// 	// 调用权限控制函数
-// 	var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-// 	var currentUrl = window.location.href;
+					var readButtons = document.querySelectorAll("[data-button-type='read']");
+					for (var j = 0; j < readButtons.length; j++) {
+						readButtons[j].style.display = "none";
+					}
 
-// 	handlePagePermissions(currentUser, currentUrl);
-// });
+					var readButtons = document.querySelectorAll("[data-button-type='download']");
+					for (var j = 0; j < readButtons.length; j++) {
+						readButtons[j].style.display = "block";
+					}
+				}
+			}
+		}
+	}
+}
+
+// 创建一个函数，根据元素隐藏
+function hideButton(element) {
+	if (element) {
+		element.style.display = "none";
+	}
+}
+
+// 创建一个函数，根据按钮ID来显示按钮
+function showButton(element) {
+	if (element) {
+		element.style.display = "block";
+	}
+}
+
+// 调用权限控制函数
+var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+var currentUrl = window.location.href;
+
+// handlePagePermissions(currentUser, currentUrl);

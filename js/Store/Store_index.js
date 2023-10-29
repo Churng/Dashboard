@@ -120,8 +120,3 @@ $(document).ready(function () {
 $("#allBtn").on("click", function () {
 	fetchAccountList();
 });
-
-//權限控制
-$(document).ready(function () {
-	handlePermissionControl();
-});

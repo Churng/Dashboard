@@ -29,7 +29,7 @@ $(document).ready(function () {
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const shopData = responseData.returnData[0];
-				console.log(shopData.storeName, shopData.storeManager, shopData.storeType);
+
 				$("#shop-storeName").val(shopData.storeName);
 				$("#shop-storeManager").val(shopData.storeManager);
 				$("#shop-Type").val(shopData.storeType);

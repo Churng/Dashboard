@@ -157,7 +157,6 @@ $(document).ready(function () {
 				$("#EditAccount").val(componentData.getupdateOperator);
 
 				displayFileNameInInput(componentData.file);
-
 				const myButton = document.getElementById("downloadBtn");
 				myButton.setAttribute("data-file", componentData.file);
 
@@ -191,65 +190,18 @@ function displayFileNameInInput(fileName) {
 	}
 }
 
-//顯示圖片
-function showFile(fileName) {
-	const apiName = "component";
-	const formData = new FormData();
-	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-	const user_session_id = gertuserData.sessionId;
-
-	const chsmtoDeleteFile = user_session_id + apiName + fileName + "HBAdminGetFileApi";
-	const chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
-
-	formData.set("apiName", apiName);
-	formData.set("session_id", user_session_id);
-	formData.set("chsm", chsm);
-	formData.set("fileName", fileName);
-
-	$.ajax({
-		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/getFile",
-		data: formData,
-		processData: false,
-		contentType: false,
-		xhrFields: {
-			responseType: "blob",
-		},
-		success: function (response) {
-			console.log(response);
-			const imageBinaryData = response;
-
-			const imageType = "image/jpeg"; // 根據圖像類型設置
-			const imageBlob = new Blob([imageBinaryData], { type: imageType });
-			const imageUrl = URL.createObjectURL(imageBlob);
-
-			const imageElement = document.createElement("img");
-			imageElement.src = imageUrl;
-			imageElement.alt = fileName;
-
-			const viewer = window.open("");
-			viewer.document.body.appendChild(imageElement);
-		},
-		error: function (error) {
-			showAPIErrorNotification();
-		},
-	});
-}
-
 //下載檔案
 $(document).on("click", ".file-download", function () {
 	var fileName = $(this).data("file");
 	var apiName = "component";
 	if (fileName) {
 		downloadFile(apiName, fileName);
-		showFile(fileName);
 	} else {
 		showErrorFileNotification();
 	}
 });
 
-// 取消訂購：僅更新單據備註
+// 取消訂購：監聽
 var form = document.getElementById("uploadForm");
 var button = document.getElementById("onlyNotePost");
 
@@ -269,6 +221,7 @@ button.addEventListener("click", function (event) {
 function sendFormDataToAPI(event) {
 	var formData = new FormData();
 	var getpurchase = localStorage.getItem("purchaseId");
+
 	const purchaseRemarkValue = document.getElementById("purchaseRemark");
 
 	if (purchaseRemarkValue.value.trim() === "") {
@@ -293,7 +246,7 @@ function sendFormDataToAPI(event) {
 
 		var updateData = {
 			id: getpurchase,
-			purchaseRemark: purchaseRemark,
+			remark: purchaseRemark,
 		};
 
 		// 组装发送文件所需数据
@@ -331,7 +284,7 @@ function sendFormDataToAPI(event) {
 	}
 }
 
-// 取消訂購：僅更新單據備註
+// 同意訂購：監聽
 var formData = new FormData();
 var button = document.getElementById("allPost");
 

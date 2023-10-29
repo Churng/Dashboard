@@ -60,9 +60,18 @@ function updateData(responseData) {
 	var orderRemark = orderData.orderRemark;
 	var totalPrice = responseData.totalPrice;
 
+	var orderLog = orderData.orderLog;
+
 	var updateTime = orderData.updateTime;
 	var updateOperator = orderData.updateOperator;
 
+	const orderLogArray = orderData.orderLog;
+	actionNote = "";
+	if (orderLogArray.length > 0) {
+		orderLog.forEach((logItem, index) => {
+			actionNote = logItem.actionNote;
+		});
+	}
 	// 填充表单元素的值
 	$("#orderId").val(orderId);
 	$("#orderNo").val(orderNo);
@@ -73,6 +82,7 @@ function updateData(responseData) {
 	$("#brandName").val(brandName);
 	$("#orderNote").val(orderNote);
 	$("#orderRemark").val(orderRemark);
+	$("#orderLog").val(actionNote);
 
 	$("#BuildTime").val(createTime);
 	$("#EditTime").val(updateTime);
@@ -96,7 +106,6 @@ function updatePageWithData(responseData) {
 		var buttonsHtml = "";
 
 		if (data.status == 1 || data.status == 2 || data.status == 3) {
-			console.log(data.if_order_delete_component);
 			if (data.if_order_delete_component === true) {
 				buttonsHtml += '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除零件</button>';
 			}
@@ -123,6 +132,7 @@ function updatePageWithData(responseData) {
 				data.workingHour,
 				data.depotPosition,
 				data.statusName,
+				data.orderLog,
 			])
 			.draw(false);
 	});
