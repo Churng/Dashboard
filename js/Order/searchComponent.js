@@ -16,7 +16,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			const brandList = document.getElementById("selectBrand");
@@ -63,7 +63,7 @@ function fetchAccountList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/depot",
+		url: `${apiURL}/depot`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			updatePageWithData(responseData);
@@ -161,7 +161,7 @@ function refreshDataList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			updatePageWithData(responseData);
@@ -211,7 +211,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart",
+			url: `${apiURL}/shoppingCart`,
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -289,7 +289,7 @@ $(document).ready(function () {
 		// 发送API请求以获取数据
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/depot",
+			url: `${apiURL}/depot`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				// 处理成功响应
@@ -346,7 +346,7 @@ $(document).ready(function () {
 		// 发送API请求以获取数据
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/depot",
+			url: `${apiURL}/depot`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				// 处理成功响应

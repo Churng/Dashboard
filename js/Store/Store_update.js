@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
+		url: `${apiURL}/store`,
 		data: {
 			action: action,
 			session_id: user_session_id,
@@ -130,7 +130,7 @@ $(document).ready(function () {
 			// 发送文件上传请求
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
+				url: `${apiURL}/store`,
 				data: formData,
 				processData: false,
 				contentType: false,

@@ -352,3 +352,7 @@ th {
 	opacity: 0;
 	cursor: pointer;
 }
+
+#stockInPage_length {
+	position: absolute;
+}

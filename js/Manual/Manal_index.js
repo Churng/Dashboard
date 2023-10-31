@@ -1,3 +1,6 @@
+// 在需要使用 API 网址的地方使用 apiURL 变量
+// console.log(`${apiURL}`);
+
 // 取得列表
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
@@ -17,7 +20,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
+		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应
@@ -49,7 +52,6 @@ function updatePageWithData(responseData) {
 		// 按鈕設定//
 
 		var downloadButtonHtml = "";
-		var isButtonDisabled = true;
 		if (data.file) {
 			downloadButtonHtml =
 				'<button download class="btn btn-primary file-download " data-button-type="download" id="download-button" data-file="' +
@@ -62,23 +64,23 @@ function updatePageWithData(responseData) {
 		}
 
 		var modifyButtonHtml =
-			'<a href="2-manual-management_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="manualDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
 		var deleteButtonHtml =
-			'<button class="btn btn-danger"  style="display:none" data-button-type="delete" data-id="' +
+			'<button class="btn btn-danger delete-button"  style="display:none" data-button-type="delete" data-id="' +
 			data.id +
 			'" data-filename="' +
 			data.fileName +
 			'">刪除</button>';
 
 		var readButtonHtml =
-			'<a href="2-manual-management_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			'<a href="manualDetail_Rupdate.html" style="display:none margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
 			data.id +
-			'">查看</a>';
+			'">查看詳請</a>';
 
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
+		var buttonsHtml = readButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + modifyButtonHtml;
 
 		dataTable.row
 			.add([
@@ -124,7 +126,7 @@ function refreshDataList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
+		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应
@@ -145,7 +147,7 @@ $(document).on("click", ".delete-button", function () {
 	var deleteButton = $(this); // 保存删除按钮元素的引用
 	var itemId = deleteButton.data("id");
 	var itemfileName = deleteButton.data("filename");
-	console.log(itemId, itemfileName);
+	// console.log(itemId, itemfileName);
 
 	var data = {
 		fileName: itemfileName,
@@ -197,7 +199,7 @@ $(document).on("click", ".delete-button", function () {
 		// 发送删除请求
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
+			url: `${apiURL}/manual`,
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -227,3 +229,60 @@ $(document).on("click", ".file-download", function (e) {
 		showErrorFileNotification();
 	}
 });
+
+// handlePagePermissions(currentUser, currentUrl);
+
+// 權限設定
+
+function handlePagePermissions(currentUser, currentUrl) {
+	if (currentUser.userretrunData) {
+		for (var i = 0; i < currentUser.userretrunData.length; i++) {
+			var page = currentUser.userretrunData[i];
+			if (currentUrl.includes(page.url) && Array.isArray(page.auth)) {
+				if (page.auth.includes("read")) {
+					var readButtons = document.querySelectorAll("[data-button-type='read']");
+					for (var j = 0; j < readButtons.length; j++) {
+						readButtons[j].style.display = "inline-block";
+						readButtons[j].style.marginBottom = "5px";
+					}
+				}
+
+				if (page.auth.includes("insert")) {
+					showButton(document.getElementById("addButton"));
+				}
+
+				if (page.auth.includes("update")) {
+					var updateButtons = document.querySelectorAll("[data-button-type='update']");
+					for (var k = 0; k < updateButtons.length; k++) {
+						updateButtons[k].style.display = "inline-block";
+					}
+				}
+
+				if (page.auth.includes("delete")) {
+					var deleteButtons = document.querySelectorAll("[data-button-type='delete']");
+					for (var m = 0; m < deleteButtons.length; m++) {
+						deleteButtons[m].style.display = "inline-block";
+					}
+				}
+			}
+		}
+	}
+}
+
+// 创建一个函数，根据元素隐藏
+function hideButton(element) {
+	if (element) {
+		element.style.display = "none";
+	}
+}
+
+// 创建一个函数，根据按钮ID来显示按钮
+function showButton(element) {
+	if (element) {
+		element.style.display = "block";
+	}
+}
+
+// 调用权限控制函数
+var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+var currentUrl = window.location.href;

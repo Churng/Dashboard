@@ -15,7 +15,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			const brandList = document.getElementById("selectBrand");
@@ -70,7 +70,7 @@ function fetchAccountList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应
@@ -94,6 +94,14 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
+		// 權限設定 //
+
+		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		var currentUrl = window.location.href;
+		handlePagePermissions(currentUser, currentUrl);
+
+		// 按鈕設定//
+
 		var downloadButtonHtml = "";
 		if (data.file) {
 			// 如果data.file不为null，创建可以下载的按钮
@@ -109,11 +117,18 @@ function updatePageWithData(responseData) {
 		}
 
 		var modifyButtonHtml =
-			'<a href="5-partsmanagement_update.html" class="btn btn-primary text-white modify-button" data-id="' +
+			'<a href="5-partsmanagement_update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
-		var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+		var deleteButtonHtml =
+			'<button class="btn btn-danger delete-button"data-button-type="delete" data-id="' + data.id + '">刪除</button>';
+
+		var readButtonHtml =
+			'<a href="5-partsmanagement_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			data.id +
+			'">查看</a>';
+
+		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
 
 		// 查看倉庫還未設置
 		var goInventory = '<a href="#" class="btn btn-primary">點擊</a>';
@@ -168,7 +183,7 @@ function refreshDataList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应
@@ -196,7 +211,7 @@ $(document).on("click", ".delete-button", function () {
 	deleteItem(
 		"HBAdminShoppingCartApi",
 		"deleteShoppingCartDetail",
-		"https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart",
+		`${apiURL}/shoppingCart`,
 		jsonData,
 		function (response) {
 			refreshDataList();
@@ -267,7 +282,7 @@ function sendApiRequest(filterData) {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 		success: function (responseData) {
 			// 处理成功响应

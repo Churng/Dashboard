@@ -15,7 +15,7 @@ function fetchAccountList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/stockIn",
+		url: `${apiURL}/stockIn`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			handleApiResponse(responseData);
@@ -72,9 +72,6 @@ function updatePageWithData(responseData) {
 				data.id,
 				data.createTime,
 				data.createOperator,
-				data.depotId,
-				data.storeName,
-				data.createOperatorId,
 				data.componentId,
 				data.componentSupplier,
 				data.componentNumber,
@@ -141,7 +138,7 @@ $(document).ready(function () {
 		// 发送API请求以获取数据
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/stockIn",
+			url: `${apiURL}/stockIn`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				// 处理成功响应

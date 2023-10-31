@@ -56,7 +56,7 @@ $(document).ready(function () {
 
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
+				url: `${apiURL}/store`,
 				data: formData,
 				processData: false,
 				contentType: false,

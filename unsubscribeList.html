@@ -21,13 +21,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
 
     <!-- DataTable Stylesheet -->
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 
 </head>
 
@@ -103,28 +106,55 @@
                             </ol>
                         </nav>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-5">
-                            <button class="btn btn-primary " type="button">基本資料</button>
-                            <button class="btn btn-primary" type="button">照片檔案</button>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-3">
+                                <p>開始日期</p>
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+                            <div class="col-sm-3">
+                                <p>結束日期</p>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
                         </div>
 
-                        <div class="tableList">
+
+                        <div class="row g-3 mb-4">
+                            <div class="input-fit mb-3">
+                                <label for="searchStatus" class="form-label">退貨狀態</label>
+                                <select class="form-select" id="searchStatus" required="">
+                                    <option>請選擇</option>
+                                    <option value="1">[開始退貨] -> 退貨中</option>
+                                    <option value="2">[退貨完成] -> 退貨完成</option>
+                                    <option value="3">[取消退貨] -> 取消退貨</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-3 pt-sm-4" style="margin-top: 22px;">
+                                <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                            </div>
+                        </div>
+
+
+                        <div class="tableList mt-5">
                             <div class="table-responsive">
-                                <table id="orderRefund" class="display  table table-striped">
+                                <table id="Unsubscribe" class="display  table table-striped">
                                     <thead>
                                         <tr>
+                                            <th scope="col">操作項目</th>
                                             <th scope="col">單據序號</th>
                                             <th scope="col">單據時間</th>
                                             <th scope="col">填寫人員</th>
                                             <th scope="col">訂單序號</th>
                                             <th scope="col">訂單門市</th>
                                             <th scope="col">訂單註記</th>
-                                            <th scope="col">訂單狀態</th>
+                                            <th scope="col">單據狀態</th>
                                             <th scope="col">零件序號</th>
                                             <th scope="col">零件料號</th>
                                             <th scope="col">零件名稱</th>
                                             <th scope="col">適用車型</th>
-                                            <th scope="col">定價</th>
+                                            <th scope="col">訂價</th>
                                             <th scope="col">批發價</th>
                                             <th scope="col">最低批發價</th>
                                             <th scope="col">成本</th>
@@ -132,60 +162,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                            <td>Member</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -207,19 +183,53 @@
     </div>
 
     <!--  Boostrap JavaScript Libraries -->
-    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
 
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script src="js/Login/Authlogin.js"></script>
     <script>
-        new DataTable('#orderRefund');
+        $(document).ready(function () {
+            var table = $('#Unsubscribe').DataTable({
+                // columnDefs: [
+                //     {
+                //         targets: 6, // 列索引，例如 6 表示第 7 列
+                //         visible: false, // 默认隐藏列
+                //         data: function (row, type, val, meta) {
+                //             if (type === 'display' && typeof row.statusName === 'undefined') {
+                //                 return '';
+                //             } else if (type === 'display' && typeof row.statusName !== 'undefined') {
+                //                 return row.statusName;
+                //             }
+                //             return val;
+                //         },
+                //     },
+                //     // 可以添加其他列的条件性显示/隐藏
+                // ],
+            });
+        });
+
     </script>
     <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/Public/downloadPdfFile.js"></script>
+    <!-- <script src="js/Public/downloadFile.js"></script> -->
+    <script src="js/Order/unsubscribe/unsubscribeList.js"></script>
     <script src="js/Public/menu.js"></script>
+
+    <!-- 權限 -->
+    <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Public/globleAuth.js"></script>
 </body>
 
 </html>

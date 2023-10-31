@@ -19,7 +19,7 @@ $(document).ready(function () {
 	// 发送POST请求;
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/purchase",
+		url: `${apiURL}/purchase`,
 		data: {
 			action: action,
 			session_id: user_session_id,
@@ -74,7 +74,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			const brandList = document.getElementById("brandId");
@@ -122,7 +122,7 @@ $(document).ready(function () {
 	// 发送POST请求
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+		url: `${apiURL}/component`,
 		data: {
 			action: action,
 			session_id: user_session_id,
@@ -262,7 +262,7 @@ function sendFormDataToAPI(event) {
 
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/purchase",
+			url: `${apiURL}/purchase`,
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -367,17 +367,16 @@ function sendAgreeDataToAPI(event) {
 
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+			url: `${apiURL}/component`,
 			data: formData,
 			processData: false,
 			contentType: false,
 			success: function (response) {
 				console.log(response);
+				handleApiResponse(response);
 
 				if (response.returnCode == "1") {
 					sendFormDataToAPI(event);
-
-					handleApiResponse(response.returnCode);
 					showSuccessFileNotification();
 					localStorage.removeItem("purchaseId");
 				} else {

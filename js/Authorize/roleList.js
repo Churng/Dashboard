@@ -14,7 +14,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/authorize",
+		url: `${apiURL}/authorize`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应
@@ -73,7 +73,7 @@ function refreshDataList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
+		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应

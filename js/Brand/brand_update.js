@@ -20,7 +20,7 @@ $(document).ready(function () {
 	// 发送POST请求
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: {
 			action: action,
 			session_id: user_session_id,
@@ -104,7 +104,7 @@ $(document).ready(function () {
 
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/brand", // 替换为实际的上传端点 URL
+				url: `${apiURL}/brand`,
 				data: formData,
 				processData: false,
 				contentType: false,

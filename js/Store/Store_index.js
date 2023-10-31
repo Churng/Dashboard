@@ -16,7 +16,7 @@ function fetchAccountList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
+		url: `${apiURL}/store`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			handleApiResponse(responseData);
@@ -39,16 +39,31 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
+		// 權限設定 //
+
+		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		var currentUrl = window.location.href;
+		handlePagePermissions(currentUser, currentUrl);
+
+		// 按鈕設定//
+
 		var modifyButtonHtml =
-			'<a href="3-store-information_update.html" class="btn btn-primary text-white modify-button update-button" data-id="' +
+			'<a href="3-store-information_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
+
+		var readButtonHtml =
+			'<a href="3-store-information_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			data.id +
+			'">查看</a>';
+
+		var buttonsHtml = modifyButtonHtml + "&nbsp;" + readButtonHtml;
 
 		var statusText = data.status === "2" ? "停業" : "正常";
 
 		dataTable.row
 			.add([
-				modifyButtonHtml,
+				buttonsHtml,
 				data.storeName,
 				data.storeTypeName,
 				data.storeManager,
@@ -99,7 +114,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/store",
+			url: `${apiURL}/store`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				updatePageWithData(responseData);

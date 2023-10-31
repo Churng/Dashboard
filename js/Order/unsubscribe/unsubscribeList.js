@@ -6,17 +6,18 @@ function fetchAccountList() {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	// chsm = session_id+action+'HBAdminPurchaseApi'
+	// console.log(user_session_id);
+	// chsm = session_id+action+'HBAdminUnsubscribeApi'
 	// 組裝菜單所需資料
-	var action = "getPurchaseList";
-	var chsmtoGetPurchaseList = user_session_id + action + "HBAdminPurchaseApi";
-	var chsm = CryptoJS.MD5(chsmtoGetPurchaseList).toString().toLowerCase();
+	var action = "getUnsubscribeList";
+	var chsmtoGetUnsubscribeList = user_session_id + action + "HBAdminUnsubscribeApi";
+	var chsm = CryptoJS.MD5(chsmtoGetUnsubscribeList).toString().toLowerCase();
 
-	$("#partsOrder").DataTable();
+	$("#Unsubscribe").DataTable();
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: `${apiURL}/purchase`,
+		url: `${apiURL}/unsubscribe`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// 处理成功响应
@@ -32,52 +33,62 @@ function fetchAccountList() {
 
 // 表格填充
 function updatePageWithData(responseData) {
-	var dataTable = $("#partsOrder").DataTable();
+	// 清空表格数据
+	var dataTable = $("#Unsubscribe").DataTable();
 	dataTable.clear().draw();
 
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
-		// 暫時隱藏做更新
-		// var status = data.status;
-		// var modifyButtonHtml = '';
+		// 權限設定 //
 
-		// // 狀態為2採購中顯示修改
-		// if (status === 2) {
-		//     modifyButtonHtml = '<a href="purchaseDetail.html" class="btn btn-primary text-white modify-button" data-id="' + data.id + '">修改</a>';
-		// }
+		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		var currentUrl = window.location.href;
+		handlePagePermissions(currentUser, currentUrl);
+
+		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="purchaseDetail.html" class="btn btn-primary text-white modify-button" data-id="' +
+			'<a href="unsubscribeDetail.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
-			'" data-componentid="' +
-			data.componentId +
 			'">修改</a>';
 
-		var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
+		var deleteButtonHtml =
+			'<button class="btn btn-danger delete-button"  style="display:none" data-button-type="delete" data-id="' +
+			data.id +
+			'" data-filename="' +
+			data.fileName +
+			'">刪除</button>';
 
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+		var readButtonHtml =
+			'<a href="unsubscribeDetail.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			data.id +
+			'">查看</a>';
 
+		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
+
+		const orderNote = data.orderNote !== null ? data.orderNote : "無";
+		const statusName = data.statusName !== "" ? data.orderNote : "無";
+		const suitableCarModel = data.suitableCarModel !== "" ? data.orderNote : "無";
 		dataTable.row
 			.add([
 				buttonsHtml,
 				data.id,
 				data.createTime,
 				data.createOperator,
+				data.orderId,
 				data.storeName,
-				data.statusName,
-				data.orderNo,
+				orderNote,
+				statusName,
 				data.componentId,
 				data.componentNumber,
 				data.componentName,
-				data.brandName,
-				data.suitableCarModel,
+				suitableCarModel,
 				data.price,
 				data.wholesalePrice,
 				data.lowestWholesalePrice,
 				data.cost,
 				data.workingHour,
-				data.statusName,
 			])
 			.draw(false);
 	}
@@ -85,16 +96,14 @@ function updatePageWithData(responseData) {
 
 // 修改按鈕事件
 $(document).on("click", ".modify-button", function () {
-	var purchaseId = $(this).data("id");
-	var componentId = $(this).data("componentid");
+	var UnsubscribeId = $(this).data("id");
 
-	localStorage.setItem("purchaseId", JSON.stringify(purchaseId));
-	localStorage.setItem("componentId", JSON.stringify(componentId));
+	localStorage.setItem("UnsubscribeId", JSON.stringify(UnsubscribeId));
 });
 
 //更新數據
 function refreshDataList() {
-	var dataTable = $("#orderIndex").DataTable();
+	var dataTable = $("#Unsubscribe").DataTable();
 	dataTable.clear().draw();
 
 	// 从localStorage中获取session_id和chsm
@@ -103,20 +112,23 @@ function refreshDataList() {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	/// chsm = session_id+action+'HBAdminPurchaseApi'
+	// console.log(user_session_id);
+	// chsm = session_id+action+'HBAdminManualApi'
 	// 組裝菜單所需資料
-	var action = "getPurchaseList";
-	var chsmtoGetPurchaseList = user_session_id + action + "HBAdminPurchaseApi";
-	var chsm = CryptoJS.MD5(chsmtoGetPurchaseList).toString().toLowerCase();
+	var action = "getUnsubscribeList";
+	var chsmtoGetUnsubscribeList = user_session_id + action + "HBAdminUnsubscribeApi";
+	var chsm = CryptoJS.MD5(chsmtoGetUnsubscribeList).toString().toLowerCase();
 
-	$("#partsOrder").DataTable();
+	$("#Unsubscribe").DataTable();
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: `${apiURL}/purchase`,
+		url: `${apiURL}/unsubscribe`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// console.log(responseData);
+			// 处理成功响应
+			console.log("成功响应：", responseData);
+			// 可以在这里执行其他操作
 			updatePageWithData(responseData);
 		},
 		error: function (error) {
@@ -159,7 +171,6 @@ $(document).on("click", ".delete-button", function () {
 
 	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-delete", function () {
-		// 获取本地存储中的ID
 		// 从localStorage中获取session_id和chsm
 		// 解析JSON字符串为JavaScript对象
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -167,9 +178,9 @@ $(document).on("click", ".delete-button", function () {
 		const user_session_id = gertuserData.sessionId;
 
 		// 组装发送文件所需数据
-		// chsm = session_id+action+'HBAdminPurchaseApi'
-		var action = "deletePurchaseDetail";
-		var chsmtoDeleteFile = user_session_id + action + "HBAdminPurchaseApi";
+		// chsm = session_id+action+'HBAdminUnsubscribeApi'
+		var action = "deleteStockInDetail";
+		var chsmtoDeleteFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
 
 		// 设置其他formData字段
@@ -181,7 +192,7 @@ $(document).on("click", ".delete-button", function () {
 		// 发送删除请求
 		$.ajax({
 			type: "POST",
-			url: `${apiURL}/purchase`,
+			url: `${apiURL}/stockIn`,
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -210,62 +221,9 @@ $("#allBtn").on("click", function () {
 	fetchAccountList();
 });
 
-// 搜尋後清空
-function clearDateFields() {
-	$("#startDate").val("");
-	$("#endDate").val("");
-}
-
-//取得門市資料
-$(document).ready(function () {
-	// 从localStorage中获取session_id和chsm
-	// 解析JSON字符串为JavaScript对象
-	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-	const user_session_id = gertuserData.sessionId;
-
-	// chsm = session_id+action+'HBAdminStoreApi'
-	// 組裝菜單所需資料
-	var action = "getStoreList";
-	var chsmtoGetManualList = user_session_id + action + "HBAdminStoreApi";
-	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
-
-	// 发送API请求以获取数据
-	$.ajax({
-		type: "POST",
-		url: `${apiURL}/store`,
-		data: { session_id: user_session_id, action: action, chsm: chsm },
-		success: function (responseData) {
-			const storeList = document.getElementById("purchaseStore");
-			console.log(responseData);
-			const defaultOption = document.createElement("option");
-			defaultOption.text = "請選擇門市";
-			storeList.appendChild(defaultOption);
-
-			for (let i = 0; i < responseData.returnData.length; i++) {
-				const store = responseData.returnData[i];
-				const storeName = store.storeName;
-				const storeId = store.id;
-
-				const option = document.createElement("option");
-				option.text = storeName;
-				option.value = storeId;
-
-				storeList.appendChild(option);
-			}
-		},
-		error: function (error) {
-			showErrorNotification();
-		},
-	});
-});
-
-// 日期、狀態取得
-// {"storeId":1,"status":1,"stime":"2023-10-13","etime":"2023-10-21"}
-
 // 監聽欄位變動
 $(document).ready(function () {
-	var sdateValue, edateValue, storeValue, statusValue;
+	var sdateValue, edateValue, statusValue;
 
 	// 監聽起始日期
 	$("#startDate").on("change", function () {
@@ -277,15 +235,10 @@ $(document).ready(function () {
 		edateValue = $(this).val();
 	});
 
-	// 監聽門市
-	$("#purchaseStore").on("change", function () {
-		storeValue = $(this).val();
-	});
-
-	// 監聽狀態
-	$("#purchaseStatus").on("change", function () {
-		statusValue = $(this).val();
-	});
+	// // 監聽狀態
+	// $("#searchStatus").on("change", function () {
+	// 	statusValue = $(this).val();
+	// });
 
 	// 点击搜索按钮时触发API请求
 	$("#searchBtn").on("click", function () {
@@ -300,13 +253,9 @@ $(document).ready(function () {
 			filterData.etime = edateValue;
 		}
 
-		if (storeValue) {
-			filterData.storeId = storeValue;
-		}
-
-		if (statusValue) {
-			filterData.status = statusValue;
-		}
+		// if (statusValue) {
+		// 	filterData.status = statusValue;
+		// }
 
 		sendApiRequest(filterData);
 	});
@@ -316,21 +265,20 @@ $(document).ready(function () {
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// console.log(user_session_id);
-		// chsm = session_id+action+'HBAdminPurchaseApi'
+		//chsm = session_id+action+'HBAdminUnsubscribeApi'
 		// 組裝菜單所需資料
-		var action = "getPurchaseList";
-		var chsmtoGetManualList = user_session_id + action + "HBAdminPurchaseApi";
+		var action = "getUnsubscribeList";
+		var chsmtoGetManualList = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
-		var filterDataJSON = JSON.stringify(filterData);
 
+		var filterDataJSON = JSON.stringify(filterData);
 		var postData = filterDataJSON;
 
 		$("#orderIndex").DataTable();
 		// 发送API请求以获取数据
 		$.ajax({
 			type: "POST",
-			url: `${apiURL}/purchase`,
+			url: `${apiURL}/unsubscribe`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				// 处理成功响应
@@ -343,3 +291,9 @@ $(document).ready(function () {
 		});
 	}
 });
+
+// 搜尋後清空
+function clearDateFields() {
+	$("#startDate").val("");
+	$("#endDate").val("");
+}

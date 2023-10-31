@@ -956,7 +956,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			const ulList = document.querySelector(".selectBrand");
@@ -1044,7 +1044,7 @@ $(document).ready(function () {
 			// 发送文件上传请求
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/authorize",
+				url: `${apiURL}/authorize`,
 				data: formData,
 				processData: false,
 				contentType: false,

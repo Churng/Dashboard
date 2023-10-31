@@ -18,7 +18,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			console.log(responseData);
@@ -40,10 +40,28 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
+		// 權限設定 //
+
+		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		var currentUrl = window.location.href;
+		handlePagePermissions(currentUser, currentUrl);
+
+		// 按鈕設定//
+
 		var modifyButtonHtml =
-			'<a href="brand_update.html?id=' + data.id + '" class="btn btn-primary text-white update-button">修改</a>';
-		var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+			'<a href="brand_update.html?id=' +
+			data.id +
+			'" class="btn btn-primary text-white" style="display:none" data-button-type="update">修改</a>';
+		var deleteButtonHtml =
+			'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
+			data.id +
+			'">刪除</button>';
+
+		var readButtonHtml =
+			'<a href="brand_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			data.id +
+			'">查看</a>';
+		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
 
 		dataTable.row
 			.add([buttonsHtml, data.brandName, data.brandOrder, data.statusName, data.createTime, data.createOperator])
@@ -73,7 +91,7 @@ function refreshDataList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			console.log(responseData);
@@ -139,7 +157,7 @@ $(document).on("click", ".delete-button", function () {
 		// 发送删除请求
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+			url: `${apiURL}/brand`,
 			data: formData,
 			processData: false,
 			contentType: false,

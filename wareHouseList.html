@@ -111,7 +111,7 @@
                         <div class="py-1 mb-5">
                             <button type="button" class="btn btn btn-primary me-2" data-bs-toggle="modal"
                                 data-bs-target="#createModal">
-                                料號查詢
+                                新增入庫單
 
                             </button>
 
@@ -130,7 +130,7 @@
                                             <div class="col-auto">
                                                 <label for="componentNum" class="visually-hidden">料號</label>
                                                 <input type="text" class="form-control" id="componentNum"
-                                                    placeholder="請輸入料號查詢">
+                                                    placeholder="請輸入料號、零件序號查詢">
                                             </div>
 
                                         </div>
@@ -174,9 +174,6 @@
                                             <th scope="col">單據序號</th>
                                             <th scope="col">單據時間</th>
                                             <th scope="col">填寫人員</th>
-                                            <th scope="col">訂單序號</th>
-                                            <th scope="col">填寫門市</th>
-                                            <th scope="col">訂單註記</th>
                                             <th scope="col">零件序號</th>
                                             <th scope="col">零件供應商</th>
                                             <th scope="col">零件料號</th>
@@ -234,6 +231,7 @@
 
     </script>
     <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/downloadPdfFile.js"></script>
     <script src="js/WareHouse/wareHouseList.js"></script>

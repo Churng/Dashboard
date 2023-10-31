@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>門市資料-新增門市</title>
+    <title>手冊管理 / 修改資料</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -94,82 +94,55 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row  bg-light rounded p-3 mx-0">
 
-                    <h3>門市資料新增</h3>
-
+                    <h3>零件手冊修改</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="storeList.html">門市資料</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">門市新增</li>
+                            <li class="breadcrumb-item"><a href="manualList.html">手冊管理</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">零件手冊資料 / 修改</li>
                         </ol>
                     </nav>
 
+                    <form id="uploadForm" class="needs-validation" novalidate>
+                        <div class="py-4 my-2 input-fit">
+                            <div class="mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="form-control" name="manual[]" id="fileInput"
+                                        accept="application/pdf" multiple>
+                                </div>
+                                <button id="downloadBtn" download class="btn btn-primary file-download my-3">下載</button>
+                            </div>
+                        </div>
 
-                    <div class="block-first mt-5">
-                        <h4>門市資料</h4>
-                        <form id="uploadForm" class="needs-validation" novalidate>
+                        <div class="block-first">
+                            <h4>零件手冊資料</h4>
                             <div class="row g-3">
                                 <div class="col-sm-6">
-                                    <label for="shop-storeName" class="form-label">*門市名稱</label>
-                                    <input type="text" class="form-control" id="shop-storeName" name="storeName"
+                                    <label for="fileNameField" class="form-label">*檔案名稱</label>
+                                    <input type="text" class="form-control" id="fileNameField" name="fileName">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="M-BrandName" class="form-label">*廠牌</label>
+                                    <input type="text" class="form-control" id="M-BrandName" name="brandName" required>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="M-year" class="form-label">*年份</label>
+                                    <input type="year" class="form-control" id="M-year" name="year" required>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="M-applicableType" class="form-label">*適用車型</label>
+                                    <input type="text" class="form-control" id="M-applicableType" name="applicableType"
                                         required>
                                 </div>
 
-                                <div class="col-sm-6">
-                                    <label for="shop-storeManager" class="form-label">*店長</label>
-                                    <input type="text" class="form-control" id="shop-storeManager" name="storeManager"
-                                        required>
-                                </div>
 
-                                <div class="col-sm-6">
-                                    <label for="shop-Type" class="form-label">*門市類型</label>
-                                    <select class="form-select" id="shop-Type" name="storeType" required>
-                                        <option value="1">總部</option>
-                                        <option value="2">分公司</option>
-                                        <option value="3">加盟店</option>
-                                        <option value="4">同行</option>
-                                    </select>
+                                <div class="col mb-3">
+                                    <label for="M-remark" class="form-label">備註</label>
+                                    <textarea class="form-control" id="M-remark" rows="3" name="remark"
+                                        placeholder="若無請填N/A" required></textarea>
                                 </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-ContactPerson" class="form-label">*聯絡人</label>
-                                    <input type="text" class="form-control" id="shop-ContactPerson" name="contactPerson"
-                                        required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-phoneNumber" class="form-label">*電話</label>
-                                    <input type="tel" class="form-control" id="shop-phoneNumber" name="phoneNumber"
-                                        required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-FaxNumber" class="form-label">*傳真</label>
-                                    <input type="text" class="form-control" id="shop-FaxNumber" name="fax" required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-TaxNumber" class="form-label">*統一編號</label>
-                                    <input type="text" class="form-control" id="shop-TaxNumber" name="taxId" required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-status" class="form-label">*狀態</label>
-                                    <select class="form-select" id="shop-status" name="status" required>
-                                        <option value="1">正常</option>
-                                        <option value="2">停業</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-address" class="form-label">*住址</label>
-                                    <input type="text" class="form-control" id="shop-address" name="address" required>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label for="shop-order" class="form-label">*店號</label>
-                                    <input type="text" class="form-control" id="shop-order" name="storeOrder" required>
-                                </div>
-
                             </div>
 
                             <hr class="my-4">
@@ -190,13 +163,13 @@
                                     <input type="text" class="form-control" id="EditAccount" disabled>
                                 </div>
                                 <div class="text-center w-100 pt-3">
-                                    <button id="saveButton" class="w-25 btn btn-primary btn-md"
+                                    <button id="updateButton" class="w-25 btn btn-primary btn-md"
                                         type="submit">儲存</button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
 
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- Blank End -->
@@ -227,14 +200,14 @@
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Public/create_showInfo.js"></script>
-    <script src="js/Store/Store_create.js"></script>
+    <script src="js/Manual/Manal_read.js"></script>
+    <script src="js/Public/downloadPDFFile.js"></script>
     <script src="js/Public/menu.js"></script>
+    <script src="js/Public/globleAuth.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/globleAuth.js"></script>
-
+    <!-- <script src="js/Public/globleAuth.js"></script> -->
 </body>
 
 </html>

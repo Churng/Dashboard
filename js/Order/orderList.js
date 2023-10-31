@@ -18,7 +18,7 @@ function fetchAccountList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/order",
+		url: `${apiURL}/order`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			console.log(responseData);
@@ -93,7 +93,7 @@ function refreshDataList() {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/order",
+		url: `${apiURL}/order`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			// console.log(responseData);
@@ -161,7 +161,7 @@ $(document).on("click", ".delete-button", function () {
 		// 发送删除请求
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+			url: `${apiURL}/component`,
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -241,7 +241,7 @@ $(document).ready(function () {
 		// 发送API请求以获取数据
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/order",
+			url: `${apiURL}/order`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				// 处理成功响应

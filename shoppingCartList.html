@@ -230,6 +230,7 @@
 
     </script>
     <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/menu.js"></script>
 
@@ -254,7 +255,7 @@
             // 发送API请求以获取数据
             $.ajax({
                 type: "POST",
-                url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+                url: `${apiURL}/brand`,
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
                     const brandList = document.getElementById("selectBrand");
@@ -307,7 +308,7 @@
             // 发送API请求以获取数据
             $.ajax({
                 type: "POST",
-                url: "https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart",
+                url: `${apiURL}/shoppingCart`,
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
                     console.log(responseData, '購物車');
@@ -421,7 +422,7 @@
             // 将数据发送到服务器的API
             $.ajax({
                 type: "POST",
-                url: "https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart",
+                url: `${apiURL}/shoppingCart`,
                 data: formData,
                 processData: false, // 不处理数据
                 contentType: false, // 不设置内容类型
@@ -458,7 +459,7 @@
             // 发送API请求以获取数据
             $.ajax({
                 type: "POST",
-                url: "https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart",
+                url: `${apiURL}/shoppingCart`,
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
                     console.log(responseData);
@@ -526,7 +527,7 @@
                 // 发送删除请求
                 $.ajax({
                     type: "POST",
-                    url: "https://88bakery.tw/HBAdmin/index.php?/api/shoppingCart",
+                    url: `${apiURL}/shoppingCart`,
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -575,7 +576,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'https://88bakery.tw/HBAdmin/index.php?/api/order',
+                    url: `${apiURL}/order`,
                     data: formData,
                     processData: false,
                     contentType: false,

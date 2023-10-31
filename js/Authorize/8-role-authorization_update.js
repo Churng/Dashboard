@@ -897,7 +897,79 @@ $(document).ready(function () {
 });
 
 //詳細內容
+let getBrandId;
+var originalBrandData = []; //品牌原始資料
+var originalMenuAuthorizeData = []; //表格選項原始資料
 $(document).ready(function () {
+	var partId = localStorage.getItem("partId");
+	const dataId = { id: partId };
+	const IdPost = JSON.stringify(dataId);
+
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminAuthorizeApi'
+	// 组装详细数据所需数据
+	action = "getAuthorizeDetail";
+	var chsmtoGetManualDetail = user_session_id + action + "HBAdminAuthorizeApi";
+	chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
+
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/authorize`,
+		data: {
+			action: action,
+			session_id: user_session_id,
+			chsm: chsm,
+			data: IdPost,
+		},
+		success: function (authResponse) {
+			handleApiResponse(authResponse);
+			console.log(authResponse);
+
+			if (authResponse.returnCode === "1" && authResponse.returnData.length > 0) {
+				const AuthData = authResponse.returnData[0];
+
+				var storeTypeValue = AuthData.storeType;
+
+				// 处理详细数据
+				$("#roleName").val(AuthData.authorizeName);
+				$("#storeType").val(storeTypeValue);
+				$("#remarkAuth").val(AuthData.remark);
+				$("#roleOrder").val(AuthData.roleOrder);
+				$("#BuildTime").val(AuthData.createTime);
+				$("#EditTime").val(AuthData.updateTime);
+				$("#EditAccount").val(AuthData.updateOperator);
+
+				//品牌內容
+				handleBrandId(AuthData.brandIdList);
+				originalBrandData = JSON.parse(AuthData.brandIdList);
+
+				// 處理表格
+				if (AuthData.menuAuthorize && AuthData.menuAuthorize !== "undefined") {
+					originalMenuAuthorizeData = JSON.parse(AuthData.menuAuthorize);
+					console.log(originalMenuAuthorizeData);
+				} else {
+					// 处理 menuAuthorize 为 undefined 的情况
+					console.log("menuAuthorize is undefined");
+				}
+				// 表格标识符数组
+				var tableIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 使用循环为不同的表格填充复选框
+				for (var i = 0; i < tableIds.length; i++) {
+					fillCheckboxes(originalMenuAuthorizeData, tableIds[i]);
+				}
+
+				// 填充完毕后隐藏加载中的spinner
+				$("#spinner").hide();
+			}
+		},
+	});
+});
+
+//品牌列表
+function handleBrandId(getBrandId) {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -905,7 +977,7 @@ $(document).ready(function () {
 	const user_session_id = gertuserData.sessionId;
 
 	// chsm = session_id+action+'HBAdminBrandApi'
-	// 组装菜单所需数据
+	// 組裝菜單所需資料
 	var action = "getBrandList";
 	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
 	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
@@ -913,114 +985,88 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
-		success: function (brandResponse) {
-			var partId = localStorage.getItem("partId");
-			const dataId = { id: partId };
-			const IdPost = JSON.stringify(dataId);
+		success: function (responseData) {
+			const ulList = document.querySelector(".selectBrand");
 
-			// chsm = session_id+action+'HBAdminAuthorizeApi'
-			// 组装详细数据所需数据
-			action = "getAuthorizeDetail";
-			var chsmtoGetManualDetail = user_session_id + action + "HBAdminAuthorizeApi";
-			chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
+			for (let i = 0; i < responseData.returnData.length; i++) {
+				const brand = responseData.returnData[i];
+				const brandName = brand.brandName;
+				const brandId = brand.id;
 
-			$.ajax({
-				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/authorize",
-				data: {
-					action: action,
-					session_id: user_session_id,
-					chsm: chsm,
-					data: IdPost,
-				},
-				success: function (authResponse) {
-					console.log(authResponse);
-					// 获取详细数据成功后，处理数据和更新复选框
-					if (authResponse.returnCode === "1" && authResponse.returnData.length > 0) {
-						const AuthData = authResponse.returnData[0];
+				const li = document.createElement("li");
+				li.classList.add("form-check");
 
-						var storeTypeValue = AuthData.storeType;
+				const input = document.createElement("input");
+				input.classList.add("form-check-input");
+				input.type = "checkbox";
+				input.value = "";
+				input.id = brandId;
 
-						// 处理详细数据
-						$("#roleName").val(AuthData.authorizeName);
-						$("#storeType").val(storeTypeValue);
-						$("#selectBrand").val(AuthData.year);
-						$("#remarkAuth").val(AuthData.remark);
-						$("#roleOrder").val(AuthData.roleOrder);
-						$("#BuildTime").val(AuthData.createTime);
-						$("#EditTime").val(AuthData.updateTime);
-						$("#EditAccount").val(AuthData.updateOperator);
+				// 根据详细数据中的 brandIdList 来判断是否选中该复选框
+				if (getBrandId.includes(brandId)) {
+					input.checked = true;
+				}
 
-						// 填充完毕后隐藏加载中的spinner
-						$("#spinner").hide();
+				const label = document.createElement("label");
+				label.classList.add("form-check-label");
+				label.htmlFor = brandId;
+				label.textContent = brandName;
 
-						// 處理表格
-						var menuAuthorizeData = JSON.parse(AuthData.menuAuthorize);
+				li.appendChild(input);
+				li.appendChild(label);
 
-						// 表格标识符数组
-						var tableIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				ulList.appendChild(li);
 
-						// 使用循环为不同的表格填充复选框
-						for (var i = 0; i < tableIds.length; i++) {
-							fillCheckboxes(menuAuthorizeData, tableIds[i]);
-						}
-
-						// 处理品牌列表
-						const ulList = document.querySelector(".selectBrand");
-
-						for (let i = 0; i < brandResponse.returnData.length; i++) {
-							const brand = brandResponse.returnData[i];
-							const brandName = brand.brandName;
-							const brandId = brand.id;
-
-							const li = document.createElement("li");
-							li.classList.add("form-check");
-
-							const input = document.createElement("input");
-							input.classList.add("form-check-input");
-							input.type = "checkbox";
-							input.value = "";
-							input.id = brandId;
-
-							// 根据详细数据中的 brandIdList 来判断是否选中该复选框
-							if (AuthData.brandIdList.includes(brandId)) {
-								input.checked = true;
-							}
-
-							const label = document.createElement("label");
-							label.classList.add("form-check-label");
-							label.htmlFor = brandId;
-							label.textContent = brandName;
-
-							li.appendChild(input);
-							li.appendChild(label);
-
-							ulList.appendChild(li);
-						}
-					} else {
-						showErrorNotification();
-					}
-				},
-				error: function (error) {
-					showErrorNotification();
-				},
-			});
+				// 添加事件监听器，每次点击复选框都会更新选中的品牌名称
+				input.addEventListener("change", function () {
+					updateSelectedBrands(ulList, responseData);
+				});
+			}
+			// 初始化时调用一次以显示初始选中的品牌名称
+			updateSelectedBrands(ulList, responseData);
 		},
 		error: function (error) {
 			showErrorNotification();
 		},
 	});
-});
+}
+// 更新選中名稱並顯示在頁面上
+function updateSelectedBrands(ulList, responseData) {
+	const selectedBrandNames = [];
+	const checkboxes = ulList.querySelectorAll("input[type='checkbox']");
+	checkboxes.forEach((checkbox) => {
+		if (checkbox.checked) {
+			const brandId = checkbox.id;
+			const brand = responseData.returnData.find((item) => item.id === brandId);
+			if (brand) {
+				selectedBrandNames.push(brand.brandName);
+			}
+		}
+	});
+
+	// 选择另一个 <ul> 元素用于显示选中的品牌名称
+	const showSelectBrandList = document.querySelector("#showSelectBrand");
+
+	// 清空 <ul> 元素中的内容
+	showSelectBrandList.innerHTML = "";
+
+	// 为每个选中的品牌名称创建 <li> 元素并添加到 <ul> 中
+	selectedBrandNames.forEach((brandName) => {
+		const li = document.createElement("li");
+		li.textContent = brandName;
+		showSelectBrandList.appendChild(li);
+	});
+}
 
 // 回填表格內容
-function fillCheckboxes(menuAuthorizeData, tableId) {
+function fillCheckboxes(originalMenuAuthorizeData, tableId) {
 	var $table = $("#authorize-management-" + tableId);
 
-	for (var id in menuAuthorizeData) {
-		if (menuAuthorizeData.hasOwnProperty(id)) {
-			var columnsToCheck = menuAuthorizeData[id];
+	for (var id in originalMenuAuthorizeData) {
+		if (originalMenuAuthorizeData.hasOwnProperty(id)) {
+			var columnsToCheck = originalMenuAuthorizeData[id];
 
 			for (var i = 0; i < columnsToCheck.length; i++) {
 				var columnToCheck = columnsToCheck[i];
@@ -1033,8 +1079,7 @@ function fillCheckboxes(menuAuthorizeData, tableId) {
 }
 
 // 選取checkbox 整理打包
-var jsonData;
-
+var newAuthSelectData = [];
 $(document).ready(function () {
 	var selectedData = {};
 	// 取得的每一checkbox資料
@@ -1061,6 +1106,17 @@ $(document).ready(function () {
 				}
 			}
 
+			// 在这里检查原始数据并添加未更改的数据
+			if (originalMenuAuthorizeData[id]) {
+				// 获取原始数据中的选中列
+				var originalSelectedColumns = originalMenuAuthorizeData[id];
+
+				// 如果用户取消选中了所有列，但原始数据中有选择的列，将它们添加回newAuthSelectData中
+				if (newAuthSelectData[id] && newAuthSelectData[id].length === 0 && originalSelectedColumns.length > 0) {
+					newAuthSelectData[id] = originalSelectedColumns.slice(); // 复制原始数据
+				}
+			}
+
 			// 将选中数据组装成指定的格式
 			var formattedData = {};
 			for (var id in selectedData) {
@@ -1070,8 +1126,9 @@ $(document).ready(function () {
 			}
 
 			// 使用 jQuery 将对象转换为 JSON 字符串
-			jsonData = formattedData;
-			console.log();
+			newAuthSelectData = formattedData;
+			console.log(newAuthSelectData);
+			console.log(originalMenuAuthorizeData);
 		}
 	});
 });
@@ -1098,8 +1155,6 @@ $(document).ready(function () {
 			var getremarkAuth = $("#remarkAuth").val();
 			var getroleOrder = $("#roleOrder").val();
 
-			console.log(getstoreType);
-
 			var AuthDataObject = {
 				id: partId,
 				authorizeName: getroleName,
@@ -1125,13 +1180,42 @@ $(document).ready(function () {
 			formData.set("session_id", user_session_id);
 			formData.set("chsm", chsm);
 			formData.set("data", JSON.stringify(AuthDataObject));
-			formData.set("menuAuthorize", JSON.stringify(jsonData));
-			formData.set("brandIdList", JSON.stringify(formattedString));
+			// formData.set("menuAuthorize", JSON.stringify(jsonData));
+
+			// 比较新选择的数据和原始数据
+			var modifiedAuthData = {};
+			for (var id in newAuthSelectData) {
+				if (newAuthSelectData.hasOwnProperty(id)) {
+					if (
+						!originalMenuAuthorizeData.hasOwnProperty(id) ||
+						JSON.stringify(newAuthSelectData[id]) !== JSON.stringify(originalMenuAuthorizeData[id])
+					) {
+						modifiedAuthData[id] = newAuthSelectData[id];
+					}
+				}
+			}
+
+			// 如果有任何更改，添加到新地方，否则使用原始数据
+			var finalAuthData = Object.keys(modifiedAuthData).length > 0 ? modifiedAuthData : originalMenuAuthorizeData;
+
+			// 在这里检查是否有没有更改的原始数据
+			for (var id in originalMenuAuthorizeData) {
+				if (!finalAuthData.hasOwnProperty(id)) {
+					finalAuthData[id] = originalMenuAuthorizeData[id];
+				}
+			}
+
+			// 检查是否有更改的品牌数据
+			if (formattedString.length > 0) {
+				formData.set("brandIdList", JSON.stringify(formattedString));
+			} else {
+				formData.set("brandIdList", JSON.stringify(originalBrandData));
+			}
 
 			// 发送文件上传请求
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/authorize",
+				url: `${apiURL}/authorize`,
 				data: formData,
 				processData: false,
 				contentType: false,
@@ -1151,8 +1235,8 @@ $(document).ready(function () {
 	});
 });
 
-//監聽品牌複選
-var formattedString = [];
+// 監聽品牌複選
+var formattedString = []; //修改資料
 $(document).ready(function () {
 	$(".selectBrand").on("change", 'input[type="checkbox"]', function () {
 		const selectedIds = [];
@@ -1167,7 +1251,11 @@ $(document).ready(function () {
 			}
 		});
 
-		formattedString = selectedIds;
-		// console.log(formattedString);
+		// 检查selectedIds是否与originalData相同
+		if (selectedIds.length > 0 && JSON.stringify(selectedIds) !== JSON.stringify(originalBrandData)) {
+			formattedString = selectedIds;
+		} else {
+			formattedString = originalBrandData;
+		}
 	});
 });

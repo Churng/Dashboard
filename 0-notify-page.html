@@ -74,8 +74,8 @@
                                 class="fa fa-tachometer-alt me-2"></i>零件手冊管理</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="manualList.html" class="dropdown-item">零件手冊查詢</a>
-                            <a href="2-manual-management_create.html" class="dropdown-item">零件手冊新增</a>
-                            <a href="2-manual-management_update.html" class="dropdown-item">零件手冊修改</a>
+                            <a href="manualDetail_update.html" class="dropdown-item">零件手冊新增</a>
+                            <a href="manualDetail_update.html" class="dropdown-item">零件手冊修改</a>
                         </div>
                     </div>
 
@@ -268,6 +268,7 @@
 
 
     <!-- Datatable Libraries -->
+    <script src="config/api-config.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
@@ -299,7 +300,7 @@
             // 发送API请求以获取数据
             $.ajax({
                 type: 'POST',
-                url: 'https://88bakery.tw/HBAdmin/index.php?/api/notification',
+                url: `${apiURL}/notification`,
                 data: { session_id: user_session_id, action: action, chsm: chsm },
                 success: function (responseData) {
                     // 处理成功响应

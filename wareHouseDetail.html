@@ -31,8 +31,6 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-
-
 </head>
 
 <body>
@@ -108,71 +106,71 @@
                         </nav>
                         <div class="block-first">
                             <h4 class="mt-5">單據資料</h4>
+
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-3">
+                                    <label for="WarehouseId" class="form-label">單據序號</label>
+                                    <input type="text" class="form-control" id="WarehouseId" placeholder="" value=""
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label for="createTime" class="form-label">單據時間</label>
+                                    <input type="text" class="form-control" id="createTime" placeholder="" value=""
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label for="createOperator" class="form-label">填寫人員</label>
+                                    <input type="text" class="form-control" id="createOperator" placeholder="" value=""
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label for="storeName" class="form-label">填寫門市</label>
+                                    <input type="text" class="form-control" id="storeName" placeholder="" value=""
+                                        disabled>
+                                </div>
+
+                            </div>
+
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="statusName" class="form-label">單據狀態</label>
+                                    <input type="text" class="form-control" id="statusName" placeholder="" value="5"
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="sourceType" class="form-label">來源類型</label>
+                                    <select class="form-select" id="sourceType" disabled>
+                                        <option value="1">外部零件</option>
+                                        <option value="2">退貨</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="file-EditTime" class="form-label">來源單號</label>
+                                    <input type="text" class="form-control" id="file-EditTime" placeholder="stockInNo"
+                                        value="" required="">
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="remark" class="form-label">單據備註</label>
+                                    <textarea class="form-control" id="remark" rows="3">remark</textarea>
+                                </div>
+                            </div>
+
+
+                            <h4>入庫資料</h4>
                             <form id="uploadForm" class="needs-validation" novalidate>
-                                <div class="row g-3 mb-5">
-                                    <div class="col-sm-3">
-                                        <label for="WarehouseId" class="form-label">單據序號</label>
-                                        <input type="text" class="form-control" id="WarehouseId" placeholder="" value=""
-                                            disabled>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <label for="createTime" class="form-label">單據時間</label>
-                                        <input type="text" class="form-control" id="createTime" placeholder="" value=""
-                                            disabled>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <label for="createOperator" class="form-label">填寫人員</label>
-                                        <input type="text" class="form-control" id="createOperator" placeholder=""
-                                            value="" disabled>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <label for="storeName" class="form-label">填寫門市</label>
-                                        <input type="text" class="form-control" id="storeName" placeholder="" value=""
-                                            disabled>
-                                    </div>
-
-                                </div>
-
-                                <div class="row g-3 mb-5">
-                                    <div class="col-sm-4">
-                                        <label for="statusName" class="form-label">單據狀態</label>
-                                        <input type="text" class="form-control" id="statusName" placeholder="" value="5"
-                                            disabled>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label for="sourceType" class="form-label">來源類型</label>
-                                        <select class="form-select" id="sourceType" disabled>
-                                            <option value="1">外部零件</option>
-                                            <option value="2">退貨</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label for="file-EditTime" class="form-label">來源單號</label>
-                                        <input type="text" class="form-control" id="file-EditTime"
-                                            placeholder="stockInNo" value="" required="">
-                                    </div>
-
-                                    <div class="col-sm-6 mb-3">
-                                        <label for="remark" class="form-label">單據備註</label>
-                                        <textarea class="form-control" id="remark" rows="3">remark</textarea>
-                                    </div>
-
-                                    <h4>入庫資料</h4>
-
-                                    <div class="col-sm-4">
-                                        <label for="amount" class="form-label">零件數量</label>
-                                        <input type="number" class="form-control" id="amount" placeholder="">
-                                    </div>
-
+                                <div class="col-sm-4">
+                                    <label for="amount" class="form-label">零件數量</label>
+                                    <input type="number" class="form-control" id="amount" placeholder="" required>
                                 </div>
 
 
-                                <div class="block-second">
+                                <div class="block-second mt-5">
                                     <h4>零件定義</h4>
 
                                     <div class="py-4 my-2 input-fit">
@@ -261,26 +259,24 @@
                                     <div class="row g-3 mb-5">
                                         <div class="col-sm-4">
                                             <label for="BuildTime" class="form-label">建立時間</label>
-                                            <input type="text" class="form-control" id="BuildTime" placeholder=""
-                                                value="" disabled>
+                                            <input type="text" class="form-control" id="BuildTime" disabled>
                                         </div>
 
                                         <div class="col-sm-4">
                                             <label for="EditTime" class="form-label">修改時間</label>
-                                            <input type="text" class="form-control" id="EditTime" placeholder=""
-                                                value="" disabled>
+                                            <input type="text" class="form-control" id="EditTime" disabled>
                                         </div>
 
                                         <div class="col-sm-4">
                                             <label for="EditAccount" class="form-label">修改帳號</label>
-                                            <input type="text" class="form-control" id="EditAccount" placeholder=""
-                                                value="" disabled>
+                                            <input type="text" class="form-control" id="EditAccount" disabled>
                                         </div>
+
+
                                         <div class="text-center w-100 pt-3">
                                             <button class="w-25 btn btn-primary btn-md" type="submit">送出</button>
-                                            <button class="w-25 btn btn-primary btn-md" type="cancle"> <a
-                                                    href="wareHouseList.html"
-                                                    class="text-white text-decoration-none">取消</a></button>
+                                            <button class="w-25 btn btn-primary btn-md" type="button"
+                                                id="cancel">取消</button>
                                             <!-- 跳窗 -->
                                             <!-- Button trigger modal -->
                                             <button type="button" class="w-25 btn btn-primary btn-md"
@@ -331,24 +327,23 @@
                                             </div>
                                         </div>
                                     </div>
+
                             </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <!-- Footer End -->
         </div>
-        <!-- Blank End -->
+        <!-- Content End -->
 
 
-        <!-- Footer Start -->
-        <!-- Footer End -->
-    </div>
-    <!-- Content End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
 
@@ -374,6 +369,7 @@
 
     </script>
     <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/downloadPdfFile.js"></script>
     <script src="js/WareHouse/wareHouseDetail_create.js"></script>

@@ -20,7 +20,7 @@ $(document).ready(function () {
 	// 发送POST请求
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/order",
+		url: `${apiURL}/order`,
 		data: {
 			action: action,
 			session_id: user_session_id,

@@ -9,7 +9,7 @@ $(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "https://88bakery.tw/HBAdmin/index.php?/api/adminLogin",
+			url: `${apiURL}/adminLogin`,
 			data: { account: account, password: password, chsm: chsm },
 			success: function (response) {
 				$("#loginResult").html("服务器响应：" + response);
@@ -38,7 +38,7 @@ $(function () {
 
 				$.ajax({
 					type: "POST",
-					url: "https://88bakery.tw/HBAdmin/index.php?/api/menu",
+					url: `${apiURL}/menu`,
 					data: { session_id: getSessionId, action: action, chsm: chsm },
 					success: function (secondApiResponse) {
 						console.log(secondApiResponse);

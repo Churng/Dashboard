@@ -123,13 +123,13 @@
 
                                 <div class="col-sm-4 pt-sm-4" style="margin-top: 22px;">
                                     <div class="custom-multi-select dropdown">
-                                        <button id="selectBrand" class="btn btn-outline-primary dropdown-toggle"
-                                            type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             可用品牌（複選）
                                         </button>
+                                        <ul id="showSelectBrand"></ul>
                                         <ul class="dropdown-menu selectBrand" style="padding: 5px;"
-                                            aria-labelledby="selectBrand">
+                                            aria-labelledby="selectBrand" id="selectBrand">
                                         </ul>
                                     </div>
                                 </div>
@@ -416,10 +416,15 @@
     <!-- <script src="js/dataTables.bootstrap5.js"></script> -->
 
     <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
     <script src="js/Public/create_showInfo.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/menu.js"></script>
     <script src="js/Authorize/8-role-authorization_update.js"></script>
+
+    <!-- 權限 -->
+    <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Public/globleAuth.js"></script>
 
 </body>
 

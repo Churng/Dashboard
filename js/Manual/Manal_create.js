@@ -46,7 +46,7 @@ $(document).ready(function () {
 
 				$.ajax({
 					type: "POST",
-					url: "https://88bakery.tw/HBAdmin/index.php?/api/manual",
+					url: `${apiURL}/manual`,
 					data: formData,
 					processData: false,
 					contentType: false,
@@ -86,3 +86,46 @@ $(document).ready(function () {
 		}
 	});
 });
+
+// 權限設定
+
+function handlePagePermissions(currentUser, currentUrl) {
+	if (currentUser.userretrunData) {
+		for (var i = 0; i < currentUser.userretrunData.length; i++) {
+			var page = currentUser.userretrunData[i];
+
+			if (currentUrl.includes("manualDetail") && Array.isArray(page.auth)) {
+				if (!page.auth.includes("read")) {
+					showNotification();
+					break;
+				}
+
+				if (page.auth.includes("insert")) {
+					const updateButton = document.getElementById("saveButton");
+					updateButton.disabled = false;
+				}
+
+				if (page.auth.includes("download")) {
+					showButton(document.getElementById("downloadBtn"));
+				}
+			}
+		}
+	}
+}
+
+function hideButton(element) {
+	if (element) {
+		element.style.display = "none";
+	}
+}
+
+function showButton(element) {
+	if (element) {
+		element.style.display = "block";
+	}
+}
+
+// 调用权限控制函数
+var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+var currentUrl = window.location.href;
+handlePagePermissions(currentUser, currentUrl);

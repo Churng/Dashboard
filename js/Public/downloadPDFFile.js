@@ -14,7 +14,7 @@ function downloadPdfFile(apiName, fileName) {
 
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/getFile",
+		url: `${apiURL}/getFile`,
 		data: formData,
 		processData: false,
 		contentType: false,

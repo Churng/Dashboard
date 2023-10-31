@@ -15,7 +15,7 @@ $(document).ready(function () {
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/brand",
+		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			const brandList = document.getElementById("C-brandId");
@@ -62,7 +62,7 @@ $(document).ready(function () {
 	// 发送POST请求
 	$.ajax({
 		type: "POST",
-		url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+		url: `${apiURL}/component`,
 		data: {
 			action: action,
 			session_id: user_session_id,
@@ -222,7 +222,7 @@ $(document).ready(function () {
 			// 发送上传更新文件的请求
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/component",
+				url: `${apiURL}/component`,
 				data: formData,
 				processData: false,
 				contentType: false,

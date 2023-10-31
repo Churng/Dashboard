@@ -46,7 +46,7 @@ $(document).ready(function () {
 			// 发送文件上传请求
 			$.ajax({
 				type: "POST",
-				url: "https://88bakery.tw/HBAdmin/index.php?/api/brand", // 替换为实际的上传端点 URL
+				url: `${apiURL}/brand`,
 				data: formData,
 				processData: false,
 				contentType: false,
