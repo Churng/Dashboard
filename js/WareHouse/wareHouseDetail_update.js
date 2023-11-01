@@ -1,5 +1,6 @@
 // 取得詳細資料
 let componentId;
+let orderStatus;
 $(document).ready(function () {
 	var stockValue = localStorage.getItem("wareHouseId");
 	var IdPost = JSON.stringify({ id: stockValue });
@@ -35,7 +36,8 @@ $(document).ready(function () {
 				$("#createOperator").val(wareHouseData.createOperator);
 				$("#storeName").val(wareHouseData.storeName);
 				$("#statusName").val(wareHouseData.statusName);
-
+				$("#unsubscribeId").val(wareHouseData.unsubscribeId);
+				$("#sourceType").val(wareHouseData.sourceType);
 				$("#amount").val(wareHouseData.amount);
 
 				$("#BuildTime").val(wareHouseData.createTime);
@@ -44,6 +46,8 @@ $(document).ready(function () {
 
 				updatePageWithData(responseData);
 				handleComponentId(wareHouseData.componentId);
+
+				orderStatus = wareHouseData.status;
 				// 填充完毕后隐藏加载中的spinner;
 				$("#spinner").hide();
 			} else {
@@ -272,6 +276,10 @@ $(document).ready(function () {
 			var partId = localStorage.getItem("componentValue");
 
 			//取值
+			var getWarehouseId = $("#WarehouseId").val();
+			var amount = $("#amount").val();
+
+			//零件
 			var getComponentName = $("#componentName").val();
 			var getComponentNumber = $("#componentNumber").val();
 			var getbrandId = $("#brandId").val();
@@ -289,7 +297,6 @@ $(document).ready(function () {
 			var getprecautions = $("#precautions").val();
 			var getlowestInventory = $("#lowestInventory").val();
 			var fileInput = document.getElementById("fileInput");
-			var amount = $("#amount").val();
 
 			var getcreateTime = $("#BuildTime").val();
 			var getupdateTime = $("#EditTime").val();
@@ -307,7 +314,9 @@ $(document).ready(function () {
 				updateData.file = "";
 			}
 
-			updateData.componentId = partId;
+			updateData.getWarehouseId = getWarehouseId;
+
+			updateData.id = partId;
 			updateData.amount = amount;
 			updateData.componentNumber = getComponentNumber;
 			updateData.brandId = getbrandId;

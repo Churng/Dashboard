@@ -1,6 +1,3 @@
-// 在需要使用 API 网址的地方使用 apiURL 变量
-// console.log(`${apiURL}`);
-
 // 取得列表
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
@@ -239,6 +236,11 @@ function handlePagePermissions(currentUser, currentUrl) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
 			if (currentUrl.includes(page.url) && Array.isArray(page.auth)) {
+				if (!page.auth.includes("read")) {
+					document.body.style.display = "none";
+					window.location.href = "index.html";
+				}
+
 				if (page.auth.includes("read")) {
 					var readButtons = document.querySelectorAll("[data-button-type='read']");
 					for (var j = 0; j < readButtons.length; j++) {

@@ -13,7 +13,8 @@ $(document).ready(function () {
 					Array.isArray(page.auth) &&
 					!page.auth.includes("read")
 				) {
-					showNotification();
+					showErrorAuthNotification();
+					window.location.href = "index.html";
 					break;
 				}
 			}

@@ -900,6 +900,7 @@ $(document).ready(function () {
 let getBrandId;
 var originalBrandData = []; //品牌原始資料
 var originalMenuAuthorizeData = []; //表格選項原始資料
+var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
 $(document).ready(function () {
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
@@ -1079,7 +1080,8 @@ function fillCheckboxes(originalMenuAuthorizeData, tableId) {
 }
 
 // 選取checkbox 整理打包
-var newAuthSelectData = [];
+var newAuthSelectData;
+var deepCopyOfNewDataJSON;
 $(document).ready(function () {
 	var selectedData = {};
 	// 取得的每一checkbox資料
@@ -1097,23 +1099,35 @@ $(document).ready(function () {
 				}
 				selectedData[id].push(column);
 			} else {
-				// 复选框被取消选中
 				if (selectedData[id]) {
 					var columnIndex = selectedData[id].indexOf(column);
 					if (columnIndex !== -1) {
 						selectedData[id].splice(columnIndex, 1);
+
+						// 在取消选中时，从 deepCopyOfNewData 中删除相应的项目
+						if (deepCopyOfNewData[id]) {
+							var deepCopyIndex = deepCopyOfNewData[id].indexOf(column);
+							if (deepCopyIndex !== -1) {
+								deepCopyOfNewData[id].splice(deepCopyIndex, 1);
+							}
+							// 如果深拷贝数组为空，从 deepCopyOfNewData 中删除属性
+							if (deepCopyOfNewData[id].length === 0) {
+								delete deepCopyOfNewData[id];
+							}
+							// 如果 deepCopyOfNewData[id] 中不再包含任何元素，也删除 id
+							if (Object.keys(deepCopyOfNewData).length === 0) {
+								delete deepCopyOfNewData[id];
+							}
+						}
 					}
 				}
-			}
 
-			// 在这里检查原始数据并添加未更改的数据
-			if (originalMenuAuthorizeData[id]) {
-				// 获取原始数据中的选中列
-				var originalSelectedColumns = originalMenuAuthorizeData[id];
-
-				// 如果用户取消选中了所有列，但原始数据中有选择的列，将它们添加回newAuthSelectData中
-				if (newAuthSelectData[id] && newAuthSelectData[id].length === 0 && originalSelectedColumns.length > 0) {
-					newAuthSelectData[id] = originalSelectedColumns.slice(); // 复制原始数据
+				// 从原始数据中删除
+				if (originalMenuAuthorizeData[id]) {
+					var originalIndex = originalMenuAuthorizeData[id].indexOf(column);
+					if (originalIndex !== -1) {
+						originalMenuAuthorizeData[id].splice(originalIndex, 1);
+					}
 				}
 			}
 
@@ -1125,10 +1139,29 @@ $(document).ready(function () {
 				}
 			}
 
+			var formdeepCopyOfNewData = {};
+			for (var id in deepCopyOfNewData) {
+				if (deepCopyOfNewData.hasOwnProperty(id)) {
+					formdeepCopyOfNewData[id] = deepCopyOfNewData[id];
+				}
+			}
+
 			// 使用 jQuery 将对象转换为 JSON 字符串
 			newAuthSelectData = formattedData;
-			console.log(newAuthSelectData);
-			console.log(originalMenuAuthorizeData);
+			deepCopyOfNewDataJSON = formdeepCopyOfNewData;
+			deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData)); // 同时更新深拷贝
+			for (var id in selectedData) {
+				if (selectedData.hasOwnProperty(id)) {
+					if (!deepCopyOfNewData[id]) {
+						deepCopyOfNewData[id] = [];
+					}
+					deepCopyOfNewData[id] = deepCopyOfNewData[id].concat(selectedData[id]);
+				}
+			}
+
+			console.log(newAuthSelectData, "ＮＥＷ");
+			console.log(originalMenuAuthorizeData, "O");
+			console.log(deepCopyOfNewData, "深拷貝");
 		}
 	});
 });
@@ -1180,30 +1213,7 @@ $(document).ready(function () {
 			formData.set("session_id", user_session_id);
 			formData.set("chsm", chsm);
 			formData.set("data", JSON.stringify(AuthDataObject));
-			// formData.set("menuAuthorize", JSON.stringify(jsonData));
-
-			// 比较新选择的数据和原始数据
-			var modifiedAuthData = {};
-			for (var id in newAuthSelectData) {
-				if (newAuthSelectData.hasOwnProperty(id)) {
-					if (
-						!originalMenuAuthorizeData.hasOwnProperty(id) ||
-						JSON.stringify(newAuthSelectData[id]) !== JSON.stringify(originalMenuAuthorizeData[id])
-					) {
-						modifiedAuthData[id] = newAuthSelectData[id];
-					}
-				}
-			}
-
-			// 如果有任何更改，添加到新地方，否则使用原始数据
-			var finalAuthData = Object.keys(modifiedAuthData).length > 0 ? modifiedAuthData : originalMenuAuthorizeData;
-
-			// 在这里检查是否有没有更改的原始数据
-			for (var id in originalMenuAuthorizeData) {
-				if (!finalAuthData.hasOwnProperty(id)) {
-					finalAuthData[id] = originalMenuAuthorizeData[id];
-				}
-			}
+			formData.set("menuAuthorize", JSON.stringify(deepCopyOfNewData));
 
 			// 检查是否有更改的品牌数据
 			if (formattedString.length > 0) {

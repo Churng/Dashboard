@@ -1,4 +1,8 @@
 $(document).ready(function () {
+	var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+	var currentUrl = window.location.href;
+	handlePagePermissions(currentUser, currentUrl);
+
 	var formData = new FormData();
 	var uploadForm = document.getElementById("uploadForm");
 
@@ -96,8 +100,8 @@ function handlePagePermissions(currentUser, currentUrl) {
 
 			if (currentUrl.includes("manualDetail") && Array.isArray(page.auth)) {
 				if (!page.auth.includes("read")) {
-					showNotification();
-					break;
+					document.body.style.display = "none";
+					window.history.back();
 				}
 
 				if (page.auth.includes("insert")) {

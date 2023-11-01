@@ -27,7 +27,7 @@ $(document).ready(function () {
 		},
 		success: function (responseData) {
 			handleApiResponse(responseData);
-
+			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const wareHouseData = responseData.returnData[0];
 				handleApiResponse(responseData);

@@ -144,20 +144,22 @@
                                 <div class="col-sm-4">
                                     <label for="sourceType" class="form-label">來源類型</label>
                                     <select class="form-select" id="sourceType" disabled>
+                                        <option value="">請選擇</option>
+                                        <option value="null">未定義</option>
                                         <option value="1">外部零件</option>
                                         <option value="2">退貨</option>
                                     </select>
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label for="file-EditTime" class="form-label">來源單號</label>
-                                    <input type="text" class="form-control" id="file-EditTime" placeholder="stockInNo"
-                                        value="" required="">
+                                    <label for="unsubscribeId" class="form-label">來源單號</label>
+                                    <input type="text" class="form-control" id="unsubscribeId" value="" required=""
+                                        disabled>
                                 </div>
 
                                 <div class="col-sm-6 mb-3">
                                     <label for="remark" class="form-label">單據備註</label>
-                                    <textarea class="form-control" id="remark" rows="3">remark</textarea>
+                                    <textarea class="form-control" id="remark" rows="3"></textarea>
                                 </div>
                             </div>
 

@@ -1,5 +1,4 @@
 // 取得詳細資料
-// update
 let unsubId = "";
 $(document).ready(function () {
 	var partId = localStorage.getItem("UnsubscribeId");
@@ -68,8 +67,6 @@ $(document).ready(function () {
 				// displayFileNameInInput(unsubscribeData.file);
 				// const myButton = document.getElementById("downloadBtn");
 				// myButton.setAttribute("data-file", unsubscribeData.file);
-
-				startBtn;
 
 				const startButton = document.getElementById("startBtn");
 				if (unsubscribeData.if_unsubscribe_execute_start === false) {
@@ -152,21 +149,12 @@ $(document).ready(function () {
 			event.preventDefault();
 			var partId = localStorage.getItem("partId");
 
-			var getfileNameField = $("#fileNameField").val();
-			var getBrandName = $("#M-BrandName").val();
-			var getyear = $("#M-year").val();
-			var getapplicableType = $("#M-applicableType").val();
-			var getremark = $("#M-remark").val();
-			var fileInput = document.getElementById("fileInput");
-
-			var createTime = $("#BuildTime").val();
-			var updateTime = $("#EditTime").val();
-			var updateOperator = $("#EditAccount").val();
+			var getorderNote = $("#unsubscribeRemark").val();
 
 			var updateData = {};
 			if (fileInput.files.length > 0) {
 				for (var i = 0; i < fileInput.files.length; i++) {
-					formData.append("manual[]", fileInput.files[i]);
+					formData.append("unsubscribe[]", fileInput.files[i]);
 				}
 				updateData.fileName = fileInput.files[0].name;
 				updateData.file = fileInput.files[0].name;
@@ -174,21 +162,17 @@ $(document).ready(function () {
 				updateData.fileName = "";
 				updateData.file = "";
 			}
-			updateData.id = partId;
-			updateData.fileName = getfileNameField;
-			updateData.brandName = getBrandName;
-			updateData.year = getyear;
-			updateData.applicableType = getapplicableType;
-			updateData.remark = getremark;
-			updateData.file = fileInput.files[0].name;
+			updateData.orderId = partId;
+			updateData.orderNote = getorderNote;
 
 			const jsonStringFromLocalStorage = localStorage.getItem("userData");
 			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 			const user_session_id = gertuserData.sessionId;
 
 			// 组装上传更新文件的数据
-			var action = "updateManualDetail";
-			var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
+			// chsm = session_id+action+'HBAdminUnsubscribeApi'
+			var action = "insertUnsubscribeDetail";
+			var chsmtoUpdateFile = user_session_id + action + "HBAdminUnsubscribeApi";
 			var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
 
 			formData.set("action", action);
@@ -199,15 +183,17 @@ $(document).ready(function () {
 			// 发送上传更新文件的请求
 			$.ajax({
 				type: "POST",
-				url: `${apiURL}/manual`,
+				url: `${apiURL}/unsubscribe`,
 				data: formData,
 				processData: false,
 				contentType: false,
 				success: function (response) {
 					console.warn(response);
-					showSuccessFileNotification();
-					var newPageUrl = "manualList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode == "1") {
+						showSuccessFileNotification();
+						var newPageUrl = "unsubscribeList.html";
+						window.location.href = newPageUrl;
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();

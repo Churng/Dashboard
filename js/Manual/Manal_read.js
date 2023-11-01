@@ -185,6 +185,11 @@ function handlePagePermissions(currentUser, currentUrl) {
 			console.log("currentUrl:", currentUrl);
 			console.log("page.auth:", page.auth);
 			if (currentUrl.includes("manualDetail") && Array.isArray(page.auth)) {
+				if (!page.auth.includes("read")) {
+					document.body.style.display = "none";
+					window.history.back();
+				}
+
 				if (page.auth.includes("read")) {
 					hideButton(document.getElementById("saveButton"));
 					hideButton(document.getElementById("updateButton"));

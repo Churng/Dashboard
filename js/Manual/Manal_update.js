@@ -182,11 +182,15 @@ function handlePagePermissions(currentUser, currentUrl) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
 
-			console.log(!page.auth.includes("insert"));
 			if (currentUrl.includes("manualDetail") && Array.isArray(page.auth)) {
 				if (!page.auth.includes("read")) {
-					showNotification();
-					break;
+					document.body.style.display = "none";
+					window.history.back();
+				}
+
+				if (page.auth.includes("read")) {
+					const updateButton = document.getElementById("updateButton");
+					updateButton.disabled = false;
 				}
 
 				if (page.auth.includes("update")) {
