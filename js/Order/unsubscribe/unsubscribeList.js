@@ -49,23 +49,23 @@ function updatePageWithData(responseData) {
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="unsubscribeDetail.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
-		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button"  style="display:none" data-button-type="delete" data-id="' +
-			data.id +
-			'" data-filename="' +
-			data.fileName +
-			'">刪除</button>';
+		// var deleteButtonHtml =
+		// 	'<button class="btn btn-danger delete-button"  style="display:none" data-button-type="delete" data-id="' +
+		// 	data.id +
+		// 	'" data-filename="' +
+		// 	data.fileName +
+		// 	'">刪除</button>';
 
 		var readButtonHtml =
-			'<a href="unsubscribeDetail.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			'<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
 			data.id +
 			'">查看</a>';
 
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
+		var buttonsHtml = modifyButtonHtml + "&nbsp;" + readButtonHtml;
 
 		const orderNote = data.orderNote !== null ? data.orderNote : "無";
 		const statusName = data.statusName !== "" ? data.orderNote : "無";

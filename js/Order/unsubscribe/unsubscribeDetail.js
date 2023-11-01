@@ -1,4 +1,5 @@
 // 取得詳細資料
+// update
 let unsubId = "";
 $(document).ready(function () {
 	var partId = localStorage.getItem("UnsubscribeId");
@@ -28,6 +29,7 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const unsubscribeData = responseData.returnData[0];
 				// 單據
@@ -48,6 +50,15 @@ $(document).ready(function () {
 				$("#statusName").val(unsubscribeData.statusName);
 				$("#EditAccount").val(unsubscribeData.updateOperator);
 
+				//零件定義
+				$("#componentNumber").val(unsubscribeData.componentNumber);
+				$("#componentName").val(unsubscribeData.componentName);
+				$("#workingHour").val(unsubscribeData.workingHour);
+				$("#lowestWholesalePrice").val(unsubscribeData.lowestWholesalePrice);
+				$("#depotPosition").val(unsubscribeData.depotPosition);
+				$("#description").val(unsubscribeData.description);
+				$("#precautions").val(unsubscribeData.precautions);
+
 				$("#BuildTime").val(unsubscribeData.createTime);
 				$("#EditTime").val(unsubscribeData.updateTime);
 				$("#EditAccount").val(unsubscribeData.updateOperator);
@@ -58,20 +69,27 @@ $(document).ready(function () {
 				// const myButton = document.getElementById("downloadBtn");
 				// myButton.setAttribute("data-file", unsubscribeData.file);
 
-				getComponentContent(unsubscribeData.componentId);
+				startBtn;
 
-				var completeButton = $("#completeBtn");
-				if (unsubscribeData.if_unsubscribe_execute_complete === true) {
-					completeButton.addClass("disabled");
+				const startButton = document.getElementById("startBtn");
+				if (unsubscribeData.if_unsubscribe_execute_start === false) {
+					startButton.disabled = true;
 				} else {
-					completeButton.removeClass("disabled");
+					startButton.disabled = false;
 				}
 
-				var cancelButton = $(".cancelBtn");
-				if (unsubscribeData.if_unsubscribe_execute_cancel === true) {
-					cancelButton.addClass("disabled");
+				const completeButton = document.getElementById("completeBtn");
+				if (unsubscribeData.if_unsubscribe_execute_complete === false) {
+					completeButton.disabled = true;
 				} else {
-					cancelButton.removeClass("disabled");
+					completeButton.disabled = false;
+				}
+
+				const cancelButton = document.getElementById("cancelBtn");
+				if (unsubscribeData.if_unsubscribe_execute_cancel === false) {
+					cancelButton.disabled = true;
+				} else {
+					cancelButton.disabled = false;
 				}
 
 				unsubId = unsubscribeData.id;
@@ -86,187 +104,116 @@ $(document).ready(function () {
 			showErrorNotification();
 		},
 	});
-
-	//取零件資料
-	function getComponentContent(componentId) {
-		const dataId = { id: componentId };
-		const IdPost = JSON.stringify(dataId);
-		// 从localStorage中获取session_id和chsm
-		// 解析JSON字符串为JavaScript对象
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
-
-		// chsm = session_id+action+'HBAdminComponentApi'
-		// 组装所需数据
-		var action = "getComponentDetail";
-		var chsmtoGetComponentDetail = user_session_id + action + "HBAdminComponentApi";
-		var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
-
-		// 发送POST请求
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/component`,
-			data: {
-				action: action,
-				session_id: user_session_id,
-				chsm: chsm,
-				data: IdPost,
-			},
-			success: function (responseData) {
-				if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-					const componentData = responseData.returnData[0];
-					$("#componentName").val(componentData.componentName);
-					$("#componentNumber").val(componentData.componentNumber);
-					$("#brandId").val(componentData.brandId);
-
-					$("#purchaseAmount").val(componentData.purchaseAmount);
-					$("#depotAmount").val(componentData.depotAmount);
-					$("#depotPosition").val(componentData.depotPosition);
-
-					$("#Price").val(componentData.price);
-					$("#Cost").val(componentData.cost);
-					$("#WholesalePrice").val(componentData.wholesalePrice);
-					$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
-					$("#supplier").val(componentData.componentSupplier);
-					$("#workingHour").val(componentData.workingHour);
-					$("#suitableModel").val(componentData.suitableCarModel);
-					$("#description").val(componentData.description);
-					$("#precautions").val(componentData.precautions);
-					$("#lowestInventory").val(componentData.lowestInventory);
-
-					displayFileNameInInput(componentData.file);
-					const myButton = document.getElementById("downloadBtn");
-					myButton.setAttribute("data-file", componentData.file);
-
-					// 填充完毕后隐藏加载中的spinner
-					$("#spinner").hide();
-				} else {
-					showErrorNotification();
-				}
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	}
 });
 
-//監聽按鈕：取消、完成
-// $(document).on("click", "#completeBtn", function () {
-// 	var formData = new FormData();
-
-// 	var getunsubId = $("#unsubId").val();
-// 	var statusName = $("#statusName").val();
-
-// 	var updateData = {
-// 		id: getunsubId,
-// 	};
-
-// 	// 从localStorage中获取session_id和chsm
-// 	// 解析JSON字符串为JavaScript对象
-// 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-// 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-// 	const user_session_id = gertuserData.sessionId;
-
-// 	// chsm = session_id+action+'HBAdminUnsubscribeApi'
-// 	// 组装所需数据
-// 	var action = "completeUnsubscribeDetail";
-// 	var chsmtoGetComponentDetail = user_session_id + action + "HBAdminUnsubscribeApi";
-// 	var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
-
-// 	formData.set("action", action);
-// 	formData.set("session_id", user_session_id);
-// 	formData.set("chsm", chsm);
-// 	formData.set("data", JSON.stringify(updateData));
-
-// 	// 发送POST请求
-// 	$.ajax({
-// 		type: "POST",
-// 		url: `${apiURL}/unsubscribe`,
-// 		data: formData,
-// 		success: function (responseData) {
-// 			console.log(responseData);
-// 			// if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-// 			// 	// 填充完毕后隐藏加载中的spinner
-// 			// 	$("#spinner").hide();
-// 			// } else {
-// 			// 	showErrorNotification();
-// 			// }
-// 		},
-// 		error: function (error) {
-// 			showErrorNotification();
-// 		},
-// 	});
-// });
-
-// $(document).on("click", "#cancelBtn", function () {
-// 	var formData = new FormData();
-
-// 	var updateData = {
-// 		id: unsubId,
-// 	};
-
-// 	// 从localStorage中获取session_id和chsm
-// 	// 解析JSON字符串为JavaScript对象
-// 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-// 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-// 	const user_session_id = gertuserData.sessionId;
-
-// 	// chsm = session_id+action+'HBAdminUnsubscribeApi'
-// 	// 组装所需数据
-// 	var action = "deleteStockInDetail";
-// 	var chsmtoGetComponentDetail = user_session_id + action + "HBAdminUnsubscribeApi";
-// 	var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
-
-// 	formData.set("action", action);
-// 	formData.set("session_id", user_session_id);
-// 	formData.set("chsm", chsm);
-// 	formData.set("data", JSON.stringify(updateData));
-
-// 	// 发送POST请求
-// 	$.ajax({
-// 		type: "POST",
-// 		url: `${apiURL}/unsubscribe`,
-// 		data: formData,
-// 		success: function (responseData) {
-// 			console.log(responseData);
-// 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-// 				showSuccessFileDeleteNotification();
-// 			}
-// 		},
-// 		error: function (error) {
-// 			showErrorNotification();
-// 		},
-// 	});
-// });
-
 // 顯示已上傳檔案
-function displayFileNameInInput(fileName) {
-	const fileInput = document.getElementById("fileInput");
+// function displayFileNameInInput(fileName) {
+// 	const fileInput = document.getElementById("fileInput");
 
-	if (fileName) {
-		const dataTransfer = new DataTransfer();
+// 	if (fileName) {
+// 		const dataTransfer = new DataTransfer();
 
-		const blob = new Blob([""], { type: "application/octet-stream" });
-		const file = new File([blob], fileName);
+// 		const blob = new Blob([""], { type: "application/octet-stream" });
+// 		const file = new File([blob], fileName);
 
-		dataTransfer.items.add(file);
+// 		dataTransfer.items.add(file);
 
-		const fileList = dataTransfer.files;
+// 		const fileList = dataTransfer.files;
 
-		fileInput.files = fileList;
-	}
-}
+// 		fileInput.files = fileList;
+// 	}
+// }
 
 // 下载檔案
-$(document).on("click", ".file-download", function (e) {
-	e.preventDefault(); // 阻止默认链接行为
-	var fileName = $(this).data("file");
-	var apiName = "unsubscribe";
-	if (fileName) {
-		downloadPdfFile(apiName, fileName);
-	} else {
-		showErrorFileNotification();
-	}
+// $(document).on("click", ".file-download", function (e) {
+// 	e.preventDefault(); // 阻止默认链接行为
+// 	var fileName = $(this).data("file");
+// 	var apiName = "unsubscribe";
+// 	if (fileName) {
+// 		downloadPdfFile(apiName, fileName);
+// 	} else {
+// 		showErrorFileNotification();
+// 	}
+// });
+
+// 上傳更新檔案
+
+$(document).ready(function () {
+	var formData = new FormData();
+	var uploadForm = document.getElementById("uploadForm");
+
+	// 添加表单提交事件监听器
+	uploadForm.addEventListener("submit", function (event) {
+		if (uploadForm.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		} else {
+			// 处理表单提交
+			event.preventDefault();
+			var partId = localStorage.getItem("partId");
+
+			var getfileNameField = $("#fileNameField").val();
+			var getBrandName = $("#M-BrandName").val();
+			var getyear = $("#M-year").val();
+			var getapplicableType = $("#M-applicableType").val();
+			var getremark = $("#M-remark").val();
+			var fileInput = document.getElementById("fileInput");
+
+			var createTime = $("#BuildTime").val();
+			var updateTime = $("#EditTime").val();
+			var updateOperator = $("#EditAccount").val();
+
+			var updateData = {};
+			if (fileInput.files.length > 0) {
+				for (var i = 0; i < fileInput.files.length; i++) {
+					formData.append("manual[]", fileInput.files[i]);
+				}
+				updateData.fileName = fileInput.files[0].name;
+				updateData.file = fileInput.files[0].name;
+			} else {
+				updateData.fileName = "";
+				updateData.file = "";
+			}
+			updateData.id = partId;
+			updateData.fileName = getfileNameField;
+			updateData.brandName = getBrandName;
+			updateData.year = getyear;
+			updateData.applicableType = getapplicableType;
+			updateData.remark = getremark;
+			updateData.file = fileInput.files[0].name;
+
+			const jsonStringFromLocalStorage = localStorage.getItem("userData");
+			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+			const user_session_id = gertuserData.sessionId;
+
+			// 组装上传更新文件的数据
+			var action = "updateManualDetail";
+			var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
+			var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
+
+			formData.set("action", action);
+			formData.set("session_id", user_session_id);
+			formData.set("chsm", chsm);
+			formData.set("data", JSON.stringify(updateData));
+
+			// 发送上传更新文件的请求
+			$.ajax({
+				type: "POST",
+				url: `${apiURL}/manual`,
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					console.warn(response);
+					showSuccessFileNotification();
+					var newPageUrl = "manualList.html";
+					window.location.href = newPageUrl;
+				},
+				error: function (error) {
+					showErrorFileNotification();
+				},
+			});
+		}
+		uploadForm.classList.add("was-validated");
+	});
 });
