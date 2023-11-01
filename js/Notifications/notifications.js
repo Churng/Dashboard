@@ -81,3 +81,38 @@ function showErrorAuthNotification() {
 function showErrorTypeNotification() {
 	toastr.error("檔案類型非Pdf副檔名", "錯誤");
 }
+
+// 訂單
+
+function showgoPurchaseNotification() {
+	toastr.success('是否前往，<a href="purchaseList.html">零件採購單</a>查看更多。', "提醒！", {
+		onclick: function () {
+			// 点击链接时触发的操作
+			window.location.href = "purchaseList.html";
+		},
+	});
+}
+
+function showgoshipDetailNotification() {
+	toastr.success('是否前往，<a href="shipDetail.html">出庫申請單</a>查看更多。', "提醒！", {
+		onclick: function () {
+			// 点击链接时触发的操作
+			window.location.href = "shipDetail.html";
+		},
+	});
+}
+
+function showSuccessAddToOrderNotification() {
+	toastr.success("已刪除零件！", "成功");
+}
+
+function showSuccessorderCompleteNotification() {
+	toastr.success("已完成訂單！", "成功");
+}
+
+function showSuccessorderCancelNotification() {
+	toastr.success("已取消訂單！", "成功");
+}
+function showSuccessorderunSubscribeNotification() {
+	toastr.success("已完成退貨，請至退貨列表查看！", "成功");
+}

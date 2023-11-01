@@ -21,7 +21,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
 
     <!-- DataTable Stylesheet -->
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
@@ -192,12 +194,13 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
-                            <button class="btn btn-primary " type="button" id="redirectButton">
-                                執行出庫</button>
-                            <button class="btn btn-primary" type="button">訂單完成</button>
-                            <button class="btn btn-primary" type="button">查看出庫單</button>
-                            <!-- <button class="btn btn-primary btn-md" type="submit">刪除零件</button>
-                            <button class="btn btn-primary" type="button">退貨</button> -->
+                            <button class="btn btn-primary " type="button">執行出庫</button>
+                            <button class="btn btn-primary" type="button" id="orderComplete">訂單完成</button>
+                            <button class="btn btn-primary" type="button" id="orderCancel">訂單取消</button>
+                            <button class="btn btn-primary" type="button">
+                                <a href="shipDetail.html" class="remove-link-decoration text-white"> 查看出庫單</a>
+
+                            </button>
                         </div>
 
 

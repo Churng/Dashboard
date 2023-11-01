@@ -21,8 +21,10 @@ function fetchAccountList() {
 		url: `${apiURL}/order`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log(responseData);
-			updatePageWithData(responseData);
+			handleApiResponse(responseData);
+			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+				updatePageWithData(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -96,8 +98,10 @@ function refreshDataList() {
 		url: `${apiURL}/order`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// console.log(responseData);
-			updatePageWithData(responseData);
+			handleApiResponse(responseData);
+			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+				updatePageWithData(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -166,7 +170,10 @@ $(document).on("click", ".delete-button", function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				console.log(response);
+				handleApiResponse(response);
+				if (response.returnCode === "1" && response.returnData.length > 0) {
+					updatePageWithData(response);
+				}
 				setTimeout(function () {
 					showSuccessFileDeleteNotification();
 				}, 1000);
@@ -244,9 +251,11 @@ $(document).ready(function () {
 			url: `${apiURL}/order`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
-				// 处理成功响应
-				updatePageWithData(responseData);
-				clearDateFields();
+				handleApiResponse(responseData);
+				if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+					updatePageWithData(responseData);
+					clearDateFields();
+				}
 			},
 			error: function (error) {
 				showErrorNotification();

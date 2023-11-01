@@ -3,14 +3,18 @@ function handleApiResponse(apiResponse) {
 		1: () => {
 			console.log();
 		},
+
+		"001": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"002": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
 		"003": () => {
 			toastr.warning(apiResponse.returnMessage);
 			setTimeout(function () {
 				window.location.href = "0-signin.html";
 			}, 1000);
-		},
-		"001": () => {
-			toastr.warning(apiResponse.returnMessage);
 		},
 		"005": () => {
 			toastr.warning(apiResponse.returnMessage);
