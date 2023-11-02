@@ -190,7 +190,6 @@ $(document).ready(function () {
 			var getprecautions = $("#precautions").val();
 			var getlowestInventory = $("#lowestInventory").val();
 			var fileInput = document.getElementById("fileInput");
-			var amount = $("#amount").val();
 
 			var getcreateTime = $("#BuildTime").val();
 			var getupdateTime = $("#EditTime").val();
@@ -208,24 +207,23 @@ $(document).ready(function () {
 				updateData.file = "";
 			}
 
-			updateData.componentId = partId;
-			updateData.amount = amount;
-			updateData.componentNumber = getComponentNumber;
+			updateData.id = partId;
 			updateData.brandId = getbrandId;
 			updateData.componentName = getComponentName;
-			// purchaseAmount: getpurchaseAmount,
-			// depotAmount: getdepotAmount,
-			updateData.depotPosition = getdepotPosition;
-			updateData.price = getprice;
-			updateData.cost = getcost;
-			updateData.wholesalePrice = getwholesalePrice;
-			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+			updateData.componentNumber = getComponentNumber;
 			updateData.componentSupplier = getcomponentSupplier;
-			updateData.workingHour = getworkingHour;
-			updateData.suitableCarModel = getsuitableCarModel;
+			updateData.cost = getcost;
+			// updateData.depotAmount = getdepotAmount;
+			// updateData.purchaseAmount = getpurchaseAmount;
+			updateData.depotPosition = getdepotPosition;
 			updateData.description = getdescription;
-			updateData.precautions = getprecautions;
 			updateData.lowestInventory = getlowestInventory;
+			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+			updateData.precautions = getprecautions;
+			updateData.price = getprice;
+			updateData.suitableCarModel = getsuitableCarModel;
+			updateData.wholesalePrice = getwholesalePrice;
+			updateData.workingHour = getworkingHour;
 			updateData.createTime = getcreateTime;
 			updateData.updateTime = getupdateTime;
 			updateData.updateOperator = getupdateOperator;
@@ -237,9 +235,9 @@ $(document).ready(function () {
 			const user_session_id = gertuserData.sessionId;
 
 			// 组装发送文件所需数据
-			// chsm = session_id+action+'HBAdminStockInApi'
-			var action = "insertStockInDetail";
-			var chsmtoPostFile = user_session_id + action + "HBAdminStockInApi";
+			// chsm = session_id+action+'HBAdminComponentApi'
+			var action = "updateComponentDetail";
+			var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
 			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
 
 			// 设置其他formData字段
@@ -251,16 +249,17 @@ $(document).ready(function () {
 			// 发送上传更新文件的请求
 			$.ajax({
 				type: "POST",
-				url: `${apiURL}/stockIn`,
+				url: `${apiURL}/component`,
 				data: formData,
 				processData: false,
 				contentType: false,
 				success: function (response) {
+					sendSecondCreate();
 					console.log(response);
-					showSuccessFileNotification();
-					localStorage.removeItem("partId");
-					var newPageUrl = "wareHouseList.html";
-					window.location.href = newPageUrl;
+					// showSuccessFileNotification();
+					// localStorage.removeItem("partId");
+					// var newPageUrl = "wareHouseList.html";
+					// window.location.href = newPageUrl;
 				},
 				error: function (error) {
 					showErrorFileNotification();
@@ -270,3 +269,51 @@ $(document).ready(function () {
 		uploadForm.classList.add("was-validated");
 	});
 });
+
+function sendSecondCreate() {
+	var formData = new FormData();
+	var partId = localStorage.getItem("componentValue");
+
+	var amount = $("#amount").val();
+
+	var updateData = {
+		componentId: partId,
+		amount: amount,
+	};
+
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// 组装发送文件所需数据
+	// chsm = session_id+action+'HBAdminStockInApi'
+	var action = "insertStockInDetail";
+	var chsmtoPostFile = user_session_id + action + "HBAdminStockInApi";
+	var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+	// 设置其他formData字段
+	formData.set("action", action);
+	formData.set("session_id", user_session_id);
+	formData.set("chsm", chsm);
+	formData.set("data", JSON.stringify(updateData));
+
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/stockIn`,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			console.log(response);
+			showSuccessFileNotification();
+			localStorage.removeItem("partId");
+			var newPageUrl = "wareHouseList.html";
+			window.location.href = newPageUrl;
+		},
+		error: function (error) {
+			showErrorFileNotification();
+		},
+	});
+}

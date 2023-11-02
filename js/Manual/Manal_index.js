@@ -20,7 +20,8 @@ $(document).ready(function () {
 		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
+			handleApiResponse(responseData);
+
 			console.log("成功响应：", responseData);
 			// 可以在这里执行其他操作
 			updatePageWithData(responseData);
@@ -77,7 +78,7 @@ function updatePageWithData(responseData) {
 			data.id +
 			'">查看詳請</a>';
 
-		var buttonsHtml = readButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + modifyButtonHtml;
+		var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
 		dataTable.row
 			.add([

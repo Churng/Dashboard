@@ -41,14 +41,14 @@ function updatePageWithData(responseData) {
 
 		// 權限設定 //
 
-		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		var currentUrl = window.location.href;
-		handlePagePermissions(currentUser, currentUrl);
+		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		// var currentUrl = window.location.href;
+		// handlePagePermissions(currentUser, currentUrl);
 
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="3-store-information_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="3-store-information_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 

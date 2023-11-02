@@ -103,7 +103,7 @@ function showgoshipDetailNotification() {
 }
 
 function showSuccessAddToOrderNotification() {
-	toastr.success("已刪除零件！", "成功");
+	toastr.success("訂單已成立！", "成功");
 }
 
 function showSuccessorderCompleteNotification() {

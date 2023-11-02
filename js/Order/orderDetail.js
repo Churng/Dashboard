@@ -1,5 +1,6 @@
 // 取得詳細資料
 let orderStatus;
+let orderId;
 $(document).ready(function () {
 	var partId = localStorage.getItem("orderNo");
 	var orderData = JSON.parse(partId);
@@ -32,8 +33,10 @@ $(document).ready(function () {
 			console.log(responseData);
 			handleApiResponse(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-				var status = responseData.orderData;
-				orderStatus = status.status;
+				var getOrderData = responseData.orderData;
+				orderStatus = getOrderData.status;
+				orderId = getOrderData.id;
+
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {
@@ -48,7 +51,7 @@ $(document).ready(function () {
 
 //表單內資料：單據詳細資料
 function updateData(responseData) {
-	console.log(responseData);
+	// console.log(responseData);
 	// var partId = localStorage.getItem("orderNo");
 	// var partId = JSON.parse(partId);
 	const orderData = responseData.orderData;
@@ -113,7 +116,7 @@ function updatePageWithData(responseData) {
 
 		// 刪除零件：
 		var deleteButtonHtml = "";
-		if (data.status == 1 || data.status == 2 || data.status == 3) {
+		if (data.status == 1 || data.status == 2 || data.status == 3 || data.status == 4 || data.status == 5) {
 			if (data.if_order_delete_component === true) {
 				deleteButtonHtml +=
 					'<button class="btn btn-danger delete-button" data-id="' +
@@ -126,14 +129,18 @@ function updatePageWithData(responseData) {
 
 		// 退貨：退貨單新增
 		var unsubButtonHtml = "";
-		if (data.status == 3 && data.statusName == "已出庫") {
+		if (data.status == 6 && data.statusName == "已出庫") {
 			if (data.if_order_unsubscribe === true) {
 				unsubButtonHtml +=
-					'<button class="btn btn-warning unsubscribe-button" data-id="' + data.id + '" >退貨</button>';
+					'<button  class="btn btn-warning unsubscribe-button" data-id="' + orderId + '" >退貨</button>';
 			}
 		}
 
-		var buttonsHtml = deleteButtonHtml + "&nbsp;" + unsubButtonHtml;
+		//查看出庫單
+		var shipButtonHtml =
+			'<a href="shipDetail.html"  class="btn btn-primary text-white "  data-id="' + data.id + '">查看出庫單</a>';
+
+		var buttonsHtml = deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml;
 		dataTable.row
 			.add([
 				checkboxHtml,
@@ -281,11 +288,10 @@ $(document).on("click", ".delete-button", function (e) {
 //unsubscribe-button
 //退貨
 $(document).on("click", ".unsubscribe-button", function (e) {
-	var formData = new FormData(); // 在外部定义 formData
-
+	var formData = new FormData();
 	var unsubscribeButton = $(this);
-	var itemId = unsubscribeButton.data("id");
-	console.log(itemId, buttonStatus);
+	var itemId = unsubscribeButton.data("id"); //orderId
+	localStorage.setItem("getOrderId", itemId);
 
 	var data = {
 		id: itemId,
@@ -322,7 +328,7 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
 		formData.set("data", jsonData);
-
+		console.log(jsonData);
 		$.ajax({
 			type: "POST",
 			url: `${apiURL}/order`,
@@ -330,8 +336,13 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				showSuccessorderunSubscribeNotification();
-				refreshDataList();
+				console.log(response);
+				// setTimeout(function () {
+				// 	showSuccessorderunSubscribeNotification();
+				// }, 1000);
+
+				var newPageUrl = "unsubscribeDetail.html";
+				window.location.href = newPageUrl;
 			},
 			error: function (error) {
 				showErrorNotification();

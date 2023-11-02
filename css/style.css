@@ -340,6 +340,32 @@ th {
 	min-width: 120px;
 }
 
+th:first-child,
+td:first-child {
+	min-width: 100px;
+}
+
+#manual-management th:first-child,
+td:first-child {
+	min-width: 200px;
+}
+
+#partsOrder,
+#storeInformation th:first-child,
+td:first-child {
+	min-width: 150px;
+}
+
+#orderDetail th:first-child,
+td:first-child {
+	min-width: 70px;
+}
+
+#orderDetail th:nth-child(2),
+#orderDetail td:nth-child(2) {
+	min-width: 300px;
+}
+
 .remove-link-decoration {
 	text-decoration: none !important;
 }

@@ -16,6 +16,9 @@ function handleApiResponse(apiResponse) {
 				window.location.href = "0-signin.html";
 			}, 1000);
 		},
+		"004": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
 		"005": () => {
 			toastr.warning(apiResponse.returnMessage);
 		},

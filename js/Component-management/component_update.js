@@ -18,6 +18,7 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			console.log(responseData);
 			const brandList = document.getElementById("C-brandId");
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇品牌";

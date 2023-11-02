@@ -42,18 +42,18 @@ function updatePageWithData(responseData) {
 
 		// 權限設定 //
 
-		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		var currentUrl = window.location.href;
-		handlePagePermissions(currentUser, currentUrl);
+		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		// var currentUrl = window.location.href;
+		// handlePagePermissions(currentUser, currentUrl);
 
 		// 按鈕設定//
 
 		var modifyButtonHtml =
 			'<a href="brand_update.html?id=' +
 			data.id +
-			'" class="btn btn-primary text-white" style="display:none" data-button-type="update">修改</a>';
+			'" class="btn btn-primary text-white" style="display:inline-block" data-button-type="update">修改</a>';
 		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
+			'<button class="btn btn-danger delete-button" style="display:inline-block" data-button-type="delete" data-id="' +
 			data.id +
 			'">刪除</button>';
 
