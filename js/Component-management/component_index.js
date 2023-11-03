@@ -253,12 +253,13 @@ $(document).ready(function () {
 
 		var selectedBrand = $("#selectBrand").val();
 
-		if (selectedBrand) {
+		if (!selectedBrand) {
+			fetchAccountList();
+		} else {
+			var filterData = {};
 			filterData.brandId = selectedBrand;
+			sendApiRequest(filterData);
 		}
-
-		// 发送API请求以获取数据
-		sendApiRequest(filterData);
 	});
 });
 

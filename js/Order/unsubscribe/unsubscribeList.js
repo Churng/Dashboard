@@ -42,14 +42,14 @@ function updatePageWithData(responseData) {
 
 		// 權限設定 //
 
-		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		var currentUrl = window.location.href;
-		handlePagePermissions(currentUser, currentUrl);
+		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		// var currentUrl = window.location.href;
+		// handlePagePermissions(currentUser, currentUrl);
 
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="unsubscribeDetail_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
@@ -216,11 +216,6 @@ $(document).ready(function () {
 	fetchAccountList();
 });
 
-// 或者在点击按钮时调用 fetchAccountList
-$("#allBtn").on("click", function () {
-	fetchAccountList();
-});
-
 // 監聽欄位變動
 $(document).ready(function () {
 	var sdateValue, edateValue, statusValue;
@@ -235,10 +230,10 @@ $(document).ready(function () {
 		edateValue = $(this).val();
 	});
 
-	// // 監聽狀態
-	// $("#searchStatus").on("change", function () {
-	// 	statusValue = $(this).val();
-	// });
+	// 監聽狀態
+	$("#searchStatus").on("change", function () {
+		statusValue = $(this).val();
+	});
 
 	// 点击搜索按钮时触发API请求
 	$("#searchBtn").on("click", function () {
@@ -253,11 +248,15 @@ $(document).ready(function () {
 			filterData.etime = edateValue;
 		}
 
-		// if (statusValue) {
-		// 	filterData.status = statusValue;
-		// }
+		if (statusValue) {
+			filterData.status = statusValue;
+		}
 
-		sendApiRequest(filterData);
+		if (sdateValue || edateValue || statusValue) {
+			sendApiRequest(filterData);
+		} else if (!statusValue) {
+			fetchAccountList();
+		}
 	});
 
 	function sendApiRequest(filterData) {

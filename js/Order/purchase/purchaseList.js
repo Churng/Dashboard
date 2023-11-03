@@ -205,11 +205,6 @@ $(document).ready(function () {
 	fetchAccountList();
 });
 
-// 或者在点击按钮时调用 fetchAccountList
-$("#allBtn").on("click", function () {
-	fetchAccountList();
-});
-
 // 搜尋後清空
 function clearDateFields() {
 	$("#startDate").val("");
@@ -240,6 +235,7 @@ $(document).ready(function () {
 			console.log(responseData);
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇門市";
+			defaultOption.value = "";
 			storeList.appendChild(defaultOption);
 
 			for (let i = 0; i < responseData.returnData.length; i++) {
@@ -306,6 +302,12 @@ $(document).ready(function () {
 
 		if (statusValue) {
 			filterData.status = statusValue;
+		}
+
+		if (sdateValue || edateValue || storeValue || statusValue) {
+			sendApiRequest(filterData);
+		} else if (!statusValue || !storeValue) {
+			fetchAccountList();
 		}
 
 		sendApiRequest(filterData);

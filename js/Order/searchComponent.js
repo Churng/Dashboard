@@ -254,6 +254,10 @@ $(document).ready(function () {
 		// 创建筛选数据对象
 		var filterData = {};
 
+		if (!selectedBrandId) {
+			fetchAccountList();
+		}
+
 		if (selectedBrandId) {
 			filterData.brandId = selectedBrandId;
 		}
@@ -361,11 +365,6 @@ $(document).ready(function () {
 
 // 加载时调用在页面 fetchAccountList
 $(document).ready(function () {
-	fetchAccountList();
-});
-
-// 或者在点击按钮时调用 fetchAccountList
-$("#allBtn").on("click", function () {
 	fetchAccountList();
 });
 

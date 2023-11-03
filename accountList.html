@@ -113,7 +113,7 @@
                             </button>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-5">
                             <span class="mb-3"> 可以依照選擇執行查詢項目、例如：選擇單一項目：所屬門市>搜尋</span>
                             <div class="col-sm-3">
                                 <label for="A-shoplist" class="form-label">*所屬門市</label>
@@ -130,16 +130,20 @@
                             <div class="col-sm-3">
                                 <label for="A-status" class="form-label">*狀態</label>
                                 <select class="form-select" id="A-status" name="status">
+                                    <option value="">請選擇狀態</option>
                                     <option value="1">正常</option>
                                     <option value="0">停用</option>
                                 </select>
                             </div>
+
+
+                            <div class=" col-sm-3 " style="margin-top: 30px;">
+                                <!-- <button id="allBtn" type="button" class="btn btn btn-primary">全部</button> -->
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                            </div>
+
                         </div>
 
-                        <div class="mb-5">
-                            <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
-                            <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
-                        </div>
 
 
                         <!-- 表格 -->

@@ -20,9 +20,7 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			handleApiResponse(responseData);
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
+			// console.log("成功响应：", responseData);
 			updatePageWithData(responseData);
 		},
 		error: function (error) {
@@ -92,10 +90,13 @@ $(document).ready(function () {
 	$("#searchBtn").on("click", function () {
 		var filterData = {};
 
-		if (selectedShopId) {
+		if (!selectedShopId) {
+			fetchAccountList();
+		} else {
+			var filterData = {};
 			filterData.storeType = selectedShopId;
+			sendApiRequest(filterData);
 		}
-		sendApiRequest(filterData);
 	});
 
 	function sendApiRequest(filterData) {

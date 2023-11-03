@@ -261,6 +261,10 @@ function handlePagePermissions(currentUser, currentUrl) {
 					}
 				}
 
+				console.log(page.auth);
+
+				console.log(page.auth.includes("delete"));
+
 				if (page.auth.includes("delete")) {
 					var deleteButtons = document.querySelectorAll("[data-button-type='delete']");
 					for (var m = 0; m < deleteButtons.length; m++) {

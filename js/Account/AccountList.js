@@ -123,6 +123,12 @@ $(document).ready(function () {
 			filterData.status = selectedStatus;
 		}
 
+		if (selectedShopId || selectedAuthId || selectedStatus) {
+			sendApiRequest(filterData);
+		} else if (!statusValue) {
+			fetchAccountList();
+		}
+
 		// 发送API请求以获取数据
 		sendApiRequest(filterData);
 	});
@@ -211,9 +217,9 @@ function updatePageWithData(responseData) {
 
 		// 權限設定 //
 
-		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		var currentUrl = window.location.href;
-		handlePagePermissions(currentUser, currentUrl);
+		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		// var currentUrl = window.location.href;
+		// handlePagePermissions(currentUser, currentUrl);
 
 		// 按鈕設定//
 
