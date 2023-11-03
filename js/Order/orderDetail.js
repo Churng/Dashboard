@@ -319,30 +319,26 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// chsm = session_id+action+'HBAdminOrderApi'
-		var action = "unsubscribeOrderDetailComponent";
-		var chsmtoDeleteFile = user_session_id + action + "HBAdminOrderApi";
+		// chsm = session_id+action+'HBAdminUnsubscribeApi'
+		var action = "getUnsubscribeDetail";
+		var chsmtoDeleteFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
 
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
 		formData.set("data", jsonData);
-		console.log(jsonData);
 		$.ajax({
 			type: "POST",
-			url: `${apiURL}/order`,
+			url: `${apiURL}/unsubscribe`,
 			data: formData,
 			processData: false,
 			contentType: false,
 			success: function (response) {
 				console.log(response);
-				// setTimeout(function () {
-				// 	showSuccessorderunSubscribeNotification();
-				// }, 1000);
-
-				var newPageUrl = "unsubscribeDetail.html";
-				window.location.href = newPageUrl;
+				setTimeout(function () {
+					showSuccessorderunSubscribeNotification();
+				}, 1000);
 			},
 			error: function (error) {
 				showErrorNotification();

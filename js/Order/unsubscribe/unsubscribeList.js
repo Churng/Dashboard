@@ -20,9 +20,8 @@ function fetchAccountList() {
 		url: `${apiURL}/unsubscribe`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
 			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
+			handleApiResponse(responseData);
 			updatePageWithData(responseData);
 		},
 		error: function (error) {
@@ -128,7 +127,7 @@ function refreshDataList() {
 		success: function (responseData) {
 			// 处理成功响应
 			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
+			handleApiResponse(responseData);
 			updatePageWithData(responseData);
 		},
 		error: function (error) {
@@ -198,6 +197,7 @@ $(document).on("click", ".delete-button", function () {
 			contentType: false,
 			success: function (response) {
 				console.log(response);
+				handleApiResponse(responseData);
 				setTimeout(function () {
 					showSuccessFileDeleteNotification();
 				}, 1000);
@@ -281,6 +281,7 @@ $(document).ready(function () {
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				// 处理成功响应
+				handleApiResponse(responseData);
 				updatePageWithData(responseData);
 				clearDateFields();
 			},

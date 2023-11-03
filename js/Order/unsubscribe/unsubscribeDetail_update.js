@@ -39,6 +39,7 @@ $(document).ready(function () {
 				$("#unsubscribeStoreName").val(unsubscribeData.unsubscribeStoreName);
 				$("#unsubscribeStatusName").val(unsubscribeData.unsubscribeStatusName);
 				$("#unsubscribeRemark").val(unsubscribeData.unsubscribeRemark);
+				$("#unsubscribeId").val(unsubscribeData.unsubscribeId);
 
 				// 訂單
 				$("#orderId").val(unsubscribeData.orderId);
@@ -46,9 +47,9 @@ $(document).ready(function () {
 				$("#orderNote").val(unsubscribeData.orderNote);
 
 				//零件序號
-				$("#componentId").val(unsubscribeData.componentId);
-				$("#statusName").val(unsubscribeData.statusName);
-				$("#EditAccount").val(unsubscribeData.updateOperator);
+				$("#componentId").val(unsubscribeData.depotId);
+				$("#statusName").val(unsubscribeData.depotStatusName);
+				$("#depotRemark").val(unsubscribeData.depotRemark);
 
 				//零件定義
 				$("#componentNumber").val(unsubscribeData.componentNumber);
@@ -58,10 +59,15 @@ $(document).ready(function () {
 				$("#depotPosition").val(unsubscribeData.depotPosition);
 				$("#description").val(unsubscribeData.description);
 				$("#precautions").val(unsubscribeData.precautions);
+				$("#supplier").val(unsubscribeData.componentSupplier);
+				$("#suitableModel").val(unsubscribeData.suitableCarModel);
+				$("#Price").val(unsubscribeData.price);
+				$("#WholesalePrice").val(unsubscribeData.wholesalePrice);
 
 				$("#BuildTime").val(unsubscribeData.createTime);
 				$("#EditTime").val(unsubscribeData.updateTime);
 				$("#EditAccount").val(unsubscribeData.updateOperator);
+
 				if (unsubscribeData.fileName == "") {
 					showWarningNotification();
 				}
@@ -169,16 +175,14 @@ $(document).ready(function () {
 			updateData.file = "";
 		}
 		updateData.id = partId;
-		updateData.fileName = getfileNameField;
 		updateData.remark = getremark;
-		updateData.file = fileInput.files[0].name;
 
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
 		// 组装上传更新文件的数据
-		var action = "updateManualDetail";
+		var action = "updateUnsubscribeDetail";
 		var chsmtoUpdateFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
 
@@ -195,7 +199,6 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				console.warn(response);
 				showSuccessFileNotification();
 			},
 			error: function (error) {
@@ -230,9 +233,7 @@ $(document).ready(function () {
 			updateData.file = "";
 		}
 		updateData.id = partId;
-		updateData.fileName = getfileNameField;
 		updateData.remark = getremark;
-		updateData.file = fileInput.files[0].name;
 
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);

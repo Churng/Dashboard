@@ -2,11 +2,14 @@ var currentData = localStorage.getItem("currentUser");
 var currentData = JSON.parse(currentData);
 var menuData = currentData.userretrunData;
 
-// 获取要放置菜单项的父元素
 const dynamicMenu = document.getElementById("dynamicMenu");
 
 function compareMenuOrder(a, b) {
 	return a.menuOrder - b.menuOrder;
+}
+
+function hasPermission(auth, permission) {
+	return auth.includes(permission);
 }
 
 function generateMenu(data, parentId) {
@@ -27,6 +30,11 @@ function generateMenu(data, parentId) {
 	};
 
 	parentItems.forEach((parentItem) => {
+		const hasReadPermission = hasPermission(parentItem.auth, "read");
+		if (!hasReadPermission) {
+			return;
+		}
+
 		const parentMenuItem = document.createElement("div");
 		parentMenuItem.className = "nav-item dropdown";
 
@@ -51,7 +59,6 @@ function generateMenu(data, parentId) {
 
 		dynamicMenu.appendChild(parentMenuItem);
 
-		// 递归生成子层菜单项
 		generateSubMenu(data, parentItem.id, parentDropdownMenu);
 	});
 }
@@ -62,6 +69,12 @@ function generateSubMenu(data, parentId, parentDropdownMenu) {
 		.sort(compareMenuOrder);
 
 	subItems.forEach((subItem) => {
+		const hasReadPermission = hasPermission(subItem.auth, "read");
+
+		if (!hasReadPermission) {
+			return;
+		}
+
 		const subMenuItem = document.createElement("a");
 		subMenuItem.href = subItem.url || "javascript:void(0)";
 		subMenuItem.className = "dropdown-item";
@@ -69,10 +82,8 @@ function generateSubMenu(data, parentId, parentDropdownMenu) {
 
 		parentDropdownMenu.appendChild(subMenuItem);
 
-		// 如果子项还有子层，继续递归生成
 		generateSubMenu(data, subItem.id, subMenuItem);
 	});
 }
-generateMenu(menuData, null);
 
-// 分隔線
+generateMenu(menuData, null);

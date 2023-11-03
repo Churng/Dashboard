@@ -1,7 +1,7 @@
 // 取得詳細資料
 let unsubId = "";
 $(document).ready(function () {
-	var partId = localStorage.getItem("UnsubscribeId");
+	var partId = localStorage.getItem("getOrderId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
 
@@ -11,12 +11,14 @@ $(document).ready(function () {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
+	console.log(user_session_id);
+
 	// chsm = session_id+action+'HBAdminUnsubscribeApi'
 	// 组装所需数据
 	var action = "getUnsubscribeDetail";
 	var chsmtogetUnsubscribeDetail = user_session_id + action + "HBAdminUnsubscribeApi";
 	var chsm = CryptoJS.MD5(chsmtogetUnsubscribeDetail).toString().toLowerCase();
-
+	console.log(chsm);
 	// 发送POST请求
 	$.ajax({
 		type: "POST",
