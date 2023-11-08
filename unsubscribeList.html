@@ -198,26 +198,12 @@
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
+
         $(document).ready(function () {
-            var table = $('#Unsubscribe').DataTable({
-                // columnDefs: [
-                //     {
-                //         targets: 6, // 列索引，例如 6 表示第 7 列
-                //         visible: false, // 默认隐藏列
-                //         data: function (row, type, val, meta) {
-                //             if (type === 'display' && typeof row.statusName === 'undefined') {
-                //                 return '';
-                //             } else if (type === 'display' && typeof row.statusName !== 'undefined') {
-                //                 return row.statusName;
-                //             }
-                //             return val;
-                //         },
-                //     },
-                //     // 可以添加其他列的条件性显示/隐藏
-                // ],
+            new DataTable('#Unsubscribe', {
+                scrollX: true
             });
         });
-
     </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>

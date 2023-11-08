@@ -383,3 +383,10 @@ td:first-child {
 #stockInPage_length {
 	position: absolute;
 }
+
+/* DataTable Pagination */
+
+div.table-responsive > div.dataTables_wrapper > div.row {
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+}

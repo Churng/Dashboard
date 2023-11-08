@@ -309,8 +309,6 @@ $(document).ready(function () {
 		} else if (!statusValue || !storeValue) {
 			fetchAccountList();
 		}
-
-		sendApiRequest(filterData);
 	});
 
 	function sendApiRequest(filterData) {

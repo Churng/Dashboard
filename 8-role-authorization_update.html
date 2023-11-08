@@ -121,24 +121,28 @@
                                     </select>
                                 </div>
 
-                                <div class="col-sm-4 pt-sm-4" style="margin-top: 22px;">
+                                <div class="col-sm-3 mb-3">
+                                    <label for="remarkAuth" class="form-label">描述</label>
+                                    <textarea class="form-control" id="remarkAuth" rows="2" style="width: 300px;"
+                                        placeholder="若無請填N/A" required></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="row  g-3 mb-4">
+                                <div class="col-sm-3 pt-sm-4">
                                     <div class="custom-multi-select dropdown">
                                         <button class="btn btn-outline-primary dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             可用品牌（複選）
                                         </button>
-                                        <ul id="showSelectBrand"></ul>
                                         <ul class="dropdown-menu selectBrand" style="padding: 5px;"
                                             aria-labelledby="selectBrand" id="selectBrand">
                                         </ul>
                                     </div>
                                 </div>
-
-
-                                <div class="col-sm-3 mb-3">
-                                    <label for="remarkAuth" class="form-label">描述</label>
-                                    <textarea class="form-control" id="remarkAuth" rows="2" style="width: 300px;"
-                                        placeholder="若無請填N/A" required></textarea>
+                                <div class="col-sm-3 pt-sm-4">
+                                    <ul id="showSelectBrand" class="list-group list-group-flush"></ul>
                                 </div>
                             </div>
 

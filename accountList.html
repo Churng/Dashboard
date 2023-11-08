@@ -206,9 +206,11 @@
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
-        $(document).ready(function () {
-            new DataTable('#accountList');
 
+        $(document).ready(function () {
+            new DataTable('#accountList', {
+                scrollX: true
+            });
         });
     </script>
 
@@ -220,7 +222,7 @@
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/globleAuth.js"></script>
+    <!-- <script src="js/Public/globleAuth.js"></script> -->
 
 </body>
 

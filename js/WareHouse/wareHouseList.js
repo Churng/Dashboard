@@ -164,7 +164,7 @@ $(document).on("click", ".modify-button", function () {
 // Modal點擊跳轉頁面
 $(document).ready(function () {
 	$("#confirm").click(function () {
-		var inputValue = $("#componentNum").val();
+		var inputValue = $("#componentId").val();
 		localStorage.setItem("componentValue", inputValue);
 		$("#createModal").modal("hide");
 

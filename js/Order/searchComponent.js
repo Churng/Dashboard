@@ -23,6 +23,7 @@ $(document).ready(function () {
 
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇品牌";
+			defaultOption.value = "";
 			brandList.appendChild(defaultOption);
 
 			for (let i = 0; i < responseData.returnData.length; i++) {
@@ -263,7 +264,7 @@ $(document).ready(function () {
 		}
 
 		if (selectInventoryId) {
-			filterData.inventroyId = selectInventoryId;
+			filterData.ifGoods = selectInventoryId;
 		}
 
 		if (selectedsearchValue) {

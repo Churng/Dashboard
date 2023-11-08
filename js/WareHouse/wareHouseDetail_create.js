@@ -1,4 +1,5 @@
 // 取得詳細資料
+var postId;
 $(document).ready(function () {
 	var componentValue = localStorage.getItem("componentValue");
 	var IdPost = JSON.stringify({ componentNumber: componentValue });
@@ -58,6 +59,8 @@ $(document).ready(function () {
 				displayFileNameInInput(wareHouseData.file);
 				const myButton = document.getElementById("downloadBtn");
 				myButton.setAttribute("data-file", wareHouseData.file);
+
+				postId = wareHouseData.id;
 
 				// 填充完毕后隐藏加载中的spinner;
 				$("#spinner").hide();
@@ -168,10 +171,6 @@ $(document).ready(function () {
 			event.preventDefault();
 			event.stopPropagation();
 		} else {
-			// 处理表单提交
-			event.preventDefault();
-			var partId = localStorage.getItem("componentValue");
-
 			//取值
 			var getComponentName = $("#componentName").val();
 			var getComponentNumber = $("#componentNumber").val();
@@ -207,7 +206,7 @@ $(document).ready(function () {
 				updateData.file = "";
 			}
 
-			updateData.id = partId;
+			updateData.id = postId;
 			updateData.brandId = getbrandId;
 			updateData.componentName = getComponentName;
 			updateData.componentNumber = getComponentNumber;
@@ -277,7 +276,7 @@ function sendSecondCreate() {
 	var amount = $("#amount").val();
 
 	var updateData = {
-		componentId: partId,
+		componentId: postId,
 		amount: amount,
 	};
 

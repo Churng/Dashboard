@@ -125,12 +125,9 @@ $(document).ready(function () {
 
 		if (selectedShopId || selectedAuthId || selectedStatus) {
 			sendApiRequest(filterData);
-		} else if (!statusValue) {
+		} else if (!selectedStatus) {
 			fetchAccountList();
 		}
-
-		// 发送API请求以获取数据
-		sendApiRequest(filterData);
 	});
 
 	// 创建一个函数，发送API请求以获取数据
@@ -165,7 +162,7 @@ $(document).ready(function () {
 	}
 });
 
-// //取帳號列表
+//取帳號列表
 function fetchAccountList() {
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
@@ -197,11 +194,6 @@ function fetchAccountList() {
 
 // 加载时调用在页面 fetchAccountList
 $(document).ready(function () {
-	fetchAccountList();
-});
-
-// 或者在点击按钮时调用 fetchAccountList
-$("#allBtn").on("click", function () {
 	fetchAccountList();
 });
 

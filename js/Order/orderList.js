@@ -207,6 +207,7 @@ $(document).ready(function () {
 	// 監聽狀態
 	$("#status").on("change", function () {
 		statusValue = $(this).val();
+		console.log(statusValue);
 	});
 
 	// 点击搜索按钮时触发API请求
@@ -226,7 +227,12 @@ $(document).ready(function () {
 			filterData.status = statusValue;
 		}
 
-		sendApiRequest(filterData);
+		if (sdateValue || edateValue || statusValue) {
+			sendApiRequest(filterData);
+		} else if (!statusValue) {
+			fetchAccountList();
+			clearDateFields();
+		}
 	});
 
 	function sendApiRequest(filterData) {
@@ -254,7 +260,6 @@ $(document).ready(function () {
 				handleApiResponse(responseData);
 				if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 					updatePageWithData(responseData);
-					clearDateFields();
 				}
 			},
 			error: function (error) {
@@ -266,11 +271,6 @@ $(document).ready(function () {
 
 // 加载时调用在页面 fetchAccountList
 $(document).ready(function () {
-	fetchAccountList();
-});
-
-// 或者在点击按钮时调用 fetchAccountList
-$("#allBtn").on("click", function () {
 	fetchAccountList();
 });
 

@@ -1057,6 +1057,7 @@ function updateSelectedBrands(ulList, responseData) {
 	selectedBrandNames.forEach((brandName) => {
 		const li = document.createElement("li");
 		li.textContent = brandName;
+		li.classList.add("list-group-item");
 		showSelectBrandList.appendChild(li);
 	});
 }

@@ -127,6 +127,7 @@
                             <div class="col-sm-3">
                                 <label for="status" class="form-label">單據狀態</label>
                                 <select class="form-select" id="status" name="status" required>
+                                    <option value="">請選擇狀態</option>
                                     <option value="1">全部</option>
                                     <option value="2">進行中</option>
                                     <option value="3">可出庫</option>
@@ -197,8 +198,11 @@
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
+
         $(document).ready(function () {
-            new DataTable('#orderIndex');
+            new DataTable('#orderIndex', {
+                scrollX: true
+            });
         });
 
     </script>

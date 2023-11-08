@@ -136,10 +136,10 @@
                                         <th scope="col">零件名稱</th>
                                         <th scope="col">品牌</th>
                                         <th scope="col">適用車型</th>
-                                        <th scope="col">訂價</th>
-                                        <th scope="col">批發價</th>
-
-                                        <th scope="col">最低批發價</th>
+                                        <th scope="col" style="display: none;">訂價</th>
+                                        <th scope="col" style="display: none;">成本</th>
+                                        <th scope="col" style="display: none;">批發價</th>
+                                        <th scope="col" style="display: none;">最低批發價</th>
                                         <th scope="col">工時（小時）</th>
                                         <th scope="col">採購中數量</th>
                                         <th scope="col">庫存數量</th>
@@ -184,11 +184,6 @@
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
-        $(document).ready(function () {
-            new DataTable('#partsManagement');
-        });
-    </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>

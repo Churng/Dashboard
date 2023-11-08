@@ -194,6 +194,8 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
     <script src="js/crypto-js.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
@@ -205,14 +207,23 @@
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
         $(document).ready(function () {
-            new DataTable('#inventory');
+            new DataTable('#inventory', {
+                scrollX: true
+            });
         });
 
     </script>
     <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Store/Store_index.js"></script>
     <script src="js/Public/menu.js"></script>
 
+
+    <!-- 權限 -->
+    <script src="js/Public/permissionControl.js"></script>
+    <!-- <script src="js/Public/globleAuth.js"></script> -->
 </body>
 
 </html>

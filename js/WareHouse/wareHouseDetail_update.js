@@ -1,6 +1,6 @@
 // 取得詳細資料
-let componentId;
 let orderStatus;
+
 $(document).ready(function () {
 	var stockValue = localStorage.getItem("wareHouseId");
 	var IdPost = JSON.stringify({ id: stockValue });
@@ -45,10 +45,9 @@ $(document).ready(function () {
 				$("#EditAccount").val(wareHouseData.updateOperator);
 
 				updatePageWithData(responseData);
-				handleComponentId(wareHouseData.componentId);
+				handleComponentId(wareHouseData.componentId); //存著ID取零件資料
 
 				orderStatus = wareHouseData.status;
-				// 填充完毕后隐藏加载中的spinner;
 				$("#spinner").hide();
 			} else {
 				showErrorNotification();
@@ -149,15 +148,7 @@ function updatePageWithData(responseData) {
 		// 按鈕設定//
 
 		dataTable.row
-			.add([
-				data.id,
-				data.componentId,
-				data.componentNumber,
-				data.componentName,
-				data.orderNo,
-				data.storeName,
-				data.orderNote,
-			])
+			.add([data.id, data.componentId, data.componentName, data.orderNo, data.storeName, data.orderNote])
 			.draw(false);
 	}
 }
@@ -167,7 +158,6 @@ function updatePageWithData(responseData) {
 $(document).ready(function () {
 	$("#BackList").click(function () {
 		localStorage.removeItem("componentValue");
-		localStorage.removeItem("partId");
 		window.location.href = "wareHouseList.html";
 	});
 });

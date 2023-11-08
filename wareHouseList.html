@@ -121,16 +121,16 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="createLabel">掃描料號</h5>
+                                            <h5 class="modal-title" id="createLabel">掃描零件料號</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
 
                                             <div class="col-auto">
-                                                <label for="componentNum" class="visually-hidden">料號</label>
-                                                <input type="text" class="form-control" id="componentNum"
-                                                    placeholder="請輸入料號、零件序號查詢">
+                                                <label for="componentId" class="visually-hidden">零件料號</label>
+                                                <input type="text" class="form-control" id="componentId"
+                                                    placeholder="請輸入零件料號查詢">
                                             </div>
 
                                         </div>
@@ -225,10 +225,12 @@
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
-        $(document).ready(function () {
-            new DataTable('#stockIn');
-        });
 
+        $(document).ready(function () {
+            new DataTable('#stockIn', {
+                scrollX: true
+            });
+        });
     </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
