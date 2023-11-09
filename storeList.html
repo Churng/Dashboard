@@ -131,7 +131,7 @@
 
                         <div class="tableList mt-5">
                             <div class="table-responsive">
-                                <table id="storeInformation" class="display  table table-striped">
+                                <table id="storeInformation" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th scope="col">選取動作</th>
@@ -143,8 +143,6 @@
                                             <th scope="col">狀態</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -184,7 +182,8 @@
     <script>
         $(document).ready(function () {
             new DataTable('#storeInformation', {
-                scrollX: true
+                scrollX: true,
+                responsive: true
             });
         });
 

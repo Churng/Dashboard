@@ -1,6 +1,7 @@
 // 表格初始
 $(document).ready(function () {
 	// Data1
+
 	var columnsData1 = [
 		{ data: "empty", title: "#" },
 		{ data: "read", title: "查看" },
@@ -21,7 +22,7 @@ $(document).ready(function () {
 			id: 31,
 			read: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="read" />',
 			insert: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="insert" disabled/>',
-			update: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="update" disableddisabled/>',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="update" disabled/>',
 			delete: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="delete" disabled/>',
 		},
 		{
@@ -57,6 +58,15 @@ $(document).ready(function () {
 			delete: '<input type="checkbox" name="rowCheckbox" data-id="35" data-column="delete" />',
 		},
 	];
+
+	var table1DataArray = Object.values(table1Data);
+	table1DataArray.forEach(function (row) {
+		row.id = parseInt(row.id);
+	});
+
+	table1DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
 
 	// Data2
 	var columnsData2 = [
@@ -117,6 +127,15 @@ $(document).ready(function () {
 		},
 	];
 
+	var table2DataArray = Object.values(table2Data);
+	table2DataArray.forEach(function (row) {
+		row.id = parseInt(row.id); // 将id转换为数字
+	});
+
+	table2DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	//Data3
 	var columnsData3 = [
 		{ data: "empty", title: "#" },
@@ -159,6 +178,15 @@ $(document).ready(function () {
 		columns3.push({ data: column.data, title: column.title });
 	});
 
+	var table3DataArray = Object.values(table3Data);
+	table3DataArray.forEach(function (row) {
+		row.id = parseInt(row.id);
+	});
+
+	table3DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	//Data4
 	var columnsData4 = [
 		{ data: "empty", title: "#" },
@@ -176,7 +204,7 @@ $(document).ready(function () {
 		{
 			empty: "零件管理",
 			id: 7,
-			read: '<input type="checkbox" name="rowCheckbox" data-id="7" data-column="read" disabled/>',
+			read: '<input type="checkbox" name="rowCheckbox" data-id="7" data-column="read"/>',
 			insert: '<input type="checkbox" name="rowCheckbox" data-id="7" data-column="insert" disabled/>',
 			update: '<input type="checkbox" name="rowCheckbox" data-id="7" data-column="update" disabled/>',
 			delete: '<input type="checkbox" name="rowCheckbox" data-id="7" data-column="delete" disabled/>',
@@ -246,6 +274,15 @@ $(document).ready(function () {
 		columns4.push({ data: column.data, title: column.title });
 	});
 
+	var table4DataArray = Object.values(table4Data);
+	table4DataArray.forEach(function (row) {
+		row.id = parseInt(row.id);
+	});
+
+	table4DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	//Data5
 	var columnsData5 = [
 		{ data: "empty", title: "#" },
@@ -305,6 +342,15 @@ $(document).ready(function () {
 
 	columnsData5.forEach(function (column) {
 		columns5.push({ data: column.data, title: column.title });
+	});
+
+	var table5DataArray = Object.values(table5Data);
+	table5DataArray.forEach(function (row) {
+		row.id = parseInt(row.id);
+	});
+
+	table5DataArray.sort(function (a, b) {
+		return a.id - b.id;
 	});
 
 	//Data6
@@ -451,6 +497,15 @@ $(document).ready(function () {
 		columns6.push({ data: column.data, title: column.title });
 	});
 
+	var table6DataArray = Object.values(table6Data);
+	table6DataArray.forEach(function (row) {
+		row.id = parseInt(row.id); // 将id转换为数字
+	});
+
+	table6DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	//Data7
 
 	var columnsData7 = [
@@ -583,6 +638,15 @@ $(document).ready(function () {
 		columns7.push({ data: column.data, title: column.title });
 	});
 
+	var table7DataArray = Object.values(table7Data);
+	table7DataArray.forEach(function (row) {
+		row.id = parseInt(row.id); // 将id转换为数字
+	});
+
+	table7DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	//Data8
 
 	var columnsData8 = [
@@ -638,6 +702,15 @@ $(document).ready(function () {
 		columns8.push({ data: column.data, title: column.title });
 	});
 
+	var table8DataArray = Object.values(table8Data);
+	table8DataArray.forEach(function (row) {
+		row.id = parseInt(row.id); // 将id转换为数字
+	});
+
+	table8DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	//Data9
 	var columnsData9 = [
 		{ data: "empty", title: "#" },
@@ -682,6 +755,15 @@ $(document).ready(function () {
 
 	columnsData9.forEach(function (column) {
 		columns9.push({ data: column.data, title: column.title });
+	});
+
+	var table9DataArray = Object.values(table9Data);
+	table9DataArray.forEach(function (row) {
+		row.id = parseInt(row.id); // 将id转换为数字
+	});
+
+	table9DataArray.sort(function (a, b) {
+		return a.id - b.id;
 	});
 
 	//Data10
@@ -808,15 +890,32 @@ $(document).ready(function () {
 		columns10.push({ data: column.data, title: column.title });
 	});
 
+	var table10DataArray = Object.values(table10Data);
+	table10DataArray.forEach(function (row) {
+		row.id = parseInt(row.id); // 将id转换为数字
+	});
+
+	console.log(table10DataArray);
+
+	table10DataArray.sort(function (a, b) {
+		return a.id - b.id;
+	});
+
 	// 初始
 	var table1 = $("#authorize-management-1").DataTable({
-		data: table1Data,
+		data: table1DataArray,
 		columns: columns1,
 		paging: false,
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table1.clear().rows.add(table1DataArray).draw();
 
 	var table2 = $("#authorize-management-2").DataTable({
 		data: table2Data,
@@ -825,7 +924,14 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table1.clear().rows.add(table2DataArray).draw();
+
 	var table3 = $("#authorize-management-3").DataTable({
 		data: table3Data,
 		columns: columns3,
@@ -833,7 +939,13 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table3.clear().rows.add(table3DataArray).draw();
 
 	var table4 = $("#authorize-management-4").DataTable({
 		data: table4Data,
@@ -842,7 +954,14 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table4.clear().rows.add(table4DataArray).draw();
+
 	var table5 = $("#authorize-management-5").DataTable({
 		data: table5Data,
 		columns: columns5,
@@ -850,7 +969,13 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table5.clear().rows.add(table5DataArray).draw();
 
 	var table6 = $("#authorize-management-6").DataTable({
 		data: table6Data,
@@ -859,7 +984,14 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table6.clear().rows.add(table6DataArray).draw();
+
 	var table7 = $("#authorize-management-7").DataTable({
 		data: table7Data,
 		columns: columns7,
@@ -867,7 +999,13 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table7.clear().rows.add(table7DataArray).draw();
 
 	var table8 = $("#authorize-management-8").DataTable({
 		data: table8Data,
@@ -876,7 +1014,14 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table8.clear().rows.add(table8DataArray).draw();
+
 	var table9 = $("#authorize-management-9").DataTable({
 		data: table9Data,
 		columns: columns9,
@@ -884,7 +1029,13 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table9.clear().rows.add(table9DataArray).draw();
 
 	var table10 = $("#authorize-management-10").DataTable({
 		data: table10Data,
@@ -893,7 +1044,13 @@ $(document).ready(function () {
 		searching: false,
 		scrollX: false,
 		info: false,
+		order: [
+			[2, "desc"],
+			[2, "asc"],
+		],
 	});
+
+	table10.clear().rows.add(table10DataArray).draw();
 });
 
 //詳細內容
@@ -1033,6 +1190,7 @@ function handleBrandId(getBrandId) {
 		},
 	});
 }
+
 // 更新選中名稱並顯示在頁面上
 function updateSelectedBrands(ulList, responseData) {
 	const selectedBrandNames = [];
@@ -1048,18 +1206,11 @@ function updateSelectedBrands(ulList, responseData) {
 	});
 
 	// 选择另一个 <ul> 元素用于显示选中的品牌名称
-	const showSelectBrandList = document.querySelector("#showSelectBrand");
+	const showSelectBrand = document.querySelector("#showSelectBrand");
 
-	// 清空 <ul> 元素中的内容
-	showSelectBrandList.innerHTML = "";
+	const displayText = "選擇項目: " + selectedBrandNames.join(", ");
 
-	// 为每个选中的品牌名称创建 <li> 元素并添加到 <ul> 中
-	selectedBrandNames.forEach((brandName) => {
-		const li = document.createElement("li");
-		li.textContent = brandName;
-		li.classList.add("list-group-item");
-		showSelectBrandList.appendChild(li);
-	});
+	showSelectBrand.textContent = displayText;
 }
 
 // 回填表格內容

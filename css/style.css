@@ -390,3 +390,8 @@ div.table-responsive > div.dataTables_wrapper > div.row {
 	margin-top: 1.5rem;
 	margin-bottom: 1.5rem;
 }
+
+/* 入庫單：媒合清單內容對齊 */
+#stockInPage th {
+	text-align: center;
+}
