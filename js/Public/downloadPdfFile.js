@@ -27,16 +27,16 @@ function downloadPdfFile(apiName, fileName) {
 			downloadFile(response, fileName);
 		},
 		error: function (error) {
-			showErrorFileNotification();
+			showErrorFileNotification(); // 使用正确的错误通知函数
 		},
 	});
 }
 
-
+// 在新标签页中打开文件
 function downloadFile(blob, fileName) {
 	const fileExtension = getFileExtension(fileName).toLowerCase();
 
-
+	// 只支持 PDF 文件扩展名
 	if (fileExtension === "pdf") {
 		const url = URL.createObjectURL(blob);
 
@@ -54,7 +54,7 @@ function downloadFile(blob, fileName) {
 	}
 }
 
-
+// 获取文件扩展名
 function getFileExtension(fileName) {
 	return fileName.split(".").pop();
 }

@@ -20,6 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/toastr.min.css">
@@ -152,10 +153,10 @@
                         <!-- 表格 -->
                         <div class="tableList mt-5">
                             <div class="table-responsive parts-order-table">
-                                <table id="stockroom" class="display table table-striped">
+                                <table id="depotList" class="display table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>詳細</th>
+                                            <th>操作動作</th>
                                             <th>零件序號</th>
                                             <th>零件料號</th>
                                             <th>零件名稱</th>
@@ -174,67 +175,7 @@
                                             <th>建立時間</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                        </tr>
-                                    </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -273,7 +214,7 @@
     <script src="js/dataTables.bootstrap5.js"></script>
     <script>
         $(document).ready(function () {
-            new DataTable('#stockroom', {
+            new DataTable('#depotList', {
                 scrollX: true
             });
         });
@@ -283,8 +224,8 @@
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Store/Store_index.js"></script>
     <script src="js/Public/menu.js"></script>
+    <script src="js/Depot/depotList.js"></script>
 
 
     <!-- 權限 -->

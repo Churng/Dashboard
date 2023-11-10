@@ -73,6 +73,7 @@ function fetchAccountList() {
 		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			// 处理成功响应
 			console.log("成功响应：", responseData);
 			// 可以在这里执行其他操作
@@ -90,15 +91,32 @@ function updatePageWithData(responseData) {
 	var dataTable = $("#partsManagement").DataTable();
 	dataTable.clear().draw();
 
+	// 如果没有数据
+	if (responseData.returnData.length === 0) {
+		// 隐藏没有数据时需要隐藏的列
+		hideColumnsIfNoData();
+		return;
+	}
+
+	showPriceColumn = true;
+	showCostColumn = true;
+	showWholesalePriceColumn = true;
+	showLowestWholesalePriceColumn = true;
+
+	// 显示所有列
+	dataTable.columns().visible(true);
+
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
+		console.log(data);
+
 		// 權限設定 //
 
-		var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		var currentUrl = window.location.href;
-		handlePagePermissions(currentUser, currentUrl);
+		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+		// var currentUrl = window.location.href;
+		// handlePagePermissions(currentUser, currentUrl);
 
 		// 按鈕設定//
 
@@ -133,25 +151,56 @@ function updatePageWithData(responseData) {
 		// 查看倉庫還未設置
 		var goInventory = '<a href="#" class="btn btn-primary">點擊</a>';
 
-		dataTable.row
-			.add([
-				goInventory,
-				buttonsHtml,
-				data.componentNumber,
-				data.componentName,
-				data.brandName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.workingHour,
-				data.purchaseAmount,
-				data.depotAmount,
-				data.totalCost,
-				data.lowestInventory,
-				data.createTime,
-			])
-			.draw(false);
+		// 使用條件判斷來填充列
+		var row = [
+			goInventory,
+			buttonsHtml,
+			data.componentNumber,
+			data.componentName,
+			data.brandName,
+			data.suitableCarModel,
+		];
+
+		if (data.hasOwnProperty("price") && showPriceColumn) {
+			row.push(data.price ? data.price : "");
+		}
+		if (data.hasOwnProperty("cost") && showCostColumn) {
+			row.push(data.cost ? data.cost : "");
+		}
+		if (data.hasOwnProperty("wholesalePrice") && showWholesalePriceColumn) {
+			row.push(data.wholesalePrice ? data.wholesalePrice : "");
+		}
+		if (data.hasOwnProperty("lowestWholesalePrice") && showLowestWholesalePriceColumn) {
+			row.push(data.lowestWholesalePrice ? data.lowestWholesalePrice : "");
+		}
+
+		row.push(
+			data.workingHour,
+			data.purchaseAmount,
+			data.depotAmount,
+			data.totalCost,
+			data.lowestInventory,
+			data.createTime
+		);
+
+		dataTable.row.add(row).draw(false);
+	}
+}
+
+// 無數據隱藏列
+function hideColumnsIfNoData() {
+	var dataTable = $("#partsManagement").DataTable();
+	if (!showPriceColumn) {
+		dataTable.column(4).visible(false);
+	}
+	if (!showCostColumn) {
+		dataTable.column(5).visible(false);
+	}
+	if (!showWholesalePriceColumn) {
+		dataTable.column(6).visible(false);
+	}
+	if (!showLowestWholesalePriceColumn) {
+		dataTable.column(7).visible(false);
 	}
 }
 
@@ -197,7 +246,7 @@ function refreshDataList() {
 	});
 }
 
-//刪除按鈕:外部function
+//刪除按鈕
 $(document).on("click", ".delete-button", function () {
 	var deleteButton = $(this);
 	var itemId = deleteButton.data("id");
@@ -296,8 +345,7 @@ function sendApiRequest(filterData) {
 		},
 	});
 }
-
-// 或者在点击按钮时调用 fetchAccountList
-$("#allBtn").on("click", function () {
+// 加载时调用在页面 fetchAccountList
+$(document).ready(function () {
 	fetchAccountList();
 });
