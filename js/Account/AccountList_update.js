@@ -211,14 +211,15 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					console.log(response);
-
-					setTimeout(function () {
-						showSuccessFileNotification();
-					}, 1000);
-
-					var newPageUrl = "accountList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						setTimeout(function () {
+							showSuccessFileNotification();
+						}, 1000);
+						var newPageUrl = "accountList.html";
+						window.location.href = newPageUrl;
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();

@@ -18,6 +18,7 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			// console.log(responseData);
 			const brandList = document.getElementById("P-brandId");
 			const defaultOption = document.createElement("option");
@@ -71,6 +72,7 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			// console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const purchaseData = responseData.returnData[0];
@@ -131,7 +133,6 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const componentData = responseData.returnData[0];
 				$("#componentName").val(componentData.componentName);
@@ -164,7 +165,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -268,15 +269,17 @@ function sendFormDataToAPI(event) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				console.log(response);
-				handleApiResponse(response.returnCode);
-				showSuccessFileNotification();
-				localStorage.removeItem("purchaseId");
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+					localStorage.removeItem("purchaseId");
 
-				setTimeout(function () {
-					var newPageUrl = "purchaseList.html";
-					window.location.href = newPageUrl;
-				}, 3000);
+					setTimeout(function () {
+						var newPageUrl = "purchaseList.html";
+						window.location.href = newPageUrl;
+					}, 3000);
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorFileNotification();
@@ -373,13 +376,11 @@ function sendAgreeDataToAPI(event) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				console.log(response);
-				handleApiResponse(response);
-
 				if (response.returnCode == "1") {
 					sendFormDataToAPI(event);
 					localStorage.removeItem("purchaseId");
 				} else {
+					handleApiResponse(response);
 					return;
 				}
 			},

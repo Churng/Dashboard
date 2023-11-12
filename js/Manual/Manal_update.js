@@ -54,7 +54,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -149,10 +149,13 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					console.warn(response);
-					showSuccessFileNotification();
-					var newPageUrl = "manualList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+						var newPageUrl = "manualList.html";
+						window.location.href = newPageUrl;
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();

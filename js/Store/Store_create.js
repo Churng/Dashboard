@@ -61,9 +61,13 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					showSuccessFileNotification();
-					var newPageUrl = "storeList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+						var newPageUrl = "storeList.html";
+						window.location.href = newPageUrl;
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorSubmitNotification();

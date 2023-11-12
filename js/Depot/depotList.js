@@ -20,10 +20,11 @@ function fetchAccountList() {
 		url: `${apiURL}/stocks`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			handleApiResponse(responseData);
-
-			console.log("成功响应：", responseData);
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -155,8 +156,11 @@ $(document).ready(function () {
 			url: `${apiURL}/stocks`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
-				// 处理成功响应
-				updatePageWithData(responseData);
+				if (responseData.returnCode === "1") {
+					updatePageWithData(responseData);
+				} else {
+					handleApiResponse(responseData);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();

@@ -51,10 +51,13 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					console.log(response);
-					showSuccessFileNotification();
-					var newPageUrl = "brandList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+						var newPageUrl = "brandList.html";
+						window.location.href = newPageUrl;
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					console.log(error);

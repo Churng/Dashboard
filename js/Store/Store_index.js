@@ -19,9 +19,11 @@ function fetchAccountList() {
 		url: `${apiURL}/store`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			handleApiResponse(responseData);
-			// console.log("成功响应：", responseData);
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -118,7 +120,11 @@ $(document).ready(function () {
 			url: `${apiURL}/store`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
-				updatePageWithData(responseData);
+				if (responseData.returnCode === "1") {
+					updatePageWithData(responseData);
+				} else {
+					handleApiResponse(responseData);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();

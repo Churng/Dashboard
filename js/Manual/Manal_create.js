@@ -55,11 +55,15 @@ $(document).ready(function () {
 					processData: false,
 					contentType: false,
 					success: function (response) {
-						showSuccessFileNotification();
-						setTimeout(function () {
-							var newPageUrl = "manualList.html";
-							window.location.href = newPageUrl;
-						}, 3000);
+						if (response.returnCode === "1") {
+							showSuccessFileNotification();
+							setTimeout(function () {
+								var newPageUrl = "manualList.html";
+								window.location.href = newPageUrl;
+							}, 3000);
+						} else {
+							handleApiResponse(response);
+						}
 					},
 					error: function (error) {
 						showErrorFileNotification();

@@ -21,8 +21,11 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log(responseData);
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -94,8 +97,11 @@ function refreshDataList() {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log(responseData);
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -162,11 +168,15 @@ $(document).on("click", ".delete-button", function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				setTimeout(function () {
-					showSuccessFileDeleteNotification();
-				}, 1000);
+				if (response.returnCode === "1") {
+					setTimeout(function () {
+						showSuccessFileDeleteNotification();
+					}, 1000);
 
-				refreshDataList();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();

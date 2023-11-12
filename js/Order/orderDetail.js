@@ -293,7 +293,7 @@ $(document).on("click", ".delete-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(responseData);
+				handleApiResponse(response);
 				showSuccessFileDeleteNotification();
 				refreshDataList();
 			},
@@ -354,7 +354,7 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(responseData);
+				handleApiResponse(response);
 				console.log(response);
 				setTimeout(function () {
 					showSuccessorderunSubscribeNotification();
@@ -426,7 +426,7 @@ $(document).on("click", "#orderComplete", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(responseData);
+				handleApiResponse(response);
 				showSuccessorderCompleteNotification();
 				refreshDataList();
 			},
@@ -491,7 +491,7 @@ $(document).on("click", "#orderCancel", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(responseData);
+				handleApiResponse(response);
 				showSuccessorderCancelNotification();
 				refreshDataList();
 			},
@@ -540,9 +540,9 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 		const user_session_id = gertuserData.sessionId;
 
 		console.log(user_session_id);
-		// chsm = session_id+action+'HBAdminOrderApi'
+		// chsm = session_id+action+'HBAdminShipApi'
 		var action = "insertShipDetail";
-		var chsmtoDeleteFile = user_session_id + action + "HBAdminOrderApi";
+		var chsmtoDeleteFile = user_session_id + action + "HBAdminShipApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
 
 		console.log(chsm);
@@ -550,7 +550,7 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
-		formData.set("data", formattedData);
+		formData.set("orderIdList", formattedData);
 
 		$.ajax({
 			type: "POST",
@@ -559,13 +559,16 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(response);
-				// showSuccessorderCancelNotification();
-				// refreshDataList();
+				showSuccessshipdetail();
+				refreshDataList();
 			},
 			error: function (error) {
-				showErrorNotification();
+				handleApiResponse(response);
 			},
 		});
 	});
+});
+
+$(document).on("click", "#saveBtn", function (e) {
+	window.history.back();
 });

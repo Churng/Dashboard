@@ -102,6 +102,10 @@ function showgoshipDetailNotification() {
 	});
 }
 
+function showSuccessshipdetail() {
+	toastr.success("已成功執行出庫", "成功");
+}
+
 function showSuccessAddToOrderNotification() {
 	toastr.success("訂單已成立！", "成功");
 }

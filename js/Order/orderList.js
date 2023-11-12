@@ -21,9 +21,10 @@ function fetchAccountList() {
 		url: `${apiURL}/order`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			handleApiResponse(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -98,9 +99,10 @@ function refreshDataList() {
 		url: `${apiURL}/order`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			handleApiResponse(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -170,15 +172,17 @@ $(document).on("click", ".delete-button", function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(response);
 				if (response.returnCode === "1" && response.returnData.length > 0) {
 					updatePageWithData(response);
-				}
-				setTimeout(function () {
-					showSuccessFileDeleteNotification();
-				}, 1000);
 
-				refreshDataList();
+					setTimeout(function () {
+						showSuccessFileDeleteNotification();
+					}, 1000);
+
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
@@ -258,9 +262,10 @@ $(document).ready(function () {
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				console.log(responseData);
-				handleApiResponse(responseData);
 				if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 					updatePageWithData(responseData);
+				} else {
+					handleApiResponse(responseData);
 				}
 			},
 			error: function (error) {

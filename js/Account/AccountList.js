@@ -18,22 +18,26 @@ $(document).ready(function () {
 		url: `${apiURL}/store`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			const storeList = document.getElementById("A-shoplist");
+			if (responseData.returnCode === "1") {
+				const storeList = document.getElementById("A-shoplist");
 
-			const defaultOption = document.createElement("option");
-			defaultOption.text = "請選擇門市";
-			defaultOption.value = "";
-			storeList.appendChild(defaultOption);
+				const defaultOption = document.createElement("option");
+				defaultOption.text = "請選擇門市";
+				defaultOption.value = "";
+				storeList.appendChild(defaultOption);
 
-			for (let i = 0; i < responseData.returnData.length; i++) {
-				const store = responseData.returnData[i];
-				const storeName = store.storeName;
-				const storeId = store.id;
-				const option = document.createElement("option");
-				option.text = storeName;
-				option.value = storeId;
+				for (let i = 0; i < responseData.returnData.length; i++) {
+					const store = responseData.returnData[i];
+					const storeName = store.storeName;
+					const storeId = store.id;
+					const option = document.createElement("option");
+					option.text = storeName;
+					option.value = storeId;
 
-				storeList.appendChild(option);
+					storeList.appendChild(option);
+				}
+			} else {
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -62,23 +66,27 @@ $(document).ready(function () {
 		url: `${apiURL}/authorize`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			const rolleList = document.getElementById("A-auth");
+			if (responseData.returnCode === "1") {
+				const rolleList = document.getElementById("A-auth");
 
-			const defaultOption = document.createElement("option");
-			defaultOption.text = "請選擇角色";
-			defaultOption.value = "";
-			rolleList.appendChild(defaultOption);
+				const defaultOption = document.createElement("option");
+				defaultOption.text = "請選擇角色";
+				defaultOption.value = "";
+				rolleList.appendChild(defaultOption);
 
-			for (let i = 0; i < responseData.returnData.length; i++) {
-				const roll = responseData.returnData[i];
-				const rollName = roll.authorizeName;
-				const rollId = roll.id;
-				const option = document.createElement("option");
+				for (let i = 0; i < responseData.returnData.length; i++) {
+					const roll = responseData.returnData[i];
+					const rollName = roll.authorizeName;
+					const rollId = roll.id;
+					const option = document.createElement("option");
 
-				option.text = rollName;
-				option.value = rollId;
+					option.text = rollName;
+					option.value = rollId;
 
-				rolleList.appendChild(option);
+					rolleList.appendChild(option);
+				}
+			} else {
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -151,9 +159,11 @@ $(document).ready(function () {
 			url: `${apiURL}/account`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
-				// 处理成功响应
-				console.log("成功响应：", responseData);
-				updatePageWithData(responseData);
+				if (responseData.returnCode === "1") {
+					updatePageWithData(responseData);
+				} else {
+					handleApiResponse(responseData);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
@@ -182,9 +192,11 @@ function fetchAccountList() {
 		url: `${apiURL}/account`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();

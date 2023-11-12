@@ -43,7 +43,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showWarningContentNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -109,6 +109,7 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
+					handleApiResponse(response);
 					console.log(response);
 					showSuccessFileNotification();
 					localStorage.removeItem("selectedBrandData");

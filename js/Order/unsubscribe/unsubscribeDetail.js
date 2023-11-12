@@ -30,6 +30,7 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const unsubscribeData = responseData.returnData[0];
@@ -190,6 +191,7 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
+					handleApiResponse(response);
 					console.warn(response);
 					if (response.returnCode == "1") {
 						showSuccessFileNotification();

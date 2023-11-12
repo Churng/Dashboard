@@ -17,11 +17,11 @@ $(document).ready(function () {
 		url: `${apiURL}/authorize`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-
-			updatePageWithData(responseData);
-			handleApiResponse(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -62,7 +62,6 @@ function refreshDataList() {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	// console.log(user_session_id);
 	// chsm = session_id+action+'HBAdminManualApi'
 	// 組裝菜單所需資料
 	var action = "getManualList";
@@ -76,10 +75,11 @@ function refreshDataList() {
 		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();

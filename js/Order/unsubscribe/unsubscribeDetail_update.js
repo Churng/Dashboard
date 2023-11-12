@@ -111,7 +111,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -199,7 +199,11 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				showSuccessFileNotification();
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorFileNotification();
@@ -257,8 +261,13 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+				} else {
+					handleApiResponse(response);
+				}
+
 				console.warn(response);
-				showSuccessFileNotification();
 			},
 			error: function (error) {
 				showErrorFileNotification();

@@ -18,21 +18,25 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			const brandList = document.getElementById("C-brandId");
-			const defaultOption = document.createElement("option");
-			defaultOption.text = "請選擇品牌";
-			brandList.appendChild(defaultOption);
+			if (responseData.returnCode === "1") {
+				const brandList = document.getElementById("C-brandId");
+				const defaultOption = document.createElement("option");
+				defaultOption.text = "請選擇品牌";
+				brandList.appendChild(defaultOption);
 
-			for (let i = 0; i < responseData.returnData.length; i++) {
-				const brand = responseData.returnData[i];
-				const brandName = brand.brandName;
-				const brandId = brand.id;
+				for (let i = 0; i < responseData.returnData.length; i++) {
+					const brand = responseData.returnData[i];
+					const brandName = brand.brandName;
+					const brandId = brand.id;
 
-				const option = document.createElement("option");
-				option.text = brandName;
-				option.value = brandId;
+					const option = document.createElement("option");
+					option.text = brandName;
+					option.value = brandId;
 
-				brandList.appendChild(option);
+					brandList.appendChild(option);
+				}
+			} else {
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -138,11 +142,14 @@ $(document).ready(function () {
 					processData: false,
 					contentType: false,
 					success: function (response) {
-						console.log(response);
-						showSuccessFileNotification();
-						localStorage.removeItem("selectedComponentData");
-						var newPageUrl = "componentList.html";
-						window.location.href = newPageUrl;
+						if (response.returnCode === "1") {
+							showSuccessFileNotification();
+							localStorage.removeItem("selectedComponentData");
+							var newPageUrl = "componentList.html";
+							window.location.href = newPageUrl;
+						} else {
+							handleApiResponse(response);
+						}
 					},
 					error: function (error) {
 						showErrorFileNotification();

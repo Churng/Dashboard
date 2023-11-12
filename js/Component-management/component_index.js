@@ -18,6 +18,7 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			const brandList = document.getElementById("selectBrand");
 
 			const defaultOption = document.createElement("option");
@@ -73,11 +74,11 @@ function fetchAccountList() {
 		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			handleApiResponse(responseData);
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -235,10 +236,11 @@ function refreshDataList() {
 		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -335,10 +337,11 @@ function sendApiRequest(filterData) {
 		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 		success: function (responseData) {
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();

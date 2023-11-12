@@ -18,6 +18,7 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			console.log(responseData);
 			const brandList = document.getElementById("C-brandId");
 			const defaultOption = document.createElement("option");
@@ -71,7 +72,6 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const componentData = responseData.returnData[0];
 
@@ -105,7 +105,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showWarningNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -228,11 +228,14 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					console.log(response);
-					showSuccessFileNotification();
-					localStorage.removeItem("partId");
-					var newPageUrl = "componentList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+						localStorage.removeItem("partId");
+						var newPageUrl = "componentList.html";
+						window.location.href = newPageUrl;
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();

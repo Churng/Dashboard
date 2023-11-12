@@ -67,7 +67,11 @@ function fetchAccountList() {
 		url: `${apiURL}/depot`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -165,7 +169,11 @@ function refreshDataList() {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -296,8 +304,11 @@ $(document).ready(function () {
 			url: `${apiURL}/depot`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
-				// 处理成功响应
-				updatePageWithData(responseData);
+				if (responseData.returnCode === "1") {
+					updatePageWithData(responseData);
+				} else {
+					handleApiResponse(responseData);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
@@ -353,8 +364,11 @@ $(document).ready(function () {
 			url: `${apiURL}/depot`,
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
-				// 处理成功响应
-				updatePageWithData(responseData);
+				if (responseData.returnCode === "1") {
+					updatePageWithData(responseData);
+				} else {
+					handleApiResponse(responseData);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();

@@ -20,11 +20,11 @@ $(document).ready(function () {
 		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			handleApiResponse(responseData);
-
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -127,10 +127,11 @@ function refreshDataList() {
 		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			// 处理成功响应
-			console.log("成功响应：", responseData);
-			// 可以在这里执行其他操作
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -202,11 +203,15 @@ $(document).on("click", ".delete-button", function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				setTimeout(function () {
-					showSuccessFileDeleteNotification();
-				}, 1000);
+				if (response.returnCode === "1") {
+					setTimeout(function () {
+						showSuccessFileDeleteNotification();
+					}, 1000);
 
-				refreshDataList();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();

@@ -30,8 +30,6 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			handleApiResponse(responseData);
-
 			console.log("成功响应：", responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const depotData = responseData.returnData[0];
@@ -54,7 +52,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -132,7 +130,7 @@ function handleComponentId(id) {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -317,13 +315,11 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					handleApiResponse(responseData);
-					console.log(response);
-					getdepotUpdatePost();
-					// showSuccessFileNotification();
-					// localStorage.removeItem("partId");
-					// var newPageUrl = "wareHouseList.html";
-					// window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						getdepotUpdatePost();
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();
@@ -369,12 +365,14 @@ function getdepotUpdatePost() {
 		processData: false,
 		contentType: false,
 		success: function (response) {
-			handleApiResponse(responseData);
-			console.log(response);
-			showSuccessFileNotification();
-			localStorage.removeItem("depotId");
-			var newPageUrl = "depotList.html";
-			window.location.href = newPageUrl;
+			if (response.returnCode === "1") {
+				showSuccessFileNotification();
+				localStorage.removeItem("depotId");
+				var newPageUrl = "depotList.html";
+				window.location.href = newPageUrl;
+			} else {
+				handleApiResponse(response);
+			}
 		},
 		error: function (error) {
 			showErrorFileNotification();

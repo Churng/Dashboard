@@ -930,7 +930,7 @@ $(document).ready(function () {
 		],
 	});
 
-	table1.clear().rows.add(table2DataArray).draw();
+	table2.clear().rows.add(table2DataArray).draw();
 
 	var table3 = $("#authorize-management-3").DataTable({
 		data: table3Data,
@@ -1083,9 +1083,7 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (authResponse) {
-			handleApiResponse(authResponse);
 			console.log(authResponse);
-
 			if (authResponse.returnCode === "1" && authResponse.returnData.length > 0) {
 				const AuthData = authResponse.returnData[0];
 
@@ -1121,6 +1119,8 @@ $(document).ready(function () {
 
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
+			} else {
+				handleApiResponse(authResponse);
 			}
 		},
 	});
@@ -1311,9 +1311,9 @@ $(document).ready(function () {
 				}
 			}
 
-			console.log(newAuthSelectData, "ＮＥＷ");
-			console.log(originalMenuAuthorizeData, "O");
-			console.log(deepCopyOfNewData, "深拷貝");
+			// console.log(newAuthSelectData, "ＮＥＷ");
+			// console.log(originalMenuAuthorizeData, "O");
+			// console.log(deepCopyOfNewData, "深拷貝");
 		}
 	});
 });

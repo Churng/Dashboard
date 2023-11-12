@@ -54,10 +54,7 @@ $(document).ready(function () {
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showWarningContentNotification();
-				localStorage.removeItem("partId");
-				var listPageUrl = "storeList.html";
-				window.location.href = listPageUrl;
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -136,10 +133,15 @@ $(document).ready(function () {
 				contentType: false,
 				success: function (response) {
 					console.log(response);
-					showSuccessFileNotification();
 
-					var newPageUrl = "storeList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+
+						var newPageUrl = "storeList.html";
+						window.location.href = newPageUrl;
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();

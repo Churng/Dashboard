@@ -253,12 +253,12 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					sendSecondCreate();
 					console.log(response);
-					// showSuccessFileNotification();
-					// localStorage.removeItem("partId");
-					// var newPageUrl = "wareHouseList.html";
-					// window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						sendSecondCreate();
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();
@@ -306,10 +306,15 @@ function sendSecondCreate() {
 		contentType: false,
 		success: function (response) {
 			console.log(response);
-			showSuccessFileNotification();
-			localStorage.removeItem("partId");
-			var newPageUrl = "wareHouseList.html";
-			window.location.href = newPageUrl;
+
+			if (response.returnCode === "1") {
+				showSuccessFileNotification();
+				localStorage.removeItem("partId");
+				var newPageUrl = "wareHouseList.html";
+				window.location.href = newPageUrl;
+			} else {
+				handleApiResponse(response);
+			}
 		},
 		error: function (error) {
 			showErrorFileNotification();

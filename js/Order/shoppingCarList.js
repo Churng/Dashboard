@@ -20,6 +20,7 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			handleApiResponse(responseData);
 			const brandList = document.getElementById("selectBrand");
 
 			console.log(responseData);
@@ -70,13 +71,15 @@ $(document).ready(function () {
 		url: `${apiURL}/shoppingCart`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log(responseData, "購物車");
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
 
-			responseData.returnData.forEach(function (item) {
-				idArray.push(item.id);
-			});
-			console.log(idArray);
+				responseData.returnData.forEach(function (item) {
+					idArray.push(item.id);
+				});
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -184,15 +187,18 @@ $("#confirmModifyButton").on("click", function () {
 		type: "POST",
 		url: `${apiURL}/shoppingCart`,
 		data: formData,
-		processData: false, // 不处理数据
-		contentType: false, // 不设置内容类型
+		processData: false,
+		contentType: false,
 		success: function (response) {
-			console.log(response);
-			$("#modifyModal").modal("hide");
-			refreshDataList();
+			if (response.returnCode === "1") {
+				$("#modifyModal").modal("hide");
+				refreshDataList();
+			} else {
+				handleApiResponse(response);
+			}
 		},
 		error: function (error) {
-			// 处理错误响应
+			showErrorNotification();
 		},
 	});
 });
@@ -222,8 +228,11 @@ function refreshDataList() {
 		url: `${apiURL}/shoppingCart`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log(responseData);
-			updatePageWithData(responseData);
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -292,11 +301,15 @@ $(document).on("click", ".delete-button", function () {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				setTimeout(function () {
-					showSuccessFileDeleteNotification();
-				}, 1000);
+				if (response.returnCode === "1") {
+					setTimeout(function () {
+						showSuccessFileDeleteNotification();
+					}, 1000);
 
-				refreshDataList();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
