@@ -145,7 +145,7 @@
                         <!-- 表格 -->
                         <div class="tableList">
                             <div class="table-responsive">
-                                <table id="searchParts" class="display  table table-striped">
+                                <table id="searchParts" class="display  table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
 
@@ -211,8 +211,10 @@
     <script>
         $(document).ready(function () {
             new DataTable('#searchParts', {
-                scrollX: true
+                scrollX: true,
+                responsive: true
             });
+
         });
 
     </script>

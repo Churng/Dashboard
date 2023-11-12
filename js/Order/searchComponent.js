@@ -255,14 +255,6 @@ $(document).ready(function () {
 		// 创建筛选数据对象
 		var filterData = {};
 
-		// if (!selectedBrandId) {
-		// 	fetchAccountList();
-		// }
-
-		// if (!selectInventoryId) {
-		// 	fetchAccountList();
-		// }
-
 		if (selectedBrandId) {
 			filterData.brandId = selectedBrandId;
 		}
@@ -280,9 +272,6 @@ $(document).ready(function () {
 		} else if (!selectedBrandId || !selectInventoryId) {
 			fetchAccountList();
 		}
-
-		// // 发送API请求以获取数据
-		// sendApiRequest(filterData);
 	});
 
 	// 创建一个函数，发送API请求以获取数据

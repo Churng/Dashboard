@@ -67,18 +67,18 @@ function updateData(responseData) {
 	var orderRemark = orderData.orderRemark;
 	var totalPrice = responseData.totalPrice;
 
-	var orderLog = orderData.orderLog;
-
 	var updateTime = orderData.updateTime;
 	var updateOperator = orderData.updateOperator;
 
 	const orderLogArray = orderData.orderLog;
-	actionNote = "";
+	var actionNotesText = "";
+
 	if (orderLogArray.length > 0) {
-		orderLog.forEach((logItem, index) => {
-			actionNote = logItem.actionNote;
+		orderLogArray.forEach((logItem, index) => {
+			actionNotesText += `[${logItem.actionNote}\n`;
 		});
 	}
+
 	// 填充表单元素的值
 	$("#orderId").val(orderId);
 	$("#orderNo").val(orderNo);
@@ -89,7 +89,7 @@ function updateData(responseData) {
 	$("#brandName").val(brandName);
 	$("#orderNote").val(orderNote);
 	$("#orderRemark").val(orderRemark);
-	$("#orderLog").val(actionNote);
+	$("#orderLog").val(actionNotesText);
 
 	$("#BuildTime").val(createTime);
 	$("#EditTime").val(updateTime);
@@ -109,9 +109,10 @@ function updatePageWithData(responseData) {
 	// 填充API数据到表格，包括下载链接
 	responseData.returnData.forEach(function (data) {
 		//checkbox顯示：狀態在庫（3）
+		//出庫單選取
 		var checkboxHtml = "";
 		if (data.status == 3) {
-			var checkboxHtml = '<input type="checkbox" class="your-checkbox-class" data-id="' + data.id + '">';
+			var checkboxHtml = '<input type="checkbox" class="executeship-button" data-id="' + data.id + '">';
 		}
 
 		// 刪除零件：
@@ -137,10 +138,27 @@ function updatePageWithData(responseData) {
 		}
 
 		//查看出庫單
-		var shipButtonHtml =
-			'<a href="shipDetail.html"  class="btn btn-primary text-white "  data-id="' + data.id + '">查看出庫單</a>';
+		// if_shipDetail = true
+		// shipId
 
-		var buttonsHtml = deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml;
+		var shipButtonHtml = "";
+		if ((data.if_shipDetail = true)) {
+			shipButtonHtml +=
+				'<a href="shipDetail.html"  class="btn btn-primary text-white "  data-id="' + data.id + '">查看出庫單</a>';
+		}
+
+		//查看零件採購單
+		//if_purchaseDetail =true
+		//purchaseId
+
+		var purchaseButtonHtml = "";
+		if ((data.if_purchaseDetail = true)) {
+			purchaseButtonHtml +=
+				'<a href="purchaseList.html"  class="btn btn-info text-white "  data-id="' + data.id + '">查看零件採購</a>';
+		}
+
+		var buttonsHtml =
+			deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml + "&nbsp;" + purchaseButtonHtml;
 		dataTable.row
 			.add([
 				checkboxHtml,
@@ -275,6 +293,7 @@ $(document).on("click", ".delete-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				handleApiResponse(responseData);
 				showSuccessFileDeleteNotification();
 				refreshDataList();
 			},
@@ -335,6 +354,7 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				handleApiResponse(responseData);
 				console.log(response);
 				setTimeout(function () {
 					showSuccessorderunSubscribeNotification();
@@ -406,6 +426,7 @@ $(document).on("click", "#orderComplete", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				handleApiResponse(responseData);
 				showSuccessorderCompleteNotification();
 				refreshDataList();
 			},
@@ -470,6 +491,7 @@ $(document).on("click", "#orderCancel", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				handleApiResponse(responseData);
 				showSuccessorderCancelNotification();
 				refreshDataList();
 			},
@@ -481,3 +503,69 @@ $(document).on("click", "#orderCancel", function (e) {
 });
 
 //執行出庫
+// if_order_execute_ship = true
+$(document).on("click", "#orderExecuteShip", function (e) {
+	var formData = new FormData();
+	var checkboxes = document.querySelectorAll(".executeship-button:checked");
+
+	var selectedIds = [];
+	checkboxes.forEach(function (checkbox) {
+		selectedIds.push(checkbox.getAttribute("data-id"));
+	});
+
+	var formattedData = JSON.stringify(selectedIds);
+	console.log(formattedData);
+
+	$(document).off("click", ".confirm-delete");
+
+	toastr.options = {
+		closeButton: true,
+		timeOut: 1000,
+		extendedTimeOut: 0,
+		positionClass: "toast-top-center",
+	};
+
+	toastr.warning(
+		"確定要出庫選取零件嗎？<br/><br><button class='btn btn-danger confirm-delete'>確定</button>",
+		"確定出庫零件",
+		{
+			allowHtml: true,
+		}
+	);
+
+	// 绑定新的点击事件处理程序
+	$(document).on("click", ".confirm-delete", function () {
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		console.log(user_session_id);
+		// chsm = session_id+action+'HBAdminOrderApi'
+		var action = "insertShipDetail";
+		var chsmtoDeleteFile = user_session_id + action + "HBAdminOrderApi";
+		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+
+		console.log(chsm);
+
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", formattedData);
+
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/ship`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				handleApiResponse(response);
+				// showSuccessorderCancelNotification();
+				// refreshDataList();
+			},
+			error: function (error) {
+				showErrorNotification();
+			},
+		});
+	});
+});

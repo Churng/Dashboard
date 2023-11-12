@@ -352,7 +352,9 @@ td:first-child {
 
 #partsOrder,
 #storeInformation,
-#partsOrder th:first-child,
+#partsOrder,
+#depotList,
+th:first-child,
 td:first-child {
 	min-width: 150px;
 }
@@ -364,7 +366,7 @@ td:first-child {
 
 #orderDetail th:nth-child(2),
 #orderDetail td:nth-child(2) {
-	min-width: 300px;
+	min-width: 320px;
 }
 
 .remove-link-decoration {
@@ -385,10 +387,9 @@ td:first-child {
 }
 
 /* DataTable Pagination */
-
 div.table-responsive > div.dataTables_wrapper > div.row {
-	margin-top: 1.5rem;
-	margin-bottom: 1.5rem;
+	margin-top: 3vw;
+	margin-bottom: 3vw;
 }
 
 /* 入庫單：媒合清單內容對齊 */

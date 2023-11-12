@@ -98,8 +98,8 @@
 
         <!-- Blank Start -->
         <div class="container-fluid pt-4 px-4">
-            <div class="row vh-100 bg-light rounded p-3 mx-0">
-                <div class="">
+            <div class="row  bg-light rounded p-3 mx-0">
+                <div id="table-content">
                     <h3>零件手冊查詢</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -168,8 +168,11 @@
     <script>
         $(document).ready(function () {
             new DataTable('#manual-management', {
-                scrollX: true
+                // scrollX: true,
+                responsive: true,
             });
+
+
         });
 
     </script>

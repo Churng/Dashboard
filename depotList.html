@@ -109,44 +109,45 @@
                         <div class="row mb-5">
 
                             <div class="col-sm-3">
-                                <label for="shop-Type" class="form-label">訂單序號</label>
-                                <select class="form-select" id="shop-Type" required="">
+                                <label for="orderNum" class="form-label">訂單序號</label>
+                                <select class="form-select" id="orderNum" required="">
                                     <option value="">全部</option>
-                                    <option>有</option>
-                                    <option>無</option>
+                                    <option value="1">有</option>
+                                    <option value="0">無</option>
                                 </select>
                             </div>
 
                             <div class="col-sm-3">
-                                <label for="shop-Type" class="form-label">零件狀態</label>
-                                <select class="form-select" id="shop-Type" required="">
-                                    <option value="">全部</option>
-                                    <option>已入庫</option>
-                                    <option>已領取</option>
-                                    <option>申請出庫中</option>
+                                <label for="depotStatus" class="form-label">零件狀態</label>
+                                <select class="form-select" id="depotStatus" required="">
+                                    <option value="">請選擇狀態</option>
+                                    <option value="0">未定義</option>
+                                    <option value="1">已入庫</option>
+                                    <option value="2">申請出庫中</option>
+                                    <option value="3">等待領取</option>
+                                    <option value="4">已出庫</option>
+                                    <option value="5">盤點損失</option>
                                 </select>
                             </div>
-                        </div>
-                        <!-- 
-                        <div class="input-fit mb-5">
-                            <div class="mb-3">
-                                <label for="Search-item" class="form-label">搜尋</label>
-                                <input type="text" class="form-control" id="Search-item" placeholder="關鍵字模糊查詢">
+
+                            <!-- 1:已入庫 2:申請出庫中 3:等待領取 4:已出庫 5:盤點損失 -->
+
+                            <div class="col-sm-3 pt-sm-4" style="margin-top: 6px;">
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-primary">確認</button>
-                        </div> -->
+                        </div>
 
                         <div class="row g-3 mb-5">
                             <div class="col-sm-4">
-                                <label for="file-EditTime" class="form-label">零件總數量</label>
-                                <input type="text" class="form-control" id="file-EditTime" placeholder="" value=""
-                                    required="">
+                                <label for="depotNum" class="form-label">零件總數量</label>
+                                <input type="text" class="form-control" id="depotNum" placeholder="" value=""
+                                    required="" readonly>
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="file-EditTime" class="form-label">零件總成本</label>
-                                <input type="text" class="form-control" id="file-EditTime" placeholder="" value=""
-                                    required="">
+                                <label for="totalAmount" class="form-label">零件總成本</label>
+                                <input type="text" class="form-control" id="totalAmount" placeholder="" value=""
+                                    required="" readonly>
                             </div>
                         </div>
 
