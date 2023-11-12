@@ -26,7 +26,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -94,58 +93,45 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row  bg-light rounded p-3 mx-0">
 
-                    <h3>零件手冊修改</h3>
+                    <h3>品牌修改</h3>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="manualList.html">手冊管理</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">零件手冊資料 / 修改</li>
+                            <li class="breadcrumb-item"><a href="brandList.html">品牌管理</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">品牌資料</li>
                         </ol>
                     </nav>
 
-                    <form id="uploadForm" class="needs-validation" novalidate>
-                        <div class="py-4 my-2 input-fit">
-                            <div class="mb-3">
-                                <div class="custom-file">
-                                    <input type="file" class="form-control" name="manual[]" id="fileInput"
-                                        accept="application/pdf" multiple>
-                                </div>
-                                <button id="downloadBtn" download class="btn btn-primary file-download my-3">下載</button>
-                            </div>
-                        </div>
-
-                        <div class="block-first">
-                            <h4>零件手冊資料</h4>
+                    <div class="block-first">
+                        <h4>品牌資料</h4>
+                        <form id="uploadForm" class="needs-validation" novalidate>
                             <div class="row g-3">
                                 <div class="col-sm-6">
-                                    <label for="fileNameField" class="form-label">*檔案名稱</label>
-                                    <input type="text" class="form-control" id="fileNameField" name="fileName">
+                                    <label for="brand-Name" class="form-label">*品牌名稱</label>
+                                    <input type="text" class="form-control" id="brand-Name" name="brandName" disabled>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="M-BrandName" class="form-label">*廠牌</label>
-                                    <input type="text" class="form-control" id="M-BrandName" name="brandName" required>
+                                    <label for="brand-Order" class="form-label">*排序</label>
+                                    <input type="text" class="form-control" id="brand-Order" name="brandOrder" disabled>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="M-year" class="form-label">*年份</label>
-                                    <input type="year" class="form-control" id="M-year" name="year" required>
+                                    <label for="brand-Status" class="form-label">*狀態</label>
+                                    <select class="form-select" id="brand-Status" name="status" disabled>
+                                        <option value="1">正常</option>
+                                        <option value="0">停用</option>
+                                    </select>
                                 </div>
-
-                                <div class="col-sm-6">
-                                    <label for="M-applicableType" class="form-label">*適用車型</label>
-                                    <input type="text" class="form-control" id="M-applicableType" name="applicableType"
-                                        required>
-                                </div>
-
 
                                 <div class="col mb-3">
-                                    <label for="M-remark" class="form-label">備註</label>
-                                    <textarea class="form-control" id="M-remark" rows="3" name="remark"
-                                        placeholder="若無請填N/A" required></textarea>
+                                    <label for="brandTextarea" class="form-label">備註</label>
+                                    <textarea class="form-control" id="brandTextarea" rows="3" name="remark"
+                                        placeholder="若無請填N/A" disabled></textarea>
                                 </div>
                             </div>
 
                             <hr class="my-4">
+
                             <h4>系統資料</h4>
                             <div class="row g-3 mb-5">
                                 <div class="col-sm-4">
@@ -163,13 +149,13 @@
                                     <input type="text" class="form-control" id="EditAccount" disabled>
                                 </div>
                                 <div class="text-center w-100 pt-3">
-                                    <button id="updateButton" class="w-25 btn btn-primary btn-md"
-                                        type="submit">儲存</button>
+                                    <button id="backButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">上一頁</button>
                                 </div>
                             </div>
+                        </form>
+                    </div>
 
-                        </div>
-                    </form>
                 </div>
             </div>
             <!-- Blank End -->
@@ -184,6 +170,7 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+
 
     <!--  Boostrap JavaScript Libraries -->
     <script src="js/jquery-3.7.1.min.js"></script>
@@ -200,14 +187,20 @@
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Manual/Manal_read.js"></script>
-    <script src="js/Public/downloadPDFFile.js"></script>
     <script src="js/Public/menu.js"></script>
-    <script src="js/Public/globleAuth.js"></script>
+    <script src="js/Brand/brand_update.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <!-- <script src="js/Public/globleAuth.js"></script> -->
+
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            // 使用 history.back() 方法回到上一頁
+            history.back();
+        });
+    </script>
+
+
 </body>
 
 </html>

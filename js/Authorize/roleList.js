@@ -37,7 +37,7 @@ function updatePageWithData(responseData) {
 		var data = responseData.returnData[i];
 
 		var modifyButtonHtml =
-			'<a href="8-role-authorization_update.html" data-id="' +
+			'<a href="roleAuthorize_update.html" data-id="' +
 			data.id +
 			'" class="btn btn-primary text-white modify-button">修改</a>';
 

@@ -1,9 +1,11 @@
 // 取得詳細資料
 let orderStatus;
-var componentId;
+var componetsValue;
 $(document).ready(function () {
 	var stockValue = localStorage.getItem("wareHouseId");
 	var IdPost = JSON.stringify({ id: stockValue });
+
+	componetsValue = localStorage.getItem("componentId");
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -46,9 +48,9 @@ $(document).ready(function () {
 				$("#EditAccount").val(wareHouseData.updateOperator);
 
 				updatePageWithData(responseData);
-				handleComponentId(wareHouseData.componentId); //存著ID取零件資料
+				handleComponentId(); //存著ID取零件資料
 
-				componentId = wareHouseData.componentId;
+				componentId = wareHouseData.id;
 				orderStatus = wareHouseData.status;
 				$("#spinner").hide();
 			} else {
@@ -63,6 +65,7 @@ $(document).ready(function () {
 
 //取得零件資料
 function handleComponentId(id) {
+	console.log(id);
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -76,7 +79,7 @@ function handleComponentId(id) {
 	var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
 
 	var postData = {
-		id: id,
+		id: componetsValue,
 	};
 
 	// 发送POST请求
@@ -240,7 +243,7 @@ $(document).ready(function () {
 	$("#BackList").click(function () {
 		localStorage.removeItem("componentValue");
 		localStorage.removeItem("partId");
-		window.location.href = "wareHouseList.html"; // 替换为下一页的 URL
+		window.location.href = "wareHouseList.html";
 	});
 });
 
@@ -248,7 +251,7 @@ $(document).ready(function () {
 	$("#cancel").click(function () {
 		localStorage.removeItem("componentValue");
 		localStorage.removeItem("partId");
-		window.location.href = "wareHouseList.html"; // 替换为下一页的 URL
+		window.location.href = "wareHouseList.html";
 	});
 });
 
@@ -329,8 +332,8 @@ $(document).ready(function () {
 
 			// 组装发送文件所需数据
 			// chsm = session_id+action+'HBAdminComponentApi'
-			var action = "updateStockInDetail";
-			var chsmtoPostFile = user_session_id + action + "HBAdminStockInApi";
+			var action = "updateComponentDetail";
+			var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
 			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
 
 			// 设置其他formData字段
@@ -342,7 +345,7 @@ $(document).ready(function () {
 			// 发送上传更新文件的请求
 			$.ajax({
 				type: "POST",
-				url: `${apiURL}/stockIn`,
+				url: `${apiURL}/component`,
 				data: formData,
 				processData: false,
 				contentType: false,
@@ -362,6 +365,7 @@ $(document).ready(function () {
 	});
 });
 
+// TODO 修改要帶amount?
 function getdepotUpdatePost() {
 	var formData = new FormData();
 

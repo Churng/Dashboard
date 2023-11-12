@@ -350,6 +350,11 @@ td:first-child {
 	min-width: 200px;
 }
 
+#brand-management th:first-child,
+td:first-child {
+	min-width: 200px;
+}
+
 #partsOrder,
 #storeInformation,
 #partsOrder,

@@ -39,25 +39,19 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
-		// 權限設定 //
-
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
-
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="3-store-information_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="storeDetail_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
 		var readButtonHtml =
-			'<a href="3-store-information_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			'<a href="storeDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
 			data.id +
-			'">查看</a>';
+			'">查看詳請</a>';
 
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + readButtonHtml;
+		var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
 
 		var statusText = data.status === "2" ? "停業" : "正常";
 
@@ -73,6 +67,7 @@ function updatePageWithData(responseData) {
 			])
 			.draw(false);
 	}
+	handlePagePermissions(currentUser, currentUrl);
 }
 
 // 監聽拿修改ID

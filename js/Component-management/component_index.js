@@ -92,6 +92,9 @@ function updatePageWithData(responseData) {
 	var dataTable = $("#partsManagement").DataTable();
 	dataTable.clear().draw();
 
+	// 显示所有列
+	dataTable.columns().visible(true);
+
 	// 如果没有数据
 	if (responseData.returnData.length === 0) {
 		// 隐藏没有数据时需要隐藏的列
@@ -104,36 +107,27 @@ function updatePageWithData(responseData) {
 	showWholesalePriceColumn = true;
 	showLowestWholesalePriceColumn = true;
 
-	// 显示所有列
-	dataTable.columns().visible(true);
-
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
-		console.log(data);
-
-		// 權限設定 //
-
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
+		// console.log(data);
 
 		// 按鈕設定//
 
-		var downloadButtonHtml = "";
-		if (data.file) {
-			// 如果data.file不为null，创建可以下载的按钮
-			downloadButtonHtml =
-				'<button download class="btn btn-primary file-download" data-file="' +
-				data.file +
-				'" data-fileName="' +
-				data.fileName +
-				'">下載</button>';
-		} else {
-			// 如果data.file为null，创建禁用的按钮
-			downloadButtonHtml = '<button class="btn btn-primary" disabled>無法下載</button>';
-		}
+		// var downloadButtonHtml = "";
+		// if (data.file) {
+		// 	// 如果data.file不为null，创建可以下载的按钮
+		// 	downloadButtonHtml =
+		// 		'<button download class="btn btn-primary file-download" data-file="' +
+		// 		data.file +
+		// 		'" data-fileName="' +
+		// 		data.fileName +
+		// 		'">下載</button>';
+		// } else {
+		// 	// 如果data.file为null，创建禁用的按钮
+		// 	downloadButtonHtml = '<button class="btn btn-primary" disabled>無法下載</button>';
+		// }
 
 		var modifyButtonHtml =
 			'<a href="5-partsmanagement_update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
@@ -162,18 +156,16 @@ function updatePageWithData(responseData) {
 			data.suitableCarModel,
 		];
 
-		if (data.hasOwnProperty("price") && showPriceColumn) {
-			row.push(data.price ? data.price : "");
+		function pushDataIfExists(data, field, showColumn, row) {
+			if (data.hasOwnProperty(field) && showColumn) {
+				row.push(data[field] != null ? data[field] : "");
+			}
 		}
-		if (data.hasOwnProperty("cost") && showCostColumn) {
-			row.push(data.cost ? data.cost : "");
-		}
-		if (data.hasOwnProperty("wholesalePrice") && showWholesalePriceColumn) {
-			row.push(data.wholesalePrice ? data.wholesalePrice : "");
-		}
-		if (data.hasOwnProperty("lowestWholesalePrice") && showLowestWholesalePriceColumn) {
-			row.push(data.lowestWholesalePrice ? data.lowestWholesalePrice : "");
-		}
+
+		pushDataIfExists(data, "price", showPriceColumn, row);
+		pushDataIfExists(data, "cost", showCostColumn, row);
+		pushDataIfExists(data, "wholesalePrice", showWholesalePriceColumn, row);
+		pushDataIfExists(data, "lowestWholesalePrice", showLowestWholesalePriceColumn, row);
 
 		row.push(
 			data.workingHour,
@@ -183,7 +175,7 @@ function updatePageWithData(responseData) {
 			data.lowestInventory,
 			data.createTime
 		);
-
+		setColumnVisibility(data, dataTable);
 		dataTable.row.add(row).draw(false);
 	}
 }
@@ -203,6 +195,15 @@ function hideColumnsIfNoData() {
 	if (!showLowestWholesalePriceColumn) {
 		dataTable.column(7).visible(false);
 	}
+}
+
+// 欄位可見
+function setColumnVisibility(data, dataTable) {
+	//  price, cost, wholesalePrice, lowestWholesalePrice 列的值来判断是否显示
+	dataTable.column(6).visible(data.hasOwnProperty("price") && data.price !== null);
+	dataTable.column(7).visible(data.hasOwnProperty("cost") && data.cost !== null);
+	dataTable.column(8).visible(data.hasOwnProperty("wholesalePrice") && data.wholesalePrice !== null);
+	dataTable.column(9).visible(data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice !== null);
 }
 
 // 监听修改按钮的点击事件

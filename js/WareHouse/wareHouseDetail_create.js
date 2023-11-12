@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 				$("#BuildTime").val(wareHouseData.createTime);
 				$("#EditTime").val(wareHouseData.updateTime);
-				$("#EditAccount").val(wareHouseData.getupdateOperator);
+				$("#EditAccount").val(wareHouseData.updateOperator);
 
 				displayFileNameInInput(wareHouseData.file);
 				const myButton = document.getElementById("downloadBtn");
@@ -170,7 +170,9 @@ $(document).ready(function () {
 		if (uploadForm.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
+			console.log("Form validation failed");
 		} else {
+			event.preventDefault();
 			//取值
 			var getComponentName = $("#componentName").val();
 			var getComponentNumber = $("#componentNumber").val();
@@ -271,7 +273,7 @@ $(document).ready(function () {
 
 function sendSecondCreate() {
 	var formData = new FormData();
-	var partId = localStorage.getItem("componentValue");
+	// var partId = localStorage.getItem("componentValue");
 
 	var amount = $("#amount").val();
 
@@ -306,15 +308,16 @@ function sendSecondCreate() {
 		contentType: false,
 		success: function (response) {
 			console.log(response);
+			localStorage.removeItem("partId");
+			window.location.replace("wareHouseList.html");
 
-			if (response.returnCode === "1") {
-				showSuccessFileNotification();
-				localStorage.removeItem("partId");
-				var newPageUrl = "wareHouseList.html";
-				window.location.href = newPageUrl;
-			} else {
-				handleApiResponse(response);
-			}
+			// if (response.returnCode === "1") {
+			// 	// showSuccessFileNotification();∫
+
+			// 	setTimeout(function () {}, 3000);
+			// } else {
+			// 	handleApiResponse(response);
+			// }
 		},
 		error: function (error) {
 			showErrorFileNotification();

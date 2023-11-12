@@ -4,7 +4,7 @@ $(document).ready(function () {
 	var currentUrl = window.location.href;
 	handlePagePermissions(currentUser, currentUrl);
 
-	var partId = localStorage.getItem("partId");
+	var partId = localStorage.getItem("partRId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
 
@@ -196,7 +196,7 @@ function handlePagePermissions(currentUser, currentUrl) {
 				if (page.auth.includes("read")) {
 					hideButton(document.getElementById("saveButton"));
 					hideButton(document.getElementById("updateButton"));
-					hideButton(document.getElementById("downloadBtn"));
+					// hideButton(document.getElementById("downloadBtn"));
 					const elementsWithClass = document.getElementsByClassName("form-control");
 					for (let i = 0; i < elementsWithClass.length; i++) {
 						elementsWithClass[i].disabled = true;

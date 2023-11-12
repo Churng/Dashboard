@@ -1,7 +1,6 @@
 // 取得詳細資料
 $(document).ready(function () {
-	const urlParams = new URLSearchParams(window.location.search);
-	const partId = urlParams.get("id");
+	var partId = localStorage.getItem("brandId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
 

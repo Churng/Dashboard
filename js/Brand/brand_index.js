@@ -43,34 +43,36 @@ function updatePageWithData(responseData) {
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 
-		// 權限設定 //
-
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
-
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="brand_update.html?id=' +
+			'<a href="brand_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
-			'" class="btn btn-primary text-white" style="display:inline-block" data-button-type="update">修改</a>';
+			'">修改</a>';
+
 		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button" style="display:inline-block" data-button-type="delete" data-id="' +
+			'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
 			data.id +
 			'">刪除</button>';
 
 		var readButtonHtml =
-			'<a href="brand_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			'<a href="brand_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
 			data.id +
-			'">查看</a>';
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
+			'">查看詳請</a>';
+		var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
 		dataTable.row
 			.add([buttonsHtml, data.brandName, data.brandOrder, data.statusName, data.createTime, data.createOperator])
 			.draw(false);
 	}
+	handlePagePermissions(currentUser, currentUrl);
 }
+
+// 监听修改按钮的点击事件
+$(document).on("click", ".modify-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("brandId", id);
+});
 
 //更新數據
 function refreshDataList() {
