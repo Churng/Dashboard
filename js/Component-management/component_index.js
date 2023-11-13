@@ -350,6 +350,6 @@ function sendApiRequest(filterData) {
 	});
 }
 // 加载时调用在页面 fetchAccountList
-$(document).ready(function () {
-	fetchAccountList();
-});
+// $(document).ready(function () {
+// 	fetchAccountList();
+// });

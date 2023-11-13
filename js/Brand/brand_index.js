@@ -74,6 +74,12 @@ $(document).on("click", ".modify-button", function () {
 	localStorage.setItem("brandId", id);
 });
 
+// 查看清單
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("readBrandId", id);
+});
+
 //更新數據
 function refreshDataList() {
 	var dataTable = $("#brand-management").DataTable();

@@ -30,13 +30,12 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			console.log(responseData);
 			handleApiResponse(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				var getOrderData = responseData.orderData;
 				orderStatus = getOrderData.status;
 				orderId = getOrderData.id;
-
+				console.log(responseData);
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {
@@ -154,7 +153,9 @@ function updatePageWithData(responseData) {
 		var purchaseButtonHtml = "";
 		if ((data.if_purchaseDetail = true)) {
 			purchaseButtonHtml +=
-				'<a href="purchaseList.html"  class="btn btn-info text-white "  data-id="' + data.id + '">查看零件採購</a>';
+				'<a href="purchaseDetail.html"  class="btn btn-info text-white purchase-button "  data-id="' +
+				data.id +
+				'">查看零件採購</a>';
 		}
 
 		var buttonsHtml =
@@ -179,6 +180,11 @@ function updatePageWithData(responseData) {
 			.draw(false);
 	});
 }
+// 查看零件採購單
+$(document).on("click", ".purchase-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("purchaseId", id);
+});
 
 //更新數據
 function refreshDataList() {
@@ -230,6 +236,7 @@ function refreshDataList() {
 
 //刪除零件
 $(document).on("click", ".delete-button", function (e) {
+	e.stopPropagation();
 	var formData = new FormData(); // 在外部定义 formData
 
 	var deleteButton = $(this); // 保存删除按钮元素的引用
@@ -307,6 +314,7 @@ $(document).on("click", ".delete-button", function (e) {
 //unsubscribe-button
 //退貨
 $(document).on("click", ".unsubscribe-button", function (e) {
+	e.stopPropagation();
 	var formData = new FormData();
 	var unsubscribeButton = $(this);
 	var itemId = unsubscribeButton.data("id"); //orderId
@@ -319,7 +327,7 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 	var jsonData = JSON.stringify(data);
 
 	// 解绑之前的点击事件处理程序
-	$(document).off("click", ".confirm-delete");
+	$(document).off("click", ".confirm-unsubscribe");
 
 	toastr.options = {
 		closeButton: true,
@@ -328,9 +336,13 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 		positionClass: "toast-top-center",
 	};
 
-	toastr.warning("確定要執行退貨嗎？<br/><br><button class='btn btn-danger confirm-delete'>確定</button>", "確定退貨", {
-		allowHtml: true,
-	});
+	toastr.warning(
+		"確定要執行退貨嗎？<br/><br><button class='btn btn-danger confirm-unsubscribe'>確定</button>",
+		"確定退貨",
+		{
+			allowHtml: true,
+		}
+	);
 
 	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-delete", function () {
@@ -370,6 +382,7 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 //orderComplete
 //訂單完成
 $(document).on("click", "#orderComplete", function (e) {
+	e.stopPropagation();
 	var formData = new FormData(); // 在外部定义 formData
 	if (orderStatus == 3) {
 		showSuccessorderCompleteNotification();
@@ -386,7 +399,7 @@ $(document).on("click", "#orderComplete", function (e) {
 	var jsonData = IdPost;
 
 	// 解绑之前的点击事件处理程序
-	$(document).off("click", ".confirm-delete");
+	$(document).off("click", ".confirm-order");
 
 	toastr.options = {
 		closeButton: true,
@@ -396,7 +409,7 @@ $(document).on("click", "#orderComplete", function (e) {
 	};
 
 	toastr.warning(
-		"確定要完成訂單嗎？<br/><br><button class='btn btn-danger confirm-delete'>確定</button>",
+		"確定要完成訂單嗎？<br/><br><button class='btn btn-danger confirm-order'>確定</button>",
 		"確定完成訂單",
 		{
 			allowHtml: true,
@@ -404,7 +417,7 @@ $(document).on("click", "#orderComplete", function (e) {
 	);
 
 	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-delete", function () {
+	$(document).on("click", ".confirm-order", function () {
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
@@ -440,6 +453,7 @@ $(document).on("click", "#orderComplete", function (e) {
 //orderCancel
 //訂單取消
 $(document).on("click", "#orderCancel", function (e) {
+	e.stopPropagation();
 	var formData = new FormData(); // 在外部定义 formData
 
 	var partId = localStorage.getItem("orderNo");
@@ -449,7 +463,7 @@ $(document).on("click", "#orderCancel", function (e) {
 
 	var jsonData = IdPost;
 
-	$(document).off("click", ".confirm-delete");
+	$(document).off("click", ".confirm-cancel");
 
 	toastr.options = {
 		closeButton: true,
@@ -459,7 +473,7 @@ $(document).on("click", "#orderCancel", function (e) {
 	};
 
 	toastr.warning(
-		"確定要取消訂單嗎？<br/><br><button class='btn btn-danger confirm-delete'>確定</button>",
+		"確定要取消訂單嗎？<br/><br><button class='btn btn-danger confirm-cancel'>確定</button>",
 		"確定取消訂單",
 		{
 			allowHtml: true,
@@ -467,7 +481,7 @@ $(document).on("click", "#orderCancel", function (e) {
 	);
 
 	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-delete", function () {
+	$(document).on("click", ".confirm-cancel", function () {
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
@@ -505,6 +519,7 @@ $(document).on("click", "#orderCancel", function (e) {
 //執行出庫
 // if_order_execute_ship = true
 $(document).on("click", "#orderExecuteShip", function (e) {
+	e.stopPropagation();
 	var formData = new FormData();
 	var checkboxes = document.querySelectorAll(".executeship-button:checked");
 
@@ -516,17 +531,17 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 	var formattedData = JSON.stringify(selectedIds);
 	console.log(formattedData);
 
-	$(document).off("click", ".confirm-delete");
+	$(document).off("click", ".confirm-execute");
 
 	toastr.options = {
 		closeButton: true,
-		timeOut: 1000,
+		timeOut: 0,
 		extendedTimeOut: 0,
 		positionClass: "toast-top-center",
 	};
 
 	toastr.warning(
-		"確定要出庫選取零件嗎？<br/><br><button class='btn btn-danger confirm-delete'>確定</button>",
+		"確定要出庫選取零件嗎？<br/><br><button class='btn btn-danger confirm-execute'>確定</button>",
 		"確定出庫零件",
 		{
 			allowHtml: true,
@@ -534,7 +549,7 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 	);
 
 	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-delete", function () {
+	$(document).on("click", ".confirm-execute", function () {
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;

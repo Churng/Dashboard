@@ -188,14 +188,14 @@
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/menu.js"></script>
-    <script src="js/Brand/brand_update.js"></script>
+    <script src="js/Brand/brand_read.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
 
     <script>
         document.getElementById("backButton").addEventListener("click", function () {
-            // 使用 history.back() 方法回到上一頁
+            localStorage.removeItem("readBrandId");
             history.back();
         });
     </script>

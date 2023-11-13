@@ -75,6 +75,11 @@ $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("partId", id);
 });
+// 查看清單ID
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("readStoreId", id);
+});
 
 // 門市選擇->清單變化
 $(document).ready(function () {

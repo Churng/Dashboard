@@ -895,8 +895,6 @@ $(document).ready(function () {
 		row.id = parseInt(row.id); // 将id转换为数字
 	});
 
-	console.log(table10DataArray);
-
 	table10DataArray.sort(function (a, b) {
 		return a.id - b.id;
 	});
@@ -1057,7 +1055,7 @@ $(document).ready(function () {
 let getBrandId;
 var originalBrandData = []; //品牌原始資料
 var originalMenuAuthorizeData = []; //表格選項原始資料
-var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
+var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData)); //深拷貝資料
 $(document).ready(function () {
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
@@ -1105,7 +1103,7 @@ $(document).ready(function () {
 				// 處理表格
 				if (AuthData.menuAuthorize && AuthData.menuAuthorize !== "undefined") {
 					originalMenuAuthorizeData = JSON.parse(AuthData.menuAuthorize);
-					console.log(originalMenuAuthorizeData);
+					console.log(originalMenuAuthorizeData, "原始資料");
 				} else {
 					// 处理 menuAuthorize 为 undefined 的情况
 					console.log("menuAuthorize is undefined");
@@ -1301,24 +1299,48 @@ $(document).ready(function () {
 			// 使用 jQuery 将对象转换为 JSON 字符串
 			newAuthSelectData = formattedData;
 			deepCopyOfNewDataJSON = formdeepCopyOfNewData;
-			deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData)); // 同时更新深拷贝
-			for (var id in selectedData) {
-				if (selectedData.hasOwnProperty(id)) {
-					if (!deepCopyOfNewData[id]) {
-						deepCopyOfNewData[id] = [];
-					}
-					deepCopyOfNewData[id] = deepCopyOfNewData[id].concat(selectedData[id]);
+			deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
+			for (var selectedTableId in selectedData) {
+				if (selectedData.hasOwnProperty(selectedTableId)) {
+					deepCopyOfNewData[selectedTableId] = deepCopyWithoutUndefinedAndNull(selectedData[selectedTableId]);
 				}
 			}
 
-			// console.log(newAuthSelectData, "ＮＥＷ");
-			// console.log(originalMenuAuthorizeData, "O");
-			// console.log(deepCopyOfNewData, "深拷貝");
+			deepCopyOfNewData = deepCopyWithoutUndefinedAndNull(selectedData);
+
+			console.log(newAuthSelectData, "ＮＥＷ");
+			console.log(originalMenuAuthorizeData, "O");
+			console.log(deepCopyOfNewData, "深拷貝");
 		}
 	});
 });
 
+function deepCopyWithoutUndefinedAndNull(obj) {
+	// 對於 null 或 undefined 的輸入，返回 null 或空數組
+	if (obj === null || obj === undefined) {
+		return obj === null ? null : [];
+	}
+
+	// 將 undefined 轉換為 null
+	const parsedObj = JSON.parse(
+		JSON.stringify(obj, (key, value) => {
+			if (value === undefined) {
+				return null;
+			}
+			return value;
+		})
+	);
+
+	// 如果返回的是陣列，則使用 filter 函數
+	if (Array.isArray(parsedObj)) {
+		return parsedObj.filter((item) => item !== null);
+	}
+
+	return parsedObj;
+}
+
 // 新增
+var miss = [];
 $(document).ready(function () {
 	var formData = new FormData();
 	var uploadForm = document.getElementById("uploadForm");
