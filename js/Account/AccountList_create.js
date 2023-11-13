@@ -95,7 +95,7 @@ $(document).ready(function () {
 
 //上傳POST
 $(document).ready(function () {
-	var formData = new FormData(); // 在外部定义 formData
+	var formData = new FormData();
 	$("#saveButton").click(function () {
 		//取值
 		var getaccount = $("#A-account").val();

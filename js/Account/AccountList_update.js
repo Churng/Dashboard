@@ -146,6 +146,7 @@ $(document).ready(function () {
 
 //上傳POST
 $(document).ready(function () {
+	var formData = new FormData();
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
