@@ -1055,7 +1055,7 @@ $(document).ready(function () {
 let getBrandId;
 var originalBrandData = []; //品牌原始資料
 var originalMenuAuthorizeData = []; //表格選項原始資料
-var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData)); //深拷貝資料
+var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
 $(document).ready(function () {
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
@@ -1300,13 +1300,19 @@ $(document).ready(function () {
 			newAuthSelectData = formattedData;
 			deepCopyOfNewDataJSON = formdeepCopyOfNewData;
 			deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
+
 			for (var selectedTableId in selectedData) {
 				if (selectedData.hasOwnProperty(selectedTableId)) {
-					deepCopyOfNewData[selectedTableId] = deepCopyWithoutUndefinedAndNull(selectedData[selectedTableId]);
+					if (!deepCopyOfNewData[selectedTableId]) {
+						deepCopyOfNewData[selectedTableId] = [];
+					}
+					deepCopyOfNewData[selectedTableId] = deepCopyOfNewData[selectedTableId].concat(
+						deepCopyWithoutUndefinedAndNull(selectedData[selectedTableId])
+					);
 				}
 			}
 
-			deepCopyOfNewData = deepCopyWithoutUndefinedAndNull(selectedData);
+			// deepCopyOfNewData = deepCopyWithoutUndefinedAndNull(selectedData);
 
 			console.log(newAuthSelectData, "ＮＥＷ");
 			console.log(originalMenuAuthorizeData, "O");
@@ -1387,7 +1393,14 @@ $(document).ready(function () {
 			formData.set("session_id", user_session_id);
 			formData.set("chsm", chsm);
 			formData.set("data", JSON.stringify(AuthDataObject));
-			formData.set("menuAuthorize", JSON.stringify(deepCopyOfNewData));
+
+			var sendData;
+			if (Object.keys(deepCopyOfNewData).length > 0) {
+				sendData = deepCopyOfNewData;
+			} else {
+				sendData = originalMenuAuthorizeData;
+			}
+			formData.set("menuAuthorize", JSON.stringify(sendData));
 
 			// 检查是否有更改的品牌数据
 			if (formattedString.length > 0) {
