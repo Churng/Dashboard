@@ -49,13 +49,14 @@ function updatePageWithData(responseData) {
 		var downloadButtonHtml = "";
 		if (data.file) {
 			downloadButtonHtml =
-				'<button download class="btn btn-primary file-download " data-button-type="download" id="download-button" data-file="' +
+				'<button download style="display:none" class="btn btn-primary file-download " data-button-type="download" id="download-button"  data-button-type="download" data-file="' +
 				data.file +
 				'" data-fileName="' +
 				data.fileName +
 				'">下載</button>';
 		} else {
-			downloadButtonHtml = '<button class="btn btn-primary" disabled>無法下載</button>';
+			downloadButtonHtml =
+				'<button style="display:none" class="btn btn-primary" data-button-type="disable-download" disabled>無法下載</button>';
 		}
 
 		var modifyButtonHtml =

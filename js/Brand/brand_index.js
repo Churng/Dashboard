@@ -36,13 +36,14 @@ $(document).ready(function () {
 // 表格填充
 function updatePageWithData(responseData) {
 	// 清空表格数据
+
 	var dataTable = $("#brand-management").DataTable();
 	dataTable.clear().draw();
 
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
-
+		console.log(data);
 		// 按鈕設定//
 
 		var modifyButtonHtml =

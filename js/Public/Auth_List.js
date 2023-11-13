@@ -36,6 +36,13 @@ function handlePagePermissions(currentUser, currentUrl) {
 						deleteButtons[m].style.display = "inline-block";
 					}
 				}
+
+				if (page.auth.includes("download")) {
+					var downloadButtons = document.querySelectorAll("[data-button-type='download']");
+					for (var n = 0; n < downloadButtons.length; n++) {
+						downloadButtons[n].style.display = "inline-block";
+					}
+				}
 			}
 		}
 	}

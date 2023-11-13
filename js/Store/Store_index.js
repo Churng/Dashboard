@@ -42,7 +42,7 @@ function updatePageWithData(responseData) {
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="storeDetail_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="storeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 

@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
+	handlePageUpdatePermissions(currentUser, currentUrl);
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
