@@ -3,24 +3,24 @@ $(document).ready(function () {
 	var userData = Data.userretrunData;
 	var userAuth = getUserAuth("零件資料");
 
-	var priceDiv = document.getElementById("C-PriceDiv");
+	// var priceDiv = document.getElementById("C-PriceDiv");
 	if (!userAuth.includes("price")) {
-		priceDiv.style.display = "none";
+		$("#C-Price").closest(".col-sm-3").remove();
 	}
 
-	var costDiv = document.getElementById("C-CostDiv");
+	// var costDiv = document.getElementById("C-CostDiv");
 	if (!userAuth.includes("cost")) {
-		costDiv.style.display = "none";
+		$("#C-Cost").closest(".col-sm-3").remove();
 	}
 
-	var wholesalePriceDiv = document.getElementById("C-WholesalePriceDiv");
+	// var wholesalePriceDiv = document.getElementById("C-WholesalePriceDiv");
 	if (!userAuth.includes("wholesalePrice")) {
-		wholesalePriceDiv.style.display = "none";
+		$("#C-WholesalePrice").closest(".col-sm-3").remove();
 	}
 
-	var lowestWholesalePriceDiv = document.getElementById("C-lowestWholesalePriceDiv");
+	// var lowestWholesalePriceDiv = document.getElementById("C-lowestWholesalePriceDiv");
 	if (!userAuth.includes("lowestWholesalePrice")) {
-		lowestWholesalePriceDiv.style.display = "none";
+		$("#C-lowestWholesalePrice").closest(".col-sm-3").remove();
 	}
 
 	function getUserAuth(itemName) {

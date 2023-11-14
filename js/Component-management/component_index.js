@@ -187,10 +187,10 @@ function hideColumnsIfNoData() {
 }
 // 欄位可見
 function setColumnVisibility(data, dataTable) {
-	dataTable.column(6).visible(data.hasOwnProperty("price") && data.price !== null);
-	dataTable.column(7).visible(data.hasOwnProperty("cost") && data.cost !== null);
-	dataTable.column(8).visible(data.hasOwnProperty("wholesalePrice") && data.wholesalePrice !== null);
-	dataTable.column(9).visible(data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice !== null);
+	dataTable.column(6).visible(data.hasOwnProperty("price") && data.price == null);
+	dataTable.column(7).visible(data.hasOwnProperty("cost") && data.cost == null);
+	dataTable.column(8).visible(data.hasOwnProperty("wholesalePrice") && data.wholesalePrice == null);
+	dataTable.column(9).visible(data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice == null);
 	// dataTable.column(13).visible(data.hasOwnProperty("totalCost") && data.totalCost !== null);
 }
 

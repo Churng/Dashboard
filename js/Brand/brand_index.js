@@ -43,7 +43,7 @@ function updatePageWithData(responseData) {
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
-		console.log(data);
+		// console.log(data);
 		// 按鈕設定//
 
 		var modifyButtonHtml =
@@ -69,6 +69,21 @@ function updatePageWithData(responseData) {
 	handlePagePermissions(currentUser, currentUrl);
 }
 
+// $("#brand-management").on("draw.dt", function () {
+// 	console.log("ddddd");
+// 	updateButtonPermissions();
+// });
+$(document).ready(function () {
+	$("ul.pagination").on("click", "li.page-item:not(.disabled) a.page-link", function (event) {
+		event.preventDefault();
+		console.log("點擊了頁籤");
+		// 在這裡添加你想要的程式碼
+	});
+});
+
+function updateButtonPermissions() {
+	handlePagePermissions(currentUser, currentUrl);
+}
 // 监听修改按钮的点击事件
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");

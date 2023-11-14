@@ -72,6 +72,7 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const componentData = responseData.returnData[0];
 
@@ -87,6 +88,7 @@ $(document).ready(function () {
 				$("#C-Cost").val(componentData.cost);
 				$("#C-WholesalePrice").val(componentData.wholesalePrice);
 				$("#C-lowestWholesalePrice").val(componentData.lowestWholesalePrice);
+
 				$("#C-supplier").val(componentData.componentSupplier);
 				$("#C-workingHour").val(componentData.workingHour);
 				$("#C-suitableModel").val(componentData.suitableCarModel);
@@ -96,7 +98,7 @@ $(document).ready(function () {
 
 				$("#BuildTime").val(componentData.createTime);
 				$("#EditTime").val(componentData.updateTime);
-				$("#EditAccount").val(componentData.getupdateOperator);
+				$("#EditAccount").val(componentData.updateOperator);
 
 				displayFileNameInInput(componentData.file);
 				const myButton = document.getElementById("downloadBtn");
@@ -188,10 +190,26 @@ $(document).ready(function () {
 			// purchaseAmount: getpurchaseAmount,
 			// depotAmount: getdepotAmount,
 			updateData.depotPosition = getdepotPosition;
-			updateData.price = getprice;
-			updateData.cost = getcost;
-			updateData.wholesalePrice = getwholesalePrice;
-			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+
+			if (typeof getprice !== "undefined") {
+				updateData.price = getprice;
+			}
+
+			// 檢查並設置 getcost
+			if (typeof getcost !== "undefined") {
+				updateData.cost = getcost;
+			}
+
+			// 檢查並設置 getwholesalePrice
+			if (typeof getwholesalePrice !== "undefined") {
+				updateData.wholesalePrice = getwholesalePrice;
+			}
+
+			// 檢查並設置 getlowestWholesalePrice
+			if (typeof getlowestWholesalePrice !== "undefined") {
+				updateData.lowestWholesalePrice = getlowestWholesalePrice;
+			}
+
 			updateData.componentSupplier = getcomponentSupplier;
 			updateData.workingHour = getworkingHour;
 			updateData.suitableCarModel = getsuitableCarModel;
