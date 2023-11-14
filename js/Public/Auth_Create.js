@@ -14,8 +14,6 @@ function handlePageCreatePermissions(currentUser, currentUrl) {
 				if (page.auth.includes("insert")) {
 					const updateButton = document.getElementById("saveButton");
 					updateButton.disabled = false;
-				} else {
-					window.history.back();
 				}
 
 				if (page.auth.includes("download")) {

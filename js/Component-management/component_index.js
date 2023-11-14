@@ -157,8 +157,9 @@ function updatePageWithData(responseData) {
 		];
 
 		function pushDataIfExists(data, field, showColumn, row) {
-			if (data.hasOwnProperty(field) && showColumn) {
-				row.push(data[field] != null ? data[field] : "");
+			if (showColumn) {
+				// 檢查數據是否存在，不存在則填充空字符串
+				row.push(data.hasOwnProperty(field) && data[field] != null ? data[field] : "");
 			}
 		}
 
@@ -166,15 +167,9 @@ function updatePageWithData(responseData) {
 		pushDataIfExists(data, "cost", showCostColumn, row);
 		pushDataIfExists(data, "wholesalePrice", showWholesalePriceColumn, row);
 		pushDataIfExists(data, "lowestWholesalePrice", showLowestWholesalePriceColumn, row);
+		// pushDataIfExists(data, "totalCost", true, row);
 
-		row.push(
-			data.workingHour,
-			data.purchaseAmount,
-			data.depotAmount,
-			data.totalCost,
-			data.lowestInventory,
-			data.createTime
-		);
+		row.push(data.workingHour, data.purchaseAmount, data.depotAmount, data.lowestInventory, data.createTime);
 		setColumnVisibility(data, dataTable);
 		dataTable.row.add(row).draw(false);
 	}
@@ -183,27 +178,20 @@ function updatePageWithData(responseData) {
 // 無數據隱藏列
 function hideColumnsIfNoData() {
 	var dataTable = $("#partsManagement").DataTable();
-	if (!showPriceColumn) {
-		dataTable.column(4).visible(false);
-	}
-	if (!showCostColumn) {
-		dataTable.column(5).visible(false);
-	}
-	if (!showWholesalePriceColumn) {
-		dataTable.column(6).visible(false);
-	}
-	if (!showLowestWholesalePriceColumn) {
-		dataTable.column(7).visible(false);
+
+	for (var i = 4; i <= 9; i++) {
+		var column = dataTable.column(i);
+		column.visible(false);
+		column.nodes().to$().empty(); // 清空相應列的數據
 	}
 }
-
 // 欄位可見
 function setColumnVisibility(data, dataTable) {
-	//  price, cost, wholesalePrice, lowestWholesalePrice 列的值来判断是否显示
 	dataTable.column(6).visible(data.hasOwnProperty("price") && data.price !== null);
 	dataTable.column(7).visible(data.hasOwnProperty("cost") && data.cost !== null);
 	dataTable.column(8).visible(data.hasOwnProperty("wholesalePrice") && data.wholesalePrice !== null);
 	dataTable.column(9).visible(data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice !== null);
+	// dataTable.column(13).visible(data.hasOwnProperty("totalCost") && data.totalCost !== null);
 }
 
 // 监听修改按钮的点击事件
@@ -338,6 +326,7 @@ function sendApiRequest(filterData) {
 		url: `${apiURL}/component`,
 		data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData);
 			} else {

@@ -235,11 +235,11 @@ function refreshDataList() {
 }
 
 //刪除零件
+
 $(document).on("click", ".delete-button", function (e) {
 	e.stopPropagation();
-	var formData = new FormData(); // 在外部定义 formData
-
-	var deleteButton = $(this); // 保存删除按钮元素的引用
+	var formData = new FormData();
+	var deleteButton = $(this);
 	var itemId = deleteButton.data("id");
 	var buttonStatus = event.target.getAttribute("data-status");
 	console.log(itemId, buttonStatus);
@@ -250,23 +250,12 @@ $(document).on("click", ".delete-button", function (e) {
 
 	var jsonData = JSON.stringify(data);
 
-	// 解绑之前的点击事件处理程序
-	$(document).on("click", ".confirm-delete", function () {
-		// 根据按钮的状态值执行不同的提示
-		if (buttonStatus == 1) {
-			showgoPurchaseNotification();
-		} else if (buttonStatus == 2) {
-			showSuccessAddToOrderNotification();
-		} else if (buttonStatus == 3) {
-			showgoshipDetailNotification();
-		}
-	});
-
+	$(document).off("click", ".confirm-delete");
 	toastr.options = {
 		closeButton: true,
 		timeOut: 0,
 		extendedTimeOut: 0,
-		positionClass: "toast-top-center", // 设置提示位置
+		positionClass: "toast-top-center",
 	};
 
 	toastr.warning(
@@ -277,13 +266,20 @@ $(document).on("click", ".delete-button", function (e) {
 		}
 	);
 
-	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-delete", function () {
+		// 根據按鈕的狀態值執行不同的提示
+		// if (buttonStatus == 1) {
+		// 	showgoPurchaseNotification();
+		// } else if (buttonStatus == 2) {
+		// 	showSuccessAddToOrderNotification();
+		// } else if (buttonStatus == 3) {
+		// 	showgoshipDetailNotification();
+		// }
+
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// chsm = session_id+action+'HBAdminOrderApi'
 		var action = "deleteOrderDetailComponent";
 		var chsmtoDeleteFile = user_session_id + action + "HBAdminOrderApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
@@ -300,12 +296,18 @@ $(document).on("click", ".delete-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(response);
-				showSuccessFileDeleteNotification();
-				refreshDataList();
+				if (response.returnCode === "1") {
+					showSuccessFileDeleteNotification();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
+			},
+			complete: function () {
+				isConfirmDeleteProcessing = false; // 完成時設置狀態為非處理中
 			},
 		});
 	});
@@ -366,11 +368,13 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(response);
-				console.log(response);
-				setTimeout(function () {
-					showSuccessorderunSubscribeNotification();
-				}, 1000);
+				if (response.returnCode === "1" && response.returnData.length > 0) {
+					setTimeout(function () {
+						showSuccessorderunSubscribeNotification();
+					}, 1000);
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
@@ -439,9 +443,12 @@ $(document).on("click", "#orderComplete", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(response);
-				showSuccessorderCompleteNotification();
-				refreshDataList();
+				if (response.returnCode === "1" && response.returnData.length > 0) {
+					showSuccessorderCompleteNotification();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
@@ -505,9 +512,12 @@ $(document).on("click", "#orderCancel", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				handleApiResponse(response);
-				showSuccessorderCancelNotification();
-				refreshDataList();
+				if (response.returnCode === "1" && response.returnData.length > 0) {
+					showSuccessorderCancelNotification();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				showErrorNotification();
@@ -574,8 +584,12 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				showSuccessshipdetail();
-				refreshDataList();
+				if (response.returnCode === "1" && response.returnData.length > 0) {
+					showSuccessshipdetail();
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
 			},
 			error: function (error) {
 				handleApiResponse(response);
@@ -584,6 +598,43 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 	});
 });
 
+// 訂單儲存
 $(document).on("click", "#saveBtn", function (e) {
-	window.history.back();
+	var formData = new FormData();
+
+	var IdArray = [orderId.toString()];
+	var postId = JSON.stringify(IdArray);
+
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminOrderApi'
+	var action = "insertOrderDetail";
+	var chsmtoDeleteFile = user_session_id + action + "HBAdminOrderApi";
+	var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+
+	formData.set("action", action);
+	formData.set("session_id", user_session_id);
+	formData.set("chsm", chsm);
+	formData.set("shoppingCartId", postId);
+
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/order`,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			if (response.returnCode === "1" && response.returnData.length > 0) {
+				showSuccessshipdetail();
+				refreshDataList();
+			} else {
+				handleApiResponse(response);
+			}
+		},
+		error: function (error) {
+			handleApiResponse(response);
+		},
+	});
 });

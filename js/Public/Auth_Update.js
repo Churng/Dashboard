@@ -14,15 +14,11 @@ function handlePageUpdatePermissions(currentUser, currentUrl) {
 				if (page.auth.includes("read")) {
 					const updateButton = document.getElementById("updateButton");
 					updateButton.disabled = false;
-				} else {
-					window.history.back();
 				}
 
 				if (page.auth.includes("update")) {
 					const updateButton = document.getElementById("updateButton");
 					updateButton.disabled = false;
-				} else {
-					window.history.back();
 				}
 
 				if (page.auth.includes("download")) {

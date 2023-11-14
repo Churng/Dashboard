@@ -1,10 +1,11 @@
 // 取得詳細資料
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("brandId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
-	handlePageUpdatePermissions(currentUser, currentUrl);
 
+	console.log(IdPost);
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -67,8 +68,7 @@ $(document).ready(function () {
 			// 处理表单提交
 			event.preventDefault();
 
-			const urlParams = new URLSearchParams(window.location.search);
-			const partId = urlParams.get("id");
+			var partId = localStorage.getItem("brandId");
 
 			//取值
 			var getbrandName = $("#brand-Name").val();
@@ -109,12 +109,16 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false,
 				success: function (response) {
-					handleApiResponse(response);
-					console.log(response);
-					showSuccessFileNotification();
-					localStorage.removeItem("selectedBrandData");
-					var newPageUrl = "brandList.html";
-					window.location.href = newPageUrl;
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+						setTimeout(function () {
+							localStorage.removeItem("selectedBrandData");
+							var newPageUrl = "brandList.html";
+							window.location.href = newPageUrl;
+						}, 1000);
+					} else {
+						handleApiResponse(response);
+					}
 				},
 				error: function (error) {
 					showErrorFileNotification();

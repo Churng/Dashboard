@@ -230,9 +230,11 @@ $(document).ready(function () {
 				success: function (response) {
 					if (response.returnCode === "1") {
 						showSuccessFileNotification();
-						localStorage.removeItem("partId");
-						var newPageUrl = "componentList.html";
-						window.location.href = newPageUrl;
+						setTimeout(function () {
+							localStorage.removeItem("partId");
+							var newPageUrl = "componentList.html";
+							window.location.href = newPageUrl;
+						}, 1000);
 					} else {
 						handleApiResponse(response);
 					}

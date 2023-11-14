@@ -63,7 +63,7 @@ function updatePageWithData(responseData) {
 			'">修改</a>';
 
 		var readButtonHtml =
-			'<a href="depotDetail.html" style="display:none margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+			'<a href="depotDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
 			data.id +
 			'">查看詳請</a>';
 
@@ -97,6 +97,12 @@ function updatePageWithData(responseData) {
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("depotId", id);
+});
+
+// 查看詳請
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("depotReadId", id);
 });
 
 // 監聽欄位變動

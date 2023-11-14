@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>倉庫清單</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/toastr.min.css">
+
+
+    <!-- DataTable Stylesheet -->
+    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container-fluid position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary">進銷存後台</h3>
+                </a>
+                <div class="navbar-nav w-100" id="dynamicMenu">
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <div class="navbar-nav align-items-center ms-auto">
+
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fa fa-bell me-lg-2"></i>
+                        </a>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="userImg rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex" id="userName">John Doe</span>
+                        </a>
+                        <div
+                            class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item" id="logout">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Blank Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row  bg-light rounded p-3 mx-0">
+                    <div class="">
+                        <h3>零件資料</h3>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">倉庫列表 / 零件資料</li>
+                            </ol>
+                        </nav>
+                        <div class="block-first">
+                            <h4 class="mt-5">單據資料</h4>
+
+                            <div class="py-4 my-2 input-fit">
+                                <div class="mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="form-control" name="component[]" id="fileInput"
+                                            accept="image/*" multiple disabled>
+                                    </div>
+                                </div>
+                                <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
+                            </div>
+
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-3">
+                                    <label for="componentId" class="form-label">零件序號</label>
+                                    <input type="text" class="form-control" id="componentId" placeholder="" value=""
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <label for="statusName" class="form-label">零件狀態</label>
+                                    <input type="text" class="form-control" id="statusName" placeholder="" value=""
+                                        disabled>
+                                    <!-- <label for="statusName" class="form-label">零件狀態</label>
+                                    <select class="form-select" id="statusName" disabled>
+                                        <option value="">請選擇</option>
+                                        <option value="0">無</option>
+                                        <option value="1">請購中</option>
+                                        <option value="2">採購中</option>
+                                        <option value="3">取消請購</option>
+                                        <option value="4">已入庫</option>
+                                        <option value="5">申請出庫中</option>
+                                        <option value="6">等待領取</option>
+                                        <option value="7">已出庫</option>
+                                        <option value="8">已出庫</option>
+                                        <option value="9">盤點損失</option>
+                                    </select> -->
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="remark" class="form-label">零件備註</label>
+                                    <textarea class="form-control" id="remark" rows="3" disabled></textarea>
+                                </div>
+
+                            </div>
+
+                            <h4 class="mt-5">訂單資料</h4>
+                            <div class="row g-3 mb-5">
+                                <div class="col-sm-4">
+                                    <label for="orderId" class="form-label">訂單序號</label>
+                                    <input type="text" class="form-control" id="orderId" placeholder="" value="5"
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="storeName" class="form-label">訂單門市</label>
+                                    <input type="text" class="form-control" id="storeName" placeholder="" value="5"
+                                        disabled>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="orderNo" class="form-label">來源單號</label>
+                                    <input type="text" class="form-control" id="orderNo" value="" disabled>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="orderNote" class="form-label">訂單備註</label>
+                                    <textarea class="form-control" id="orderNote" rows="3" disabled></textarea>
+                                </div>
+                            </div>
+
+
+                            <form id="uploadForm" class="needs-validation" novalidate>
+                                <div class="block-second mt-5">
+                                    <h4>零件定義</h4>
+                                    <button class="btn btn-primary btn-md my-3" type="buttob"><a
+                                            href="componentList.html"
+                                            class="remove-link-decoration text-white">搜尋零件料號</a></button>
+
+                                    <div class="row g-3 mb-5">
+                                        <div class="col-sm-3">
+                                            <label for="componentNumber" class="form-label">*零件料號</label>
+                                            <input type="text" class="form-control" id="componentNumber" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="brandId" class="form-label">*請選擇品牌</label>
+                                            <select class="form-select" id="brandId" disabled> </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="componentName" class="form-label">*零件名稱</label>
+                                            <input type="text" class="form-control" id="componentName" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="suitableModel" class="form-label">*適用車型</label>
+                                            <input type="text" class="form-control" id="suitableModel" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="Price" class="form-label">*零件訂價</label>
+                                            <input type="text" class="form-control" id="Price" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="WholesalePrice" class="form-label">*零件批發價</label>
+                                            <input type="text" class="form-control" id="WholesalePrice" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="workingHour" class="form-label">*工時（小時）</label>
+                                            <input type="text" class="form-control" id="workingHour" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="lowestWholesalePrice" class="form-label">*零件最低批發價</label>
+                                            <input type="text" class="form-control" id="lowestWholesalePrice" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="supplier" class="form-label">*零件供應商</label>
+                                            <input type="text" class="form-control" id="supplier" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="Cost" class="form-label">*零件成本</label>
+                                            <input type="text" class="form-control" id="Cost" disabled>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="depotPosition" class="form-label">*倉庫儲位</label>
+                                            <input type="text" class="form-control" id="depotPosition" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-sm-6 mb-3">
+                                            <label for="description" class="form-label">零件描述</label>
+                                            <textarea class="form-control" id="description" rows="3"
+                                                disabled></textarea>
+                                        </div>
+
+                                        <div class="col-sm-6 mb-3">
+                                            <label for="precautions" class="form-label">注意事項</label>
+                                            <textarea class="form-control" id="precautions" rows="3"
+                                                disabled></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row g-3 mb-5">
+                                        <div class="col-sm-4">
+                                            <label for="BuildTime" class="form-label">建立時間</label>
+                                            <input type="text" class="form-control" id="BuildTime" disabled>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label for="EditTime" class="form-label">修改時間</label>
+                                            <input type="text" class="form-control" id="EditTime" disabled>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label for="EditAccount" class="form-label">修改帳號</label>
+                                            <input type="text" class="form-control" id="EditAccount" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center w-100 pt-3">
+                                        <button id="backButton" class="w-25 btn btn-primary btn-md"
+                                            type="button">上一頁</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+
+    <!--  Boostrap JavaScript Libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Login/Authlogin.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/api-notifications.js"></script>
+    <script src="js/crypto-js.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/Notifications/notifications.js"></script>
+    <script src="js/Notifications/toastr-options.js"></script>
+
+
+    <!-- Datatable Libraries -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            new DataTable('#stockInPage');
+        });
+
+    </script>
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            localStorage.removeItem("readStoreId");
+            history.back();
+        });
+    </script>
+    <!-- Template Javascript -->
+    <script src="config/api-config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/Public/downloadPdfFile.js"></script>
+    <!-- <script src="js/Public/downloadFile.js"></script> -->
+    <script src="js/Public/menu.js"></script>
+    <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Depot/depotDetail_Read.js"></script>
+
+</body>
+
+</html>
