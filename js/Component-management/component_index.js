@@ -23,6 +23,7 @@ $(document).ready(function () {
 
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇品牌";
+			defaultOption.value = "";
 			brandList.appendChild(defaultOption);
 
 			for (let i = 0; i < responseData.returnData.length; i++) {
@@ -167,7 +168,7 @@ function updatePageWithData(responseData) {
 		pushDataIfExists(data, "cost", showCostColumn, row);
 		pushDataIfExists(data, "wholesalePrice", showWholesalePriceColumn, row);
 		pushDataIfExists(data, "lowestWholesalePrice", showLowestWholesalePriceColumn, row);
-		// pushDataIfExists(data, "totalCost", true, row);
+		pushDataIfExists(data, "totalCost", true, row);
 
 		row.push(data.workingHour, data.purchaseAmount, data.depotAmount, data.lowestInventory, data.createTime);
 		setColumnVisibility(data, dataTable);
@@ -179,19 +180,31 @@ function updatePageWithData(responseData) {
 function hideColumnsIfNoData() {
 	var dataTable = $("#partsManagement").DataTable();
 
-	for (var i = 4; i <= 9; i++) {
+	for (var i = 7; i <= 11; i++) {
 		var column = dataTable.column(i);
 		column.visible(false);
-		column.nodes().to$().empty(); // 清空相應列的數據
 	}
 }
 // 欄位可見
 function setColumnVisibility(data, dataTable) {
-	dataTable.column(6).visible(data.hasOwnProperty("price") && data.price == null);
-	dataTable.column(7).visible(data.hasOwnProperty("cost") && data.cost == null);
-	dataTable.column(8).visible(data.hasOwnProperty("wholesalePrice") && data.wholesalePrice == null);
-	dataTable.column(9).visible(data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice == null);
-	// dataTable.column(13).visible(data.hasOwnProperty("totalCost") && data.totalCost !== null);
+	var hasData = Object.keys(data).length > 0;
+
+	if (hasData) {
+		dataTable.column(7).visible(true); // 显示列7（price）
+		dataTable.column(8).visible(true); // 显示列8（cost）
+		dataTable.column(9).visible(true); // 显示列9（wholesalePrice）
+		dataTable.column(10).visible(true); // 显示列10（lowestWholesalePrice）
+		dataTable.column(11).visible(true); // 显示列11（totalCost）
+
+		// 根据属性值是否为 null 决定是否隐藏列
+		dataTable.column(7).visible(!data.hasOwnProperty("price") && data.price == null); // 列7（price）
+		dataTable.column(8).visible(!data.hasOwnProperty("cost") && data.cost == null); // 列8（cost）
+		dataTable.column(9).visible(!data.hasOwnProperty("wholesalePrice") && data.wholesalePrice == null); // 列9（wholesalePrice）
+		dataTable.column(10).visible(!data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice == null); // 列10（lowestWholesalePrice）
+		dataTable.column(11).visible(!data.hasOwnProperty("totalCost") && data.totalCost == null); // 列11（totalCost）
+	} else {
+		dataTable.columns().visible(false);
+	}
 }
 
 // 监听修改按钮的点击事件
@@ -238,7 +251,9 @@ function refreshDataList() {
 }
 
 //刪除按鈕
-$(document).on("click", ".delete-button", function () {
+$(document).on("click", ".delete-button", function (e) {
+	e.stopPropagation();
+	var formData = new FormData();
 	var deleteButton = $(this);
 	var itemId = deleteButton.data("id");
 
@@ -248,25 +263,81 @@ $(document).on("click", ".delete-button", function () {
 
 	var jsonData = JSON.stringify(data);
 
-	deleteItem(
-		"HBAdminShoppingCartApi",
-		"deleteShoppingCartDetail",
-		`${apiURL}/shoppingCart`,
-		jsonData,
-		function (response) {
-			refreshDataList();
-		},
-		function (error) {
-			// 处理错误情况
+	$(document).off("click", ".confirm-delete");
+	toastr.options = {
+		closeButton: true,
+		timeOut: 0,
+		extendedTimeOut: 0,
+		positionClass: "toast-top-center",
+	};
+
+	toastr.warning(
+		"確定要刪除所選零件嗎？<br/><br><button class='btn btn-danger confirm-delete'>删除</button>",
+		"確定刪除",
+		{
+			allowHtml: true,
 		}
 	);
+
+	$(document).one("click", ".confirm-delete", function () {
+		var confirmDeleteToast = toastr.info("删除中...", { timeOut: 0 });
+
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		var action = "deleteComponentDetail";
+		var chsmtoDeleteFile = user_session_id + action + "HBAdminComponentApi";
+		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", jsonData);
+
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/component`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				removeNotification(confirmDeleteToast);
+				if (response.returnCode === "1") {
+					refreshDataList();
+				} else {
+					handleApiResponse(response);
+				}
+			},
+			error: function (error) {
+				removeNotification(confirmDeleteToast);
+				showErrorNotification();
+			},
+			complete: function () {
+				showSuccessFileDeleteNotification();
+			},
+		});
+	});
 });
 
+function showDeletingNotification() {
+	return toastr.info("删除中...", { timeOut: 0 });
+}
+
+// 删除完成
+function showSuccessFileDeleteNotification() {
+	toastr.success("删除完成");
+}
+
+// 移除提示
+function removeNotification(toast) {
+	toastr.clear(toast);
+}
 // 下載資料
 
 $(document).on("click", ".file-download", function () {
 	var fileName = $(this).data("file");
-	var apiName = "component"; // 或其他你需要的 apiName
+	var apiName = "component";
 	if (fileName) {
 		downloadFile(apiName, fileName);
 	} else {
@@ -338,7 +409,3 @@ function sendApiRequest(filterData) {
 		},
 	});
 }
-// 加载时调用在页面 fetchAccountList
-// $(document).ready(function () {
-// 	fetchAccountList();
-// });

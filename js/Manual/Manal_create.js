@@ -32,7 +32,7 @@ $(document).ready(function () {
 					year: getyear,
 					applicableType: getapplicableType,
 					remark: getremark,
-					file: getfileName,
+					file: file.name,
 				};
 
 				const jsonStringFromLocalStorage = localStorage.getItem("userData");

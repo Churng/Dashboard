@@ -35,7 +35,7 @@ $(document).ready(function () {
 				var getOrderData = responseData.orderData;
 				orderStatus = getOrderData.status;
 				orderId = getOrderData.id;
-				console.log(responseData);
+				console.log(JSON.stringify(responseData));
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {

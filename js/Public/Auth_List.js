@@ -3,6 +3,8 @@ var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 var currentUrl = window.location.href;
 function handlePagePermissions(currentUser, currentUrl) {
 	if (currentUser.userretrunData) {
+		console.log("3");
+
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
 			if (currentUrl.includes(page.url) && Array.isArray(page.auth)) {

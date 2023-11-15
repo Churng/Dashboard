@@ -4,8 +4,8 @@ $(document).ready(function () {
 
 	var columnsData1 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 	];
@@ -71,8 +71,8 @@ $(document).ready(function () {
 	// Data2
 	var columnsData2 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "notification_lowestInventory", title: "通知列表最低庫存量不足" },
@@ -139,8 +139,8 @@ $(document).ready(function () {
 	//Data3
 	var columnsData3 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 	];
@@ -190,8 +190,8 @@ $(document).ready(function () {
 	//Data4
 	var columnsData4 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "price", title: "訂價" },
@@ -286,8 +286,8 @@ $(document).ready(function () {
 	//Data5
 	var columnsData5 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "price", title: "訂價" },
@@ -356,8 +356,8 @@ $(document).ready(function () {
 	//Data6
 	var columnsData6 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "price", title: "訂價" },
@@ -510,8 +510,8 @@ $(document).ready(function () {
 
 	var columnsData7 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "ship_ship_requisition", title: "出庫單申請出庫" },
@@ -651,8 +651,8 @@ $(document).ready(function () {
 
 	var columnsData8 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "cost", title: "成本" },
@@ -714,8 +714,8 @@ $(document).ready(function () {
 	//Data9
 	var columnsData9 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "download", title: "零件手冊僅查詢下載" },
@@ -769,8 +769,8 @@ $(document).ready(function () {
 	//Data10
 	var columnsData10 = [
 		{ data: "empty", title: "#" },
-		{ data: "read", title: "查看" },
-		{ data: "insert", title: "編輯" },
+		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
 		{ data: "update", title: "修改" },
 		{ data: "delete", title: "刪除" },
 		{ data: "price", title: "訂價" },
