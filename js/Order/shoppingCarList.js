@@ -23,7 +23,7 @@ $(document).ready(function () {
 			handleApiResponse(responseData);
 			const brandList = document.getElementById("selectBrand");
 
-			console.log(responseData);
+			// console.log(responseData);
 
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇品牌";
@@ -71,6 +71,7 @@ $(document).ready(function () {
 		url: `${apiURL}/shoppingCart`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData);
 
@@ -93,7 +94,7 @@ function updatePageWithData(responseData) {
 	var dataTable = $("#partsCar").DataTable();
 	dataTable.clear().draw();
 
-	console.log(responseData);
+	// console.log(responseData);
 	var totalPriceElement = document.getElementById("totalPrice");
 	var totalPriceValue = responseData.totalPrice;
 	totalPriceElement.value = totalPriceValue;
@@ -143,7 +144,7 @@ function updatePageWithData(responseData) {
 // 修改按钮点击事件处理程序
 $(document).on("click", ".modify-button", function () {
 	var itemId = $(this).data("id"); // 获取动态ID
-	console.log(itemId);
+	// console.log(itemId);
 	$("#confirmModifyButton").data("id", itemId);
 });
 
@@ -153,7 +154,7 @@ $("#confirmModifyButton").on("click", function () {
 	var quantity = $("#quantityInput").val();
 	var itemId = $(this).data("id");
 
-	console.log(quantity, itemId);
+	// console.log(quantity, itemId);
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -181,7 +182,7 @@ $("#confirmModifyButton").on("click", function () {
 
 	formData.append("data", JSON.stringify(updateData));
 
-	console.log(JSON.stringify(updateData));
+	// console.log(JSON.stringify(updateData));
 	// 将数据发送到服务器的API
 	$.ajax({
 		type: "POST",

@@ -1,10 +1,10 @@
 var config = {
 	api_url: "https://88bakery.tw/HBAdmin/index.php?/api/authorize",
-	items_per_page: 10,
+	items_per_page: 100,
 };
 
 // 引入配置文件
-$.getScript("config.js", function () {
+function fetchData(pageOffset, pageCount) {
 	$(document).ready(function () {
 		// 從localStorage中獲取session_id和chsm
 		// 解析JSON字串為JavaScript對象
@@ -82,4 +82,4 @@ $.getScript("config.js", function () {
 			loadData();
 		});
 	});
-});
+}

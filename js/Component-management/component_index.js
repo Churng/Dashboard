@@ -96,18 +96,6 @@ function updatePageWithData(responseData) {
 	// 显示所有列
 	dataTable.columns().visible(true);
 
-	// 如果没有数据
-	if (responseData.returnData.length === 0) {
-		// 隐藏没有数据时需要隐藏的列
-		hideColumnsIfNoData();
-		return;
-	}
-
-	showPriceColumn = true;
-	showCostColumn = true;
-	showWholesalePriceColumn = true;
-	showLowestWholesalePriceColumn = true;
-
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
@@ -147,7 +135,6 @@ function updatePageWithData(responseData) {
 		// 查看倉庫還未設置
 		var goInventory = '<a href="#" class="btn btn-primary">點擊</a>';
 
-		// 使用條件判斷來填充列
 		var row = [
 			goInventory,
 			buttonsHtml,
@@ -157,17 +144,10 @@ function updatePageWithData(responseData) {
 			data.suitableCarModel,
 		];
 
-		function pushDataIfExists(data, field, showColumn, row) {
-			if (showColumn) {
-				// 檢查數據是否存在，不存在則填充空字符串
-				row.push(data.hasOwnProperty(field) && data[field] != null ? data[field] : "");
-			}
-		}
-
-		pushDataIfExists(data, "price", showPriceColumn, row);
-		pushDataIfExists(data, "cost", showCostColumn, row);
-		pushDataIfExists(data, "wholesalePrice", showWholesalePriceColumn, row);
-		pushDataIfExists(data, "lowestWholesalePrice", showLowestWholesalePriceColumn, row);
+		pushDataIfExists(data, "price", true, row);
+		pushDataIfExists(data, "cost", true, row);
+		pushDataIfExists(data, "wholesalePrice", true, row);
+		pushDataIfExists(data, "lowestWholesalePrice", true, row);
 		pushDataIfExists(data, "totalCost", true, row);
 
 		row.push(data.workingHour, data.purchaseAmount, data.depotAmount, data.lowestInventory, data.createTime);
@@ -176,35 +156,24 @@ function updatePageWithData(responseData) {
 	}
 }
 
-// 無數據隱藏列
-function hideColumnsIfNoData() {
-	var dataTable = $("#partsManagement").DataTable();
-
-	for (var i = 7; i <= 11; i++) {
-		var column = dataTable.column(i);
-		column.visible(false);
+// 欄位填充
+function pushDataIfExists(data, field, showColumn, row) {
+	var value = data.hasOwnProperty(field) ? data[field] : null;
+	if (showColumn) {
+		row.push(value !== null ? value : "");
+	} else {
+		row.push("");
 	}
 }
+
 // 欄位可見
 function setColumnVisibility(data, dataTable) {
-	var hasData = Object.keys(data).length > 0;
+	var columnsToCheck = ["price", "cost", "wholesalePrice", "lowestWholesalePrice", "totalCost"];
 
-	if (hasData) {
-		dataTable.column(7).visible(true); // 显示列7（price）
-		dataTable.column(8).visible(true); // 显示列8（cost）
-		dataTable.column(9).visible(true); // 显示列9（wholesalePrice）
-		dataTable.column(10).visible(true); // 显示列10（lowestWholesalePrice）
-		dataTable.column(11).visible(true); // 显示列11（totalCost）
-
-		// 根据属性值是否为 null 决定是否隐藏列
-		dataTable.column(7).visible(!data.hasOwnProperty("price") && data.price == null); // 列7（price）
-		dataTable.column(8).visible(!data.hasOwnProperty("cost") && data.cost == null); // 列8（cost）
-		dataTable.column(9).visible(!data.hasOwnProperty("wholesalePrice") && data.wholesalePrice == null); // 列9（wholesalePrice）
-		dataTable.column(10).visible(!data.hasOwnProperty("lowestWholesalePrice") && data.lowestWholesalePrice == null); // 列10（lowestWholesalePrice）
-		dataTable.column(11).visible(!data.hasOwnProperty("totalCost") && data.totalCost == null); // 列11（totalCost）
-	} else {
-		dataTable.columns().visible(false);
-	}
+	columnsToCheck.forEach(function (columnName, index) {
+		var isVisible = data.hasOwnProperty(columnName) && data[columnName] !== null;
+		dataTable.column(index + 6).visible(isVisible);
+	});
 }
 
 // 监听修改按钮的点击事件
@@ -223,8 +192,6 @@ function refreshDataList() {
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
-
-	// console.log(user_session_id);
 	// chsm = session_id+action+'HBAdminManualApi'
 	// 組裝菜單所需資料
 	var action = "getComponentList";
@@ -333,8 +300,8 @@ function showSuccessFileDeleteNotification() {
 function removeNotification(toast) {
 	toastr.clear(toast);
 }
-// 下載資料
 
+// 下載資料
 $(document).on("click", ".file-download", function () {
 	var fileName = $(this).data("file");
 	var apiName = "component";

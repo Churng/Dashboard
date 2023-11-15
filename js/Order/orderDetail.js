@@ -1,6 +1,7 @@
 // 取得詳細資料
 let orderStatus;
 let orderId;
+let orderNo;
 $(document).ready(function () {
 	var partId = localStorage.getItem("orderNo");
 	var orderData = JSON.parse(partId);
@@ -30,16 +31,19 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			handleApiResponse(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				var getOrderData = responseData.orderData;
 				orderStatus = getOrderData.status;
 				orderId = getOrderData.id;
-				console.log(JSON.stringify(responseData));
+				orderNo = getOrderData.orderNo;
+
+				// console.log(responseData);
+				// console.log(JSON.stringify(responseData));
+
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -50,7 +54,7 @@ $(document).ready(function () {
 
 //表單內資料：單據詳細資料
 function updateData(responseData) {
-	// console.log(responseData);
+	console.log(responseData);
 	// var partId = localStorage.getItem("orderNo");
 	// var partId = JSON.parse(partId);
 	const orderData = responseData.orderData;
@@ -63,7 +67,7 @@ function updateData(responseData) {
 	var storeName = orderData.storeName;
 	var brandName = orderData.brandName;
 	var orderNote = orderData.orderNote;
-	var orderRemark = orderData.orderRemark;
+	var orderRemark = orderData.remark;
 	var totalPrice = responseData.totalPrice;
 
 	var updateTime = orderData.updateTime;
@@ -100,13 +104,14 @@ function updateData(responseData) {
 
 //底下表格內資料：購物單零件們
 function updatePageWithData(responseData) {
-	// console.log(responseData);
 	// 清空表格数据
 	var dataTable = $("#orderDetail").DataTable();
 	dataTable.clear().draw();
 
 	// 填充API数据到表格，包括下载链接
 	responseData.returnData.forEach(function (data) {
+		console.log();
+
 		//checkbox顯示：狀態在庫（3）
 		//出庫單選取
 		var checkboxHtml = "";
@@ -114,10 +119,12 @@ function updatePageWithData(responseData) {
 			var checkboxHtml = '<input type="checkbox" class="executeship-button" data-id="' + data.id + '">';
 		}
 
+		// Boolean(data.if_order_delete_component)
+
 		// 刪除零件：
 		var deleteButtonHtml = "";
 		if (data.status == 1 || data.status == 2 || data.status == 3 || data.status == 4 || data.status == 5) {
-			if (data.if_order_delete_component === true) {
+			if (Boolean(data.if_order_delete_component) === true) {
 				deleteButtonHtml +=
 					'<button class="btn btn-danger delete-button" data-id="' +
 					data.id +
@@ -130,7 +137,7 @@ function updatePageWithData(responseData) {
 		// 退貨：退貨單新增
 		var unsubButtonHtml = "";
 		if (data.status == 6 && data.statusName == "已出庫") {
-			if (data.if_order_unsubscribe === true) {
+			if (Boolean(data.if_order_unsubscribe) === true) {
 				unsubButtonHtml +=
 					'<button  class="btn btn-warning unsubscribe-button" data-id="' + orderId + '" >退貨</button>';
 			}
@@ -141,7 +148,7 @@ function updatePageWithData(responseData) {
 		// shipId
 
 		var shipButtonHtml = "";
-		if ((data.if_shipDetail = true)) {
+		if (Boolean(data.if_shipDetail) === true) {
 			shipButtonHtml +=
 				'<a href="shipDetail.html"  class="btn btn-primary text-white "  data-id="' + data.id + '">查看出庫單</a>';
 		}
@@ -151,7 +158,7 @@ function updatePageWithData(responseData) {
 		//purchaseId
 
 		var purchaseButtonHtml = "";
-		if ((data.if_purchaseDetail = true)) {
+		if (Boolean(data.if_purchaseDetail) === true) {
 			purchaseButtonHtml +=
 				'<a href="purchaseDetail.html"  class="btn btn-info text-white purchase-button "  data-id="' +
 				data.id +
@@ -235,7 +242,6 @@ function refreshDataList() {
 }
 
 //刪除零件
-
 $(document).on("click", ".delete-button", function (e) {
 	e.stopPropagation();
 	var formData = new FormData();
@@ -307,7 +313,7 @@ $(document).on("click", ".delete-button", function (e) {
 				showErrorNotification();
 			},
 			complete: function () {
-				isConfirmDeleteProcessing = false; // 完成時設置狀態為非處理中
+				isConfirmDeleteProcessing = false;
 			},
 		});
 	});
@@ -602,22 +608,27 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 $(document).on("click", "#saveBtn", function (e) {
 	var formData = new FormData();
 
-	var IdArray = [orderId.toString()];
-	var postId = JSON.stringify(IdArray);
+	var getorderNote = $("#orderNote").val();
+	var getorderremark = $("#orderRemark").val();
+
+	var updateData = {};
+	updateData.orderNo = orderNo;
+	updateData.orderNote = getorderNote;
+	updateData.remark = getorderremark;
 
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
 	// chsm = session_id+action+'HBAdminOrderApi'
-	var action = "insertOrderDetail";
+	var action = "updateOrderDetail";
 	var chsmtoDeleteFile = user_session_id + action + "HBAdminOrderApi";
 	var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
 
 	formData.set("action", action);
 	formData.set("session_id", user_session_id);
 	formData.set("chsm", chsm);
-	formData.set("shoppingCartId", postId);
+	formData.set("data", JSON.stringify(updateData));
 
 	$.ajax({
 		type: "POST",
@@ -626,9 +637,10 @@ $(document).on("click", "#saveBtn", function (e) {
 		processData: false,
 		contentType: false,
 		success: function (response) {
-			if (response.returnCode === "1" && response.returnData.length > 0) {
+			if (response.returnCode === "1") {
 				showSuccessshipdetail();
-				refreshDataList();
+				var newPageUrl = "orderList.html";
+				window.location.href = newPageUrl;
 			} else {
 				handleApiResponse(response);
 			}

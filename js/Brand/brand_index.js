@@ -69,21 +69,39 @@ function updatePageWithData(responseData) {
 	handlePagePermissions(currentUser, currentUrl);
 }
 
-// $("#brand-management").on("draw.dt", function () {
-// 	console.log("ddddd");
-// 	updateButtonPermissions();
-// });
 $(document).ready(function () {
-	$("ul.pagination").on("click", "li.page-item:not(.disabled) a.page-link", function (event) {
-		event.preventDefault();
-		console.log("點擊了頁籤");
-		// 在這裡添加你想要的程式碼
+	const paginationContainer = document.getElementById("brand-management_paginate");
+
+	// 監聽分頁容器內的點擊事件
+	paginationContainer.addEventListener("mouseup", function (event) {
+		// 判斷點擊的是分頁頁籤
+		if (event.target.classList.contains("page-link")) {
+			// 防止點擊頁籤時跳轉到新頁面
+			event.preventDefault();
+
+			// 獲取點擊的頁籤數字
+			const pageNumber = parseInt(event.target.getAttribute("data-dt-idx"));
+
+			// 判斷點擊的是否是當前頁籤
+			if (event.target.parentElement.classList.contains("active")) {
+				console.log(`點擊了當前頁籤：${pageNumber}`);
+				// 在這裡執行你想要的操作
+
+				// 觸發第一次點擊事件
+				event.target.click();
+
+				// 使用 setTimeout 延遲觸發第二次點擊事件
+				setTimeout(function () {
+					event.target.click();
+					handlePagePermissions(currentUser, currentUrl);
+				}, 100); // 延遲 100 毫秒後觸發第二次點擊事件
+			}
+
+			// 如果有其他需要的操作，也可以在這裡添加代碼
+		}
 	});
 });
 
-function updateButtonPermissions() {
-	handlePagePermissions(currentUser, currentUrl);
-}
 // 监听修改按钮的点击事件
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
