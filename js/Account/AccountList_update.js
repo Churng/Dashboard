@@ -213,11 +213,12 @@ $(document).ready(function () {
 				contentType: false,
 				success: function (response) {
 					if (response.returnCode === "1") {
+						showSuccessFileNotification();
 						setTimeout(function () {
-							showSuccessFileNotification();
+							localStorage.removeItem("partId");
+							var newPageUrl = "accountList.html";
+							window.location.href = newPageUrl;
 						}, 1000);
-						var newPageUrl = "accountList.html";
-						window.location.href = newPageUrl;
 					} else {
 						handleApiResponse(response);
 					}

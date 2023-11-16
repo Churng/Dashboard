@@ -441,9 +441,11 @@ function getdepotUpdatePost() {
 		success: function (response) {
 			if (response.returnCode === "1") {
 				showSuccessFileNotification();
-				localStorage.removeItem("wareHouseId");
-				var newPageUrl = "wareHouseList.html";
-				window.location.href = newPageUrl;
+				setTimeout(function () {
+					localStorage.removeItem("wareHouseId");
+					var newPageUrl = "wareHouseList.html";
+					window.location.href = newPageUrl;
+				}, 1000);
 			} else {
 				handleApiResponse(response);
 			}

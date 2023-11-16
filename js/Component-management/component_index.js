@@ -55,6 +55,7 @@ $(document).ready(function () {
 
 // 列表取得：ALL
 function fetchAccountList() {
+	showSpinner();
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -76,6 +77,7 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
+				hideSpinner();
 				updatePageWithData(responseData);
 			} else {
 				handleApiResponse(responseData);

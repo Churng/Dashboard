@@ -144,9 +144,10 @@ $(document).ready(function () {
 					success: function (response) {
 						if (response.returnCode === "1") {
 							showSuccessFileNotification();
-							localStorage.removeItem("selectedComponentData");
-							var newPageUrl = "componentList.html";
-							window.location.href = newPageUrl;
+							setTimeout(function () {
+								var newPageUrl = "componentList.html";
+								window.location.href = newPageUrl;
+							}, 1000);
 						} else {
 							handleApiResponse(response);
 						}

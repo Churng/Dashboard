@@ -150,10 +150,10 @@ $(document).on("click", ".file-download", function (e) {
 	}
 });
 
-// 完成訂單
+// 退貨完成
 $(document).ready(function () {
 	var formData = new FormData();
-	var uploadButton = document.getElementById("completeBtn"); // 通过按钮的ID来获取按钮元素
+	var uploadButton = document.getElementById("completeBtn");
 	console.log(uploadButton);
 	// 添加按钮点击事件监听器
 	uploadButton.addEventListener("click", function (event) {
@@ -182,7 +182,8 @@ $(document).ready(function () {
 		const user_session_id = gertuserData.sessionId;
 
 		// 组装上传更新文件的数据
-		var action = "updateUnsubscribeDetail";
+		// chsm = session_id+action+'HBAdminUnsubscribeApi'
+		var action = "completeUnsubscribeDetail";
 		var chsmtoUpdateFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
 
@@ -201,6 +202,10 @@ $(document).ready(function () {
 			success: function (response) {
 				if (response.returnCode === "1") {
 					showSuccessFileNotification();
+					setTimeout(function () {
+						var newPageUrl = "unsubscribeList.html			";
+						window.location.href = newPageUrl;
+					}, 1000);
 				} else {
 					handleApiResponse(response);
 				}

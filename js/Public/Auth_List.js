@@ -39,7 +39,6 @@ function handlePagePermissions(currentUser, currentUrl) {
 
 				if (page.auth.includes("download")) {
 					var downloadButtons = document.querySelectorAll("[data-button-type='download']");
-					console.log(downloadButtons);
 					for (var n = 0; n < downloadButtons.length; n++) {
 						downloadButtons[n].style.display = "inline-block";
 					}

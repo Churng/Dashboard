@@ -227,12 +227,11 @@ function refreshDataList() {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			handleApiResponse(responseData);
-			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+			if (responseData.returnCode === "1") {
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -302,8 +301,8 @@ $(document).on("click", ".delete-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				showSuccessFileDeleteNotification();
 				if (response.returnCode === "1") {
-					showSuccessFileDeleteNotification();
 					refreshDataList();
 				} else {
 					handleApiResponse(response);
@@ -375,8 +374,9 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 			contentType: false,
 			success: function (response) {
 				if (response.returnCode === "1" && response.returnData.length > 0) {
+					showSuccessorderunSubscribeNotification();
 					setTimeout(function () {
-						showSuccessorderunSubscribeNotification();
+						refreshDataList();
 					}, 1000);
 				} else {
 					handleApiResponse(response);
@@ -449,9 +449,11 @@ $(document).on("click", "#orderComplete", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				if (response.returnCode === "1" && response.returnData.length > 0) {
+				if (response.returnCode === "1") {
 					showSuccessorderCompleteNotification();
-					refreshDataList();
+					setTimeout(function () {
+						refreshDataList();
+					}, 1000);
 				} else {
 					handleApiResponse(response);
 				}
@@ -518,9 +520,11 @@ $(document).on("click", "#orderCancel", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				if (response.returnCode === "1" && response.returnData.length > 0) {
+				if (response.returnCode === "1") {
 					showSuccessorderCancelNotification();
-					refreshDataList();
+					setTimeout(function () {
+						refreshDataList();
+					}, 1000);
 				} else {
 					handleApiResponse(response);
 				}
@@ -590,9 +594,11 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				if (response.returnCode === "1" && response.returnData.length > 0) {
+				if (response.returnCode === "1") {
 					showSuccessshipdetail();
-					refreshDataList();
+					setTimeout(function () {
+						refreshDataList();
+					}, 1000);
 				} else {
 					handleApiResponse(response);
 				}
@@ -638,9 +644,12 @@ $(document).on("click", "#saveBtn", function (e) {
 		contentType: false,
 		success: function (response) {
 			if (response.returnCode === "1") {
-				showSuccessshipdetail();
-				var newPageUrl = "orderList.html";
-				window.location.href = newPageUrl;
+				showSuccessFileNotification();
+				setTimeout(function () {
+					localStorage.removeItem("orderNo");
+					var newPageUrl = "orderList.html";
+					window.location.href = newPageUrl;
+				}, 1000);
 			} else {
 				handleApiResponse(response);
 			}

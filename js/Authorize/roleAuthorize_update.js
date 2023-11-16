@@ -1419,8 +1419,12 @@ $(document).ready(function () {
 				success: function (response) {
 					console.log(response);
 					showSuccessFileNotification();
-					var newPageUrl = "roleList.html";
-					window.location.href = newPageUrl;
+
+					setTimeout(function () {
+						localStorage.removeItem("partId");
+						var newPageUrl = "roleList.html";
+						window.location.href = newPageUrl;
+					}, 1000);
 				},
 				error: function (error) {
 					console.log(error);

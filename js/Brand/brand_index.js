@@ -1,28 +1,56 @@
-// 列表取得
+var table;
 $(document).ready(function () {
-	// 从localStorage中获取session_id和chsm
-	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	// console.log(user_session_id);
-	// chsm = session_id+action+'HBAdminBrandApi'
-	// 組裝菜單所需資料
 	var action = "getBrandList";
-	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
-	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+	var chsmtoGetBrandList = user_session_id + action + "HBAdminBrandApi";
+	var chsm = CryptoJS.MD5(chsmtoGetBrandList).toString().toLowerCase();
 
-	$("#brand-management").DataTable();
+	table = $("#brand-management").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml =
+						'<a href="brand_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+						row.id +
+						'">修改</a>';
 
-	// 发送API请求以获取数据
+					var deleteButtonHtml =
+						'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
+						row.id +
+						'">刪除</button>';
+
+					var readButtonHtml =
+						'<a href="brand_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+						row.id +
+						'">查看詳請</a>';
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "brandName" },
+			{ data: "brandOrder" },
+			{ data: "statusName" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+	});
+
 	$.ajax({
 		type: "POST",
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -33,74 +61,9 @@ $(document).ready(function () {
 	});
 });
 
-// 表格填充
-function updatePageWithData(responseData) {
-	// 清空表格数据
-
-	var dataTable = $("#brand-management").DataTable();
-	dataTable.clear().draw();
-
-	// 填充API数据到表格，包括下载链接
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
-		// console.log(data);
-		// 按鈕設定//
-
-		var modifyButtonHtml =
-			'<a href="brand_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-			data.id +
-			'">修改</a>';
-
-		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
-			data.id +
-			'">刪除</button>';
-
-		var readButtonHtml =
-			'<a href="brand_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-			data.id +
-			'">查看詳請</a>';
-		var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
-
-		dataTable.row
-			.add([buttonsHtml, data.brandName, data.brandOrder, data.statusName, data.createTime, data.createOperator])
-			.draw(false);
-	}
-	handlePagePermissions(currentUser, currentUrl);
+function updatePageWithData(responseData, table) {
+	table.clear().rows.add(responseData.returnData).draw();
 }
-
-$(document).ready(function () {
-	const paginationContainer = document.getElementById("brand-management_paginate");
-
-	// 監聽分頁容器內的點擊事件
-	paginationContainer.addEventListener("mouseup", function (event) {
-		// 判斷點擊的是分頁頁籤
-		if (event.target.classList.contains("page-link")) {
-			// 防止點擊頁籤時跳轉到新頁面
-			event.preventDefault();
-
-			// 獲取點擊的頁籤數字
-			const pageNumber = parseInt(event.target.getAttribute("data-dt-idx"));
-
-			// 判斷點擊的是否是當前頁籤
-			if (event.target.parentElement.classList.contains("active")) {
-				console.log(`點擊了當前頁籤：${pageNumber}`);
-				// 在這裡執行你想要的操作
-
-				// 觸發第一次點擊事件
-				event.target.click();
-
-				// 使用 setTimeout 延遲觸發第二次點擊事件
-				setTimeout(function () {
-					event.target.click();
-					handlePagePermissions(currentUser, currentUrl);
-				}, 100); // 延遲 100 毫秒後觸發第二次點擊事件
-			}
-
-			// 如果有其他需要的操作，也可以在這裡添加代碼
-		}
-	});
-});
 
 // 监听修改按钮的点击事件
 $(document).on("click", ".modify-button", function () {

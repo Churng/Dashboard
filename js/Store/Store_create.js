@@ -64,8 +64,10 @@ $(document).ready(function () {
 				success: function (response) {
 					if (response.returnCode === "1") {
 						showSuccessFileNotification();
-						var newPageUrl = "storeList.html";
-						window.location.href = newPageUrl;
+						setTimeout(function () {
+							var newPageUrl = "storeList.html";
+							window.location.href = newPageUrl;
+						}, 1000);
 					} else {
 						handleApiResponse(response);
 					}

@@ -60,7 +60,7 @@ $(document).ready(function () {
 							setTimeout(function () {
 								var newPageUrl = "manualList.html";
 								window.location.href = newPageUrl;
-							}, 3000);
+							}, 1000);
 						} else {
 							handleApiResponse(response);
 						}

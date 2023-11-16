@@ -1,4 +1,5 @@
 // 取得列表
+var table;
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -13,15 +14,56 @@ $(document).ready(function () {
 	var chsmtoGetManualList = user_session_id + action + "HBAdminManualApi";
 	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
 
-	$("#manual-management").DataTable();
+	table = $("#manual-management").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="manualDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}" data-filename="${row.fileName}">刪除</button>`;
+
+					var readButtonHtml = `<a href="manualDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{
+				// Download button column
+				render: function (data, type, row) {
+					var downloadButtonHtml = "";
+					if (row.file) {
+						downloadButtonHtml = `<button download style="display:none" class="btn btn-primary file-download" id="download-button" data-button-type="download" data-file="${row.file}" data-fileName="${row.fileName}">下載</button>`;
+					} else {
+						downloadButtonHtml = `<button style="display:none" class="btn btn-primary" data-button-type="download" disabled>無法下載</button>`;
+					}
+					return downloadButtonHtml;
+				},
+			},
+			{ data: "fileName" },
+			{ data: "brandName" },
+			{ data: "year" },
+			{ data: "applicableType" },
+			{ data: "remark" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+			hideDownloadColumn();
+		},
+	});
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
 		url: `${apiURL}/manual`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -33,66 +75,22 @@ $(document).ready(function () {
 });
 
 // 表格填充
-function updatePageWithData(responseData) {
-	// 權限設定 //
+function updatePageWithData(responseData, table) {
+	table.clear().rows.add(responseData.returnData).draw();
+}
 
-	console.log(currentUrl, currentUser);
-	// 清空表格数据
-	var dataTable = $("#manual-management").DataTable();
-	dataTable.clear().draw();
-
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
-
-		// 按鈕設定//
-
-		var downloadButtonHtml = "";
-		if (data.file) {
-			downloadButtonHtml =
-				'<button download style="display:none" class="btn btn-primary file-download " id="download-button"  data-button-type="download" data-file="' +
-				data.file +
-				'" data-fileName="' +
-				data.fileName +
-				'">下載</button>';
-		} else {
-			downloadButtonHtml =
-				'<button style="display:none" class="btn btn-primary" data-button-type="download" disabled>無法下載</button>';
-		}
-
-		var modifyButtonHtml =
-			'<a href="manualDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-			data.id +
-			'">修改</a>';
-
-		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
-			data.id +
-			'" data-filename="' +
-			data.fileName +
-			'">刪除</button>';
-
-		var readButtonHtml =
-			'<a href="manualDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-			data.id +
-			'">查看詳請</a>';
-
-		var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
-
-		dataTable.row
-			.add([
-				buttonsHtml,
-				downloadButtonHtml,
-				data.fileName,
-				data.brandName,
-				data.year,
-				data.applicableType,
-				data.remark,
-				data.createTime,
-				data.createOperator,
-			])
-			.draw(false);
+// 隐藏下载列
+function hideDownloadColumn() {
+	if (table) {
+		var rows = table.rows({ search: "applied" }).nodes();
+		$(rows).each(function () {
+			var downloadButtonCell = $(this).find("td:eq(1)");
+			if ($(downloadButtonCell).find("button").css("display") === "none") {
+				table.column(1).visible(false);
+				return false;
+			}
+		});
 	}
-	handlePagePermissions(currentUser, currentUrl);
 }
 
 // 监听修改按钮的点击事件

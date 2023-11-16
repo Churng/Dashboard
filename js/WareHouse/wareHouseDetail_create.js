@@ -310,14 +310,6 @@ function sendSecondCreate() {
 			console.log(response);
 			localStorage.removeItem("partId");
 			window.location.replace("wareHouseList.html");
-
-			// if (response.returnCode === "1") {
-			// 	// showSuccessFileNotification();∫
-
-			// 	setTimeout(function () {}, 3000);
-			// } else {
-			// 	handleApiResponse(response);
-			// }
 		},
 		error: function (error) {
 			showErrorFileNotification();

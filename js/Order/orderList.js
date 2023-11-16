@@ -240,6 +240,7 @@ $(document).ready(function () {
 	});
 
 	function sendApiRequest(filterData) {
+		showSpinner();
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
@@ -264,6 +265,7 @@ $(document).ready(function () {
 				console.log(responseData);
 				if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 					updatePageWithData(responseData);
+					hideSpinner();
 				} else {
 					handleApiResponse(responseData);
 				}

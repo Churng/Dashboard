@@ -151,8 +151,11 @@ $(document).ready(function () {
 				success: function (response) {
 					if (response.returnCode === "1") {
 						showSuccessFileNotification();
-						var newPageUrl = "manualList.html";
-						window.location.href = newPageUrl;
+						setTimeout(function () {
+							localStorage.removeItem("partId");
+							var newPageUrl = "manualList.html";
+							window.location.href = newPageUrl;
+						}, 1000);
 					} else {
 						handleApiResponse(response);
 					}

@@ -1,5 +1,6 @@
 // 列表取得
-function fetchAccountList() {
+var table;
+function fetchStoreList() {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -12,7 +13,34 @@ function fetchAccountList() {
 	var chsmtoGetStoreList = user_session_id + action + "HBAdminStoreApi";
 	var chsm = CryptoJS.MD5(chsmtoGetStoreList).toString().toLowerCase();
 
-	$("#storeInformation").DataTable();
+	table = $("#storeInformation").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="storeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+					var readButtonHtml = `<a href="storeDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
+					return buttonsHtml;
+				},
+			},
+			{ data: "storeName" },
+			{ data: "storeTypeName" },
+			{ data: "storeManager" },
+			{ data: "phoneNumber" },
+			{ data: "address" },
+			{
+				// Status column
+				render: function (data, type, row) {
+					return row.status === "2" ? "停業" : "正常";
+				},
+			},
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+	});
+
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
@@ -20,7 +48,7 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -32,42 +60,8 @@ function fetchAccountList() {
 }
 
 // 表格填充
-function updatePageWithData(responseData) {
-	var dataTable = $("#storeInformation").DataTable();
-	dataTable.clear().draw();
-
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
-
-		// 按鈕設定//
-
-		var modifyButtonHtml =
-			'<a href="storeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-			data.id +
-			'">修改</a>';
-
-		var readButtonHtml =
-			'<a href="storeDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-			data.id +
-			'">查看詳請</a>';
-
-		var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
-
-		var statusText = data.status === "2" ? "停業" : "正常";
-
-		dataTable.row
-			.add([
-				buttonsHtml,
-				data.storeName,
-				data.storeTypeName,
-				data.storeManager,
-				data.phoneNumber,
-				data.address,
-				statusText,
-			])
-			.draw(false);
-	}
-	handlePagePermissions(currentUser, currentUrl);
+function updatePageWithData(responseData, table) {
+	table.clear().rows.add(responseData.returnData).draw();
 }
 
 // 監聽拿修改ID
@@ -135,7 +129,7 @@ $(document).ready(function () {
 
 // 加載時拿fetchAccountList
 $(document).ready(function () {
-	fetchAccountList();
+	fetchStoreList();
 });
 
 // 點擊按鈕時使用 fetchAccountList

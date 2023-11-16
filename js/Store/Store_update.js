@@ -138,8 +138,11 @@ $(document).ready(function () {
 					if (response.returnCode === "1") {
 						showSuccessFileNotification();
 
-						var newPageUrl = "storeList.html";
-						window.location.href = newPageUrl;
+						setTimeout(function () {
+							localStorage.removeItem("partId");
+							var newPageUrl = "storeList.html";
+							window.location.href = newPageUrl;
+						}, 1000);
 					} else {
 						handleApiResponse(response);
 					}

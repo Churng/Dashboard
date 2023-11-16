@@ -1,4 +1,3 @@
-// data內可帶入brandId(品牌)、ifGoods( 0:無 ; 1:有 )
 //取得品牌清單、做權限篩選
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
@@ -46,6 +45,7 @@ $(document).ready(function () {
 
 // depot-列表取得
 function fetchAccountList() {
+	showSpinner();
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -69,6 +69,7 @@ function fetchAccountList() {
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData);
+				hideSpinner();
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -262,6 +263,7 @@ $(document).ready(function () {
 	$("#searchBtn").on("click", function () {
 		// 创建筛选数据对象
 		var filterData = {};
+		var searchData = {};
 
 		if (selectedBrandId) {
 			filterData.brandId = selectedBrandId;
@@ -272,37 +274,60 @@ $(document).ready(function () {
 		}
 
 		if (selectedsearchValue) {
-			filterData.searchValue = selectedsearchValue;
+			searchData.componentName = selectedsearchValue;
 		}
 
 		if (selectedBrandId || selectInventoryId || selectedsearchValue) {
-			sendApiRequest(filterData);
+			sendApiRequest(filterData, searchData);
+		} else if (selectedBrandId || selectInventoryId) {
+			sendApiRequest(filterData, {});
 		} else if (!selectedBrandId || !selectInventoryId) {
 			fetchAccountList();
 		}
 	});
 
-	// 创建一个函数，发送API请求以获取数据
-	function sendApiRequest(filterData) {
+	function sendApiRequest(filterData, searchData) {
 		// 获取用户数据
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
+		console.log(user_session_id);
 		// 设置API请求数据
 		var action = "getDepotList";
 		var chsmtoGetManualList = user_session_id + action + "HBAdminDepotApi";
 		var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
 
+		$("#searchParts").DataTable();
+
 		var filterDataJSON = JSON.stringify(filterData);
 		var postData = filterDataJSON;
 
-		$("#searchParts").DataTable();
-		// 发送API请求以获取数据
+		var searchDataJSON = JSON.stringify(searchData);
+		var postSearchData = searchDataJSON;
+
+		var requestData = {
+			session_id: user_session_id,
+			action: action,
+			chsm: chsm,
+		};
+
+		if (postData !== "{}" && postSearchData !== "{}") {
+			requestData.data = postData;
+			requestData.likeData = postSearchData;
+		} else {
+			if (postData !== "{}") {
+				requestData.data = postData;
+			}
+			if (postSearchData !== "{}") {
+				requestData.likeData = postSearchData;
+			}
+		}
+
 		$.ajax({
 			type: "POST",
 			url: `${apiURL}/depot`,
-			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+			data: requestData,
 			success: function (responseData) {
 				if (responseData.returnCode === "1") {
 					updatePageWithData(responseData);
