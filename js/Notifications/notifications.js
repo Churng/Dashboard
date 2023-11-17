@@ -120,3 +120,7 @@ function showSuccessorderCancelNotification() {
 function showSuccessorderunSubscribeNotification() {
 	toastr.success("已完成退貨，請至退貨列表查看！", "成功");
 }
+
+function shownoDataNotification() {
+	toastr.info("", "無可顯示資料");
+}

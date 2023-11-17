@@ -212,6 +212,7 @@
     <script>
         document.getElementById("backButton").addEventListener("click", function () {
             // 使用 history.back() 方法回到上一頁
+            localStorage.removeItem("partRId");
             history.back();
         });
     </script>

@@ -367,9 +367,11 @@ function getdepotUpdatePost() {
 		success: function (response) {
 			if (response.returnCode === "1") {
 				showSuccessFileNotification();
-				localStorage.removeItem("depotId");
-				var newPageUrl = "depotList.html";
-				window.location.href = newPageUrl;
+				setTimeout(function () {
+					localStorage.removeItem("depotId");
+					var newPageUrl = "depotList.html";
+					window.location.href = newPageUrl;
+				}, 1000);
 			} else {
 				handleApiResponse(response);
 			}

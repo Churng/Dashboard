@@ -205,11 +205,10 @@ $(document).on("click", ".delete-button", function () {
 			contentType: false,
 			success: function (response) {
 				if (response.returnCode === "1") {
+					showSuccessFileDeleteNotification();
 					setTimeout(function () {
-						showSuccessFileDeleteNotification();
+						refreshDataList();
 					}, 1000);
-
-					refreshDataList();
 				} else {
 					handleApiResponse(response);
 				}
@@ -233,5 +232,3 @@ $(document).on("click", ".file-download", function (e) {
 		showErrorFileNotification();
 	}
 });
-
-// handlePagePermissions(currentUser, currentUrl);

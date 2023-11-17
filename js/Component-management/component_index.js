@@ -135,7 +135,8 @@ function updatePageWithData(responseData) {
 		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
 
 		// 查看倉庫還未設置
-		var goInventory = '<a href="#" class="btn btn-primary">點擊</a>';
+		var goInventory =
+			'<button type="button" class="btn btn-primary depot-button" data-id="' + data.id + '">點擊</button>';
 
 		var row = [
 			goInventory,
@@ -182,6 +183,14 @@ function setColumnVisibility(data, dataTable) {
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("partId", id);
+});
+
+// 點擊倉庫
+$(document).ready(function () {
+	$(document).on("click", ".depot-button", function () {
+		var id = $(this).data("id");
+		window.location.href = "depotList.html?componentId=" + id;
+	});
 });
 
 //更新數據

@@ -271,9 +271,9 @@ function sendFormDataToAPI(event) {
 			success: function (response) {
 				if (response.returnCode === "1") {
 					showSuccessFileNotification();
-					localStorage.removeItem("purchaseId");
 
 					setTimeout(function () {
+						localStorage.removeItem("purchaseId");
 						var newPageUrl = "purchaseList.html";
 						window.location.href = newPageUrl;
 					}, 3000);

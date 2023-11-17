@@ -263,7 +263,7 @@ $(document).ready(function () {
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				console.log(responseData);
-				if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+				if (responseData.returnCode === "1") {
 					updatePageWithData(responseData);
 					hideSpinner();
 				} else {
