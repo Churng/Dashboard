@@ -124,3 +124,16 @@ function showSuccessorderunSubscribeNotification() {
 function shownoDataNotification() {
 	toastr.info("", "無可顯示資料");
 }
+
+// 出貨單
+function showSuccessshipCancelNotification() {
+	toastr.success("已取消出庫！", "成功");
+}
+
+function showSuccessshipRequisitionNotification() {
+	toastr.success("已領取零件！", "成功");
+}
+
+function showSuccessshipApproveNotification() {
+	toastr.success("已同意出庫！", "成功");
+}

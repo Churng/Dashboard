@@ -171,7 +171,7 @@ $(document).ready(function () {
 
 // 下载檔案
 $(document).on("click", ".file-download", function (e) {
-	e.preventDefault(); // 阻止默认链接行为
+	e.preventDefault();
 	var fileName = $(this).data("file");
 	var apiName = "manual";
 	if (fileName) {
@@ -180,5 +180,3 @@ $(document).on("click", ".file-download", function (e) {
 		showErrorFileNotification();
 	}
 });
-
-// 權限設定

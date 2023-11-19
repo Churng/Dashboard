@@ -14,7 +14,7 @@ $(document).ready(function () {
 				// Buttons column
 				render: function (data, type, row) {
 					var modifyButtonHtml =
-						'<a href="brand_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+						'<a href="brandDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 						row.id +
 						'">修改</a>';
 
@@ -24,7 +24,7 @@ $(document).ready(function () {
 						'">刪除</button>';
 
 					var readButtonHtml =
-						'<a href="brand_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
+						'<a href="brandDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
 						row.id +
 						'">查看詳請</a>';
 

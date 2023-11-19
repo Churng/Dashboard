@@ -275,6 +275,8 @@ $(document).ready(function () {
 
 		if (selectedsearchValue) {
 			searchData.componentName = selectedsearchValue;
+			searchData.componentNumber = selectedsearchValue;
+			searchData.suitableCarModel = selectedsearchValue;
 		}
 
 		if (selectedBrandId || selectInventoryId || selectedsearchValue) {
@@ -343,64 +345,64 @@ $(document).ready(function () {
 });
 
 // 監聽填寫欄位變動
-$(document).ready(function () {
-	var selectedsearchValue;
+// $(document).ready(function () {
+// 	var selectedsearchValue;
 
-	// 監聽欄位填寫
-	$("#SearchInput").on("input", function () {
-		// 获取输入框的值
-		selectedsearchValue = $(this).val().trim();
-	});
+// 	// 監聽欄位填寫
+// 	$("#SearchInput").on("input", function () {
+// 		// 获取输入框的值
+// 		selectedsearchValue = $(this).val().trim();
+// 	});
 
-	// 点击搜索按钮时触发API请求
-	$("#searchInputBtn").on("click", function () {
-		// 创建筛选数据对象
-		var filterData = {};
+// 	// 点击搜索按钮时触发API请求
+// 	$("#searchInputBtn").on("click", function () {
+// 		// 创建筛选数据对象
+// 		var filterData = {};
 
-		if (selectedsearchValue) {
-			filterData.componentNumber = selectedsearchValue;
-			filterData.componentName = selectedsearchValue;
-			filterData.suitableCarModel = selectedsearchValue;
-		}
+// 		if (selectedsearchValue) {
+// 			filterData.componentNumber = selectedsearchValue;
+// 			filterData.componentName = selectedsearchValue;
+// 			filterData.suitableCarModel = selectedsearchValue;
+// 		}
 
-		// 发送API请求以获取数据
-		sendApiRequest(filterData);
-	});
+// 		// 发送API请求以获取数据
+// 		sendApiRequest(filterData);
+// 	});
 
-	// 创建一个函数，发送API请求以获取数据
-	function sendApiRequest(filterData) {
-		// 获取用户数据
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
+// 	// 创建一个函数，发送API请求以获取数据
+// 	function sendApiRequest(filterData) {
+// 		// 获取用户数据
+// 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+// 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+// 		const user_session_id = gertuserData.sessionId;
 
-		// 设置API请求数据
-		var action = "getDepotList";
-		var chsmtoGetManualList = user_session_id + action + "HBAdminDepotApi";
-		var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+// 		// 设置API请求数据
+// 		var action = "getDepotList";
+// 		var chsmtoGetManualList = user_session_id + action + "HBAdminDepotApi";
+// 		var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
 
-		var filterDataJSON = JSON.stringify(filterData);
-		var postData = filterDataJSON;
+// 		var filterDataJSON = JSON.stringify(filterData);
+// 		var postData = filterDataJSON;
 
-		$("#searchParts").DataTable();
-		// 发送API请求以获取数据
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/depot`,
-			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
-			success: function (responseData) {
-				if (responseData.returnCode === "1") {
-					updatePageWithData(responseData);
-				} else {
-					handleApiResponse(responseData);
-				}
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	}
-});
+// 		$("#searchParts").DataTable();
+// 		// 发送API请求以获取数据
+// 		$.ajax({
+// 			type: "POST",
+// 			url: `${apiURL}/depot`,
+// 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
+// 			success: function (responseData) {
+// 				if (responseData.returnCode === "1") {
+// 					updatePageWithData(responseData);
+// 				} else {
+// 					handleApiResponse(responseData);
+// 				}
+// 			},
+// 			error: function (error) {
+// 				showErrorNotification();
+// 			},
+// 		});
+// 	}
+// });
 
 // 加载时调用在页面 fetchAccountList
 $(document).ready(function () {

@@ -54,7 +54,7 @@ $.getScript("config.js", function () {
 				var data = responseData.returnData[i];
 
 				var modifyButtonHtml =
-					'<a href="brand_update.html?id=' + data.id + '" class="btn btn-primary text-white">修改</a>';
+					'<a href="brandDetail_update.html?id=' + data.id + '" class="btn btn-primary text-white">修改</a>';
 				var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
 				var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 

@@ -1,32 +1,42 @@
 var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 var currentUrl = window.location.href;
+
 function handlePageUpdatePermissions(currentUser, currentUrl) {
+	let currentPageAuth = null;
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
 
-			if (currentUrl.includes("manualDetail") && Array.isArray(page.auth)) {
-				if (!page.auth.includes("read")) {
+			if (
+				(currentUrl.includes("manualDetail") && page.name === "零件手冊資料") ||
+				(currentUrl.includes("storeDetail") && page.name === "門市資料") ||
+				(currentUrl.includes("brandDetail") && page.name === "零件品牌資料")
+			) {
+				currentPageAuth = page.auth;
+				if (!currentPageAuth.includes("update")) {
 					document.body.style.display = "none";
 					window.history.back();
 				}
 
-				if (page.auth.includes("read")) {
+				if (currentPageAuth.includes("read")) {
 					const updateButton = document.getElementById("updateButton");
 					updateButton.disabled = false;
 				}
 
-				if (page.auth.includes("update")) {
+				if (currentPageAuth.includes("update")) {
 					const updateButton = document.getElementById("updateButton");
 					updateButton.disabled = false;
 				}
 
-				if (page.auth.includes("download")) {
+				if (currentPageAuth.includes("download")) {
 					showButton(document.getElementById("downloadBtn"));
 				}
+
+				break;
 			}
 		}
 	}
+	console.log("Auth values for current page:", currentPageAuth);
 }
 
 function hideButton(element) {

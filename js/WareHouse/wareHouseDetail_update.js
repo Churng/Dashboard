@@ -1,6 +1,5 @@
 // 取得詳細資料
 let orderStatus;
-// var componetsValue;
 var postComponentId;
 $(document).ready(function () {
 	var stockValue = localStorage.getItem("wareHouseId");
@@ -34,7 +33,7 @@ $(document).ready(function () {
 			console.log(responseData, "Orin");
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const wareHouseData = responseData.returnData[0];
-				$("#WarehouseId").val(wareHouseData.stockInNo);
+				$("#WarehouseId").val(wareHouseData.id);
 				$("#createTime").val(wareHouseData.createTime);
 				$("#createOperator").val(wareHouseData.createOperator);
 				$("#storeName").val(wareHouseData.storeName);
@@ -66,7 +65,6 @@ $(document).ready(function () {
 
 //取得零件資料
 function handleComponentId(id) {
-	console.log(id);
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -207,6 +205,7 @@ function displayFileNameInInput(fileName) {
 
 //下載檔案
 $(document).on("click", ".file-download", function () {
+	event.preventDefault();
 	var fileName = $(this).data("file");
 	var apiName = "component";
 	if (fileName) {

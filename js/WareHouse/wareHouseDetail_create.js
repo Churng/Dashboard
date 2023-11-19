@@ -92,6 +92,7 @@ function displayFileNameInInput(fileName) {
 
 //下載檔案
 $(document).on("click", ".file-download", function () {
+	event.preventDefault();
 	var fileName = $(this).data("file");
 	var apiName = "component";
 	if (fileName) {

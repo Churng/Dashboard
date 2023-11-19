@@ -738,7 +738,7 @@ $(document).ready(function () {
 			insert: '<input type="checkbox" name="rowCheckbox" data-id="2" data-column="insert" />',
 			update: '<input type="checkbox" name="rowCheckbox" data-id="2" data-column="update" />',
 			delete: '<input type="checkbox" name="rowCheckbox" data-id="2" data-column="delete" />',
-			download: '<input type="checkbox" name="rowCheckbox" data-id="2" data-column="download" disabled />',
+			download: '<input type="checkbox" name="rowCheckbox" data-id="2" data-column="download"/>',
 		},
 		{
 			empty: "零件手冊資料",

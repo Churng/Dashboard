@@ -27,17 +27,19 @@ function downloadPdfFile(apiName, fileName) {
 			downloadFile(response, fileName);
 		},
 		error: function (error) {
-			showErrorFileNotification(); // 使用正确的错误通知函数
+			showErrorFileNotification();
 		},
 	});
 }
 
 // 在新标签页中打开文件
 function downloadFile(blob, fileName) {
+	const allowedExtensions = ["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt"];
+
 	const fileExtension = getFileExtension(fileName).toLowerCase();
 
-	// 只支持 PDF 文件扩展名
-	if (fileExtension === "pdf") {
+	// 檢查檔案擴展名是否在允許的列表中
+	if (allowedExtensions.includes(fileExtension)) {
 		const url = URL.createObjectURL(blob);
 
 		const link = document.createElement("a");

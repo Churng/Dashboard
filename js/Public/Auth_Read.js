@@ -1,19 +1,25 @@
 var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 var currentUrl = window.location.href;
 function handlePageReadPermissions(currentUser, currentUrl) {
+	let currentPageAuth = null;
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
 
 			console.log("currentUrl:", currentUrl);
 			console.log("page.auth:", page.auth);
-			if (currentUrl.includes("manualDetail") && Array.isArray(page.auth)) {
-				if (!page.auth.includes("read")) {
+			if (
+				(currentUrl.includes("manualDetail") && page.name === "零件手冊資料") ||
+				(currentUrl.includes("storeDetail") && page.name === "門市資料") ||
+				(currentUrl.includes("brandDetail") && page.name === "零件品牌資料")
+			) {
+				currentPageAuth = page.auth;
+				if (!currentPageAuth.includes("read")) {
 					document.body.style.display = "none";
 					window.history.back();
 				}
 
-				if (page.auth.includes("read")) {
+				if (currentPageAuth.includes("read")) {
 					hideButton(document.getElementById("saveButton"));
 					hideButton(document.getElementById("updateButton"));
 					// hideButton(document.getElementById("downloadBtn"));
@@ -22,6 +28,8 @@ function handlePageReadPermissions(currentUser, currentUrl) {
 						elementsWithClass[i].disabled = true;
 					}
 				}
+
+				break;
 			}
 		}
 	}

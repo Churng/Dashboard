@@ -154,10 +154,6 @@ $(document).ready(function () {
 				$("#precautions").val(componentData.precautions);
 				$("#lowestInventory").val(componentData.lowestInventory);
 
-				// $("#BuildTime").val(componentData.createTime);
-				// $("#EditTime").val(componentData.updateTime);
-				// $("#EditAccount").val(componentData.getupdateOperator);
-
 				displayFileNameInInput(componentData.file);
 				const myButton = document.getElementById("downloadBtn");
 				myButton.setAttribute("data-file", componentData.file);
@@ -194,6 +190,7 @@ function displayFileNameInInput(fileName) {
 
 //下載檔案
 $(document).on("click", ".file-download", function () {
+	event.preventDefault();
 	var fileName = $(this).data("file");
 	var apiName = "component";
 	if (fileName) {

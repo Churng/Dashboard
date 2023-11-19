@@ -23,6 +23,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="css/spin.css">
 
 
     <!-- DataTable Stylesheet -->
@@ -105,106 +106,57 @@
                             </ol>
                         </nav>
 
-                        <div class="row my-5">
+                        <div class="row g-3 mb-4">
                             <div class="col-sm-3">
-                                <label for="file-EditTime" class="form-label">單據時間</label>
-                                <input type="text" class="form-control" id="file-EditTime" placeholder="" value=""
-                                    required="">
+                                <p>開始日期</p>
+                                <input type="date" class="form-control" id="startDate">
                             </div>
-
                             <div class="col-sm-3">
-                                <label for="shop-Type" class="form-label">單據狀態</label>
-                                <select class="form-select" id="shop-Type" required="">
-                                    <option value="">全部</option>
-                                    <option>申請出庫中</option>
-                                    <option>等待領取</option>
-                                    <option>已出庫</option>
-                                    <option>取消出庫</option>
-                                </select>
+                                <p>結束日期</p>
+                                <input type="date" class="form-control" id="endDate">
                             </div>
                         </div>
 
-                        <!-- <div class="input-fit mb-5">
-                            <div class="mb-3">
-                                <label for="Search-item" class="form-label">搜尋</label>
-                                <input type="text" class="form-control" id="Search-item" placeholder="關鍵字模糊查詢">
+
+                        <div class="row mb-4">
+                            <div class="col-sm-3">
+                                <label for="status" class="form-label">單據狀態</label>
+                                <select class="form-select" id="status" required="">
+                                    <option value="">全部</option>
+                                    <option value="1">申請出庫中</option>
+                                    <option value="2">等待領取</option>
+                                    <option value="3">已出庫</option>
+                                    <option value="4">取消出庫</option>
+                                </select>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-primary">確認</button>
-                        </div> -->
+
+                            <div class="col-sm-3 pt-4" style="margin-top: 8px;">
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                            </div>
+                        </div>
+
                         <!-- 表格 -->
                         <div class="tableList mt-5">
                             <div class="table-responsive parts-order-table">
                                 <table id="stockOut" class="table table-striped parts-order-list ">
                                     <thead>
                                         <tr>
-                                            <th>詳細</th>
-                                            <th class="text-center">單據序號</th>
-                                            <th>單據時間</th>
-                                            <th>填寫人員</th>
-                                            <th>訂單序號</th>
-                                            <th>填寫門市</th>
-                                            <th>品牌</th>
-                                            <th>訂單註記</th>
-                                            <th>出庫時總訂價</th>
-                                            <th>出庫時批發價</th>
-                                            <th>出庫時最低批發價</th>
-                                            <th>出庫時成本</th>
-                                            <th>零件總數量</th>
-                                            <th>單據狀態</th>
+                                            <th scope="col">選取項目</th>
+                                            <th scope="col">單據序號</th>
+                                            <th scope="col">單據時間</th>
+                                            <th scope="col">填寫人員</th>
+                                            <th scope="col">訂單序號</th>
+                                            <th scope="col">填寫門市</th>
+                                            <th scope="col">品牌</th>
+                                            <th scope="col">訂單註記</th>
+                                            <th scope="col">出庫時總訂價</th>
+                                            <th scope="col">出庫時批發價</th>
+                                            <th scope="col">出庫時最低批發價</th>
+                                            <th scope="col">出庫時成本</th>
+                                            <th scope="col">零件總數量</th>
+                                            <th scope="col">單據狀態</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">[詳細]</th>
-                                            <td>1</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>洪老闆</td>
-                                            <td>鴻寶桃園 八德門市</td>
-                                            <td>採購中</td>
-                                            <td>2</td>
-                                            <td>771</td>
-                                            <td>5GJ-11456-02</td>
-                                            <td>鏈條</td>
-                                            <td>YAMAHA</td>
-                                            <td>TMAX2002</td>
-                                            <td>11000</td>
-                                            <td>9000</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -237,29 +189,24 @@
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
     <script src="js/Notifications/toastr-options.js"></script>
+    <script src="js/spin.js"></script>
 
 
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
-        $(document).ready(function () {
-            new DataTable('#stockOut', {
-                scrollX: true
-            });
-        });
 
-    </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/permissionControl.js"></script>
     <script src="js/Public/menu.js"></script>
+    <script src="js/Order/ship/shiplist.js"></script>
 
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <!-- <script src="js/Public/globleAuth.js"></script> -->
+    <script src="js/Public/Auth_List.js"></script>
 </body>
 
 </html>

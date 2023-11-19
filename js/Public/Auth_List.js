@@ -1,6 +1,7 @@
 // 權限設定
 var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 var currentUrl = window.location.href;
+
 function handlePagePermissions(currentUser, currentUrl) {
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {

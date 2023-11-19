@@ -549,7 +549,6 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 	});
 
 	var formattedData = JSON.stringify(selectedIds);
-	console.log(formattedData);
 
 	$(document).off("click", ".confirm-execute");
 
@@ -574,13 +573,10 @@ $(document).on("click", "#orderExecuteShip", function (e) {
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		console.log(user_session_id);
 		// chsm = session_id+action+'HBAdminShipApi'
 		var action = "insertShipDetail";
 		var chsmtoDeleteFile = user_session_id + action + "HBAdminShipApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
-
-		console.log(chsm);
 
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
