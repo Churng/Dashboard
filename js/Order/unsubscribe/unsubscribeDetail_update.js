@@ -32,6 +32,9 @@ $(document).ready(function () {
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const unsubscribeData = responseData.returnData[0];
+				const unsubAmount = responseData;
+
+				$("#amount").val(unsubAmount.returnDataTotalAmount);
 				// 單據
 				$("#unsubId").val(unsubscribeData.id);
 				$("#createTime").val(unsubscribeData.createTime);
@@ -72,9 +75,9 @@ $(document).ready(function () {
 					showWarningNotification();
 				}
 
-				// displayFileNameInInput(unsubscribeData.file);
-				// const myButton = document.getElementById("downloadBtn");
-				// myButton.setAttribute("data-file", unsubscribeData.file);
+				displayFileNameInInput(unsubscribeData.file);
+				const myButton = document.getElementById("downloadBtn");
+				myButton.setAttribute("data-file", unsubscribeData.file);
 
 				const startButton = document.getElementById("startBtn");
 				if (
@@ -142,7 +145,7 @@ function displayFileNameInInput(fileName) {
 $(document).on("click", ".file-download", function (e) {
 	e.preventDefault(); // 阻止默认链接行为
 	var fileName = $(this).data("file");
-	var apiName = "unsubscribe";
+	var apiName = "component";
 	if (fileName) {
 		downloadPdfFile(apiName, fileName);
 	} else {
@@ -203,7 +206,7 @@ $(document).ready(function () {
 				if (response.returnCode === "1") {
 					showSuccessFileNotification();
 					setTimeout(function () {
-						var newPageUrl = "unsubscribeList.html			";
+						var newPageUrl = "unsubscribeList.html";
 						window.location.href = newPageUrl;
 					}, 1000);
 				} else {

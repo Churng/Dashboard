@@ -52,7 +52,7 @@ $(document).ready(function () {
 		],
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
-			hideDownloadColumn();
+			// hideDownloadColumn();
 		},
 	});
 	// 发送API请求以获取数据
@@ -129,7 +129,7 @@ function refreshDataList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}

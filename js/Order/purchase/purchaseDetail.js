@@ -44,7 +44,7 @@ $(document).ready(function () {
 });
 
 // 取得詳細資料：purchase
-$(document).ready(function () {
+function fetchAccountList() {
 	var getpurchase = localStorage.getItem("purchaseId");
 	const dataId = { id: getpurchase };
 	const IdPost = JSON.stringify(dataId);
@@ -91,6 +91,24 @@ $(document).ready(function () {
 				$("#EditTime").val(purchaseData.updateTime);
 				$("#EditAccount").val(purchaseData.updateOperator);
 
+				//同意採購
+				var ApproveInput = $("#allPost");
+				if (Boolean(purchaseData.if_purchase_execute_approve) === true) {
+					ApproveInput.prop("disabled", false);
+				} else {
+					ApproveInput.val("");
+					ApproveInput.prop("disabled", true);
+				}
+
+				//取消採購
+				var CancelInput = $("#onlyNotePost");
+				if (Boolean(purchaseData.if_purchase_execute_cancel) === true) {
+					CancelInput.prop("disabled", false);
+				} else {
+					CancelInput.val("");
+					CancelInput.prop("disabled", true);
+				}
+
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
@@ -101,7 +119,7 @@ $(document).ready(function () {
 			showErrorNotification();
 		},
 	});
-});
+}
 
 // 取得詳細資料：component
 $(document).ready(function () {
@@ -135,6 +153,7 @@ $(document).ready(function () {
 		success: function (responseData) {
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const componentData = responseData.returnData[0];
+
 				$("#componentName").val(componentData.componentName);
 				$("#componentNumber").val(componentData.componentNumber);
 				$("#P-brandId").val(componentData.brandId);
@@ -388,4 +407,93 @@ function sendAgreeDataToAPI(event) {
 	} else {
 		showWarningNotification();
 	}
+}
+
+//跳轉頁面
+$(document).ready(function () {
+	var urlParams = new URLSearchParams(window.location.search);
+	var purchaseId = urlParams.get("purchaseId");
+
+	if (purchaseId) {
+		getOrderfetchAccountList(purchaseId);
+	} else {
+		fetchAccountList();
+	}
+});
+
+//getOrderfetchAccountList
+function getOrderfetchAccountList(purchaseId) {
+	const dataId = { id: purchaseId };
+	const IdPost = JSON.stringify(dataId);
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminPurchaseApi'
+	// 组装所需数据
+	var action = "getPurchaseDetail";
+	var chsmtoGetPurchaseDetail = user_session_id + action + "HBAdminPurchaseApi";
+	var chsm = CryptoJS.MD5(chsmtoGetPurchaseDetail).toString().toLowerCase();
+
+	// 发送POST请求;
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/purchase`,
+		data: {
+			action: action,
+			session_id: user_session_id,
+			chsm: chsm,
+			data: IdPost,
+		},
+		success: function (responseData) {
+			console.log(responseData);
+			handleApiResponse(responseData);
+			// console.log(responseData);
+			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+				const purchaseData = responseData.returnData[0];
+				$("#purchaseId").val(purchaseData.id);
+				$("#purchaseCreateTime").val(purchaseData.createTime);
+				$("#purchaseCreateOperator").val(purchaseData.createOperator);
+				$("#purchasestoreName").val(purchaseData.storeName);
+				$("#purchasestatusName").val(purchaseData.statusName);
+				$("#purchaseRemark").val(purchaseData.remark);
+
+				$("#orderNumber").val(purchaseData.orderNo);
+				$("#orderStoreName").val(purchaseData.orderStoreName);
+				$("#orderNote").val(purchaseData.orderNote);
+
+				$("#BuildTime").val(purchaseData.createTime);
+				$("#EditTime").val(purchaseData.updateTime);
+				$("#EditAccount").val(purchaseData.updateOperator);
+
+				//同意採購
+				var ApproveInput = $("#allPost");
+				if (Boolean(purchaseData.if_purchase_execute_approve) === true) {
+					ApproveInput.prop("disabled", false);
+				} else {
+					ApproveInput.val("");
+					ApproveInput.prop("disabled", true);
+				}
+
+				//取消採購
+				var CancelInput = $("#onlyNotePost");
+				if (Boolean(purchaseData.if_purchase_execute_cancel) === true) {
+					CancelInput.prop("disabled", false);
+				} else {
+					CancelInput.val("");
+					CancelInput.prop("disabled", true);
+				}
+
+				// 填充完毕后隐藏加载中的spinner
+				$("#spinner").hide();
+			} else {
+				showErrorNotification();
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
 }

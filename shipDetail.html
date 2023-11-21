@@ -103,7 +103,7 @@
                         <h3>出庫單</h3>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">入庫單列表 / 入庫單</li>
+                                <li class="breadcrumb-item active" aria-current="page">出庫單列表 / 出庫單</li>
                             </ol>
                         </nav>
 
@@ -140,7 +140,7 @@
 
                             <div class="col-sm-6 mb-3">
                                 <label for="remark" class="form-label">單據備註</label>
-                                <textarea class="form-control" id="remark" rows="3" disabled></textarea>
+                                <textarea class="form-control" id="remark" rows="3"></textarea>
                             </div>
                         </div>
 
@@ -197,27 +197,27 @@
                                     <button class="btn btn-primary mb-3" type="button"
                                         id="shipRequisition">申請出庫</button>
 
-                                    <label for="requisition" class="form-label">申請人員</label>
-                                    <input type="text" class="form-control" id="requisition" disabled>
+                                    <label for="requisition-member" class="form-label">申請人員</label>
+                                    <input type="text" class="form-control" id="requisition-member" disabled>
                                 </div>
 
                                 <div class="col-sm-3  d-flex flex-column">
                                     <button class="btn btn-primary mb-3" type="button" id="shipApprove">同意出庫</button>
 
-                                    <label for="approve" class="form-label">同意人員</label>
-                                    <input type="text" class="form-control" id="approve" disabled>
+                                    <label for="approve-member" class="form-label">同意人員</label>
+                                    <input type="text" class="form-control" id="approve-member" disabled>
                                 </div>
 
                                 <div class="col-sm-3 d-flex flex-column">
                                     <button class="btn btn-primary mb-3" type="button" id="shipReceive">領取零件</button>
-                                    <label for="receive" class="form-label">領取人員</label>
-                                    <input type="text" class="form-control" id="receive" disabled>
+                                    <label for="receive-member" class="form-label">領取人員</label>
+                                    <input type="text" class="form-control" id="receive-member" disabled>
                                 </div>
 
                                 <div class="col-sm-3 d-flex flex-column">
                                     <button class="btn btn-primary mb-3" type="button" id="shipCancel">取消出庫</button>
-                                    <label for="ship_cancel" class="form-label">取消人員</label>
-                                    <input type="text" class="form-control" id="ship_cancel" disabled>
+                                    <label for="ship_cancel-member" class="form-label">取消人員</label>
+                                    <input type="text" class="form-control" id="ship_cancel-member" disabled>
                                 </div>
 
                             </div>
@@ -267,7 +267,6 @@
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/Auth_List.js"></script>
 
 </body>
 

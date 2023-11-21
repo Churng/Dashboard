@@ -13,20 +13,11 @@ $(document).ready(function () {
 			{
 				// Buttons column
 				render: function (data, type, row) {
-					var modifyButtonHtml =
-						'<a href="brandDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-						row.id +
-						'">修改</a>';
+					var modifyButtonHtml = `<a href="brandDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
 
-					var deleteButtonHtml =
-						'<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="' +
-						row.id +
-						'">刪除</button>';
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
 
-					var readButtonHtml =
-						'<a href="brandDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-						row.id +
-						'">查看詳請</a>';
+					var readButtonHtml = `<a href="brandDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
 
 					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
@@ -79,8 +70,8 @@ $(document).on("click", ".read-button", function () {
 
 //更新數據
 function refreshDataList() {
-	var dataTable = $("#brand-management").DataTable();
-	dataTable.clear().draw();
+	// var dataTable = $("#brand-management").DataTable();
+	// dataTable.clear().draw();
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -103,7 +94,7 @@ function refreshDataList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}

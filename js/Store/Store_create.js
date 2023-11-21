@@ -16,8 +16,6 @@ $(document).ready(function () {
 			var getcontactPerson = $("#shop-ContactPerson").val();
 			var getphoneNumber = $("#shop-phoneNumber").val();
 			var getfax = $("#shop-FaxNumber").val();
-
-			var getfax = $("#shop-TaxNumber").val();
 			var gettaxId = $("#shop-TaxNumber").val();
 			var getstatus = $("#shop-status").val();
 			var getaddress = $("#shop-address").val();

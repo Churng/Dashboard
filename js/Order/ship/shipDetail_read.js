@@ -89,42 +89,6 @@ function updateData(responseData) {
 
 	// 填充完毕后隐藏加载中的spinner
 	$("#spinner").hide();
-
-	//申請出庫
-	var requisitionInput = $("#shipRequisition");
-	if (Boolean(shipData.if_ship_ship_requisition) === true) {
-		requisitionInput.prop("disabled", false);
-	} else {
-		requisitionInput.val("");
-		requisitionInput.prop("disabled", true);
-	}
-
-	//同意出庫
-	var approveInput = $("#shipApprove");
-	if (Boolean(shipData.if_ship_ship_approve) === true) {
-		approveInput.prop("disabled", false);
-	} else {
-		approveInput.val("");
-		approveInput.prop("disabled", true);
-	}
-
-	//領取零件
-	var receiveInput = $("#shipReceive");
-	if (Boolean(shipData.if_ship_ship_receive) === true) {
-		receiveInput.prop("disabled", false);
-	} else {
-		receiveInput.val("");
-		receiveInput.prop("disabled", true);
-	}
-
-	//取消出庫
-	var cancelInput = $("#shipCancel");
-	if (Boolean(shipData.if_ship_ship_cancel) === true) {
-		cancelInput.prop("disabled", false);
-	} else {
-		cancelInput.val("");
-		cancelInput.prop("disabled", true);
-	}
 }
 
 //底下表格內資料：零件
@@ -210,6 +174,9 @@ $(document).on("click", "#shipApprove", function (e) {
 
 	var partId = localStorage.getItem("shipNo");
 	var getshipNo = JSON.parse(partId);
+	const dataId = { shipNo: getshipNo };
+	const IdPost = JSON.stringify(dataId);
+	var jsonData = IdPost;
 
 	// 解绑之前的点击事件处理程序
 	$(document).off("click", ".confirm-order");
@@ -231,11 +198,6 @@ $(document).on("click", "#shipApprove", function (e) {
 
 	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-order", function () {
-		var updateData = {};
-		var getremark = $("#remark").val();
-		updateData.shipNo = getshipNo;
-		updateData.remark = getremark;
-
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
@@ -248,7 +210,7 @@ $(document).on("click", "#shipApprove", function (e) {
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
-		formData.set("data", JSON.stringify(updateData));
+		formData.set("data", jsonData);
 
 		$.ajax({
 			type: "POST",
@@ -280,6 +242,9 @@ $(document).on("click", "#shipReceive", function (e) {
 
 	var partId = localStorage.getItem("shipNo");
 	var getshipNo = JSON.parse(partId);
+	const dataId = { shipNo: getshipNo };
+	const IdPost = JSON.stringify(dataId);
+	var jsonData = IdPost;
 
 	// 解绑之前的点击事件处理程序
 	$(document).off("click", ".confirm-order");
@@ -301,11 +266,6 @@ $(document).on("click", "#shipReceive", function (e) {
 
 	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-order", function () {
-		var updateData = {};
-		var getremark = $("#remark").val();
-		updateData.shipNo = getshipNo;
-		updateData.remark = getremark;
-
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
@@ -318,7 +278,7 @@ $(document).on("click", "#shipReceive", function (e) {
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
-		formData.set("data", JSON.stringify(updateData));
+		formData.set("data", jsonData);
 
 		$.ajax({
 			type: "POST",
@@ -350,6 +310,9 @@ $(document).on("click", "#shipCancel", function (e) {
 
 	var partId = localStorage.getItem("shipNo");
 	var getshipNo = JSON.parse(partId);
+	const dataId = { shipNo: getshipNo };
+	const IdPost = JSON.stringify(dataId);
+	var jsonData = IdPost;
 
 	// 解绑之前的点击事件处理程序
 	$(document).off("click", ".confirm-order");
@@ -371,11 +334,6 @@ $(document).on("click", "#shipCancel", function (e) {
 
 	// 绑定新的点击事件处理程序
 	$(document).on("click", ".confirm-order", function () {
-		var updateData = {};
-		var getremark = $("#remark").val();
-		updateData.shipNo = getshipNo;
-		updateData.remark = getremark;
-
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
@@ -388,7 +346,7 @@ $(document).on("click", "#shipCancel", function (e) {
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
-		formData.set("data", JSON.stringify(updateData));
+		formData.set("data", jsonData);
 
 		$.ajax({
 			type: "POST",

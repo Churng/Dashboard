@@ -107,16 +107,6 @@
                         <div class="block-first">
                             <h4 class="mt-5">單據資料</h4>
 
-                            <div class="py-4 my-2 input-fit">
-                                <div class="mb-3">
-                                    <div class="custom-file">
-                                        <input type="file" class="form-control" name="component[]" id="fileInput"
-                                            accept="image/*" multiple>
-                                    </div>
-                                </div>
-                                <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
-                            </div>
-
                             <div class="row g-3 mb-5">
                                 <div class="col-sm-3">
                                     <label for="componentId" class="form-label">零件序號</label>
@@ -180,9 +170,17 @@
                             <form id="uploadForm" class="needs-validation" novalidate>
                                 <div class="block-second mt-5">
                                     <h4>零件定義</h4>
-                                    <button class="btn btn-primary btn-md my-3" type="buttob"><a
-                                            href="componentList.html"
-                                            class="remove-link-decoration text-white">搜尋零件料號</a></button>
+
+                                    <div class="py-4 my-2 input-fit">
+                                        <div class="mb-3">
+                                            <div class="custom-file">
+                                                <input type="file" class="form-control" name="component[]"
+                                                    id="fileInput" accept="image/*" multiple>
+                                            </div>
+                                        </div>
+                                        <button id="downloadBtn" download
+                                            class="btn btn-primary file-download">下載</button>
+                                    </div>
 
                                     <div class="row g-3 mb-5">
                                         <div class="col-sm-3">

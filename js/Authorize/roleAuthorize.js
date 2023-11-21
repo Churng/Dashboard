@@ -221,11 +221,11 @@ $(document).ready(function () {
 			insert: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="insert" />',
 			update: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="update" />',
 			delete: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="delete" />',
-			price: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="price" />',
-			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="wholesalePrice" />',
+			price: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="price" disabled/>',
+			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="wholesalePrice" disabled/>',
 			lowestWholesalePrice:
-				'<input type="checkbox" name="rowCheckbox" data-id="8" data-column="lowestWholesalePrice" />',
-			cost: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="cost" />',
+				'<input type="checkbox" name="rowCheckbox" data-id="8" data-column="lowestWholesalePrice" disabled/>',
+			cost: '<input type="checkbox" name="rowCheckbox" data-id="8" data-column="cost" disabled/>',
 		},
 		{
 			empty: "零件品牌資料",
@@ -234,11 +234,11 @@ $(document).ready(function () {
 			insert: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="insert" />',
 			update: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="update" />',
 			delete: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="delete" />',
-			price: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="price" />',
-			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="wholesalePrice" />',
+			price: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="price" disabled/>',
+			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="wholesalePrice" disabled/>',
 			lowestWholesalePrice:
-				'<input type="checkbox" name="rowCheckbox" data-id="9" data-column="lowestWholesalePrice" />',
-			cost: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="cost" />',
+				'<input type="checkbox" name="rowCheckbox" data-id="9" data-column="lowestWholesalePrice" disabled/>',
+			cost: '<input type="checkbox" name="rowCheckbox" data-id="9" data-column="cost" disabled/>',
 		},
 		{
 			empty: "零件定義列表",
