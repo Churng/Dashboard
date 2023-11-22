@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>零件資料</title>
+    <title>零件資料-新增資料</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -71,7 +71,7 @@
                 <div class="navbar-nav align-items-center ms-auto">
 
                     <div class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="notificationList.html" class="nav-link">
                             <i class="fa fa-bell me-lg-2"></i>
                         </a>
                     </div>
@@ -96,16 +96,16 @@
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row  bg-light rounded p-3 mx-0">
-                    <div class="">
+                    <div>
                         <h3>零件資料</h3>
                         <nav aria-label="breadcrumb">
+
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="componentList.html">零件列表</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">修改零件資料</li>
+                                <li class="breadcrumb-item active" aria-current="page">新增零件資料</li>
                             </ol>
                         </nav>
 
-                        <!-- 資料填寫 -->
                         <div class="py-4 my-2 input-fit">
                             <div class="mb-3">
                                 <div class="custom-file">
@@ -113,8 +113,9 @@
                                         accept="image/*" multiple>
                                 </div>
                             </div>
-                            <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
                         </div>
+
+
 
                         <div class="block-first">
                             <h4>預設資料設定</h4>
@@ -123,7 +124,7 @@
                                     <div class="col-sm-3">
                                         <label for="C-componentNumber" class="form-label">*零件料號</label>
                                         <input type="text" class="form-control" id="C-componentNumber"
-                                            name="componentNumber" required="">
+                                            name="componentNumber" required>
                                     </div>
 
                                     <div class="col-sm-3">
@@ -134,54 +135,54 @@
                                     <div class="col-sm-3">
                                         <label for="C-componentName" class="form-label">*零件名稱</label>
                                         <input type="text" class="form-control" id="C-componentName"
-                                            name="componentName" required="">
+                                            name="componentName" required>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="C-depotPosition" class="form-label">倉庫位置</label>
                                         <input type="text" class="form-control" id="C-depotPosition"
-                                            name="depotPosition" required="">
+                                            name="depotPosition" required>
                                     </div>
 
                                     <div class="col-sm-3" id="C-PriceDiv">
                                         <label for="C-Price" class="form-label">*零件訂價</label>
-                                        <input type="text" class="form-control" id="C-Price" name="price" required="">
+                                        <input type="text" class="form-control" id="C-Price" name="price" required>
                                     </div>
 
                                     <div class="col-sm-3" id="C-CostDiv">
                                         <label for="C-Cost" class="form-label">零件成本</label>
-                                        <input type="text" class="form-control" id="C-Cost" name="cost" required="">
+                                        <input type="text" class="form-control" id="C-Cost" name="cost" required>
                                     </div>
 
                                     <div class="col-sm-3" id="C-WholesalePriceDiv">
                                         <label for="C-WholesalePrice" class="form-label">*零件批發價</label>
                                         <input type="text" class="form-control" id="C-WholesalePrice"
-                                            name="wholesalePrice" required="">
+                                            name="wholesalePrice" required>
                                     </div>
 
                                     <div class="col-sm-3" id="C-lowestWholesalePriceDiv">
                                         <label for="C-lowestWholesalePrice" class="form-label">*零件最低批發價</label>
                                         <input type="text" class="form-control" id="C-lowestWholesalePrice"
-                                            name="lowestWholesalePrice" required="">
+                                            name="lowestWholesalePrice" required>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="C-supplier" class="form-label">*零件供應商</label>
                                         <input type="text" class="form-control" id="C-supplier" name="componentSupplier"
-                                            required="">
+                                            required>
                                     </div>
 
 
                                     <div class="col-sm-3">
                                         <label for="C-workingHour" class="form-label">*工時（小時）</label>
                                         <input type="text" class="form-control" id="C-workingHour" name="workingHour"
-                                            required="">
+                                            required>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="C-suitableModel" class="form-label">*適用車型</label>
                                         <input type="text" class="form-control" id="C-suitableModel"
-                                            name="suitableCarModel" required="">
+                                            name="suitableCarModel" required>
                                     </div>
 
                                     <hr class="my-4">
@@ -206,10 +207,9 @@
                                     <div class="col-sm-4">
                                         <label for="C-lowestInventory" class="form-label">最低庫存量</label>
                                         <input type="text" class="form-control" id="C-lowestInventory"
-                                            name="lowestInventory" required="">
+                                            name="lowestInventory" required>
                                     </div>
                                 </div>
-
 
                                 <hr class="my-4">
 
@@ -233,33 +233,28 @@
                                             name="updateOperator">
                                     </div>
 
-                                    <div class="text-center w-100 pt-3">
-                                        <button id="updateButton" class="w-25 btn btn-primary btn-md"
-                                            type="submit">修改儲存</button>
+                                    <div class="d-flex justify-content-evenly pt-5">
+                                        <button id="saveButton" type="submit" class="w-25 btn btn-primary btn-md"
+                                            type="submit">送出</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
+
                     </div>
-
-
                 </div>
-
-
             </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <!-- Footer End -->
         </div>
-    </div>
-    <!-- Blank End -->
+        <!-- Content End -->
 
 
-    <!-- Footer Start -->
-    <!-- Footer End -->
-    </div>
-    <!-- Content End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!--  Boostrap JavaScript Libraries -->
@@ -273,18 +268,22 @@
     <script src="js/Notifications/notifications.js"></script>
     <script src="js/Notifications/toastr-options.js"></script>
 
+    <!-- Datatable Libraries -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap5.js"></script>
+
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Public/downloadFile.js"></script>
-    <script src="js/Component-management/component_update.js"></script>
+    <script src="js/Public/create_showInfo.js"></script>
+    <script src="js/Component-management/component_create.js"></script>
     <script src="js/Public/menu.js"></script>
+
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
     <script src="js/Public/depot_Auth.js"></script>
     <!-- <script src="js/Public/globleAuth.js"></script> -->
-
 
 </body>
 

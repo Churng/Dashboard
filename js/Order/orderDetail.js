@@ -2,7 +2,7 @@
 let orderStatus;
 let orderId;
 let orderNo;
-$(document).ready(function () {
+function fetchAccountList() {
 	var partId = localStorage.getItem("orderNo");
 	var orderData = JSON.parse(partId);
 	const dataId = { orderNo: orderData };
@@ -37,9 +37,6 @@ $(document).ready(function () {
 				orderId = getOrderData.id;
 				orderNo = getOrderData.orderNo;
 
-				// console.log(responseData);
-				// console.log(JSON.stringify(responseData));
-
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {
@@ -50,7 +47,7 @@ $(document).ready(function () {
 			showErrorNotification();
 		},
 	});
-});
+}
 
 //表單內資料：單據詳細資料
 function updateData(responseData) {
@@ -669,3 +666,61 @@ $(document).on("click", "#saveBtn", function (e) {
 		},
 	});
 });
+
+//跳轉頁面
+$(document).ready(function () {
+	var urlParams = new URLSearchParams(window.location.search);
+	var orderNo = urlParams.get("orderNo");
+
+	if (orderNo) {
+		getOrderfetchAccountList(orderNo);
+	} else {
+		fetchAccountList();
+	}
+});
+
+//getOrderfetchAccountList
+function getOrderfetchAccountList(orderNo) {
+	const dataId = { orderNo: orderNo };
+	const IdPost = JSON.stringify(dataId);
+
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminOrderApi'
+	// 组装所需数据
+	var action = "getOrderDetail";
+	var chsmtoGetOrderDetail = user_session_id + action + "HBAdminOrderApi";
+	var chsm = CryptoJS.MD5(chsmtoGetOrderDetail).toString().toLowerCase();
+
+	// 发送POST请求
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/order`,
+		data: {
+			action: action,
+			session_id: user_session_id,
+			chsm: chsm,
+			data: IdPost,
+		},
+		success: function (responseData) {
+			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+				var getOrderData = responseData.orderData;
+				orderStatus = getOrderData.status;
+				orderId = getOrderData.id;
+				orderNo = getOrderData.orderNo;
+
+				updateData(responseData);
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}

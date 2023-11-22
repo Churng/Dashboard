@@ -10,7 +10,8 @@ function handlePageUpdatePermissions(currentUser, currentUrl) {
 			if (
 				(currentUrl.includes("manualDetail") && page.name === "零件手冊資料") ||
 				(currentUrl.includes("storeDetail") && page.name === "門市資料") ||
-				(currentUrl.includes("brandDetail") && page.name === "零件品牌資料")
+				(currentUrl.includes("brandDetail") && page.name === "零件品牌資料") ||
+				(currentUrl.includes("componentDetail") && page.name === "零件定義資料")
 			) {
 				currentPageAuth = page.auth;
 				if (!currentPageAuth.includes("update")) {

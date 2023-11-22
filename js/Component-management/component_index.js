@@ -18,36 +18,33 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			if (responseData.returnCode === "1") {
-				const brandList = document.getElementById("selectBrand");
+			handleApiResponse(responseData);
+			const brandList = document.getElementById("selectBrand");
 
-				const defaultOption = document.createElement("option");
-				defaultOption.text = "請選擇品牌";
-				defaultOption.value = "";
-				brandList.appendChild(defaultOption);
+			const defaultOption = document.createElement("option");
+			defaultOption.text = "請選擇品牌";
+			defaultOption.value = "";
+			brandList.appendChild(defaultOption);
 
-				for (let i = 0; i < responseData.returnData.length; i++) {
-					const brand = responseData.returnData[i];
-					const brandName = brand.brandName;
-					const brandId = brand.id;
+			for (let i = 0; i < responseData.returnData.length; i++) {
+				const brand = responseData.returnData[i];
+				const brandName = brand.brandName;
+				const brandId = brand.id;
 
-					const option = document.createElement("option");
-					option.text = brandName;
-					option.value = brandId;
+				const option = document.createElement("option");
+				option.text = brandName;
+				option.value = brandId;
 
-					brandList.appendChild(option);
-				}
+				brandList.appendChild(option);
+			}
 
-				if (responseData.returnData.length > 0) {
-					brandList.selectedIndex = 1;
-					// 获取选中的品牌ID
-					selectedBrandId = brandList.value;
+			if (responseData.returnData.length > 0) {
+				brandList.selectedIndex = 1;
+				// 获取选中的品牌ID
+				selectedBrandId = brandList.value;
 
-					// 触发API请求
-					sendApiRequest({ brandId: selectedBrandId });
-				}
-			} else {
-				handleApiResponse(responseData);
+				// 触发API请求
+				sendApiRequest({ brandId: selectedBrandId });
 			}
 		},
 		error: function (error) {
@@ -56,116 +53,167 @@ $(document).ready(function () {
 	});
 });
 
-var table;
 // 列表取得：ALL
-// function fetchAccountList() {
-// 	showSpinner();
-// 	// 从localStorage中获取session_id和chsm
-// 	// 解析JSON字符串为JavaScript对象
-// 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-// 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-// 	const user_session_id = gertuserData.sessionId;
+function fetchAccountList() {
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
 
-// 	// console.log(user_session_id);
-// 	// chsm = session_id+action+'HBAdminComponentApi'
-// 	// 組裝菜單所需資料
-// 	var action = "getComponentList";
-// 	var chsmtoGetComponentList = user_session_id + action + "HBAdminComponentApi";
-// 	var chsm = CryptoJS.MD5(chsmtoGetComponentList).toString().toLowerCase();
+	// chsm = session_id+action+'HBAdminComponentApi'
+	// 組裝菜單所需資料
+	var action = "getComponentList";
+	var chsmtoGetComponentList = user_session_id + action + "HBAdminComponentApi";
+	var chsm = CryptoJS.MD5(chsmtoGetComponentList).toString().toLowerCase();
 
-// 	// 发送API请求以获取数据
-// 	$.ajax({
-// 		type: "POST",
-// 		url: `${apiURL}/component`,
-// 		data: { session_id: user_session_id, action: action, chsm: chsm },
-// 		success: function (responseData) {
-// 			if (responseData.returnCode === "1") {
-// 				hideSpinner();
-// 				updatePageWithData(responseData, table);
-// 			} else {
-// 				handleApiResponse(responseData);
-// 			}
-// 		},
-// 		error: function (error) {
-// 			showErrorNotification();
-// 		},
-// 	});
-// }
-
-// 欄位填充
-// function pushDataIfExists(data, field, showColumn, row) {
-// 	var value = data.hasOwnProperty(field) ? data[field] : null;
-// 	if (showColumn) {
-// 		row.push(value !== null ? value : "");
-// 	} else {
-// 		row.push("");
-// 	}
-// }
-
-// function updatePageWithData(responseData) {
-// 	// 清空表格数据
-// 	var dataTable = $("#partsManagement").DataTable();
-// 	dataTable.clear().draw();
-
-// 	// 显示所有列
-// 	dataTable.columns().visible(true);
-
-// 	// 填充API数据到表格，包括下载链接
-// 	for (var i = 0; i < responseData.returnData.length; i++) {
-// 		var data = responseData.returnData[i];
-
-// 		// 按鈕設定//
-
-// 		var modifyButtonHtml =
-// 			'<a href="5-partsmanagement_update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-// 			data.id +
-// 			'">修改</a>';
-// 		var deleteButtonHtml =
-// 			'<button class="btn btn-danger delete-button"data-button-type="delete" data-id="' + data.id + '">刪除</button>';
-
-// 		var readButtonHtml =
-// 			'<a href="5-partsmanagement_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-// 			data.id +
-// 			'">查看</a>';
-
-// 		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
-
-// 		// 查看倉庫還未設置
-// 		var goInventory =
-// 			'<button type="button" class="btn btn-primary depot-button" data-id="' + data.id + '">點擊</button>';
-
-// 		var row = [
-// 			goInventory,
-// 			buttonsHtml,
-// 			data.componentNumber,
-// 			data.componentName,
-// 			data.brandName,
-// 			data.suitableCarModel,
-// 		];
-
-// 		pushDataIfExists(data, "price", true, row);
-// 		pushDataIfExists(data, "cost", true, row);
-// 		pushDataIfExists(data, "wholesalePrice", true, row);
-// 		pushDataIfExists(data, "lowestWholesalePrice", true, row);
-// 		pushDataIfExists(data, "totalCost", true, row);
-
-// 		row.push(data.workingHour, data.purchaseAmount, data.depotAmount, data.lowestInventory, data.createTime);
-// 		setColumnVisibility(data, dataTable);
-// 		dataTable.row.add(row).draw(false);
-// 	}
-// }
-
-// 欄位可見
-function setColumnVisibility(data, dataTable) {
-	var columnsToCheck = ["price", "cost", "wholesalePrice", "lowestWholesalePrice", "totalCost"];
-
-	columnsToCheck.forEach(function (columnName) {
-		var columnIndex = getColumnIndex(dataTable, columnName);
-		if (columnIndex !== -1) {
-			dataTable.column(columnIndex).visible(isVisible);
-		}
+	$("#partsManagement").DataTable();
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/component`,
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
 	});
 }
+
+// 表格填充
+var table;
+function updatePageWithData(responseData) {
+	// 清空表格数据
+	var dataTable = $("#partsManagement").DataTable();
+	dataTable.clear().destroy();
+	// dataTable.clear().draw();
+	dataTable.columns().visible(true);
+
+	var data = responseData.returnData;
+
+	table = $("#partsManagement").DataTable({
+		initComplete: function () {
+			var columnsToCheck = ["price", "cost", "wholesalePrice", "lowestWholesalePrice", "totalCost"];
+			var table = $("#partsManagement").DataTable();
+
+			columnsToCheck.forEach(function (columnName) {
+				var columnIndex = table.column(columnName + ":name").index();
+				var isVisible = responseData.returnData.some(function (row) {
+					return row.hasOwnProperty(columnName) && row[columnName] !== undefined;
+				});
+
+				table.column(columnIndex).visible(isVisible);
+			});
+		},
+		columns: [
+			{
+				render: function (data, type, row) {
+					var goInventory = `<button type="button" class="btn btn-primary depot-button" data-id="${row.id}">點擊</button>`;
+
+					return goInventory;
+				},
+			},
+			{
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="componentDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
+
+					var readButtonHtml = `<a href="componentDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{
+				data: "price",
+				name: "price",
+				visible: false, // 默认显示
+				render: function (data, type, row) {
+					if (!row.hasOwnProperty("price")) {
+						// 如果数据中不存在 'price' 参数，则隐藏该列并返回默认值
+						table.column($(this).index()).visible(false);
+						return "N/A"; // 使用默认值
+					}
+					// 如果 'price' 参数存在，则返回该值
+					return row.price;
+				},
+			},
+			{
+				data: "cost",
+				name: "cost",
+				render: function (data, type, row) {
+					return row.cost !== undefined ? row.cost : "N/A";
+				},
+			},
+			{
+				data: "wholesalePrice",
+				name: "wholesalePrice",
+				render: function (data, type, row) {
+					return row.wholesalePrice !== undefined ? row.wholesalePrice : "N/A";
+				},
+			},
+			{
+				data: "lowestWholesalePrice",
+				name: "lowestWholesalePrice",
+				render: function (data, type, row) {
+					return row.lowestWholesalePrice !== undefined ? row.lowestWholesalePrice : "N/A";
+				},
+			},
+			{ data: "workingHour" },
+			{ data: "purchaseAmount" },
+			{ data: "depotAmount" },
+			{
+				data: "totalCost",
+				name: "totalCost",
+				render: function (data, type, row) {
+					return row.totalCost !== undefined ? row.totalCost : "N/A";
+				},
+			},
+			{ data: "lowestInventory" },
+			{ data: "createTime" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+			// setColumnVisibility(data, dataTable);
+		},
+		columnDefs: [
+			{
+				targets: [7, 8, 9, 10, 11, 14],
+				createdCell: function (td, cellData, rowData, row, col) {
+					if (cellData === undefined || cellData === "") {
+						$(td).css("display", "none");
+						table.column(col).header().style.display = "none";
+					}
+				},
+			},
+		],
+	});
+
+	table.rows.add(data).draw();
+}
+
+// 欄位填充
+// function pushDataIfExists(data, field) {
+// 	// 检查 row 对象是否存在并且具有指定字段
+// 	if (data && typeof data === "object" && data.hasOwnProperty(field)) {
+// 		var value = data[field];
+// 		return value !== null ? value : "N/A";
+// 	} else {
+// 		return ""; // 当 row 对象不存在或指定字段不存在时返回空字符串
+// 	}
+// }
 
 // 监听修改按钮的点击事件
 $(document).on("click", ".modify-button", function () {
@@ -173,12 +221,45 @@ $(document).on("click", ".modify-button", function () {
 	localStorage.setItem("partId", id);
 });
 
-// 點擊倉庫
-
-$(document).on("click", ".depot-button", function () {
+$(document).on("click", ".read-button", function () {
 	var id = $(this).data("id");
-	window.location.href = "depotList.html?componentId=" + id;
+	localStorage.setItem("partRId", id);
 });
+
+//更新數據
+function refreshDataList() {
+	var dataTable = $("#partsManagement").DataTable();
+	dataTable.clear().draw();
+
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+	// chsm = session_id+action+'HBAdminManualApi'
+	// 組裝菜單所需資料
+	var action = "getComponentList";
+	var chsmtoGetComponentList = user_session_id + action + "HBAdminComponentApi";
+	var chsm = CryptoJS.MD5(chsmtoGetComponentList).toString().toLowerCase();
+
+	$("#partsManagement").DataTable();
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/component`,
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData, table);
+			} else {
+				handleApiResponse(responseData);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}
 
 //刪除按鈕
 $(document).on("click", ".delete-button", function (e) {
@@ -234,7 +315,7 @@ $(document).on("click", ".delete-button", function (e) {
 			success: function (response) {
 				removeNotification(confirmDeleteToast);
 				if (response.returnCode === "1") {
-					fetchAccountList();
+					refreshDataList();
 				} else {
 					handleApiResponse(response);
 				}
@@ -249,6 +330,10 @@ $(document).on("click", ".delete-button", function (e) {
 		});
 	});
 });
+
+function showDeletingNotification() {
+	return toastr.info("删除中...", { timeOut: 0 });
+}
 
 // 删除完成
 function showSuccessFileDeleteNotification() {
@@ -316,153 +401,7 @@ function sendApiRequest(filterData) {
 	var filterDataJSON = JSON.stringify(filterData);
 	var postData = filterDataJSON;
 
-	table = $("#partsManagement").DataTable({
-		columns: [
-			{
-				render: function (data, type, row) {
-					var goInventory = `<button type="button" class="btn btn-primary depot-button" data-id="${row.id}">點擊</button>`;
-
-					return goInventory;
-				},
-			},
-			{
-				render: function (data, type, row) {
-					var modifyButtonHtml = `<a href="5-partsmanagement_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
-
-					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
-
-					var readButtonHtml = `<a href="5-partsmanagement_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
-
-					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
-
-					return buttonsHtml;
-				},
-			},
-			{ data: "componentNumber" },
-			{ data: "componentName" },
-			{ data: "brandName" },
-			{ data: "suitableCarModel" },
-			{
-				data: "price",
-				render: function (data, type, row) {
-					if (type === "display") {
-						var field = "price"; // 实际数据对象中的字段名称
-						var showColumn = true;
-						if (showColumn && row[field] !== null) {
-							return row[field]; // 返回实际的数据字段值
-						} else {
-							return "";
-						}
-					}
-					return data;
-				},
-				visible: function () {
-					return !table.some(function (row) {
-						return row.price !== null;
-					});
-				},
-			},
-			{
-				data: "cost",
-				render: function (data, type, row) {
-					if (type === "display") {
-						var field = "cost"; // 实际数据对象中的字段名称
-						var showColumn = true;
-						if (showColumn && row[field] !== null) {
-							return row[field]; // 返回实际的数据字段值
-						} else {
-							return "";
-						}
-					}
-					return data;
-				},
-				visible: function () {
-					return !table.some(function (row) {
-						return row.cost !== null;
-					});
-				},
-			},
-			{
-				data: "wholesalePrice",
-				render: function (data, type, row) {
-					if (type === "display") {
-						var field = "wholesalePrice";
-						var showColumn = true;
-						if (showColumn && row[field] !== null) {
-							return row[field];
-						} else {
-							return "";
-						}
-					}
-					return data;
-				},
-				visible: function () {
-					return !table.some(function (row) {
-						return row.wholesalePrice !== null;
-					});
-				},
-			},
-			{
-				data: "lowestWholesalePrice",
-				render: function (data, type, row) {
-					if (type === "display") {
-						var field = "lowestWholesalePrice";
-						var showColumn = true;
-						if (showColumn && row[field] !== null) {
-							return row[field];
-						} else {
-							return "";
-						}
-					}
-					return data;
-				},
-				visible: function () {
-					return !table.some(function (row) {
-						return row.lowestWholesalePrice !== null;
-					});
-				},
-			},
-			{
-				data: "totalCost",
-				render: function (data, type, row) {
-					if (type === "display") {
-						var field = "totalCost"; // 实际数据对象中的字段名称
-						var showColumn = true;
-						if (showColumn && row[field] !== null) {
-							return row[field]; // 返回实际的数据字段值
-						} else {
-							return "";
-						}
-					}
-					return data;
-				},
-				visible: function () {
-					return !table.some(function (row) {
-						return row.totalCost !== null;
-					});
-				},
-			},
-			{ data: "workingHour" },
-			{ data: "purchaseAmount" },
-			{ data: "depotAmount" },
-			{ data: "lowestInventory" },
-			{ data: "createTime" },
-		],
-		columnDefs: [
-			{
-				targets: [1, 6, 7, 8, 9, 10], // 6至10列的索引
-				visible: function (columnIdx, col) {
-					return !table.some(function (row) {
-						return row[columnIdx] !== null;
-					});
-				},
-			},
-		],
-		drawCallback: function () {
-			// handlePagePermissions(currentUser, currentUrl);
-			// setColumnVisibility(data, table);
-		},
-	});
+	$("#partsManagement").DataTable();
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
@@ -480,9 +419,4 @@ function sendApiRequest(filterData) {
 			showErrorNotification();
 		},
 	});
-}
-
-// 表格填充
-function updatePageWithData(responseData, table) {
-	table.clear().rows.add(responseData.returnData).draw();
 }

@@ -137,3 +137,8 @@ function showSuccessshipRequisitionNotification() {
 function showSuccessshipApproveNotification() {
 	toastr.success("已同意出庫！", "成功");
 }
+
+//通知
+function showConfirmNotification() {
+	toastr.success("已標記處理狀態！", "成功");
+}
