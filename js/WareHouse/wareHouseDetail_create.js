@@ -274,7 +274,6 @@ $(document).ready(function () {
 
 function sendSecondCreate() {
 	var formData = new FormData();
-	// var partId = localStorage.getItem("componentValue");
 
 	var amount = $("#amount").val();
 
@@ -308,12 +307,72 @@ function sendSecondCreate() {
 		processData: false,
 		contentType: false,
 		success: function (response) {
-			console.log(response);
-			localStorage.removeItem("partId");
-			window.location.replace("wareHouseList.html");
+			if (response.returnCode === "1") {
+				getStockIdModal(response.stockInId);
+				console.log(response);
+			}
 		},
 		error: function (error) {
 			showErrorFileNotification();
 		},
 	});
+}
+
+function getStockIdModal(stockInId) {
+	var IdPost = JSON.stringify({ id: stockInId });
+
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminStockInApi'
+	// 组装所需数据
+	var action = "getStockInDetail";
+	var chsmtoGetManualDetail = user_session_id + action + "HBAdminStockInApi";
+	var chsm = CryptoJS.MD5(chsmtoGetManualDetail).toString().toLowerCase();
+
+	// 发送POST请求
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/stockIn`,
+		data: {
+			action: action,
+			session_id: user_session_id,
+			chsm: chsm,
+			data: IdPost,
+		},
+		success: function (responseData) {
+			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+				updatePageWithData(responseData);
+
+				setTimeout(() => {
+					$("#wareHouseModal").modal("show");
+				}, 1000);
+
+				$("#spinner").hide();
+			} else {
+				handleApiResponse(responseData);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}
+
+// 表格填充
+function updatePageWithData(responseData) {
+	// 清空表格数据
+	var dataTable = $("#stockInPage").DataTable();
+	dataTable.clear().draw();
+
+	for (var i = 0; i < responseData.orderMatchData.length; i++) {
+		var data = responseData.orderMatchData[i];
+
+		dataTable.row
+			.add([data.id, data.componentId, data.componentName, data.orderNo, data.storeName, data.orderNote])
+			.draw(false);
+	}
 }

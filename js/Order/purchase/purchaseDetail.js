@@ -72,8 +72,6 @@ function fetchAccountList() {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			handleApiResponse(responseData);
-			// console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const purchaseData = responseData.returnData[0];
 				$("#purchaseId").val(purchaseData.id);
@@ -109,10 +107,12 @@ function fetchAccountList() {
 					CancelInput.prop("disabled", true);
 				}
 
+				//取得purchase之後打component
+				getComponentApi(purchaseData.componentId);
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {
@@ -122,9 +122,8 @@ function fetchAccountList() {
 }
 
 // 取得詳細資料：component
-$(document).ready(function () {
-	var getcompoent = localStorage.getItem("componentId");
-	const dataId = { id: getcompoent };
+function getComponentApi(id) {
+	const dataId = { id: id };
 
 	const IdPost = JSON.stringify(dataId);
 
@@ -187,7 +186,7 @@ $(document).ready(function () {
 			showErrorNotification();
 		},
 	});
-});
+}
 
 // 顯示已上傳檔案
 function displayFileNameInInput(fileName) {
@@ -449,8 +448,6 @@ function getOrderfetchAccountList(purchaseId) {
 		},
 		success: function (responseData) {
 			console.log(responseData);
-			handleApiResponse(responseData);
-			// console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const purchaseData = responseData.returnData[0];
 				$("#purchaseId").val(purchaseData.id);
@@ -486,10 +483,12 @@ function getOrderfetchAccountList(purchaseId) {
 					CancelInput.prop("disabled", true);
 				}
 
+				//取得component
+				getComponentApi(purchaseData.componentId);
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
-				showErrorNotification();
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {

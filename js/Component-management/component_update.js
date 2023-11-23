@@ -55,11 +55,15 @@ $(document).ready(function () {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
+	console.log(user_session_id);
+
 	// chsm = session_id+action+'HBAdminComponentApi'
 	// 组装所需数据
 	var action = "getComponentDetail";
 	var chsmtoGetComponentDetail = user_session_id + action + "HBAdminComponentApi";
 	var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
+
+	console.log(chsm);
 
 	// 发送POST请求
 	$.ajax({
@@ -171,13 +175,14 @@ $(document).ready(function () {
 			var getupdateTime = $("#EditTime").val();
 			var getupdateOperator = $("#EditAccount").val();
 
+			var fileInput = $("#fileInput")[0];
+
 			var updateData = {};
 			if (fileInput.files.length > 0) {
 				for (var i = 0; i < fileInput.files.length; i++) {
-					formData.append("component[]", fileInput.files[i]);
+					var file = fileInput.files[i];
+					formData.append("component[]", file, file.name);
 				}
-				updateData.fileName = fileInput.files[0].name;
-				updateData.file = fileInput.files[0].name;
 			} else {
 				updateData.fileName = "";
 				updateData.file = "";
@@ -190,6 +195,8 @@ $(document).ready(function () {
 			// purchaseAmount: getpurchaseAmount,
 			// depotAmount: getdepotAmount,
 			updateData.depotPosition = getdepotPosition;
+			updateData.fileName = file.name;
+			updateData.file = file.name;
 
 			if (typeof getprice !== "undefined") {
 				updateData.price = getprice;

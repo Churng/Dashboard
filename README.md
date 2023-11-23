@@ -73,3 +73,5 @@ v7盤點管理
 
 <https://alertifyjs.com/>
 提示套件
+
+dataTable.order([]).draw(false); //取消所有排列

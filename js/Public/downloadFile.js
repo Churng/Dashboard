@@ -24,6 +24,7 @@ function downloadFile(apiName, fileName) {
 		success: function (response) {
 			if (isImageFile(fileName)) {
 				openImageInNewTab(response, fileName);
+				downloadFileLocally(response, fileName);
 			} else {
 				downloadFileLocally(response, fileName);
 			}
@@ -46,14 +47,12 @@ function openImageInNewTab(blob, fileName) {
 	const url = URL.createObjectURL(blob);
 	const newTab = window.open();
 	const imageElement = document.createElement("img");
+	imageElement.style.maxWidth = "100%";
+	imageElement.style.maxHeight = "100%";
 	imageElement.src = url;
+	imageElement.style.display = "block";
+	newTab.document.body.style.margin = "0";
 	newTab.document.body.appendChild(imageElement);
-
-	const a = newTab.document.createElement("a");
-	a.href = url;
-	a.download = fileName;
-	a.innerText = "Download";
-	newTab.document.body.appendChild(a);
 }
 
 // 下载文件到本地
@@ -62,9 +61,8 @@ function downloadFileLocally(blob, fileName) {
 	const a = document.createElement("a");
 	a.href = url;
 	a.download = fileName;
-	document.body.appendChild(a);
 	a.click();
-	window.URL.revokeObjectURL(url);
+	URL.revokeObjectURL(url);
 }
 
 function getFileExtension(fileName) {

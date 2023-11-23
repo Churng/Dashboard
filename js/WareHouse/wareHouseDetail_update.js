@@ -162,13 +162,6 @@ function updatePageWithData(responseData) {
 
 	for (var i = 0; i < responseData.orderMatchData.length; i++) {
 		var data = responseData.orderMatchData[i];
-		// 權限設定 //
-
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
-
-		// 按鈕設定//
 
 		dataTable.row
 			.add([data.id, data.componentId, data.componentName, data.orderNo, data.storeName, data.orderNote])

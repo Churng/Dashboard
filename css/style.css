@@ -369,6 +369,16 @@ td:first-child {
 	min-width: 70px;
 }
 
+#partsManagement th:first-child,
+td:first-child {
+	min-width: 70px;
+}
+
+#partsManagement th:nth-child(2),
+td:nth-child(2) {
+	min-width: 250px;
+}
+
 #orderDetail th:nth-child(2),
 #orderDetail td:nth-child(2) {
 	min-width: 320px;

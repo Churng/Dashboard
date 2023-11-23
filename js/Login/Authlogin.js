@@ -46,3 +46,36 @@ $(function () {
 		window.location.href = "0-signin.html";
 	});
 });
+
+// 通知數字
+$(document).ready(function () {
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// console.log(user_session_id);
+	// chsm = session_id+action+'HBAdminNotificationApi'
+	// 組裝菜單所需資料
+	var action = "getNotificationList";
+	var chsmtoGetNotificationList = user_session_id + action + "HBAdminNotificationApi";
+	var chsm = CryptoJS.MD5(chsmtoGetNotificationList).toString().toLowerCase();
+
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/notification`,
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			// console.log("成功响应：", responseData);
+			var unreadMsgNumElement = document.getElementById("unreadMsgNum");
+			if (unreadMsgNumElement) {
+				unreadMsgNumElement.textContent = responseData.unReadAmount;
+			}
+		},
+		error: function (error) {
+			console.error("错误:", error);
+		},
+	});
+});

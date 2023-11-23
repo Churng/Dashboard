@@ -39,7 +39,7 @@ function downloadFile(blob, fileName) {
 	const fileExtension = getFileExtension(fileName).toLowerCase();
 
 	// 檢查檔案擴展名是否在允許的列表中
-	if (allowedExtensions.includes(fileExtension)) {
+	if (allowedExtensions.includes(fileExtension) && !isImageFile(fileExtension)) {
 		const url = URL.createObjectURL(blob);
 
 		const link = document.createElement("a");
@@ -59,4 +59,11 @@ function downloadFile(blob, fileName) {
 // 获取文件扩展名
 function getFileExtension(fileName) {
 	return fileName.split(".").pop();
+}
+
+// 添加非圖片檔案
+function isImageFile(fileExtension) {
+	const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
+
+	return imageExtensions.includes(fileExtension);
 }

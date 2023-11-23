@@ -61,17 +61,12 @@ $(document).ready(function () {
 			var fileInput = $("#fileInput")[0];
 
 			if (fileInput.files.length > 0) {
-				var fileNames = "";
-
 				for (var i = 0; i < fileInput.files.length; i++) {
 					var file = fileInput.files[i];
-					fileNames = file.name;
 					formData.append("component[]", file, file.name);
 				}
 
 				//取值
-				var getfileName = fileNames;
-
 				var getComponentName = $("#C-componentName").val();
 				var getComponentNumber = $("#C-componentNumber").val();
 				var getbrandId = $("#C-brandId").val();
@@ -113,8 +108,8 @@ $(document).ready(function () {
 					createTime: getcreateTime,
 					updateTime: getupdateTime,
 					updateOperator: getupdateOperator,
-					fileName: getfileName,
-					file: getfileName,
+					fileName: file.name,
+					file: file.name,
 				};
 
 				// 从localStorage中获取session_id和chsm

@@ -86,113 +86,30 @@ function fetchAccountList() {
 	});
 }
 
-// 表格填充
 var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
-	var dataTable = $("#partsManagement").DataTable();
-	dataTable.clear().destroy();
-	// dataTable.clear().draw();
-	dataTable.columns().visible(true);
+	// var dataTable = $("#partsManagement").DataTable();
+	// dataTable.clear().destroy();
+	// dataTable.columns().visible(true);
 
 	var data = responseData.returnData;
+	var columnsToShow = determineVisibleColumns(responseData);
 
 	table = $("#partsManagement").DataTable({
-		initComplete: function () {
-			var columnsToCheck = ["price", "cost", "wholesalePrice", "lowestWholesalePrice", "totalCost"];
-			var table = $("#partsManagement").DataTable();
-
-			columnsToCheck.forEach(function (columnName) {
-				var columnIndex = table.column(columnName + ":name").index();
-				var isVisible = responseData.returnData.some(function (row) {
-					return row.hasOwnProperty(columnName) && row[columnName] !== undefined;
-				});
-
-				table.column(columnIndex).visible(isVisible);
-			});
-		},
-		columns: [
-			{
-				render: function (data, type, row) {
-					var goInventory = `<button type="button" class="btn btn-primary depot-button" data-id="${row.id}">點擊</button>`;
-
-					return goInventory;
-				},
-			},
-			{
-				render: function (data, type, row) {
-					var modifyButtonHtml = `<a href="componentDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
-
-					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
-
-					var readButtonHtml = `<a href="componentDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
-
-					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
-
-					return buttonsHtml;
-				},
-			},
-			{ data: "componentNumber" },
-			{ data: "componentName" },
-			{ data: "brandName" },
-			{ data: "suitableCarModel" },
-			{
-				data: "price",
-				name: "price",
-				visible: false, // 默认显示
-				render: function (data, type, row) {
-					if (!row.hasOwnProperty("price")) {
-						// 如果数据中不存在 'price' 参数，则隐藏该列并返回默认值
-						table.column($(this).index()).visible(false);
-						return "N/A"; // 使用默认值
-					}
-					// 如果 'price' 参数存在，则返回该值
-					return row.price;
-				},
-			},
-			{
-				data: "cost",
-				name: "cost",
-				render: function (data, type, row) {
-					return row.cost !== undefined ? row.cost : "N/A";
-				},
-			},
-			{
-				data: "wholesalePrice",
-				name: "wholesalePrice",
-				render: function (data, type, row) {
-					return row.wholesalePrice !== undefined ? row.wholesalePrice : "N/A";
-				},
-			},
-			{
-				data: "lowestWholesalePrice",
-				name: "lowestWholesalePrice",
-				render: function (data, type, row) {
-					return row.lowestWholesalePrice !== undefined ? row.lowestWholesalePrice : "N/A";
-				},
-			},
-			{ data: "workingHour" },
-			{ data: "purchaseAmount" },
-			{ data: "depotAmount" },
-			{
-				data: "totalCost",
-				name: "totalCost",
-				render: function (data, type, row) {
-					return row.totalCost !== undefined ? row.totalCost : "N/A";
-				},
-			},
-			{ data: "lowestInventory" },
-			{ data: "createTime" },
-		],
+		columns: columnsToShow.map(function (column) {
+			return { data: column.data };
+		}),
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
+
 			// setColumnVisibility(data, dataTable);
 		},
 		columnDefs: [
 			{
-				targets: [7, 8, 9, 10, 11, 14],
+				targets: [6, 7, 8, 9, 10, 13],
 				createdCell: function (td, cellData, rowData, row, col) {
-					if (cellData === undefined || cellData === "") {
+					if (cellData === undefined || cellData === "N/A") {
 						$(td).css("display", "none");
 						table.column(col).header().style.display = "none";
 					}
@@ -200,8 +117,46 @@ function updatePageWithData(responseData) {
 			},
 		],
 	});
-
 	table.rows.add(data).draw();
+}
+
+function determineVisibleColumns(data) {
+	var useData = data.returnData;
+	var columnsToShow = [];
+
+	var columnsToCheck = ["price", "cost", "wholesalePrice", "lowestWholesalePrice", "totalCost"];
+
+	columnsToCheck.forEach(function (columnName) {
+		if (useData.hasOwnProperty(columnName) && useData[columnName] !== undefined) {
+			columnsToShow.push({ data: columnName });
+		}
+	});
+
+	// 添加按钮列的定义
+	columnsToShow.unshift(
+		{
+			render: function (data, type, row) {
+				var goInventory = `<button type="button" class="btn btn-primary depot-button" data-id="${row.id}">點擊</button>`;
+
+				return goInventory;
+			},
+		},
+		{
+			render: function (data, type, row) {
+				var modifyButtonHtml = `<a href="componentDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+
+				var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
+
+				var readButtonHtml = `<a href="componentDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
+
+				var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+
+				return buttonsHtml;
+			},
+		}
+	);
+
+	return columnsToShow;
 }
 
 // 欄位填充
@@ -221,9 +176,18 @@ $(document).on("click", ".modify-button", function () {
 	localStorage.setItem("partId", id);
 });
 
+// 查看詳請
 $(document).on("click", ".read-button", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("partRId", id);
+});
+
+// 零件轉倉庫
+$(document).ready(function () {
+	$(document).on("click", ".depot-button", function () {
+		var id = $(this).data("id");
+		window.location.href = "depotList.html?componentId=" + id;
+	});
 });
 
 //更新數據

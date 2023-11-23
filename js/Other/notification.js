@@ -48,6 +48,7 @@ function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#notify").DataTable();
 	dataTable.clear().draw();
+	dataTable.order([]).draw(false); //取消所有排列
 
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
