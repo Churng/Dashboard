@@ -30,65 +30,57 @@ function fetchAccountList() {
 	});
 }
 
-// 表格填充
+// 表格填充'
+var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#stockIn").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
 
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
+	table = $("#stockIn").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					// var modifyButtonHtml = `<a href="wareHouseDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
-		// 權限設定 //
+					// var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}" data-filename="${row.fileName}">刪除</button>`;
 
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
+					// var readButtonHtml = `<a href="wareHouseDetail_update.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
 
-		// 按鈕設定//
+					// var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+					var modifyButtonHtml = `<a href="wareHouseDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
-		var modifyButtonHtml =
-			'<a href="wareHouseDetail_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-componentid="' +
-			data.componentId +
-			'" data-id="' +
-			data.id +
-			'">修改</a>';
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}" data-filename="${row.fileName}">刪除</button>`;
 
-		var deleteButtonHtml =
-			'<button class="btn btn-danger delete-button"  style="display:none" data-id="' +
-			data.id +
-			'" data-filename="' +
-			data.fileName +
-			'">刪除</button>';
+					var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
-		var readButtonHtml =
-			'<a href="wareHouseDetail_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-			data.id +
-			'">查看</a>';
-
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml + "&nbsp;" + readButtonHtml;
-
-		dataTable.row
-			.add([
-				buttonsHtml,
-				data.id,
-				data.createTime,
-				data.createOperator,
-				data.componentId,
-				data.componentSupplier,
-				data.componentNumber,
-				data.componentName,
-				data.brandName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-				data.statusName,
-			])
-			.draw(false);
-	}
+					return buttonsHtml;
+				},
+			},
+			{ data: "id" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+			{ data: "componentId" },
+			{ data: "componentSupplier" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{ data: "price" },
+			{ data: "wholesalePrice" },
+			{ data: "lowestWholesalePrice" },
+			{ data: "cost" },
+			{ data: "workingHour" },
+			{ data: "statusName" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+	});
+	table.rows.add(data).draw();
 }
 
 // 監聽日期選擇

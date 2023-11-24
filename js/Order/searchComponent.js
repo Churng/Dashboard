@@ -52,7 +52,6 @@ function fetchAccountList() {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	// console.log(user_session_id);
 	// chsm = session_id+action+'HBAdminDepotApi'
 	// 組裝菜單所需資料
 	var action = "getDepotList";
@@ -67,7 +66,6 @@ function fetchAccountList() {
 		url: `${apiURL}/depot`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log(responseData);
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData);
 				hideSpinner();
@@ -111,7 +109,6 @@ function updatePageWithData(responseData) {
 			{
 				data: "thumbnail",
 				render: function (data, type, row) {
-					console.log(row.thumbnail);
 					return `<img src="${row.thumbnail}" alt="${row.id}" width="100" height="100">`;
 				},
 			},
@@ -127,6 +124,7 @@ function updatePageWithData(responseData) {
 		drawCallback: function () {
 			// handlePagePermissions(currentUser, currentUrl);
 		},
+		columnDefs: [{ orderable: false, targets: [0] }],
 	});
 	table.rows.add(data).draw();
 }

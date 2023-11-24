@@ -1,5 +1,6 @@
 function fetchAccountList() {
 	var partId = localStorage.getItem("shipNo");
+	console.log(partId);
 	var getshipNo = JSON.parse(partId);
 	const dataId = { shipNo: getshipNo };
 	const IdPost = JSON.stringify(dataId);
@@ -135,7 +136,7 @@ function updatePageWithData(responseData) {
 
 	// 填充API数据到表格，包括下载链接
 	responseData.returnData.forEach(function (data) {
-		console.log(data);
+		// console.log(data);
 
 		dataTable.row
 			.add([
@@ -414,55 +415,59 @@ $(document).on("click", "#shipCancel", function (e) {
 });
 
 //跳轉頁面
-$(document).ready(function () {
-	var urlParams = new URLSearchParams(window.location.search);
-	var shipNo = urlParams.get("shipNo");
+// $(document).ready(function () {
+// 	var urlParams = new URLSearchParams(window.location.search);
+// 	var shipNo = urlParams.get("shipNo");
 
-	if (shipNo) {
-		getOrderfetchAccountList(shipNo);
-	} else {
-		fetchAccountList();
-	}
-});
+// 	if (shipNo) {
+// 		getOrderfetchAccountList(shipNo);
+// 	} else {
+// 		fetchAccountList();
+// 	}
+// });
 
 //getOrderfetchAccountList
-function getOrderfetchAccountList(shipNo) {
-	const dataId = { shipNo: shipNo };
-	const IdPost = JSON.stringify(dataId);
-	console.log(IdPost);
-	// 从localStorage中获取session_id和chsm
-	// 解析JSON字符串为JavaScript对象
-	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-	const user_session_id = gertuserData.sessionId;
+// function getOrderfetchAccountList(shipNo) {
+// 	const dataId = { shipNo: shipNo };
+// 	const IdPost = JSON.stringify(dataId);
+// 	console.log(IdPost);
+// 	// 从localStorage中获取session_id和chsm
+// 	// 解析JSON字符串为JavaScript对象
+// 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+// 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+// 	const user_session_id = gertuserData.sessionId;
 
-	// chsm = session_id+action+'HBAdminOrderApi'
-	// 组装所需数据
-	var action = "getShipDetail";
-	var chsmtoGetOrderDetail = user_session_id + action + "HBAdminShipApi";
-	var chsm = CryptoJS.MD5(chsmtoGetOrderDetail).toString().toLowerCase();
+// 	// chsm = session_id+action+'HBAdminOrderApi'
+// 	// 组装所需数据
+// 	var action = "getShipDetail";
+// 	var chsmtoGetOrderDetail = user_session_id + action + "HBAdminShipApi";
+// 	var chsm = CryptoJS.MD5(chsmtoGetOrderDetail).toString().toLowerCase();
 
-	// 发送POST请求
-	$.ajax({
-		type: "POST",
-		url: `${apiURL}/ship`,
-		data: {
-			action: action,
-			session_id: user_session_id,
-			chsm: chsm,
-			data: IdPost,
-		},
-		success: function (responseData) {
-			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-				console.log(responseData);
-				updateData(responseData);
-				updatePageWithData(responseData);
-			} else {
-				handleApiResponse(responseData);
-			}
-		},
-		error: function (error) {
-			showErrorNotification();
-		},
-	});
-}
+// 	// 发送POST请求
+// 	$.ajax({
+// 		type: "POST",
+// 		url: `${apiURL}/ship`,
+// 		data: {
+// 			action: action,
+// 			session_id: user_session_id,
+// 			chsm: chsm,
+// 			data: IdPost,
+// 		},
+// 		success: function (responseData) {
+// 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
+// 				console.log(responseData);
+// 				updateData(responseData);
+// 				updatePageWithData(responseData);
+// 			} else {
+// 				handleApiResponse(responseData);
+// 			}
+// 		},
+// 		error: function (error) {
+// 			showErrorNotification();
+// 		},
+// 	});
+// }
+
+$(document).ready(function () {
+	fetchAccountList();
+});

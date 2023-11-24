@@ -33,6 +33,7 @@ $(document).ready(function () {
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
 		},
+		columnDefs: [{ orderable: false, targets: [0] }],
 	});
 
 	$.ajax({
@@ -40,6 +41,7 @@ $(document).ready(function () {
 		url: `${apiURL}/brand`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData, table);
 			} else {

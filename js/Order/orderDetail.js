@@ -37,6 +37,16 @@ function fetchAccountList() {
 				orderId = getOrderData.id;
 				orderNo = getOrderData.orderNo;
 
+				var getreturnData = responseData.returnData;
+
+				//進用執行出庫按鈕
+				var allFalse = getreturnData.every(function (item) {
+					return item.if_order_execute_ship === false;
+				});
+				if (allFalse) {
+					document.getElementById("orderExecuteShip").disabled = true;
+				}
+
 				updateData(responseData);
 				updatePageWithData(responseData);
 			} else {
@@ -107,8 +117,6 @@ function updatePageWithData(responseData) {
 
 	// 填充API数据到表格，包括下载链接
 	responseData.returnData.forEach(function (data) {
-		console.log();
-
 		//checkbox顯示：狀態在庫（3）
 		//出庫單選取
 		var checkboxHtml = "";
@@ -117,7 +125,6 @@ function updatePageWithData(responseData) {
 		}
 
 		// Boolean(data.if_order_delete_component)
-
 		// 刪除零件：
 		var deleteButtonHtml = "";
 		if (data.status == 1 || data.status == 2 || data.status == 3 || data.status == 4 || data.status == 5) {
@@ -136,7 +143,7 @@ function updatePageWithData(responseData) {
 		if (data.status == 6 && data.statusName == "已出庫") {
 			if (Boolean(data.if_order_unsubscribe) === true) {
 				unsubButtonHtml +=
-					'<button  class="btn btn-warning unsubscribe-button" data-id="' + orderId + '" >退貨</button>';
+					'<button  class="btn btn-warning unsubscribe-button" data-id="' + data.unsubscribeId + '" >退貨</button>';
 			}
 		}
 
@@ -147,11 +154,11 @@ function updatePageWithData(responseData) {
 		var shipButtonHtml = "";
 		if (Boolean(data.if_shipDetail) === true) {
 			shipButtonHtml +=
-				'<button type="button"  class="btn btn-primary text-white ship-button"  data-id="' +
+				'<a href="shipDetail.html" class="btn btn-primary text-white ship-button"  data-id="' +
 				data.id +
 				'" data-shipno="' +
 				data.shipNo +
-				'">查看出庫單</button>';
+				'">查看出庫單</a>';
 		}
 
 		//查看零件採購單
@@ -201,7 +208,8 @@ $(document).on("click", ".purchase-button", function () {
 $(document).on("click", ".ship-button", function () {
 	var shipNo = $(this).data("shipno");
 	console.log("Ship No:", shipNo);
-	window.location.href = "shipDetail.html?shipNo=" + shipNo;
+	// window.location.href = "shipDetail.html?shipNo=" + shipNo;
+	localStorage.setItem("shipNo", JSON.stringify(shipNo));
 });
 
 //更新數據
@@ -336,10 +344,11 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 	var formData = new FormData();
 	var unsubscribeButton = $(this);
 	var itemId = unsubscribeButton.data("id"); //orderId
+	console.log(itemId);
 	localStorage.setItem("getOrderId", itemId);
 
 	var data = {
-		id: itemId,
+		orderId: itemId,
 	};
 
 	var jsonData = JSON.stringify(data);
@@ -369,7 +378,7 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 		const user_session_id = gertuserData.sessionId;
 
 		// chsm = session_id+action+'HBAdminUnsubscribeApi'
-		var action = "getUnsubscribeDetail";
+		var action = "insertUnsubscribeDetail";
 		var chsmtoDeleteFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
 
@@ -388,6 +397,10 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 					showSuccessorderunSubscribeNotification();
 					setTimeout(function () {
 						refreshDataList();
+						//跳轉頁面
+						// var shipNo = $(this).data("shipno");
+						// console.log("Ship No:", shipNo);
+						// localStorage.setItem("shipNo", shipNo);
 					}, 1000);
 				} else {
 					handleApiResponse(response);

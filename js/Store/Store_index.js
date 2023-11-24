@@ -39,6 +39,7 @@ function fetchStoreList() {
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
 		},
+		columnDefs: [{ orderable: false, targets: [0] }],
 	});
 
 	// 发送API请求以获取数据
@@ -47,6 +48,7 @@ function fetchStoreList() {
 		url: `${apiURL}/store`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData, table);
 			} else {

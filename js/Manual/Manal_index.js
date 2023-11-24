@@ -52,8 +52,9 @@ $(document).ready(function () {
 		],
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
-			// hideDownloadColumn();
+			hideDownloadColumn();
 		},
+		columnDefs: [{ orderable: false, targets: [0] }],
 	});
 	// 发送API请求以获取数据
 	$.ajax({

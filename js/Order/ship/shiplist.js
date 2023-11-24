@@ -47,6 +47,7 @@ function fetchAccountList() {
 			drawCallback: function () {
 				handlePagePermissions(currentUser, currentUrl);
 			},
+			columnDefs: [{ orderable: false, targets: [0] }],
 		});
 	}
 

@@ -89,74 +89,94 @@ function fetchAccountList() {
 var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
-	// var dataTable = $("#partsManagement").DataTable();
-	// dataTable.clear().destroy();
-	// dataTable.columns().visible(true);
+	var dataTable = $("#partsManagement").DataTable();
+	dataTable.clear().destroy();
+	dataTable.columns().visible(true);
 
 	var data = responseData.returnData;
-	var columnsToShow = determineVisibleColumns(responseData);
 
 	table = $("#partsManagement").DataTable({
-		columns: columnsToShow.map(function (column) {
-			return { data: column.data };
-		}),
-		drawCallback: function () {
-			handlePagePermissions(currentUser, currentUrl);
-
-			// setColumnVisibility(data, dataTable);
-		},
-		columnDefs: [
+		autoWidth: false,
+		columns: [
 			{
-				targets: [6, 7, 8, 9, 10, 13],
-				createdCell: function (td, cellData, rowData, row, col) {
-					if (cellData === undefined || cellData === "N/A") {
-						$(td).css("display", "none");
-						table.column(col).header().style.display = "none";
-					}
+				render: function (data, type, row) {
+					var goInventory = `<button type="button" class="btn btn-primary depot-button" data-id="${row.id}">點擊</button>`;
+
+					return goInventory;
 				},
 			},
+			{
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="componentDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
+
+					var readButtonHtml = `<a href="componentDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{ data: "price", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "workingHour" },
+			{ data: "purchaseAmount" },
+			{ data: "depotAmount" },
+			{ data: "totalCost", defaultContent: "" },
+			{ data: "lowestInventory" },
+			{ data: "createTime" },
 		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(6).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(6).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(7).visible(false);
+				} else {
+					api.column(7).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(8).visible(false);
+				} else {
+					api.column(8).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(9).visible(false);
+				} else {
+					api.column(9).visible(true);
+				}
+
+				if (obj.totalCost === "" || obj.totalCost === undefined) {
+					api.column(13).visible(false);
+				} else {
+					api.column(13).visible(true);
+				}
+			}
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
 	});
 	table.rows.add(data).draw();
-}
-
-function determineVisibleColumns(data) {
-	var useData = data.returnData;
-	var columnsToShow = [];
-
-	var columnsToCheck = ["price", "cost", "wholesalePrice", "lowestWholesalePrice", "totalCost"];
-
-	columnsToCheck.forEach(function (columnName) {
-		if (useData.hasOwnProperty(columnName) && useData[columnName] !== undefined) {
-			columnsToShow.push({ data: columnName });
-		}
-	});
-
-	// 添加按钮列的定义
-	columnsToShow.unshift(
-		{
-			render: function (data, type, row) {
-				var goInventory = `<button type="button" class="btn btn-primary depot-button" data-id="${row.id}">點擊</button>`;
-
-				return goInventory;
-			},
-		},
-		{
-			render: function (data, type, row) {
-				var modifyButtonHtml = `<a href="componentDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
-
-				var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
-
-				var readButtonHtml = `<a href="componentDetail_read.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read"  data-id="${row.id}">查看詳請</a>`;
-
-				var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
-
-				return buttonsHtml;
-			},
-		}
-	);
-
-	return columnsToShow;
 }
 
 // 欄位填充

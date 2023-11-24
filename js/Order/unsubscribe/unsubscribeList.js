@@ -33,66 +33,53 @@ function fetchAccountList() {
 }
 
 // 表格填充
+var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#Unsubscribe").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
 
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
+	table = $("#Unsubscribe").DataTable({
+		columns: [
+			{
+				render: function (data, type, row) {
+					// var modifyButtonHtml = `<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
-		// 權限設定 //
+					// var readButtonHtml = `<a href="unsubscribeDetail_update.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
 
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
+					// var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
 
-		// 按鈕設定//
+					var modifyButtonHtml = `<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
-		var modifyButtonHtml =
-			'<a href="unsubscribeDetail_update.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-			data.id +
-			'">修改</a>';
+					var buttonsHtml = modifyButtonHtml;
 
-		// var deleteButtonHtml =
-		// 	'<button class="btn btn-danger delete-button"  style="display:none" data-button-type="delete" data-id="' +
-		// 	data.id +
-		// 	'" data-filename="' +
-		// 	data.fileName +
-		// 	'">刪除</button>';
-
-		var readButtonHtml =
-			'<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-warning text-white read-button" data-button-type="read" data-id="' +
-			data.id +
-			'">查看</a>';
-
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + readButtonHtml;
-
-		const orderNote = data.orderNote !== null ? data.orderNote : "無";
-		const statusName = data.statusName !== "" ? data.orderNote : "無";
-		const suitableCarModel = data.suitableCarModel !== "" ? data.orderNote : "無";
-		dataTable.row
-			.add([
-				buttonsHtml,
-				data.id,
-				data.createTime,
-				data.createOperator,
-				data.orderId,
-				data.storeName,
-				orderNote,
-				statusName,
-				data.componentId,
-				data.componentNumber,
-				data.componentName,
-				suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-			])
-			.draw(false);
-	}
+					return buttonsHtml;
+				},
+			},
+			{ data: "id" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+			{ data: "orderId" },
+			{ data: "storeName" },
+			{ data: "orderNote" },
+			{ data: "statusName" },
+			{ data: "componentId" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "suitableCarModel" },
+			{ data: "price" },
+			{ data: "wholesalePrice" },
+			{ data: "lowestWholesalePrice" },
+			{ data: "cost" },
+			{ data: "workingHour" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+	});
+	table.rows.add(data).draw();
 }
 
 // 修改按鈕事件

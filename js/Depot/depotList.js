@@ -48,40 +48,44 @@ function updatePageWithData(responseData) {
 	var depotNumValue = responseData.returnTotalCost;
 	depotNumElement.value = depotNumValue;
 
-	if ($.fn.DataTable.isDataTable("#depotList")) {
-		table.clear().rows.add(responseData.returnData).draw();
-	} else {
-		table = $("#depotList").DataTable({
-			columns: [
-				{
-					render: function (data, type, row) {
-						var modifyButtonHtml = `<a href="depotDetail.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
-						var readButtonHtml = `<a href="depotDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
-						var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
-						return buttonsHtml;
-					},
-				},
-				{ data: "componentId" },
-				{ data: "componentNumber" },
-				{ data: "componentName" },
-				{ data: "brandName" },
-				{ data: "suitableCarModel" },
-				{ data: "orderNo" },
-				{ data: "storeName" },
-				{ data: "orderNote" },
-				{ data: "price" },
-				{ data: "wholesalePrice" },
-				{ data: "lowestWholesalePrice" },
-				{ data: "cost" },
-				{ data: "workingHour" },
-				{ data: "depotPosition" },
-				{ data: "statusName" },
-				{ data: "createTime" },
-			],
-		});
+	var dataTable = $("#depotList").DataTable();
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
 
-		table.clear().rows.add(responseData.returnData).draw();
-	}
+	table = $("#depotList").DataTable({
+		columns: [
+			{
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="depotDetail.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+					var readButtonHtml = `<a href="depotDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
+					return buttonsHtml;
+				},
+			},
+			{ data: "componentId" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{ data: "orderNo" },
+			{ data: "storeName" },
+			{ data: "orderNote" },
+			{ data: "price" },
+			{ data: "wholesalePrice" },
+			{ data: "lowestWholesalePrice" },
+			{ data: "cost" },
+			{ data: "workingHour" },
+			{ data: "depotPosition" },
+			{ data: "statusName" },
+			{ data: "createTime" },
+		],
+		drawCallback: function () {
+			// handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+	});
+
+	table.clear().rows.add(data).draw();
 }
 
 // 监听修改按钮的点击事件

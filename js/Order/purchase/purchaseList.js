@@ -32,56 +32,53 @@ function fetchAccountList() {
 }
 
 // 表格填充
+
+var table;
 function updatePageWithData(responseData) {
 	var dataTable = $("#partsOrder").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
 
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
+	table = $("#partsOrder").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="purchaseDetail.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
-		// 暫時隱藏做更新
-		// var status = data.status;
-		// var modifyButtonHtml = '';
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}">刪除</button>`;
 
-		// // 狀態為2採購中顯示修改
-		// if (status === 2) {
-		//     modifyButtonHtml = '<a href="purchaseDetail.html" class="btn btn-primary text-white modify-button" data-id="' + data.id + '">修改</a>';
-		// }
+					// var readButtonHtml = `<a href="manualDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
 
-		var modifyButtonHtml =
-			'<a href="purchaseDetail.html" class="btn btn-primary text-white modify-button" data-id="' +
-			data.id +
-			'" data-componentid="' +
-			data.componentId +
-			'">修改</a>';
+					var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
-		var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
-
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
-
-		dataTable.row
-			.add([
-				buttonsHtml,
-				data.id,
-				data.createTime,
-				data.createOperator,
-				data.storeName,
-				data.statusName,
-				data.orderNo,
-				data.componentId,
-				data.componentNumber,
-				data.componentName,
-				data.brandName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-				data.statusName,
-			])
-			.draw(false);
-	}
+					return buttonsHtml;
+				},
+			},
+			{ data: "id" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+			{ data: "storeName" },
+			{ data: "statusName" },
+			{ data: "createTime" },
+			{ data: "orderNo" },
+			{ data: "componentId" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{ data: "wholesalePrice" },
+			{ data: "lowestWholesalePrice" },
+			{ data: "cost" },
+			{ data: "workingHour" },
+			{ data: "statusName" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+	});
+	table.rows.add(data).draw();
 }
 
 // 修改按鈕事件
@@ -119,7 +116,7 @@ function refreshDataList() {
 		success: function (responseData) {
 			handleApiResponse(responseData);
 			// console.log(responseData);
-			updatePageWithData(responseData);
+			updatePageWithData(responseData, table);
 		},
 		error: function (error) {
 			showErrorNotification();

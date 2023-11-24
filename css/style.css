@@ -345,39 +345,71 @@ td:first-child {
 	min-width: 100px;
 }
 
+/* 三 */
+
 #manual-management th:first-child,
-td:first-child {
+#manual-managementd:first-child {
 	min-width: 200px;
 }
 
 #brand-management th:first-child,
-td:first-child {
+#brand-management td:first-child {
 	min-width: 200px;
 }
 
-#partsOrder,
-#storeInformation,
-#partsOrder,
-#depotList,
-th:first-child,
-td:first-child {
+#partsManagement th:nth-child(2),
+#partsManagement td:nth-child(2) {
+	min-width: 200px;
+}
+
+/* 二 */
+#storeInformation th:first-child,
+#storeInformation td:first-child {
 	min-width: 150px;
 }
 
-#orderDetail th:first-child,
-td:first-child {
-	min-width: 70px;
+#partsOrder th:first-child,
+#partsOrder td:first-child {
+	min-width: 150px;
 }
 
+#depotList th:first-child,
+#depotList td:first-child {
+	min-width: 150px;
+}
+
+#stockIn th:first-child,
+#stockIn td:first-child {
+	min-width: 150px;
+}
+
+#stockOut th:first-child,
+#stockOut td:first-child {
+	min-width: 150px;
+}
+
+#orderIndex th:first-child,
+#orderIndex td:first-child {
+	min-width: 100px;
+}
+
+/* 一 */
 #partsManagement th:first-child,
-td:first-child {
+#partsManagement td:first-child {
 	min-width: 70px;
 }
 
-#partsManagement th:nth-child(2),
-td:nth-child(2) {
-	min-width: 250px;
+#orderDetail th:first-child,
+#orderDetail td:first-child {
+	min-width: 70px;
 }
+
+#roleList th:first-child,
+#roleList td:first-child {
+	min-width: 70px;
+}
+
+/* >三 */
 
 #orderDetail th:nth-child(2),
 #orderDetail td:nth-child(2) {

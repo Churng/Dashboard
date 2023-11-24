@@ -1,7 +1,11 @@
 $(document).ready(function () {
 	var Data = JSON.parse(localStorage.getItem("currentUser")) || [];
 	var userData = Data.userretrunData;
-	var userAuth = getUserAuth("零件資料");
+	var userAuth = getUserAuth("零件定義資料");
+
+	console.log(Data);
+	console.log(userData);
+	console.log(userAuth);
 
 	// var priceDiv = document.getElementById("C-PriceDiv");
 	if (!userAuth.includes("price")) {
