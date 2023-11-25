@@ -118,7 +118,7 @@ function showSuccessorderCancelNotification() {
 	toastr.success("已取消訂單！", "成功");
 }
 function showSuccessorderunSubscribeNotification() {
-	toastr.success("已完成退貨，請至退貨列表查看！", "成功");
+	toastr.success("已完成退貨，即將導轉至退貨單！", "成功");
 }
 
 function shownoDataNotification() {
@@ -141,4 +141,14 @@ function showSuccessshipApproveNotification() {
 //通知
 function showConfirmNotification() {
 	toastr.success("已標記處理狀態！", "成功");
+}
+
+//退貨
+
+function showSuccessunsubCompleteNotification() {
+	toastr.success("已完成退貨！", "成功");
+}
+
+function showSuccessunsubCancelNotification() {
+	toastr.success("已取消退貨！", "成功");
 }

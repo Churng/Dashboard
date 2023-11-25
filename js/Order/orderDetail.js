@@ -143,7 +143,7 @@ function updatePageWithData(responseData) {
 		if (data.status == 6 && data.statusName == "已出庫") {
 			if (Boolean(data.if_order_unsubscribe) === true) {
 				unsubButtonHtml +=
-					'<button  class="btn btn-warning unsubscribe-button" data-id="' + data.unsubscribeId + '" >退貨</button>';
+					'<button  class="btn btn-warning unsubscribe-button" data-id="' + data.id + '" >退貨</button>';
 			}
 		}
 
@@ -343,9 +343,10 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 	e.stopPropagation();
 	var formData = new FormData();
 	var unsubscribeButton = $(this);
+	console.log(unsubscribeButton);
 	var itemId = unsubscribeButton.data("id"); //orderId
 	console.log(itemId);
-	localStorage.setItem("getOrderId", itemId);
+	// localStorage.setItem("getOrderId", itemId);
 
 	var data = {
 		orderId: itemId,
@@ -372,15 +373,18 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 	);
 
 	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-delete", function () {
+	$(document).on("click", ".confirm-unsubscribe", function () {
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
+		console.log(user_session_id);
 
 		// chsm = session_id+action+'HBAdminUnsubscribeApi'
 		var action = "insertUnsubscribeDetail";
 		var chsmtoDeleteFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
+
+		console.log(chsm);
 
 		formData.set("action", action);
 		formData.set("session_id", user_session_id);
@@ -393,15 +397,16 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				if (response.returnCode === "1" && response.returnData.length > 0) {
-					showSuccessorderunSubscribeNotification();
+				console.log(response);
+				showSuccessorderunSubscribeNotification();
+				if (response.returnCode === "1") {
+					var getSubId = response.unsubscribeId;
+					localStorage.setItem("getOrderId", getSubId);
+
 					setTimeout(function () {
-						refreshDataList();
-						//跳轉頁面
-						// var shipNo = $(this).data("shipno");
-						// console.log("Ship No:", shipNo);
-						// localStorage.setItem("shipNo", shipNo);
-					}, 1000);
+						var newPageUrl = "unsubscribeDetail.html";
+						window.location.href = newPageUrl;
+					}, 3000);
 				} else {
 					handleApiResponse(response);
 				}

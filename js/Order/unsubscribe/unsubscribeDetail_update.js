@@ -147,44 +147,48 @@ $(document).on("click", ".file-download", function (e) {
 	var fileName = $(this).data("file");
 	var apiName = "component";
 	if (fileName) {
-		downloadPdfFile(apiName, fileName);
+		downloadFile(apiName, fileName);
 	} else {
 		showErrorFileNotification();
 	}
 });
 
-// 退貨完成
-$(document).ready(function () {
+// 退貨完成;
+$(document).on("click", "#completeBtn", function (e) {
+	e.stopPropagation();
 	var formData = new FormData();
-	var uploadButton = document.getElementById("completeBtn");
-	console.log(uploadButton);
-	// 添加按钮点击事件监听器
-	uploadButton.addEventListener("click", function (event) {
-		// event.preventDefault();
 
-		var partId = localStorage.getItem("UnsubscribeId");
-		var getremark = $("#unsubscribeRemark").val();
-		var fileInput = document.getElementById("fileInput");
+	console.log(e);
 
-		var updateData = {};
-		if (fileInput.files.length > 0) {
-			for (var i = 0; i < fileInput.files.length; i++) {
-				formData.append("unsubscribe[]", fileInput.files[i]);
-			}
-			updateData.fileName = fileInput.files[0].name;
-			updateData.file = fileInput.files[0].name;
-		} else {
-			updateData.fileName = "";
-			updateData.file = "";
+	// 解绑之前的点击事件处理程序
+	$(document).off("click", ".confirm-unsubscribe");
+
+	toastr.options = {
+		closeButton: true,
+		timeOut: 0,
+		extendedTimeOut: 0,
+		positionClass: "toast-top-center",
+	};
+
+	toastr.warning(
+		"確定要完成退貨嗎？<br/><br><button class='btn btn-danger confirm-unsubscribe'>確定</button>",
+		"確定同意退貨",
+		{
+			allowHtml: true,
 		}
-		updateData.id = partId;
+	);
+
+	// 绑定新的点击事件处理程序
+	$(document).on("click", ".confirm-unsubscribe", function () {
+		var updateData = {};
+		var getremark = $("#unsubscribeRemark").val();
+		updateData.id = unsubId;
 		updateData.remark = getremark;
 
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// 组装上传更新文件的数据
 		// chsm = session_id+action+'HBAdminUnsubscribeApi'
 		var action = "completeUnsubscribeDetail";
 		var chsmtoUpdateFile = user_session_id + action + "HBAdminUnsubscribeApi";
@@ -195,7 +199,6 @@ $(document).ready(function () {
 		formData.set("chsm", chsm);
 		formData.set("data", JSON.stringify(updateData));
 
-		// 发送上传更新文件的请求
 		$.ajax({
 			type: "POST",
 			url: `${apiURL}/unsubscribe`,
@@ -204,55 +207,57 @@ $(document).ready(function () {
 			contentType: false,
 			success: function (response) {
 				if (response.returnCode === "1") {
-					showSuccessFileNotification();
+					showSuccessunsubCompleteNotification();
 					setTimeout(function () {
-						var newPageUrl = "unsubscribeList.html";
-						window.location.href = newPageUrl;
+						location.reload();
 					}, 1000);
 				} else {
 					handleApiResponse(response);
 				}
 			},
 			error: function (error) {
-				showErrorFileNotification();
+				showErrorNotification();
 			},
 		});
 	});
 });
 
 // 取消訂單
-$(document).ready(function () {
+$(document).on("click", "#cancelBtn", function (e) {
+	e.stopPropagation();
 	var formData = new FormData();
-	var uploadButton = document.getElementById("cancelBtn"); // 通过按钮的ID来获取按钮元素
-	console.log(uploadButton);
-	// 添加按钮点击事件监听器
-	uploadButton.addEventListener("click", function (event) {
-		// event.preventDefault();
 
-		var partId = localStorage.getItem("UnsubscribeId");
-		var getremark = $("#unsubscribeRemark").val();
-		var fileInput = document.getElementById("fileInput");
+	// 解绑之前的点击事件处理程序
+	$(document).off("click", ".cancel-unsubscribe");
 
-		var updateData = {};
-		if (fileInput.files.length > 0) {
-			for (var i = 0; i < fileInput.files.length; i++) {
-				formData.append("unsubscribe[]", fileInput.files[i]);
-			}
-			updateData.fileName = fileInput.files[0].name;
-			updateData.file = fileInput.files[0].name;
-		} else {
-			updateData.fileName = "";
-			updateData.file = "";
+	toastr.options = {
+		closeButton: true,
+		timeOut: 0,
+		extendedTimeOut: 0,
+		positionClass: "toast-top-center",
+	};
+
+	toastr.warning(
+		"確定要取消退貨嗎？<br/><br><button class='btn btn-danger cancel-unsubscribe'>確定</button>",
+		"確定取消退貨",
+		{
+			allowHtml: true,
 		}
-		updateData.id = partId;
+	);
+
+	// 绑定新的点击事件处理程序
+	$(document).on("click", ".cancel-unsubscribe", function () {
+		var updateData = {};
+		var getremark = $("#unsubscribeRemark").val();
+		updateData.id = unsubId;
 		updateData.remark = getremark;
 
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// 组装上传更新文件的数据
-		var action = "deleteStockInDetail";
+		// chsm = session_id+action+'HBAdminUnsubscribeApi'
+		var action = "deleteUnsubscribeDetail";
 		var chsmtoUpdateFile = user_session_id + action + "HBAdminUnsubscribeApi";
 		var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
 
@@ -261,7 +266,6 @@ $(document).ready(function () {
 		formData.set("chsm", chsm);
 		formData.set("data", JSON.stringify(updateData));
 
-		// 发送上传更新文件的请求
 		$.ajax({
 			type: "POST",
 			url: `${apiURL}/unsubscribe`,
@@ -270,15 +274,16 @@ $(document).ready(function () {
 			contentType: false,
 			success: function (response) {
 				if (response.returnCode === "1") {
-					showSuccessFileNotification();
+					setTimeout(function () {
+						showSuccessunsubCancelNotification();
+					}, 1000);
+					location.reload();
 				} else {
 					handleApiResponse(response);
 				}
-
-				console.warn(response);
 			},
 			error: function (error) {
-				showErrorFileNotification();
+				showErrorNotification();
 			},
 		});
 	});

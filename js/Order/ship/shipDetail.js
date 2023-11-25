@@ -207,7 +207,7 @@ function refreshDataList() {
 //同意出庫
 $(document).on("click", "#shipApprove", function (e) {
 	e.stopPropagation();
-	var formData = new FormData(); // 在外部定义 formData
+	var formData = new FormData();
 
 	var partId = localStorage.getItem("shipNo");
 	var getshipNo = JSON.parse(partId);
