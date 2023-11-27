@@ -36,6 +36,15 @@ $(document).ready(function () {
 
 				brandList.appendChild(option);
 			}
+
+			if (responseData.returnData.length > 0) {
+				brandList.selectedIndex = 1;
+				// 获取选中的品牌ID
+				selectedBrandId = brandList.value;
+
+				// 触发API请求
+				sendApiRequest({ brandId: selectedBrandId });
+			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -271,67 +280,66 @@ $(document).ready(function () {
 			fetchAccountList();
 		}
 	});
-
-	function sendApiRequest(filterData, searchData) {
-		// 获取用户数据
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
-
-		console.log(user_session_id);
-		// 设置API请求数据
-		var action = "getDepotList";
-		var chsmtoGetManualList = user_session_id + action + "HBAdminDepotApi";
-		var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
-
-		$("#searchParts").DataTable();
-
-		var filterDataJSON = JSON.stringify(filterData);
-		var postData = filterDataJSON;
-
-		var searchDataJSON = JSON.stringify(searchData);
-		var postSearchData = searchDataJSON;
-
-		var requestData = {
-			session_id: user_session_id,
-			action: action,
-			chsm: chsm,
-		};
-
-		if (postData !== "{}" && postSearchData !== "{}") {
-			requestData.data = postData;
-			requestData.likeData = postSearchData;
-		} else {
-			if (postData !== "{}") {
-				requestData.data = postData;
-			}
-			if (postSearchData !== "{}") {
-				requestData.likeData = postSearchData;
-			}
-		}
-
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/depot`,
-			data: requestData,
-			success: function (responseData) {
-				if (responseData.returnCode === "1") {
-					updatePageWithData(responseData);
-				} else {
-					handleApiResponse(responseData);
-				}
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	}
 });
+
+function sendApiRequest(filterData, searchData) {
+	// 获取用户数据
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// 设置API请求数据
+	var action = "getDepotList";
+	var chsmtoGetManualList = user_session_id + action + "HBAdminDepotApi";
+	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+	$("#searchParts").DataTable();
+
+	var filterDataJSON = JSON.stringify(filterData);
+	var postData = filterDataJSON;
+
+	var searchDataJSON = JSON.stringify(searchData);
+	var postSearchData = searchDataJSON;
+
+	var requestData = {
+		session_id: user_session_id,
+		action: action,
+		chsm: chsm,
+	};
+
+	if (postData !== "{}" && postSearchData !== "{}") {
+		requestData.data = postData;
+		requestData.likeData = postSearchData;
+	} else {
+		if (postData !== "{}") {
+			requestData.data = postData;
+		}
+		if (postSearchData !== "{}") {
+			requestData.likeData = postSearchData;
+		}
+	}
+
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/depot`,
+		data: requestData,
+		success: function (responseData) {
+			if (responseData.returnCode === "1") {
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}
 
 // 加载时调用在页面 fetchAccountList
-$(document).ready(function () {
-	fetchAccountList();
-});
+// $(document).ready(function () {
+// 	fetchAccountList();
+// });
 
 //下載檔案
 $(document).on("click", ".file-download", function () {

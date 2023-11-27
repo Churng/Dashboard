@@ -179,17 +179,6 @@ function updatePageWithData(responseData) {
 	table.rows.add(data).draw();
 }
 
-// 欄位填充
-// function pushDataIfExists(data, field) {
-// 	// 检查 row 对象是否存在并且具有指定字段
-// 	if (data && typeof data === "object" && data.hasOwnProperty(field)) {
-// 		var value = data[field];
-// 		return value !== null ? value : "N/A";
-// 	} else {
-// 		return ""; // 当 row 对象不存在或指定字段不存在时返回空字符串
-// 	}
-// }
-
 // 监听修改按钮的点击事件
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
@@ -356,8 +345,6 @@ $(document).ready(function () {
 
 		// 创建筛选数据对象
 		var filterData = {};
-
-		var selectedBrand = $("#selectBrand").val();
 
 		if (!selectedBrand) {
 			fetchAccountList();

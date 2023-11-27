@@ -20,22 +20,26 @@ $(document).ready(function () {
 		url: `${apiURL}/notification`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			console.log("成功响应：", responseData);
-			var unreadMsgNumElement = document.getElementById("unreadMsgNum");
-			if (unreadMsgNumElement) {
-				unreadMsgNumElement.textContent = responseData.unReadAmount;
-			}
+			if (responseData.returnCode === "1") {
+				console.log("成功响应：", responseData);
+				// var unreadMsgNumElement = document.getElementById("unreadMsgNum");
+				// if (unreadMsgNumElement) {
+				// 	unreadMsgNumElement.textContent = responseData.unReadAmount;
+				// }
 
-			var confirmButton = document.getElementById("confirmButton");
+				var confirmButton = document.getElementById("confirmButton");
 
-			if (confirmButton) {
-				if (responseData.unReadAmount == 0) {
-					confirmButton.disabled = true;
-				} else {
-					confirmButton.disabled = false;
+				if (confirmButton) {
+					if (responseData.unReadAmount == 0) {
+						confirmButton.disabled = true;
+					} else {
+						confirmButton.disabled = false;
+					}
 				}
+				updatePageWithData(responseData);
+			} else {
+				handleApiResponse(responseData);
 			}
-			updatePageWithData(responseData);
 		},
 		error: function (error) {
 			console.error("错误:", error);
