@@ -72,8 +72,13 @@
                 <div class="navbar-nav align-items-center ms-auto">
 
                     <div class="nav-item">
-                        <a href="notificationList.html" class="nav-link">
+                        <a href="notificationList.html" class="nav-link position-relative">
                             <i class="fa fa-bell me-lg-2"></i>
+                            <span
+                                class="position-absolute top-30 start-60 translate-middle badge rounded-pill bg-danger"
+                                id="unreadMsgNum">
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
                         </a>
                     </div>
                     <div class="nav-item dropdown">
@@ -84,8 +89,6 @@
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
                             <a href="#" class="dropdown-item" id="logout">Log Out</a>
                         </div>
                     </div>
@@ -104,7 +107,6 @@
                                 <li class="breadcrumb-item active" aria-current="page">盤點管理 / 盤點列表</li>
                             </ol>
                         </nav>
-                        TODO 進入盤點資料
                         <div class="py-1 mb-5">
                             <button type="button" class="btn btn-sm btn-primary me-2">
                                 <a href="inventory_create.html" class="text-white text-decoration-none">開始盤點</a>

@@ -228,12 +228,12 @@ function updatePageWithData(responseData) {
 		// 按鈕設定//
 
 		var modifyButtonHtml =
-			'<a href="8-account-update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
+			'<a href="accountDetail_update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
 			data.id +
 			'">修改</a>';
 
 		var readButtonHtml =
-			'<a href="8-account-update.html" style="display:none" class="btn btn-warning text-white" data-button-type="read" data-id="' +
+			'<a href="accountDetail_update.html" style="display:none" class="btn btn-warning text-white" data-button-type="read" data-id="' +
 			data.id +
 			'">查看</a>';
 

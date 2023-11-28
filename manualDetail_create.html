@@ -68,8 +68,13 @@
                 <div class="navbar-nav align-items-center ms-auto">
 
                     <div class="nav-item">
-                        <a href="notificationList.html" class="nav-link">
+                        <a href="notificationList.html" class="nav-link position-relative">
                             <i class="fa fa-bell me-lg-2"></i>
+                            <span
+                                class="position-absolute top-30 start-60 translate-middle badge rounded-pill bg-danger"
+                                id="unreadMsgNum">
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
                         </a>
                     </div>
                     <div class="nav-item dropdown">
@@ -80,8 +85,7 @@
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end bg-body-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
+                            >
                             <a href="#" class="dropdown-item" id="logout">Log Out</a>
                         </div>
                     </div>
@@ -98,7 +102,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="manualList.html">手冊管理</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">零件手冊資料</li>
+                            <li class="breadcrumb-item active" aria-current="page">零件手冊資料 / 新增資料</li>
                         </ol>
                     </nav>
 
