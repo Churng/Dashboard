@@ -34,6 +34,7 @@ $(document).ready(function () {
 			handlePagePermissions(currentUser, currentUrl);
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
 
 	$.ajax({

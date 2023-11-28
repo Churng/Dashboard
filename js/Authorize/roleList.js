@@ -33,6 +33,8 @@ $(document).ready(function () {
 function updatePageWithData(responseData) {
 	var dataTable = $("#roleList").DataTable();
 	dataTable.clear().draw();
+	dataTable.order([]).draw(false);
+
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
 

@@ -349,7 +349,7 @@ td:first-child {
 
 #manual-management th:first-child,
 #manual-managementd:first-child {
-	min-width: 200px;
+	min-width: 220px;
 }
 
 #brand-management th:first-child,
@@ -365,27 +365,27 @@ td:first-child {
 /* 二 */
 #storeInformation th:first-child,
 #storeInformation td:first-child {
-	min-width: 150px;
+	min-width: 160px;
 }
 
 #partsOrder th:first-child,
 #partsOrder td:first-child {
-	min-width: 150px;
+	min-width: 160px;
 }
 
 #depotList th:first-child,
 #depotList td:first-child {
-	min-width: 150px;
+	min-width: 160px;
 }
 
 #stockIn th:first-child,
 #stockIn td:first-child {
-	min-width: 150px;
+	min-width: 160px;
 }
 
 #stockOut th:first-child,
 #stockOut td:first-child {
-	min-width: 150px;
+	min-width: 160px;
 }
 
 #orderIndex th:first-child,
@@ -407,6 +407,11 @@ td:first-child {
 #roleList th:first-child,
 #roleList td:first-child {
 	min-width: 70px;
+}
+
+#searchParts th:first-child,
+#searchParts td:first-child {
+	min-width: 120px;
 }
 
 /* >三 */

@@ -54,9 +54,8 @@ $(document).ready(function () {
 			handlePagePermissions(currentUser, currentUrl);
 			hideDownloadColumn();
 		},
-		columnDefs: [
-			{ orderable: false, targets: 0 }, // 第一列的索引为 0
-		],
+		columnDefs: [{ orderable: false, targets: 0 }],
+		order: [],
 	});
 	// 发送API请求以获取数据
 	$.ajax({

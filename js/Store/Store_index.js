@@ -40,6 +40,7 @@ function fetchStoreList() {
 			handlePagePermissions(currentUser, currentUrl);
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
 
 	// 发送API请求以获取数据

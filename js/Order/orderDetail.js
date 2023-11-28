@@ -39,13 +39,21 @@ function fetchAccountList() {
 
 				var getreturnData = responseData.returnData;
 
-				//進用執行出庫按鈕
+				//禁用執行出庫按鈕
 				var allFalse = getreturnData.every(function (item) {
 					return item.if_order_execute_ship === false;
 				});
 				if (allFalse) {
 					document.getElementById("orderExecuteShip").disabled = true;
 				}
+
+				// var orderComplete = document.getElementById("orderComplete");
+				// if (orderStatus == 3 || orderStatus == 4) {
+				// 	orderComplete.disabled = true;
+				// 	return;
+				// } else {
+				// 	orderComplete.disabled = false;
+				// }
 
 				updateData(responseData);
 				updatePageWithData(responseData);
@@ -122,6 +130,8 @@ function updatePageWithData(responseData) {
 		var checkboxHtml = "";
 		if (data.status == 3) {
 			var checkboxHtml = '<input type="checkbox" class="executeship-button" data-id="' + data.id + '">';
+		} else {
+			checkboxHtml += "<span>" + "已處理出庫" + "</span>";
 		}
 
 		// Boolean(data.if_order_delete_component)
@@ -177,6 +187,7 @@ function updatePageWithData(responseData) {
 
 		var buttonsHtml =
 			deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml + "&nbsp;" + purchaseButtonHtml;
+
 		dataTable.row
 			.add([
 				checkboxHtml,
@@ -423,12 +434,6 @@ $(document).on("click", ".unsubscribe-button", function (e) {
 $(document).on("click", "#orderComplete", function (e) {
 	e.stopPropagation();
 	var formData = new FormData(); // 在外部定义 formData
-	if (orderStatus == 3) {
-		showSuccessorderCompleteNotification();
-		return;
-	}
-
-	console.log(orderStatus);
 
 	var partId = localStorage.getItem("orderNo");
 	var orderData = JSON.parse(partId);

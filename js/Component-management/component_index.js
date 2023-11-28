@@ -175,6 +175,7 @@ function updatePageWithData(responseData) {
 			}
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
 	table.rows.add(data).draw();
 }

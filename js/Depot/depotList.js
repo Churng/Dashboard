@@ -83,6 +83,7 @@ function updatePageWithData(responseData) {
 			// handlePagePermissions(currentUser, currentUrl);
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
 
 	table.clear().rows.add(data).draw();

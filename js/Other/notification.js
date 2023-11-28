@@ -22,10 +22,6 @@ $(document).ready(function () {
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
 				console.log("成功响应：", responseData);
-				// var unreadMsgNumElement = document.getElementById("unreadMsgNum");
-				// if (unreadMsgNumElement) {
-				// 	unreadMsgNumElement.textContent = responseData.unReadAmount;
-				// }
 
 				var confirmButton = document.getElementById("confirmButton");
 
@@ -239,10 +235,6 @@ function refreshDataList() {
 		url: `${apiURL}/notification`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
-			var unreadMsgNumElement = document.getElementById("unreadMsgNum");
-			if (unreadMsgNumElement) {
-				unreadMsgNumElement.textContent = responseData.unReadAmount;
-			}
 			updatePageWithData(responseData);
 		},
 		error: function (error) {

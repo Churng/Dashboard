@@ -214,18 +214,11 @@ function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#accountList").DataTable();
 	dataTable.clear().draw();
+	dataTable.order([]).draw(false);
 
 	// 填充API数据到表格，包括下载链接
 	for (var i = 0; i < responseData.returnData.length; i++) {
 		var data = responseData.returnData[i];
-
-		// 權限設定 //
-
-		// var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-		// var currentUrl = window.location.href;
-		// handlePagePermissions(currentUser, currentUrl);
-
-		// 按鈕設定//
 
 		var modifyButtonHtml =
 			'<a href="accountDetail_update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
