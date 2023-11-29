@@ -23,6 +23,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="css/spin.css">
 
 
     <!-- DataTable Stylesheet -->
@@ -30,7 +31,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -107,27 +107,37 @@
                                 <li class="breadcrumb-item active" aria-current="page">盤點管理 / 盤點列表</li>
                             </ol>
                         </nav>
-                        <div class="py-1 mb-5">
-                            <button type="button" class="btn btn-sm btn-primary me-2">
-                                <a href="inventory_create.html" class="text-white text-decoration-none">開始盤點</a>
+                        <div class="my-4">
+                            <button type="button" class="btn btn btn-primary my-4">
+                                <a href="inventoryDetail_create.html" class="text-white text-decoration-none">開始盤點</a>
                             </button>
                         </div>
 
                         <div class="container">
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-sm-3">
+                                    <p>盤點開始日期</p>
+                                    <input type="date" class="form-control" id="startDate">
+                                </div>
+                                <div class="col-sm-3">
+                                    <p>盤點結束日期</p>
+                                    <input type="date" class="form-control" id="endDate">
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <label for="parts-order-Time" class="form-label">盤點時間</label>
-                                    <input type="date" class="form-control" id="parts-order-Time" placeholder=""
-                                        value="" required="">
+                                    <label for="status" class="form-label">結果相符</label>
+                                    <select class="form-select" id="status" required="">
+                                        <option value="">全部</option>
+                                        <option value="1">相符</option>
+                                        <option value="2">不相符</option>
+                                    </select>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <label for="parts-order-ShopName" class="form-label">結果相符</label>
-                                    <select class="form-select" id="parts-order-ShopName" required="">
-                                        <option value="">全部</option>
-                                        <option>是</option>
-                                        <option>否</option>
-                                    </select>
+                                <div class="col-sm-3 pt-4" style="margin-top: 8px;">
+                                    <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
                                 </div>
                             </div>
                         </div>
@@ -138,8 +148,9 @@
                                 <table id="inventory" class="display  table table-striped">
                                     <thead>
                                         <tr>
+                                            <th>選取項目</th>
                                             <th>盤點編號</th>
-                                            <th class="text-center">盤點帳號</th>
+                                            <th>盤點帳號</th>
                                             <th>盤點開始時間</th>
                                             <th>盤點結束時間</th>
                                             <th>儲位</th>
@@ -149,29 +160,6 @@
                                             <th>結果相符</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>洪老闆</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>Ａ1-1-1-1</td>
-                                            <td>30000</td>
-                                            <td>100</td>
-                                            <td>100</td>
-                                            <td>是</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>洪老闆</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>2022/01/01 12:01:01</td>
-                                            <td>Ａ1-1-1-1</td>
-                                            <td>30000</td>
-                                            <td>100</td>
-                                            <td>103</td>
-                                            <td>是</td>
-                                        </tr>
                                 </table>
                             </div>
                         </div>
@@ -192,6 +180,7 @@
     </div>
 
 
+
     <!--  Boostrap JavaScript Libraries -->
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -202,30 +191,21 @@
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
     <script src="js/Notifications/toastr-options.js"></script>
-
+    <script src="js/spin.js"></script>
 
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
-        $(document).ready(function () {
-            new DataTable('#inventory', {
-                scrollX: true
-            });
-        });
 
-    </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Store/Store_index.js"></script>
     <script src="js/Public/menu.js"></script>
-
+    <script src="js/Inventory/inventoryList.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <!-- <script src="js/Public/globleAuth.js"></script> -->
+    <script src="js/Public/Auth_List.js"></script>
 </body>
 
 </html>

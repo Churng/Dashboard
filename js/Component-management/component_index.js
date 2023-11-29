@@ -347,11 +347,11 @@ $(document).ready(function () {
 		// 创建筛选数据对象
 		var filterData = {};
 
-		if (!selectedBrand) {
+		if (!selectedBrandId) {
 			fetchAccountList();
 		} else {
 			var filterData = {};
-			filterData.brandId = selectedBrand;
+			filterData.brandId = selectedBrandId;
 			sendApiRequest(filterData);
 		}
 	});

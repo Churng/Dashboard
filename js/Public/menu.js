@@ -87,3 +87,41 @@ function generateSubMenu(data, parentId, parentDropdownMenu) {
 }
 
 generateMenu(menuData, null);
+
+//菜單展開
+// 获取当前页面路径
+let currentPath = window.location.pathname;
+if (currentPath.charAt(0) === "/") {
+	currentPath = currentPath.slice(1);
+}
+
+// 获取菜单项容器
+const getdynamicMenu = document.getElementById("dynamicMenu");
+
+// 找到所有的菜单项
+
+const linksNodeList = document.querySelectorAll(".dropdown-menu a");
+const links = Array.from(linksNodeList).map((link) => link.getAttribute("href"));
+
+const matchedLinks = links.filter((link) => link === currentPath);
+
+localStorage.setItem("expandedMenu", matchedLinks[0]);
+
+// 在页面加载时应用展开的菜单项状态
+window.addEventListener("load", () => {
+	// 从localStorage中获取展开的菜单项URL
+	const expandedMenuUrl = localStorage.getItem("expandedMenu");
+
+	if (expandedMenuUrl) {
+		// 找到对应的菜单项并展开
+		const expandedMenuItem = getdynamicMenu.querySelector(`[href="${expandedMenuUrl}"]`);
+
+		if (expandedMenuItem) {
+			// 找到父菜单项并展开
+			const parentDropdown = expandedMenuItem.closest(".dropdown-menu");
+			if (parentDropdown) {
+				parentDropdown.classList.add("show");
+			}
+		}
+	}
+});

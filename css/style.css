@@ -363,6 +363,11 @@ td:first-child {
 }
 
 /* 二 */
+#insertContent th:first-child,
+#insertContent td:first-child {
+	min-width: 220px;
+}
+
 #storeInformation th:first-child,
 #storeInformation td:first-child {
 	min-width: 160px;

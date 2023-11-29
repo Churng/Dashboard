@@ -152,3 +152,24 @@ function showSuccessunsubCompleteNotification() {
 function showSuccessunsubCancelNotification() {
 	toastr.success("已取消退貨！", "成功");
 }
+
+//盤點
+function showSuccessuInsertNotification() {
+	toastr.success("已新增盤點項目！", "成功");
+}
+
+function showSuccessuInventoryStockInNotification() {
+	toastr.success("已新增盤點入庫！", "成功");
+}
+
+function showSuccessuInventoryLossNotification() {
+	toastr.success("已列入盤點損失！", "成功");
+}
+
+function showSuccessucompleteInventoryNotification() {
+	toastr.success("已結束盤點！", "成功");
+}
+
+function showSuccesupdateInventoryDetailNotification() {
+	toastr.success("已成功暫存內容！", "成功");
+}
