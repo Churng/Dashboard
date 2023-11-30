@@ -130,8 +130,6 @@ function updatePageWithData(responseData) {
 		var checkboxHtml = "";
 		if (data.status == 3) {
 			var checkboxHtml = '<input type="checkbox" class="executeship-button" data-id="' + data.id + '">';
-		} else {
-			checkboxHtml += "<span>" + "已處理出庫" + "</span>";
 		}
 
 		// Boolean(data.if_order_delete_component)
