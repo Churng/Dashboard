@@ -223,7 +223,7 @@ function updatePageWithData(responseData) {
 					//盤點入庫
 					var inventoryLossButtonHtml = "";
 					if (Boolean(ifInventoryLoss) === true) {
-						`<button class="btn btn-warning InventoryLoss-button" data-id="${row.id}">列入盤點損失</button>`;
+						inventoryLossButtonHtml += `<button class="btn btn-warning InventoryLoss-button" data-id="${row.id}">列入盤點損失</button>`;
 					}
 
 					// 盤點損失
