@@ -98,9 +98,6 @@ if (currentPath.charAt(0) === "/") {
 const pathParts = currentPath.split("/");
 const htmlName = pathParts[pathParts.length - 1];
 
-console.log("HTML 名稱:", htmlName);
-console.log(currentPath);
-
 // 获取菜单项容器
 const getdynamicMenu = document.getElementById("dynamicMenu");
 
