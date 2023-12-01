@@ -109,7 +109,7 @@ const getdynamicMenu = document.getElementById("dynamicMenu");
 const linksNodeList = document.querySelectorAll(".dropdown-menu a");
 const links = Array.from(linksNodeList).map((link) => link.getAttribute("href"));
 
-const matchedLinks = links.filter((link) => link === currentPath);
+const matchedLinks = links.filter((link) => link === htmlName);
 
 localStorage.setItem("expandedMenu", matchedLinks[0]);
 
