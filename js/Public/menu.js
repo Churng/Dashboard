@@ -94,6 +94,7 @@ let currentPath = window.location.pathname;
 if (currentPath.charAt(0) === "/") {
 	currentPath = currentPath.slice(1);
 }
+console.log(currentPath);
 
 // 获取菜单项容器
 const getdynamicMenu = document.getElementById("dynamicMenu");
