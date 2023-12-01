@@ -33,13 +33,15 @@ $(document).ready(function () {
 			console.log(responseData, "Orin");
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const wareHouseData = responseData.returnData[0];
+
 				$("#WarehouseId").val(wareHouseData.id);
 				$("#createTime").val(wareHouseData.createTime);
 				$("#createOperator").val(wareHouseData.createOperator);
 				$("#storeName").val(wareHouseData.storeName);
 				$("#statusName").val(wareHouseData.statusName);
+				$("#sourceType").val(wareHouseData.typeName);
 				$("#unsubscribeId").val(wareHouseData.unsubscribeId);
-				$("#sourceType").val(wareHouseData.sourceType);
+
 				$("#amount").val(wareHouseData.amount);
 				$("#remark").val(wareHouseData.remark);
 

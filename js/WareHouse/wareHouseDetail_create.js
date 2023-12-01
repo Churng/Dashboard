@@ -27,11 +27,9 @@ $(document).ready(function () {
 			data: IdPost,
 		},
 		success: function (responseData) {
-			handleApiResponse(responseData);
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const wareHouseData = responseData.returnData[0];
-				handleApiResponse(responseData);
 
 				$("#componentName").val(wareHouseData.componentName);
 				$("#componentNumber").val(wareHouseData.componentNumber);
@@ -64,6 +62,8 @@ $(document).ready(function () {
 
 				// 填充完毕后隐藏加载中的spinner;
 				$("#spinner").hide();
+			} else {
+				handleApiResponse(responseData);
 			}
 		},
 		error: function (error) {

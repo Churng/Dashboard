@@ -6,6 +6,9 @@ function handleApiResponse(apiResponse) {
 		// 參數錯誤
 		"001": () => {
 			toastr.warning(apiResponse.returnMessage);
+			setTimeout(function () {
+				window.history.back();
+			}, 1000);
 		},
 		"002": () => {
 			toastr.warning(apiResponse.returnMessage);

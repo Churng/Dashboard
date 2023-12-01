@@ -89,7 +89,7 @@ $(document).on("click", "#searchdepotPosition", function () {
 			if (responseData.returnCode === "1") {
 				const showPosition = document.getElementById("getPositon");
 				showPosition.value = getdepotPosition;
-				// updatePageWithData(responseData);
+				updatePageWithData(responseData);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -187,3 +187,63 @@ $(document).on("click", "#uploadExcel", function (e) {
 		}
 	});
 });
+
+var table;
+function updatePageWithData(responseData) {
+	// 清空表格数据
+	var dataTable = $("#insertContent").DataTable();
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
+
+	table = $("#insertContent").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var ifInventoryLoss = row.if_inventory_loss;
+					var ifInventoryStockIn = row.if_inventory_stock_in;
+					//盤點入庫
+					var inventoryLossButtonHtml = "";
+					if (Boolean(ifInventoryLoss) === true) {
+						inventoryLossButtonHtml += `<button class="btn btn-warning InventoryLoss-button" data-id="${row.id}">列入盤點損失</button>`;
+					}
+
+					// 盤點損失
+					var inventoryStockInButtonHtml = "";
+					if (Boolean(ifInventoryStockIn) === true) {
+						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" data-id="${row.id}">盤點入庫</button>`;
+					}
+
+					var buttonsHtml = inventoryLossButtonHtml + "&nbsp;" + inventoryStockInButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "id" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "suitableCarModel" },
+			{ data: "orderNo" },
+			{ data: "storeName" },
+			{ data: "orderNote" },
+			{ data: "cost" },
+			{ data: "depotAmount" },
+			{ data: "inventoryAmount" },
+			{ data: "statusName" },
+			{
+				data: "remark",
+
+				render: function (data, type, row) {
+					const value = data !== null ? data : "";
+					return `<span contenteditable="true" class="editable-cell" data-id="${row.id}">${data}</span>`;
+				},
+			},
+		],
+		drawCallback: function () {
+			// handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
+	});
+	table.rows.add(data).draw();
+}
