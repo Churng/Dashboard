@@ -124,6 +124,10 @@ window.addEventListener("load", () => {
 			const parentDropdown = expandedMenuItem.closest(".dropdown-menu");
 			if (parentDropdown) {
 				parentDropdown.classList.add("show");
+
+				expandedMenuItem.style.color = "#fff";
+				expandedMenuItem.style.textDecoration = "none";
+				expandedMenuItem.style.backgroundColor = "#0d6efd";
 			}
 		}
 	}
