@@ -245,6 +245,12 @@ $(document).ready(function () {
 	// 監聽倉庫庫存
 	$("#selectInventory").on("change", function () {
 		selectInventoryId = $("#selectInventory").val();
+
+		// 在倉庫选择变化时，检查品牌选择是否存在并设置筛选条件
+		if (selectInventoryId) {
+			// 获取当前品牌选择的值
+			selectedBrandId = $("#selectBrand").val();
+		}
 	});
 
 	// 監聽欄位填寫
