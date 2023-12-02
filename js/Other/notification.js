@@ -67,15 +67,24 @@ function updatePageWithData(responseData) {
 				"</div>";
 		}
 
-		//零件採購單
-		var newPurchaseButtonHtml = "";
-		if (Boolean(data.if_newPurchase) === true) {
-			newPurchaseButtonHtml +=
-				'<button type="button"  class="btn btn-primary text-white ship-button"  data-id="' +
+		//新增入庫單
+		var wareHouseButtonHtml = "";
+		if (Boolean(data.if_newStockIn) === true) {
+			wareHouseButtonHtml +=
+				'<button type="button" class="btn btn-primary text-white wareHouse-button"  data-id="' +
 				data.id +
-				'" data-shipno="' +
-				data.shipNo +
-				'">查看零件採購單</button>';
+				'" data-componentid="' +
+				data.componentId +
+				'">新增入庫單</button>';
+		}
+
+		//前往入庫單
+		var gowareHouseButtonHtml = "";
+		if (Boolean(data.if_stockInDetail) === true && data.notificationType == "1") {
+			gowareHouseButtonHtml +=
+				'<button type="button" class="btn btn-primary text-white gowareHouse-button"  data-id="' +
+				data.id +
+				'">前往入庫單</button>';
 		}
 
 		//訂單
@@ -112,13 +121,15 @@ function updatePageWithData(responseData) {
 		}
 
 		var buttonsHtml =
-			newPurchaseButtonHtml +
+			wareHouseButtonHtml +
 			"&nbsp;" +
 			orderButtonHtml +
 			"&nbsp;" +
 			purchaseDetailButtonHtml +
 			"&nbsp;" +
-			shipDetailButtonHtml;
+			shipDetailButtonHtml +
+			"&nbsp;" +
+			gowareHouseButtonHtml;
 		// 在这里添加点击事件处理程序来处理复选框的点击事件
 		checkboxHtml += '<input type="hidden" data-id="' + data.id + '">';
 
@@ -127,6 +138,23 @@ function updatePageWithData(responseData) {
 			.draw(false);
 	}
 }
+
+// 新增入庫單
+$(document).on("click", ".wareHouse-button", function () {
+	var componentId = $(this).data("componentid");
+	localStorage.setItem("componentValue", componentId);
+	var newPageUrl = "wareHouseDetail.html";
+	window.location.href = newPageUrl;
+});
+
+// 前往入庫單
+$(document).on("click", ".gowareHouse-button", function () {
+	var wareHouseId = $(this).data("id");
+	localStorage.setItem("wareHouseId", wareHouseId);
+	var newPageUrl = "wareHouseDetail_update.html";
+	window.location.href = newPageUrl;
+});
+
 // 查看零件採購單
 $(document).on("click", ".purchase-button", function () {
 	var purchaseId = $(this).data("purchaseid");
@@ -139,7 +167,7 @@ $(document).on("click", ".ship-button", function () {
 	window.location.href = "shipDetail.html?shipNo=" + shipNo;
 });
 
-// 查看出庫單
+// 查看訂單
 $(document).on("click", ".order-button", function () {
 	var orderNo = $(this).data("orderno");
 	window.location.href = "orderDetail.html?orderNo=" + orderNo;
