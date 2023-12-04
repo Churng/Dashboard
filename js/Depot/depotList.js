@@ -62,7 +62,7 @@ function updatePageWithData(responseData) {
 					return buttonsHtml;
 				},
 			},
-			{ data: "componentId" },
+			{ data: "id" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "brandName" },

@@ -21,7 +21,7 @@ $(document).ready(function () {
 	var currentUser = localStorage.getItem("currentUser");
 
 	if (!userData || !currentUser) {
-		window.location.href = "0-signin.html";
+		window.location.href = "signin.html";
 	}
 });
 
@@ -41,9 +41,9 @@ $(function () {
 		// 移除 localStorage 中的用户数据
 		localStorage.removeItem("userData");
 		localStorage.removeItem("currentUser");
-		window.history.replaceState({}, document.title, "0-signin.html");
+		window.history.replaceState({}, document.title, "signin.html");
 
-		window.location.href = "0-signin.html";
+		window.location.href = "signin.html";
 	});
 });
 

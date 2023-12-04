@@ -139,6 +139,11 @@
                                 <input type="text" class="form-control" id="getPositon" disabled>
                             </div>
 
+                            <div class="col-sm-4">
+                                <label for="getinventoryNo" class="form-label">來源單號</label>
+                                <input type="text" class="form-control" id="getinventoryNo" disabled>
+                            </div>
+
                         </div>
 
                         <div class="row g-3 mb-4">
@@ -185,6 +190,7 @@
                                     </div>
                                 </div>
 
+                                <button class="btn btn btn-primary" type="button" id="uploadExcel">上傳</button>
 
                                 <div class="tableList mt-5">
                                     <div class="table-responsive parts-order-table">
@@ -209,11 +215,11 @@
 
                                 <div class="row">
                                     <div class="col-sm-4 my-3">
-                                        <label for="status" class="form-label">結果相符</label>
-                                        <select class="form-select" id="status" required="">
+                                        <label for="inventoryStatus" class="form-label">結果相符</label>
+                                        <select class="form-select" id="inventoryStatus" required="">
                                             <option value="">全部</option>
-                                            <option value="1">相符</option>
-                                            <option value="2">不相符</option>
+                                            <option value="相符">相符</option>
+                                            <option value="不相符">不相符</option>
                                         </select>
                                     </div>
                                 </div>

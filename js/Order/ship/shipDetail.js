@@ -1,6 +1,5 @@
 function fetchAccountList() {
 	var partId = localStorage.getItem("shipNo");
-	console.log(partId);
 	var getshipNo = JSON.parse(partId);
 	const dataId = { shipNo: getshipNo };
 	const IdPost = JSON.stringify(dataId);
@@ -140,7 +139,7 @@ function updatePageWithData(responseData) {
 
 		dataTable.row
 			.add([
-				data.componentId,
+				data.id,
 				data.componentNumber,
 				data.componentName,
 				data.brandName,

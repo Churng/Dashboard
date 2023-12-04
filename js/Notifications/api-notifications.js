@@ -16,7 +16,7 @@ function handleApiResponse(apiResponse) {
 		"003": () => {
 			toastr.warning(apiResponse.returnMessage);
 			setTimeout(function () {
-				window.location.href = "0-signin.html";
+				window.location.href = "signin.html";
 			}, 1000);
 		},
 		"004": () => {

@@ -33,7 +33,7 @@ $(document).ready(function () {
 			console.log("成功响应：", responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const depotData = responseData.returnData[0];
-				$("#componentId").val(depotData.componentId);
+				$("#componentId").val(depotData.id);
 				$("#statusName").val(depotData.statusName);
 				$("#remark").val(depotData.remark);
 

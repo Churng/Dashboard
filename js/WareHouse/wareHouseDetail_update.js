@@ -166,7 +166,7 @@ function updatePageWithData(responseData) {
 		var data = responseData.orderMatchData[i];
 
 		dataTable.row
-			.add([data.id, data.componentId, data.componentName, data.orderNo, data.storeName, data.orderNote])
+			.add([data.id, data.componentNumber, data.componentName, data.orderNo, data.storeName, data.orderNote])
 			.draw(false);
 	}
 }

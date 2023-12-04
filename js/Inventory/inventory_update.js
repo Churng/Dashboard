@@ -82,6 +82,7 @@ $(document).ready(function () {
 
 				$("#inventoryId").val(inventoryData.id);
 				$("#getPositon").val(inventoryData.depotPosition);
+				$("#getinventoryNo").val(inventoryData.inventoryNo);
 				$("#EditAccount").val(inventoryData.createOperator);
 				$("#BuildTime").val(inventoryData.createTime);
 				$("#EditTime").val(inventoryData.updateTime);
@@ -250,10 +251,10 @@ function updatePageWithData(responseData) {
 			{ data: "statusName" },
 			{
 				data: "remark",
-
+				type: "input",
 				render: function (data, type, row) {
 					const value = data !== null ? data : "";
-					return `<span contenteditable="true" class="editable-cell" data-id="${row.id}">${data}</span>`;
+					return `<input type="text" class="form-control editable-cell" data-id="${row.id}" value="${value}" />`;
 				},
 			},
 		],
@@ -264,6 +265,14 @@ function updatePageWithData(responseData) {
 		order: [],
 	});
 	table.rows.add(data).draw();
+
+	//資料篩選
+
+	$("#inventoryStatus").on("change", function () {
+		var selectedStatus = $(this).val();
+
+		table.column(11).search(selectedStatus).draw();
+	});
 }
 
 // Remark取值
@@ -509,7 +518,7 @@ $(document).on("click", "#completeInventoryBtn", function (e) {
 	});
 });
 
-//暫存修改
+//暫存修改:僅備註
 $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 	e.stopPropagation();
 	var formData = new FormData(); // 在外部定义 formData
@@ -534,24 +543,8 @@ $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 
 	$(document).on("click", ".upload-content", function () {
 		event.preventDefault();
-		var fileInput = $("#fileInput")[0];
 
 		var updateObj = {};
-
-		if (fileInput.files.length > 0) {
-			for (var i = 0; i < fileInput.files.length; i++) {
-				var file = fileInput.files[i];
-				formData.append("inventory[]", file, file.name);
-
-				updateObj.inventoryNo = getinventoryNo;
-				updateObj.fileName = file.name;
-				updateObj.file = file.name;
-			}
-		} else {
-			updateObj.inventoryNo = getinventoryNo;
-			updateObj.fileName = "";
-			updateObj.file = "";
-		}
 
 		//取值:remark
 		var remarkObj = [];
@@ -623,10 +616,69 @@ $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 });
 
 // 下載excel資料
+// document.getElementById("downloadExelBtn").addEventListener("click", function () {
+// 	var table = $("#insertContent").DataTable();
+// 	var data = table.rows().data();
+// 	var csvContent = "data:text/csv;charset=utf-8,";
+
+// 	// 取得表頭
+// 	var headers = table
+// 		.columns()
+// 		.header()
+// 		.toArray()
+// 		.map(function (header) {
+// 			return $(header).text();
+// 		});
+// 	headers.shift();
+// 	csvContent += headers.join(",") + "\n";
+
+// 	var excludedProperties = ["componentId", "if_inventory_stock_in", "if_inventory_loss", "status"];
+
+// 	// 將資料轉換為二維陣列
+// 	var dataArray = [];
+// 	for (var i = 0; i < data.length; i++) {
+// 		var rowData = data[i];
+// 		var row = [];
+
+// 		for (var key in rowData) {
+// 			if (rowData.hasOwnProperty(key) && !excludedProperties.includes(key)) {
+// 				row.push(rowData[key]);
+// 			}
+// 		}
+
+// 		dataArray.push(row);
+// 	}
+
+// 	for (var j = 0; j < dataArray.length; j++) {
+// 		var lastColumnIndex = dataArray[j].length - 1;
+// 		var secondLastColumnIndex = dataArray[j].length - 2;
+// 		if (lastColumnIndex >= 0 && secondLastColumnIndex >= 0) {
+// 			var tempData = dataArray[j][lastColumnIndex];
+// 			dataArray[j][lastColumnIndex] = dataArray[j][secondLastColumnIndex];
+// 			dataArray[j][secondLastColumnIndex] = tempData;
+// 		}
+// 	}
+
+// 	for (var k = 0; k < dataArray.length; k++) {
+// 		var row = dataArray[k];
+// 		csvContent += row.join(",") + "\n";
+// 	}
+
+// 	// 建立下載連結
+// 	var encodedUri = encodeURI(csvContent);
+// 	var link = document.createElement("a");
+// 	link.setAttribute("href", encodedUri);
+// 	link.setAttribute("download", "datatable.csv");
+// 	document.body.appendChild(link);
+// 	link.click();
+// 	document.body.removeChild(link);
+// });
+
 document.getElementById("downloadExelBtn").addEventListener("click", function () {
 	var table = $("#insertContent").DataTable();
 	var data = table.rows().data();
-	var csvContent = "data:text/csv;charset=utf-8,";
+
+	var excludedProperties = ["componentId", "if_inventory_stock_in", "if_inventory_loss", "status"];
 
 	// 取得表頭
 	var headers = table
@@ -636,15 +688,15 @@ document.getElementById("downloadExelBtn").addEventListener("click", function ()
 		.map(function (header) {
 			return $(header).text();
 		});
+	headers = headers.filter(function (header) {
+		return !excludedProperties.includes(header);
+	});
 	headers.shift();
-	csvContent += headers.join(",") + "\n";
 
-	var excludedProperties = ["componentId", "if_inventory_stock_in", "if_inventory_loss", "status"];
+	var csvContent = headers.join(",") + "\n";
 
-	// 將資料轉換為二維陣列
-	var dataArray = [];
-	for (var i = 0; i < data.length; i++) {
-		var rowData = data[i];
+	// 將資料轉換為 CSV 格式
+	data.each(function (rowData) {
 		var row = [];
 
 		for (var key in rowData) {
@@ -653,30 +705,107 @@ document.getElementById("downloadExelBtn").addEventListener("click", function ()
 			}
 		}
 
-		dataArray.push(row);
-	}
-
-	for (var j = 0; j < dataArray.length; j++) {
-		var lastColumnIndex = dataArray[j].length - 1;
-		var secondLastColumnIndex = dataArray[j].length - 2;
-		if (lastColumnIndex >= 0 && secondLastColumnIndex >= 0) {
-			var tempData = dataArray[j][lastColumnIndex];
-			dataArray[j][lastColumnIndex] = dataArray[j][secondLastColumnIndex];
-			dataArray[j][secondLastColumnIndex] = tempData;
-		}
-	}
-
-	for (var k = 0; k < dataArray.length; k++) {
-		var row = dataArray[k];
 		csvContent += row.join(",") + "\n";
-	}
+	});
+
+	var blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
 
 	// 建立下載連結
-	var encodedUri = encodeURI(csvContent);
 	var link = document.createElement("a");
-	link.setAttribute("href", encodedUri);
+	link.href = URL.createObjectURL(blob);
 	link.setAttribute("download", "datatable.csv");
 	document.body.appendChild(link);
+
+	// 點擊下載連結
 	link.click();
+
+	// 移除元素
 	document.body.removeChild(link);
+});
+
+//上傳：拿修改api上傳
+$(document).on("click", "#uploadExcel", function (e) {
+	e.stopPropagation();
+	var formData = new FormData(); // 在外部定义 formData
+
+	// 解绑之前的点击事件处理程序
+	$(document).off("click", ".upload-excel");
+
+	toastr.options = {
+		closeButton: true,
+		timeOut: 0,
+		extendedTimeOut: 0,
+		positionClass: "toast-top-center",
+	};
+
+	toastr.warning(
+		"確定要上傳檔案嗎？<br/><br><button class='btn btn-danger upload-excel'>確定</button>",
+		"確定完成上傳",
+		{
+			allowHtml: true,
+		}
+	);
+
+	$(document).on("click", ".upload-excel", function () {
+		event.preventDefault();
+		var fileInput = $("#fileInput")[0];
+
+		if (fileInput.files.length > 0) {
+			for (var i = 0; i < fileInput.files.length; i++) {
+				var file = fileInput.files[i];
+				formData.append("inventory[]", file, file.name);
+			}
+
+			//取值
+			var updateObj = {
+				fileName: file.name,
+				file: file.name,
+			};
+
+			// 从localStorage中获取session_id和chsm
+			// 解析JSON字符串为JavaScript对象
+			const jsonStringFromLocalStorage = localStorage.getItem("userData");
+			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+			const user_session_id = gertuserData.sessionId;
+
+			// 组装发送文件所需数据
+			// chsm = session_id+action+'HBAdminInventoryApi'
+			var action = "updateInventoryDetail";
+			var chsmtoPostFile = user_session_id + action + "HBAdminInventoryApi";
+			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+			formData.set("action", action);
+			formData.set("session_id", user_session_id);
+			formData.set("chsm", chsm);
+			formData.set("data", JSON.stringify(updateObj));
+
+			// 執行POST請求
+			$.ajax({
+				type: "POST",
+				url: `${apiURL}/inventory`,
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					if (response.returnCode === "1") {
+						showSuccessuInsertNotification();
+						var getinventoryNo = response.inventoryNo;
+						console.log(response);
+						localStorage.setItem("inventoryNo", getinventoryNo);
+						setTimeout(function () {
+							var newPageUrl = "inventoryDetail_update.html";
+							window.location.href = newPageUrl;
+						}, 1000);
+					} else {
+						handleApiResponse(response);
+					}
+				},
+				error: function (error) {
+					showErrorFileNotification();
+				},
+			});
+		} else {
+			showWarningNotification();
+		}
+	});
 });

@@ -38,6 +38,7 @@ function updatePageWithData(responseData) {
 	var dataTable = $("#partsOrder").DataTable();
 	dataTable.clear().destroy();
 	var data = responseData.returnData;
+	console.log(data);
 
 	table = $("#partsOrder").DataTable({
 		columns: [
@@ -60,13 +61,13 @@ function updatePageWithData(responseData) {
 			{ data: "createOperator" },
 			{ data: "storeName" },
 			{ data: "statusName" },
-			{ data: "createTime" },
 			{ data: "orderNo" },
-			{ data: "componentId" },
+
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "brandName" },
 			{ data: "suitableCarModel" },
+			{ data: "price" },
 			{ data: "wholesalePrice" },
 			{ data: "lowestWholesalePrice" },
 			{ data: "cost" },
@@ -209,10 +210,10 @@ $(document).ready(function () {
 });
 
 // 搜尋後清空
-function clearDateFields() {
-	$("#startDate").val("");
-	$("#endDate").val("");
-}
+// function clearDateFields() {
+// 	$("#startDate").val("");
+// 	$("#endDate").val("");
+// }
 
 //取得門市資料
 $(document).ready(function () {
@@ -338,7 +339,7 @@ $(document).ready(function () {
 			success: function (responseData) {
 				if (responseData.returnCode === "1") {
 					updatePageWithData(responseData);
-					clearDateFields();
+					// clearDateFields();
 				} else {
 					handleApiResponse(responseData);
 				}

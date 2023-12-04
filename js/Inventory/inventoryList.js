@@ -123,7 +123,7 @@ $(document).ready(function () {
 			sendApiRequest(filterData);
 		} else if (!statusValue) {
 			fetchAccountList();
-			clearDateFields();
+			// clearDateFields();
 		}
 	});
 
