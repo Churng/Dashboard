@@ -1,24 +1,13 @@
 //User login info
 
-if (typeof Storage !== "undefined") {
-	var userData = localStorage.getItem("currentUser");
-
-	if (userData) {
-		var userObject = JSON.parse(userData);
-
-		var userName = userObject.userName;
-		var userPhoto = userObject.userPhoto;
-	} else {
-		console.log("在localStorage中未找到個人資料。");
-	}
-} else {
-	console.log("瀏覽器不支持localStorage。");
-}
+var userData = localStorage.getItem("currentUser");
+var userObject = JSON.parse(userData);
+var userName = userObject.userName;
+var userPhoto = userObject.userPhoto;
 
 //Authlogin
 $(document).ready(function () {
-	var userData = localStorage.getItem("userData");
-	var currentUser = localStorage.getItem("currentUser");
+	var currentUser = localStorage.getItem("userData");
 
 	if (!userData || !currentUser) {
 		window.location.href = "signin.html";
