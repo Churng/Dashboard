@@ -1,15 +1,14 @@
-//User login info
-
-var userData = localStorage.getItem("currentUser");
-var userObject = JSON.parse(userData);
+var currentUser = localStorage.getItem("currentUser");
+var userData = localStorage.getItem("userData");
+var userObject = JSON.parse(currentUser);
 var userName = userObject.userName;
 var userPhoto = userObject.userPhoto;
 
 //Authlogin
 $(document).ready(function () {
-	var currentUser = localStorage.getItem("userData");
-
-	if (!userData || !currentUser) {
+	console.log(JSON.parse(userData));
+	console.log(JSON.parse(userData).returnCode);
+	if (JSON.parse(userData).returnCode !== "1") {
 		window.location.href = "signin.html";
 	}
 });
