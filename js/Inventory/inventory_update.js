@@ -103,18 +103,18 @@ $(document).ready(function () {
 				}
 
 				//下載excel
-				var downloadExelBtn = document.getElementById("downloadExelBtn");
-				if (downloadExelBtn) {
+				var downloadExcelBtn = document.getElementById("downloadExcelBtn");
+				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_downloadInventoryExcel) === true) {
-						downloadExelBtn.disabled = false;
+						downloadExcelBtn.disabled = false;
 					} else {
-						downloadExelBtn.disabled = true;
+						downloadExcelBtn.disabled = true;
 					}
 				}
 
 				//匯入excel按鈕
 				var downloadInput = document.getElementById("fileInput");
-				if (downloadExelBtn) {
+				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_importExcel) === true) {
 						downloadInput.disabled = false;
 					} else {
@@ -124,7 +124,7 @@ $(document).ready(function () {
 
 				// 查找儲位
 				var searchdepotPosition = document.getElementById("searchdepotPosition");
-				if (downloadExelBtn) {
+				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_searchDepotPosition) === true) {
 						searchdepotPosition.disabled = false;
 					} else {
@@ -134,7 +134,7 @@ $(document).ready(function () {
 
 				// 暫存
 				var updateInventoryDetailBtn = document.getElementById("updateInventoryDetailBtn");
-				if (downloadExelBtn) {
+				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_tempSave) === true) {
 						updateInventoryDetailBtn.disabled = false;
 					} else {
@@ -215,6 +215,7 @@ function updatePageWithData(responseData) {
 	var data = responseData.returnData;
 
 	table = $("#insertContent").DataTable({
+		responsive: true,
 		columns: [
 			{
 				// Buttons column
@@ -254,7 +255,7 @@ function updatePageWithData(responseData) {
 				type: "input",
 				render: function (data, type, row) {
 					const value = data !== null ? data : "";
-					return `<input type="text" class="form-control editable-cell" data-id="${row.id}" value="${value}" />`;
+					return `<input type="text" class="form-control editable-cell" data-id="${row.id}" data-value="${row.remark}" value="${row.remark}" />`;
 				},
 			},
 		],
@@ -279,12 +280,13 @@ function updatePageWithData(responseData) {
 var changedCells;
 $(document).ready(function () {
 	changedCells = [];
+
 	$("#insertContent tbody").on("blur", ".editable-cell", function () {
-		const currentValue = $(this).text();
-		const originalValue = $(this).data("original-value");
+		const currentValue = $(this).val();
+		const originalValue = $(this).data("value");
 		const rowIndex = table.row($(this).closest("tr")).index();
 
-		if (currentValue !== originalValue) {
+		if (currentValue !== originalValue && currentValue.trim() !== "") {
 			const rowData = table.row(rowIndex).data();
 			const rowId = rowData.id;
 
@@ -545,6 +547,9 @@ $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 		event.preventDefault();
 
 		var updateObj = {};
+		var updateObj = {
+			inventoryNo: getinventoryNo,
+		};
 
 		//取值:remark
 		var remarkObj = [];
@@ -616,65 +621,8 @@ $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 });
 
 // 下載excel資料
-// document.getElementById("downloadExelBtn").addEventListener("click", function () {
-// 	var table = $("#insertContent").DataTable();
-// 	var data = table.rows().data();
-// 	var csvContent = "data:text/csv;charset=utf-8,";
 
-// 	// 取得表頭
-// 	var headers = table
-// 		.columns()
-// 		.header()
-// 		.toArray()
-// 		.map(function (header) {
-// 			return $(header).text();
-// 		});
-// 	headers.shift();
-// 	csvContent += headers.join(",") + "\n";
-
-// 	var excludedProperties = ["componentId", "if_inventory_stock_in", "if_inventory_loss", "status"];
-
-// 	// 將資料轉換為二維陣列
-// 	var dataArray = [];
-// 	for (var i = 0; i < data.length; i++) {
-// 		var rowData = data[i];
-// 		var row = [];
-
-// 		for (var key in rowData) {
-// 			if (rowData.hasOwnProperty(key) && !excludedProperties.includes(key)) {
-// 				row.push(rowData[key]);
-// 			}
-// 		}
-
-// 		dataArray.push(row);
-// 	}
-
-// 	for (var j = 0; j < dataArray.length; j++) {
-// 		var lastColumnIndex = dataArray[j].length - 1;
-// 		var secondLastColumnIndex = dataArray[j].length - 2;
-// 		if (lastColumnIndex >= 0 && secondLastColumnIndex >= 0) {
-// 			var tempData = dataArray[j][lastColumnIndex];
-// 			dataArray[j][lastColumnIndex] = dataArray[j][secondLastColumnIndex];
-// 			dataArray[j][secondLastColumnIndex] = tempData;
-// 		}
-// 	}
-
-// 	for (var k = 0; k < dataArray.length; k++) {
-// 		var row = dataArray[k];
-// 		csvContent += row.join(",") + "\n";
-// 	}
-
-// 	// 建立下載連結
-// 	var encodedUri = encodeURI(csvContent);
-// 	var link = document.createElement("a");
-// 	link.setAttribute("href", encodedUri);
-// 	link.setAttribute("download", "datatable.csv");
-// 	document.body.appendChild(link);
-// 	link.click();
-// 	document.body.removeChild(link);
-// });
-
-document.getElementById("downloadExelBtn").addEventListener("click", function () {
+document.getElementById("downloadExcelBtn").addEventListener("click", function () {
 	var table = $("#insertContent").DataTable();
 	var data = table.rows().data();
 
@@ -708,7 +656,11 @@ document.getElementById("downloadExelBtn").addEventListener("click", function ()
 		csvContent += row.join(",") + "\n";
 	});
 
-	var blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+	// Add UTF-8 BOM to the content
+	var utf8BOM = "\uFEFF";
+	var csvContentWithBOM = utf8BOM + csvContent;
+
+	var blob = new Blob([csvContentWithBOM], { type: "text/csv;charset=utf-8;" });
 
 	// 建立下載連結
 	var link = document.createElement("a");
@@ -723,7 +675,7 @@ document.getElementById("downloadExelBtn").addEventListener("click", function ()
 	document.body.removeChild(link);
 });
 
-//上傳：拿修改api上傳
+//上傳檔案
 $(document).on("click", "#uploadExcel", function (e) {
 	e.stopPropagation();
 	var formData = new FormData(); // 在外部定义 formData
@@ -758,6 +710,7 @@ $(document).on("click", "#uploadExcel", function (e) {
 
 			//取值
 			var updateObj = {
+				inventoryNo: getinventoryNo,
 				fileName: file.name,
 				file: file.name,
 			};
@@ -788,13 +741,10 @@ $(document).on("click", "#uploadExcel", function (e) {
 				contentType: false,
 				success: function (response) {
 					if (response.returnCode === "1") {
-						showSuccessuInsertNotification();
-						var getinventoryNo = response.inventoryNo;
-						console.log(response);
-						localStorage.setItem("inventoryNo", getinventoryNo);
+						showSuccessuInsertCsvNotification();
+
 						setTimeout(function () {
-							var newPageUrl = "inventoryDetail_update.html";
-							window.location.href = newPageUrl;
+							window.location.reload();
 						}, 1000);
 					} else {
 						handleApiResponse(response);

@@ -5,9 +5,6 @@ function handlePageReadPermissions(currentUser, currentUrl) {
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
-
-			console.log("currentUrl:", currentUrl);
-			console.log("page.auth:", page.auth);
 			if (
 				(currentUrl.includes("manualDetail") && page.name === "零件手冊資料") ||
 				(currentUrl.includes("storeDetail") && page.name === "門市資料") ||

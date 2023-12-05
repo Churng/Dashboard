@@ -158,6 +158,10 @@ function showSuccessuInsertNotification() {
 	toastr.success("已新增盤點項目！", "成功");
 }
 
+function showSuccessuInsertCsvNotification() {
+	toastr.success("已成功上傳文件", "成功");
+}
+
 function showSuccessuInventoryStockInNotification() {
 	toastr.success("已新增盤點入庫！", "成功");
 }

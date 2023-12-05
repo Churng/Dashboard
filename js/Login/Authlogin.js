@@ -6,8 +6,6 @@ var userPhoto = userObject.userPhoto;
 
 //Authlogin
 $(document).ready(function () {
-	console.log(JSON.parse(userData));
-	console.log(JSON.parse(userData).returnCode);
 	if (JSON.parse(userData).returnCode !== "1") {
 		window.location.href = "signin.html";
 	}
