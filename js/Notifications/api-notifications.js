@@ -6,9 +6,6 @@ function handleApiResponse(apiResponse) {
 		// 參數錯誤
 		"001": () => {
 			toastr.warning(apiResponse.returnMessage);
-			setTimeout(function () {
-				window.history.back();
-			}, 1000);
 		},
 		"002": () => {
 			toastr.warning(apiResponse.returnMessage);
@@ -24,6 +21,9 @@ function handleApiResponse(apiResponse) {
 		},
 		"005": () => {
 			toastr.warning(apiResponse.returnMessage);
+			setTimeout(function () {
+				window.history.back();
+			}, 1000);
 		},
 		"006": () => {
 			toastr.warning(apiResponse.returnMessage);
@@ -33,8 +33,29 @@ function handleApiResponse(apiResponse) {
 		},
 		"008": () => {
 			toastr.warning(apiResponse.returnMessage);
+			setTimeout(function () {
+				window.history.back();
+			}, 1000);
 		},
 		"009": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"010": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"011": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"012": () => {
+			toastr.warning(apiResponse.returnMessage);
+			setTimeout(function () {
+				window.location.reload();
+			}, 1000);
+		},
+		"013": () => {
+			toastr.warning(apiResponse.returnMessage);
+		},
+		"014": () => {
 			toastr.warning(apiResponse.returnMessage);
 		},
 	};

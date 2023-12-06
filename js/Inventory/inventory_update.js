@@ -215,6 +215,16 @@ function updatePageWithData(responseData) {
 	var data = responseData.returnData;
 
 	table = $("#insertContent").DataTable({
+		dom: "Bfrtip",
+		buttons: [
+			"CSV",
+			{
+				extend: "csv",
+				text: "下載EXCEL",
+				bom: true,
+			},
+			"excel",
+		],
 		responsive: true,
 		columns: [
 			{
@@ -618,61 +628,6 @@ $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 			},
 		});
 	});
-});
-
-// 下載excel資料
-
-document.getElementById("downloadExcelBtn").addEventListener("click", function () {
-	var table = $("#insertContent").DataTable();
-	var data = table.rows().data();
-
-	var excludedProperties = ["componentId", "if_inventory_stock_in", "if_inventory_loss", "status"];
-
-	// 取得表頭
-	var headers = table
-		.columns()
-		.header()
-		.toArray()
-		.map(function (header) {
-			return $(header).text();
-		});
-	headers = headers.filter(function (header) {
-		return !excludedProperties.includes(header);
-	});
-	headers.shift();
-
-	var csvContent = headers.join(",") + "\n";
-
-	// 將資料轉換為 CSV 格式
-	data.each(function (rowData) {
-		var row = [];
-
-		for (var key in rowData) {
-			if (rowData.hasOwnProperty(key) && !excludedProperties.includes(key)) {
-				row.push(rowData[key]);
-			}
-		}
-
-		csvContent += row.join(",") + "\n";
-	});
-
-	// Add UTF-8 BOM to the content
-	var utf8BOM = "\uFEFF";
-	var csvContentWithBOM = utf8BOM + csvContent;
-
-	var blob = new Blob([csvContentWithBOM], { type: "text/csv;charset=utf-8;" });
-
-	// 建立下載連結
-	var link = document.createElement("a");
-	link.href = URL.createObjectURL(blob);
-	link.setAttribute("download", "datatable.csv");
-	document.body.appendChild(link);
-
-	// 點擊下載連結
-	link.click();
-
-	// 移除元素
-	document.body.removeChild(link);
 });
 
 //上傳檔案
