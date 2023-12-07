@@ -70,7 +70,7 @@ $(function () {
 						},
 					});
 				} else {
-					handleApiResponse(secondApiResponse);
+					handleApiResponse(response);
 				}
 			},
 			error: function () {
