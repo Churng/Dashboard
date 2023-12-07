@@ -29,12 +29,7 @@ function fetchStoreList() {
 			{ data: "storeManager" },
 			{ data: "phoneNumber" },
 			{ data: "address" },
-			{
-				// Status column
-				render: function (data, type, row) {
-					return row.status === "2" ? "停業" : "正常";
-				},
-			},
+			{ data: "statusName" },
 		],
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);

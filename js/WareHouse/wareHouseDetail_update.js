@@ -40,7 +40,12 @@ $(document).ready(function () {
 				$("#storeName").val(wareHouseData.storeName);
 				$("#statusName").val(wareHouseData.statusName);
 				$("#sourceType").val(wareHouseData.typeName);
-				$("#unsubscribeId").val(wareHouseData.unsubscribeId);
+
+				if (wareHouseData.type === "2") {
+					$("#unsubscribeId").val(wareHouseData.unsubscribeId);
+				} else if (wareHouseData.type === "3") {
+					$("#unsubscribeId").val(wareHouseData.inventoryId);
+				}
 
 				$("#amount").val(wareHouseData.amount);
 				$("#remark").val(wareHouseData.remark);
