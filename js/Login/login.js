@@ -61,7 +61,7 @@ $(function () {
 								window.location.href = "index.html";
 							}, 1000);
 						} else {
-							showErrorLoginNotification();
+							handleApiResponse(secondApiResponse);
 						}
 					},
 					error: function () {
