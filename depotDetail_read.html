@@ -114,15 +114,6 @@
                         <div class="block-first">
                             <h4 class="mt-5">單據資料</h4>
 
-                            <div class="py-4 my-2 input-fit">
-                                <div class="mb-3">
-                                    <div class="custom-file">
-                                        <input type="file" class="form-control" name="component[]" id="fileInput"
-                                            accept="image/*" multiple disabled>
-                                    </div>
-                                </div>
-                                <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
-                            </div>
 
                             <div class="row g-3 mb-5">
                                 <div class="col-sm-3">
@@ -135,20 +126,6 @@
                                     <label for="statusName" class="form-label">零件狀態</label>
                                     <input type="text" class="form-control" id="statusName" placeholder="" value=""
                                         disabled>
-                                    <!-- <label for="statusName" class="form-label">零件狀態</label>
-                                    <select class="form-select" id="statusName" disabled>
-                                        <option value="">請選擇</option>
-                                        <option value="0">無</option>
-                                        <option value="1">請購中</option>
-                                        <option value="2">採購中</option>
-                                        <option value="3">取消請購</option>
-                                        <option value="4">已入庫</option>
-                                        <option value="5">申請出庫中</option>
-                                        <option value="6">等待領取</option>
-                                        <option value="7">已出庫</option>
-                                        <option value="8">已出庫</option>
-                                        <option value="9">盤點損失</option>
-                                    </select> -->
                                 </div>
 
                                 <div class="col-sm-6 mb-3">
@@ -187,9 +164,18 @@
                             <form id="uploadForm" class="needs-validation" novalidate>
                                 <div class="block-second mt-5">
                                     <h4>零件定義</h4>
-                                    <button class="btn btn-primary btn-md my-3" type="buttob"><a
-                                            href="componentList.html"
-                                            class="remove-link-decoration text-white">搜尋零件料號</a></button>
+
+                                    <div class="py-4 my-2 input-fit">
+                                        <div class="mb-3">
+                                            <div class="custom-file">
+                                                <input type="file" class="form-control" name="component[]"
+                                                    id="fileInput" accept="image/*" multiple>
+                                            </div>
+                                        </div>
+                                        <button id="downloadBtn" download
+                                            class="btn btn-primary file-download">下載</button>
+                                    </div>
+
 
                                     <div class="row g-3 mb-5">
                                         <div class="col-sm-3">
@@ -336,8 +322,14 @@
     <script src="js/Public/downloadPdfFile.js"></script>
     <!-- <script src="js/Public/downloadFile.js"></script> -->
     <script src="js/Public/menu.js"></script>
-    <script src="js/Public/permissionControl.js"></script>
     <script src="js/Depot/depotDetail_Read.js"></script>
+
+
+    <!-- 權限 -->
+    <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Public/Auth_Read.js"></script>
+    <script src="js/Public/depot_Auth.js"></script>
+
 
 </body>
 

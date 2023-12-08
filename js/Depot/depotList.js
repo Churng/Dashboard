@@ -53,6 +53,7 @@ function updatePageWithData(responseData) {
 	var data = responseData.returnData;
 
 	table = $("#depotList").DataTable({
+		autoWidth: false,
 		columns: [
 			{
 				render: function (data, type, row) {
@@ -70,17 +71,49 @@ function updatePageWithData(responseData) {
 			{ data: "orderNo" },
 			{ data: "storeName" },
 			{ data: "orderNote" },
-			{ data: "price" },
-			{ data: "wholesalePrice" },
-			{ data: "lowestWholesalePrice" },
-			{ data: "cost" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
 			{ data: "workingHour" },
 			{ data: "depotPosition" },
 			{ data: "statusName" },
 			{ data: "createTime" },
 		],
 		drawCallback: function () {
-			// handlePagePermissions(currentUser, currentUrl);
+			handlePagePermissions(currentUser, currentUrl);
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(9).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(9).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(10).visible(false);
+				} else {
+					api.column(10).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(11).visible(false);
+				} else {
+					api.column(11).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(12).visible(false);
+				} else {
+					api.column(12).visible(true);
+				}
+			}
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
 		order: [],
@@ -136,6 +169,7 @@ $(document).ready(function () {
 	});
 });
 function sendApiRequest(filterData) {
+	showSpinner();
 	// 获取用户数据
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
@@ -160,6 +194,7 @@ function sendApiRequest(filterData) {
 			if (responseData.returnCode === "1") {
 				if (responseData.returnData.length > 0) {
 					updatePageWithData(responseData, table);
+					hideSpinner();
 				} else {
 					shownoDataNotification();
 				}

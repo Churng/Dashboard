@@ -30,7 +30,7 @@ function fetchAccountList() {
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				console.log(responseData);
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -128,32 +128,69 @@ function updateData(responseData) {
 }
 
 //底下表格內資料：零件
+var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#stockOutPage").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	dataTable.columns().visible(true);
 
-	// 填充API数据到表格，包括下载链接
-	responseData.returnData.forEach(function (data) {
-		// console.log(data);
+	var data = responseData.returnData;
 
-		dataTable.row
-			.add([
-				data.id,
-				data.componentNumber,
-				data.componentName,
-				data.brandName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-				data.depotPosition,
-				data.statusName,
-			])
-			.draw(false);
+	table = $("#stockOutPage").DataTable({
+		autoWidth: false,
+		columns: [
+			{ data: "componentId" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
+			{ data: "workingHour" },
+			{ data: "depotPosition" },
+			{ data: "statusName" },
+		],
+		drawCallback: function () {
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(5).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(5).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(8).visible(false);
+				} else {
+					api.column(8).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(6).visible(false);
+				} else {
+					api.column(6).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(7).visible(false);
+				} else {
+					api.column(7).visible(true);
+				}
+			}
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
+	table.rows.add(data).draw();
 }
 
 //更新數據
@@ -192,7 +229,7 @@ function refreshDataList() {
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -412,60 +449,6 @@ $(document).on("click", "#shipCancel", function (e) {
 		});
 	});
 });
-
-//跳轉頁面
-// $(document).ready(function () {
-// 	var urlParams = new URLSearchParams(window.location.search);
-// 	var shipNo = urlParams.get("shipNo");
-
-// 	if (shipNo) {
-// 		getOrderfetchAccountList(shipNo);
-// 	} else {
-// 		fetchAccountList();
-// 	}
-// });
-
-//getOrderfetchAccountList
-// function getOrderfetchAccountList(shipNo) {
-// 	const dataId = { shipNo: shipNo };
-// 	const IdPost = JSON.stringify(dataId);
-// 	console.log(IdPost);
-// 	// 从localStorage中获取session_id和chsm
-// 	// 解析JSON字符串为JavaScript对象
-// 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-// 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-// 	const user_session_id = gertuserData.sessionId;
-
-// 	// chsm = session_id+action+'HBAdminOrderApi'
-// 	// 组装所需数据
-// 	var action = "getShipDetail";
-// 	var chsmtoGetOrderDetail = user_session_id + action + "HBAdminShipApi";
-// 	var chsm = CryptoJS.MD5(chsmtoGetOrderDetail).toString().toLowerCase();
-
-// 	// 发送POST请求
-// 	$.ajax({
-// 		type: "POST",
-// 		url: `${apiURL}/ship`,
-// 		data: {
-// 			action: action,
-// 			session_id: user_session_id,
-// 			chsm: chsm,
-// 			data: IdPost,
-// 		},
-// 		success: function (responseData) {
-// 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-// 				console.log(responseData);
-// 				updateData(responseData);
-// 				updatePageWithData(responseData);
-// 			} else {
-// 				handleApiResponse(responseData);
-// 			}
-// 		},
-// 		error: function (error) {
-// 			showErrorNotification();
-// 		},
-// 	});
-// }
 
 $(document).ready(function () {
 	fetchAccountList();

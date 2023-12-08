@@ -29,6 +29,7 @@ function storeResponse(response) {
 	const storeList = document.getElementById("A-storeName");
 	const defaultOption = document.createElement("option");
 	defaultOption.text = "請選擇門市";
+	defaultOption.value = "";
 	storeList.appendChild(defaultOption);
 
 	for (let i = 0; i < responseData.returnData.length; i++) {
@@ -49,6 +50,7 @@ function roleApiResponse(response) {
 	const rolleList = document.getElementById("A-authorizeName");
 	const defaultAuthOption = document.createElement("option");
 	defaultAuthOption.text = "請選擇角色";
+	defaultAuthOption.value = "";
 	rolleList.appendChild(defaultAuthOption);
 
 	for (let i = 0; i < responseData.returnData.length; i++) {

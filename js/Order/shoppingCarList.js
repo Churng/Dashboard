@@ -22,9 +22,6 @@ $(document).ready(function () {
 		success: function (responseData) {
 			handleApiResponse(responseData);
 			const brandList = document.getElementById("selectBrand");
-
-			// console.log(responseData);
-
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇品牌";
 			brandList.appendChild(defaultOption);
@@ -55,15 +52,11 @@ $(document).ready(function () {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	// console.log(user_session_id);
 	// chsm = session_id+action+'HBAdminShoppingCartApi'
-
 	// 組裝菜單所需資料
 	var action = "getShoppingCartList";
 	var chsmtoGetManualList = user_session_id + action + "HBAdminShoppingCartApi";
 	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
-
-	$("#partsCar").DataTable();
 
 	// 发送API请求以获取数据
 	$.ajax({
@@ -73,7 +66,7 @@ $(document).ready(function () {
 		success: function (responseData) {
 			console.log(responseData);
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 
 				responseData.returnData.forEach(function (item) {
 					idArray.push(item.id);
@@ -89,12 +82,14 @@ $(document).ready(function () {
 });
 
 // 表格填充
+var table;
 function updatePageWithData(responseData) {
-	// 清空表格数据
 	var dataTable = $("#partsCar").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	dataTable.columns().visible(true);
 
-	// console.log(responseData);
+	var data = responseData.returnData;
+
 	var totalPriceElement = document.getElementById("totalPrice");
 	var totalPriceValue = responseData.totalPrice;
 	totalPriceElement.value = totalPriceValue;
@@ -107,54 +102,85 @@ function updatePageWithData(responseData) {
 	var selectBrandValue = responseData.brandName;
 	selectBrandElement.value = selectBrandValue;
 
-	// 填充API数据到表格，包括下载链接
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
+	table = $("#partsCar").DataTable({
+		autoWidth: false,
+		columns: [
+			{
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<button class="btn btn-primary text-white modify-button" data-bs-toggle="modal" data-bs-target="#modifyModal" data-id="${row.id}">修改</button>`;
 
-		var modifyButtonHtml =
-			'<button class="btn btn-primary text-white modify-button" data-bs-toggle="modal" data-bs-target="#modifyModal" data-id="' +
-			data.id +
-			'">修改</button>';
-		var deleteButtonHtml = '<button class="btn btn-danger delete-button" data-id="' + data.id + '">刪除</button>';
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete"  data-id="${row.id}">刪除</button>`;
 
-		dataTable.row
-			.add([
-				buttonsHtml,
-				data.amount,
-				data.depotAmount,
-				data.componentNumber,
-				data.componentName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-				data.statusName,
-				data.updateTime,
-				data.updateOperator,
-				data.createTime,
-				data.createOperator,
-			])
-			.draw(false);
-	}
+					var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "amount" },
+			{ data: "depotAmount" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "suitableCarModel" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
+			{ data: "workingHour" },
+			{ data: "statusName" },
+			{ data: "updateTime" },
+			{ data: "updateOperator" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(6).visible(false);
+				} else {
+					api.column(6).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(9).visible(false);
+				} else {
+					api.column(9).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(7).visible(false);
+				} else {
+					api.column(7).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(8).visible(false);
+				} else {
+					api.column(8).visible(true);
+				}
+			}
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
+	});
+	table.rows.add(data).draw();
 }
 
 // 修改按钮点击事件处理程序
 $(document).on("click", ".modify-button", function () {
 	var itemId = $(this).data("id"); // 获取动态ID
-	// console.log(itemId);
 	$("#confirmModifyButton").data("id", itemId);
 });
 
 // 修改数量
 $("#confirmModifyButton").on("click", function () {
-	// 获取用户输入的数量
 	var quantity = $("#quantityInput").val();
 	var itemId = $(this).data("id");
-
-	// console.log(quantity, itemId);
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -182,7 +208,6 @@ $("#confirmModifyButton").on("click", function () {
 
 	formData.append("data", JSON.stringify(updateData));
 
-	// console.log(JSON.stringify(updateData));
 	// 将数据发送到服务器的API
 	$.ajax({
 		type: "POST",
@@ -206,23 +231,18 @@ $("#confirmModifyButton").on("click", function () {
 
 //更新數據
 function refreshDataList() {
-	var dataTable = $("#partsCar").DataTable();
-	dataTable.clear().draw();
-
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	// console.log(user_session_id);
 	// chsm = session_id+action+'HBAdminShoppingCartApi'
 	// 組裝菜單所需資料
 	var action = "getShoppingCartList";
 	var chsmtoGetManualList = user_session_id + action + "HBAdminShoppingCartApi";
 	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
 
-	$("#partsCar").DataTable();
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
@@ -230,7 +250,7 @@ function refreshDataList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}

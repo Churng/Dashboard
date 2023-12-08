@@ -55,15 +55,11 @@ $(document).ready(function () {
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;
 
-	console.log(user_session_id);
-
 	// chsm = session_id+action+'HBAdminComponentApi'
 	// 组装所需数据
 	var action = "getComponentDetail";
 	var chsmtoGetComponentDetail = user_session_id + action + "HBAdminComponentApi";
 	var chsm = CryptoJS.MD5(chsmtoGetComponentDetail).toString().toLowerCase();
-
-	console.log(chsm);
 
 	// 发送POST请求
 	$.ajax({
@@ -88,10 +84,10 @@ $(document).ready(function () {
 				$("#C-depotAmount").val(componentData.depotAmount);
 				$("#C-depotPosition").val(componentData.depotPosition);
 
-				$("#C-Price").val(componentData.price);
-				$("#C-Cost").val(componentData.cost);
-				$("#C-WholesalePrice").val(componentData.wholesalePrice);
-				$("#C-lowestWholesalePrice").val(componentData.lowestWholesalePrice);
+				$("#Price").val(componentData.price);
+				$("#Cost").val(componentData.cost);
+				$("#WholesalePrice").val(componentData.wholesalePrice);
+				$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
 
 				$("#C-supplier").val(componentData.componentSupplier);
 				$("#C-workingHour").val(componentData.workingHour);
@@ -159,10 +155,10 @@ $(document).ready(function () {
 			// var getpurchaseAmount = $("#C-purchaseAmount").val();
 			// var getdepotAmount = $("#C-depotAmount").val();
 			var getdepotPosition = $("#C-depotPosition").val();
-			var getprice = $("#C-Price").val();
-			var getcost = $("#C-Cost").val();
-			var getwholesalePrice = $("#C-WholesalePrice").val();
-			var getlowestWholesalePrice = $("#C-lowestWholesalePrice").val();
+			var getprice = $("#Price").val();
+			var getcost = $("#Cost").val();
+			var getwholesalePrice = $("#WholesalePrice").val();
+			var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
 			var getcomponentSupplier = $("#C-supplier").val();
 			var getworkingHour = $("#C-workingHour").val();
 			var getsuitableCarModel = $("#C-suitableModel").val();

@@ -56,7 +56,7 @@ function fetchAccountList() {
 				// }
 
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -118,93 +118,128 @@ function updateData(responseData) {
 }
 
 //底下表格內資料：購物單零件們
+
+var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#orderDetail").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
+	console.log(data);
+	table = $("#orderDetail").DataTable({
+		autoWidth: false,
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					//checkbox顯示：狀態在庫（3）
+					//出庫單選取
+					var checkboxHtml = "";
 
-	// 填充API数据到表格，包括下载链接
-	responseData.returnData.forEach(function (data) {
-		//checkbox顯示：狀態在庫（3）
-		//出庫單選取
-		var checkboxHtml = "";
-		if (data.status == 3) {
-			var checkboxHtml = '<input type="checkbox" class="executeship-button" data-id="' + data.id + '">';
-		}
+					if (row.status === 3) {
+						// 如果数组不为空且第一个对象的状态值为 3，返回特定的 HTML
+						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
+					} else {
+						return checkboxHtml;
+					}
+				},
+			},
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					// Boolean(data.if_order_delete_component)
+					// 刪除零件：
+					var deleteButtonHtml = "";
+					if (row.status == 1 || row.status == 2 || row.status == 3 || row.status == 4 || row.status == 5) {
+						if (Boolean(row.if_order_delete_component) === true) {
+							deleteButtonHtml += `<button class="btn btn-danger delete-button" data-id="${row.id}" data-status="${row.status}">刪除零件</button>`;
+						}
+					}
 
-		// Boolean(data.if_order_delete_component)
-		// 刪除零件：
-		var deleteButtonHtml = "";
-		if (data.status == 1 || data.status == 2 || data.status == 3 || data.status == 4 || data.status == 5) {
-			if (Boolean(data.if_order_delete_component) === true) {
-				deleteButtonHtml +=
-					'<button class="btn btn-danger delete-button" data-id="' +
-					data.id +
-					'" data-status="' +
-					data.status +
-					'">刪除零件</button>';
+					// 退貨：退貨單新增
+					var unsubButtonHtml = "";
+					if (row.status == 6 && data.statusName == "已出庫") {
+						if (Boolean(row.if_order_unsubscribe) === true) {
+							unsubButtonHtml += `<button  class="btn btn-warning unsubscribe-button" data-id="${row.id}">退貨</button>`;
+						}
+					}
+
+					//查看出庫單
+					// if_shipDetail = true
+					// shipNo
+
+					var shipButtonHtml = "";
+					if (Boolean(row.if_shipDetail) === true) {
+						shipButtonHtml += `<button  class="btn btn-primary text-white ship-button"  data-id="${row.id}" data-shipno="${row.shipNo}"
+							>查看出庫單</button>`;
+					}
+
+					//查看零件採購單
+					//if_purchaseDetail =true
+					//purchaseId
+
+					var purchaseButtonHtml = "";
+					if (Boolean(row.if_purchaseDetail) === true) {
+						purchaseButtonHtml += `<button type="button"  class="btn btn-info text-white purchase-button "   data-id="${row.id}"  data-purchaseid="${row.purchaseId}"
+						>查看零件採購</button>`;
+					}
+
+					var buttonsHtml =
+						deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml + "&nbsp;" + purchaseButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "componentId" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "suitableCarModel" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
+			{ data: "workingHour" },
+			{ data: "depotPosition" },
+			{ data: "statusName" },
+		],
+		drawCallback: function () {
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(6).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(6).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(7).visible(false);
+				} else {
+					api.column(7).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(8).visible(false);
+				} else {
+					api.column(8).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(9).visible(false);
+				} else {
+					api.column(9).visible(true);
+				}
 			}
-		}
-
-		// 退貨：退貨單新增
-		var unsubButtonHtml = "";
-		if (data.status == 6 && data.statusName == "已出庫") {
-			if (Boolean(data.if_order_unsubscribe) === true) {
-				unsubButtonHtml +=
-					'<button  class="btn btn-warning unsubscribe-button" data-id="' + data.id + '" >退貨</button>';
-			}
-		}
-
-		//查看出庫單
-		// if_shipDetail = true
-		// shipNo
-
-		var shipButtonHtml = "";
-		if (Boolean(data.if_shipDetail) === true) {
-			shipButtonHtml +=
-				'<a href="shipDetail.html" class="btn btn-primary text-white ship-button"  data-id="' +
-				data.id +
-				'" data-shipno="' +
-				data.shipNo +
-				'">查看出庫單</a>';
-		}
-
-		//查看零件採購單
-		//if_purchaseDetail =true
-		//purchaseId
-
-		var purchaseButtonHtml = "";
-		if (Boolean(data.if_purchaseDetail) === true) {
-			purchaseButtonHtml +=
-				'<button type="button"  class="btn btn-info text-white purchase-button "  data-id="' +
-				data.id +
-				'" data-purchaseid="' +
-				data.purchaseId +
-				'">查看零件採購</button>';
-		}
-
-		var buttonsHtml =
-			deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml + "&nbsp;" + purchaseButtonHtml;
-
-		dataTable.row
-			.add([
-				checkboxHtml,
-				buttonsHtml,
-				data.componentId,
-				data.componentNumber,
-				data.componentName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-				data.depotPosition,
-				data.statusName,
-				data.orderLog,
-			])
-			.draw(false);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
+	table.rows.add(data).draw();
 }
 // 查看零件採購單
 $(document).on("click", ".purchase-button", function () {
@@ -217,7 +252,7 @@ $(document).on("click", ".purchase-button", function () {
 $(document).on("click", ".ship-button", function () {
 	var shipNo = $(this).data("shipno");
 	console.log("Ship No:", shipNo);
-	// window.location.href = "shipDetail.html?shipNo=" + shipNo;
+	window.location.href = "shipDetail.html?shipNo=" + shipNo;
 	localStorage.setItem("shipNo", JSON.stringify(shipNo));
 });
 
@@ -257,7 +292,7 @@ function refreshDataList() {
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -735,7 +770,7 @@ function getOrderfetchAccountList(orderNo) {
 				orderNo = getOrderData.orderNo;
 
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}

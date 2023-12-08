@@ -1,5 +1,5 @@
 function fetchAccountList() {
-	var partId = localStorage.getItem("shipNo");
+	var partId = localStorage.getItem("shipRNo");
 	var getshipNo = JSON.parse(partId);
 	const dataId = { shipNo: getshipNo };
 	const IdPost = JSON.stringify(dataId);
@@ -30,7 +30,7 @@ function fetchAccountList() {
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				console.log(responseData);
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -92,32 +92,69 @@ function updateData(responseData) {
 }
 
 //底下表格內資料：零件
+var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#stockOutPage").DataTable();
-	dataTable.clear().draw();
+	dataTable.clear().destroy();
+	dataTable.columns().visible(true);
 
-	// 填充API数据到表格，包括下载链接
-	responseData.returnData.forEach(function (data) {
-		console.log(data);
+	var data = responseData.returnData;
 
-		dataTable.row
-			.add([
-				data.componentId,
-				data.componentNumber,
-				data.componentName,
-				data.brandName,
-				data.suitableCarModel,
-				data.price,
-				data.wholesalePrice,
-				data.lowestWholesalePrice,
-				data.cost,
-				data.workingHour,
-				data.depotPosition,
-				data.statusName,
-			])
-			.draw(false);
+	table = $("#stockOutPage").DataTable({
+		autoWidth: false,
+		columns: [
+			{ data: "componentId" },
+			{ data: "componentNumber" },
+			{ data: "componentName" },
+			{ data: "brandName" },
+			{ data: "suitableCarModel" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
+			{ data: "workingHour" },
+			{ data: "depotPosition" },
+			{ data: "statusName" },
+		],
+		drawCallback: function () {
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(5).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(5).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(8).visible(false);
+				} else {
+					api.column(8).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(6).visible(false);
+				} else {
+					api.column(6).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(7).visible(false);
+				} else {
+					api.column(7).visible(true);
+				}
+			}
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
 	});
+	table.rows.add(data).draw();
 }
 
 //更新數據
@@ -125,7 +162,7 @@ function refreshDataList() {
 	var dataTable = $("#stockOutPage").DataTable();
 	dataTable.clear().draw();
 
-	var partId = localStorage.getItem("shipNo");
+	var partId = localStorage.getItem("shipRNo");
 	var getshipNo = JSON.parse(partId);
 	const dataId = { shipNo: getshipNo };
 	const IdPost = JSON.stringify(dataId);
@@ -156,7 +193,7 @@ function refreshDataList() {
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
 				updateData(responseData);
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -167,214 +204,10 @@ function refreshDataList() {
 	});
 }
 
-//同意出庫
-$(document).on("click", "#shipApprove", function (e) {
-	e.stopPropagation();
-	var formData = new FormData(); // 在外部定义 formData
-
-	var partId = localStorage.getItem("shipNo");
-	var getshipNo = JSON.parse(partId);
-	const dataId = { shipNo: getshipNo };
-	const IdPost = JSON.stringify(dataId);
-	var jsonData = IdPost;
-
-	// 解绑之前的点击事件处理程序
-	$(document).off("click", ".confirm-order");
-
-	toastr.options = {
-		closeButton: true,
-		timeOut: 0,
-		extendedTimeOut: 0,
-		positionClass: "toast-top-center",
-	};
-
-	toastr.warning(
-		"確定要同意出庫嗎？<br/><br><button class='btn btn-danger confirm-order'>確定</button>",
-		"確定同意出庫",
-		{
-			allowHtml: true,
-		}
-	);
-
-	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-order", function () {
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
-
-		// chsm = session_id+action+'HBAdminShipApi'
-		var action = "approveAllShip";
-		var chsmtoDeleteFile = user_session_id + action + "HBAdminShipApi";
-		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
-
-		formData.set("action", action);
-		formData.set("session_id", user_session_id);
-		formData.set("chsm", chsm);
-		formData.set("data", jsonData);
-
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/ship`,
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				if (response.returnCode === "1") {
-					showSuccessshipApproveNotification();
-					setTimeout(function () {
-						refreshDataList();
-					}, 1000);
-				} else {
-					handleApiResponse(response);
-				}
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	});
-});
-
-//領取零件
-$(document).on("click", "#shipReceive", function (e) {
-	e.stopPropagation();
-	var formData = new FormData(); // 在外部定义 formData
-
-	var partId = localStorage.getItem("shipNo");
-	var getshipNo = JSON.parse(partId);
-	const dataId = { shipNo: getshipNo };
-	const IdPost = JSON.stringify(dataId);
-	var jsonData = IdPost;
-
-	// 解绑之前的点击事件处理程序
-	$(document).off("click", ".confirm-order");
-
-	toastr.options = {
-		closeButton: true,
-		timeOut: 0,
-		extendedTimeOut: 0,
-		positionClass: "toast-top-center",
-	};
-
-	toastr.warning(
-		"確定要領取零件嗎？<br/><br><button class='btn btn-danger confirm-order'>確定</button>",
-		"確定完成領取",
-		{
-			allowHtml: true,
-		}
-	);
-
-	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-order", function () {
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
-
-		// chsm = session_id+action+'HBAdminShipApi'
-		var action = "receiveAllShip";
-		var chsmtoDeleteFile = user_session_id + action + "HBAdminShipApi";
-		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
-
-		formData.set("action", action);
-		formData.set("session_id", user_session_id);
-		formData.set("chsm", chsm);
-		formData.set("data", jsonData);
-
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/ship`,
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				if (response.returnCode === "1") {
-					showSuccessshipRequisitionNotification();
-					setTimeout(function () {
-						refreshDataList();
-					}, 1000);
-				} else {
-					handleApiResponse(response);
-				}
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	});
-});
-
-//取消出庫
-$(document).on("click", "#shipCancel", function (e) {
-	e.stopPropagation();
-	var formData = new FormData(); // 在外部定义 formData
-
-	var partId = localStorage.getItem("shipNo");
-	var getshipNo = JSON.parse(partId);
-	const dataId = { shipNo: getshipNo };
-	const IdPost = JSON.stringify(dataId);
-	var jsonData = IdPost;
-
-	// 解绑之前的点击事件处理程序
-	$(document).off("click", ".confirm-order");
-
-	toastr.options = {
-		closeButton: true,
-		timeOut: 0,
-		extendedTimeOut: 0,
-		positionClass: "toast-top-center",
-	};
-
-	toastr.warning(
-		"確定要取消出庫嗎？<br/><br><button class='btn btn-danger confirm-order'>確定</button>",
-		"確定取消出庫",
-		{
-			allowHtml: true,
-		}
-	);
-
-	// 绑定新的点击事件处理程序
-	$(document).on("click", ".confirm-order", function () {
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
-
-		// chsm = session_id+action+'HBAdminShipApi'
-		var action = "cancelAllShip";
-		var chsmtoDeleteFile = user_session_id + action + "HBAdminShipApi";
-		var chsm = CryptoJS.MD5(chsmtoDeleteFile).toString().toLowerCase();
-
-		formData.set("action", action);
-		formData.set("session_id", user_session_id);
-		formData.set("chsm", chsm);
-		formData.set("data", jsonData);
-
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/ship`,
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				if (response.returnCode === "1") {
-					showSuccessshipCancelNotification();
-					setTimeout(function () {
-						refreshDataList();
-					}, 1000);
-				} else {
-					handleApiResponse(response);
-				}
-			},
-			error: function (error) {
-				showErrorNotification();
-			},
-		});
-	});
-});
-
 //跳轉頁面
 $(document).ready(function () {
 	var urlParams = new URLSearchParams(window.location.search);
-	var shipNo = urlParams.get("shipNo");
+	var shipNo = urlParams.get("shipRNo");
 
 	if (shipNo) {
 		getOrderfetchAccountList(shipNo);

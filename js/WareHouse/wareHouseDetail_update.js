@@ -1,3 +1,46 @@
+// 取得品牌資料
+function getbrandList() {
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminBrandApi'
+	// 組裝菜單所需資料
+	var action = "getBrandList";
+	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
+	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/brand`,
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			const brandList = document.getElementById("brandId");
+			const defaultOption = document.createElement("option");
+			defaultOption.text = "請選擇品牌";
+			brandList.appendChild(defaultOption);
+
+			for (let i = 0; i < responseData.returnData.length; i++) {
+				const brand = responseData.returnData[i];
+				const brandName = brand.brandName;
+				const brandId = brand.id;
+
+				const option = document.createElement("option");
+				option.text = brandName;
+				option.value = brandId;
+
+				brandList.appendChild(option);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}
+
 // 取得詳細資料
 let orderStatus;
 var postComponentId;
@@ -32,34 +75,37 @@ $(document).ready(function () {
 		success: function (responseData) {
 			console.log(responseData, "Orin");
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-				const wareHouseData = responseData.returnData[0];
+				getbrandList();
+				setTimeout(function () {
+					const wareHouseData = responseData.returnData[0];
 
-				$("#WarehouseId").val(wareHouseData.id);
-				$("#createTime").val(wareHouseData.createTime);
-				$("#createOperator").val(wareHouseData.createOperator);
-				$("#storeName").val(wareHouseData.storeName);
-				$("#statusName").val(wareHouseData.statusName);
-				$("#sourceType").val(wareHouseData.typeName);
+					$("#WarehouseId").val(wareHouseData.id);
+					$("#createTime").val(wareHouseData.createTime);
+					$("#createOperator").val(wareHouseData.createOperator);
+					$("#storeName").val(wareHouseData.storeName);
+					$("#statusName").val(wareHouseData.statusName);
+					$("#sourceType").val(wareHouseData.typeName);
 
-				if (wareHouseData.type === "2") {
-					$("#unsubscribeId").val(wareHouseData.unsubscribeId);
-				} else if (wareHouseData.type === "3") {
-					$("#unsubscribeId").val(wareHouseData.inventoryId);
-				}
+					if (wareHouseData.type === "2") {
+						$("#unsubscribeId").val(wareHouseData.unsubscribeId);
+					} else if (wareHouseData.type === "3") {
+						$("#unsubscribeId").val(wareHouseData.inventoryId);
+					}
 
-				$("#amount").val(wareHouseData.amount);
-				$("#remark").val(wareHouseData.remark);
+					$("#amount").val(wareHouseData.amount);
+					$("#remark").val(wareHouseData.remark);
 
-				$("#BuildTime").prop("disabled", true).val(wareHouseData.createTime);
-				$("#EditTime").prop("disabled", true).val(wareHouseData.updateTime);
-				$("#EditAccount").prop("disabled", true).val(wareHouseData.updateOperator);
+					$("#BuildTime").prop("disabled", true).val(wareHouseData.createTime);
+					$("#EditTime").prop("disabled", true).val(wareHouseData.updateTime);
+					$("#EditAccount").prop("disabled", true).val(wareHouseData.updateOperator);
 
-				updatePageWithData(responseData);
-				handleComponentId(wareHouseData.componentId); //存著ID取零件資料
+					updatePageWithData(responseData);
+					handleComponentId(wareHouseData.componentId); //存著ID取零件資料
 
-				postComponentId = wareHouseData.componentId;
-				orderStatus = wareHouseData.status;
-				$("#spinner").hide();
+					postComponentId = wareHouseData.componentId;
+					orderStatus = wareHouseData.status;
+					$("#spinner").hide();
+				}, 1000);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -110,29 +156,10 @@ function handleComponentId(id) {
 				$("#depotAmount").val(componentData.depotAmount);
 				$("#depotPosition").val(componentData.depotPosition);
 
-				if (componentData.price) {
-					$("#Price").val(componentData.price);
-				} else {
-					$("#Price").closest(".col-sm-3").remove();
-				}
-
-				if (componentData.cost) {
-					$("#Cost").val(componentData.cost);
-				} else {
-					$("#Cost").closest(".col-sm-3").remove();
-				}
-
-				if (componentData.wholesalePrice) {
-					$("#WholesalePrice").val(componentData.wholesalePrice);
-				} else {
-					$("#WholesalePrice").closest(".col-sm-3").remove();
-				}
-
-				if (componentData.lowestWholesalePrice) {
-					$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
-				} else {
-					$("#lowestWholesalePrice").closest(".col-sm-3").remove();
-				}
+				$("#Price").val(componentData.price);
+				$("#Cost").val(componentData.cost);
+				$("#WholesalePrice").val(componentData.wholesalePrice);
+				$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
 
 				$("#supplier").val(componentData.componentSupplier);
 				$("#workingHour").val(componentData.workingHour);
@@ -213,49 +240,6 @@ $(document).on("click", ".file-download", function () {
 	} else {
 		showErrorFileNotification();
 	}
-});
-
-// 取得品牌資料
-$(document).ready(function () {
-	// 从localStorage中获取session_id和chsm
-	// 解析JSON字符串为JavaScript对象
-	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-	const user_session_id = gertuserData.sessionId;
-
-	// chsm = session_id+action+'HBAdminBrandApi'
-	// 組裝菜單所需資料
-	var action = "getBrandList";
-	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
-	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
-
-	// 发送API请求以获取数据
-	$.ajax({
-		type: "POST",
-		url: `${apiURL}/brand`,
-		data: { session_id: user_session_id, action: action, chsm: chsm },
-		success: function (responseData) {
-			const brandList = document.getElementById("brandId");
-			const defaultOption = document.createElement("option");
-			defaultOption.text = "請選擇品牌";
-			brandList.appendChild(defaultOption);
-
-			for (let i = 0; i < responseData.returnData.length; i++) {
-				const brand = responseData.returnData[i];
-				const brandName = brand.brandName;
-				const brandId = brand.id;
-
-				const option = document.createElement("option");
-				option.text = brandName;
-				option.value = brandId;
-
-				brandList.appendChild(option);
-			}
-		},
-		error: function (error) {
-			showErrorNotification();
-		},
-	});
 });
 
 //modal取消：回到列表頁

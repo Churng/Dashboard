@@ -84,10 +84,10 @@ $(document).ready(function () {
 				$("#C-depotAmount").val(componentData.depotAmount);
 				$("#C-depotPosition").val(componentData.depotPosition);
 
-				$("#C-Price").val(componentData.price);
-				$("#C-Cost").val(componentData.cost);
-				$("#C-WholesalePrice").val(componentData.wholesalePrice);
-				$("#C-lowestWholesalePrice").val(componentData.lowestWholesalePrice);
+				$("#Price").val(componentData.price);
+				$("#Cost").val(componentData.cost);
+				$("#WholesalePrice").val(componentData.wholesalePrice);
+				$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
 
 				$("#C-supplier").val(componentData.componentSupplier);
 				$("#C-workingHour").val(componentData.workingHour);

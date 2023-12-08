@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>退貨單</title>
+    <title>退貨單 / 查看資料 </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -102,9 +102,11 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row  bg-light rounded p-3 mx-0">
                     <h3>退貨單</h3>
+
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">退貨單列表 / 退貨單</li>
+                            <li class="breadcrumb-item"><a href="unsubscribeList.html">退貨單列表</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">退貨單 / 查看資料</li>
                         </ol>
                     </nav>
 
@@ -146,8 +148,8 @@
 
                                 <div class="col-sm-6 mb-3">
                                     <label for="unsubscribeRemark" class="form-label">單據註記</label>
-                                    <textarea class="form-control" id="unsubscribeRemark" rows="3"
-                                        placeholder="若無請填N/A"></textarea>
+                                    <textarea class="form-control" id="unsubscribeRemark" rows="3" placeholder="若無請填N/A"
+                                        disabled></textarea>
                                 </div>
                             </div>
 
@@ -174,17 +176,24 @@
                                 </div>
                             </div>
 
+                            <h4>退貨資料</h4>
+                            <div class="col-sm-4 mb-5">
+                                <label for="amount" class="form-label">零件數量</label>
+                                <input type="number" class="form-control" id="amount" disabled>
+                            </div>
+
                             <h4>零件定義</h4>
 
                             <div class="py-4 my-2 input-fit">
                                 <div class="mb-3">
                                     <div class="custom-file">
                                         <input type="file" class="form-control" name="component[]" id="fileInput"
-                                            accept="image/*" multiple>
+                                            accept="image/*" multiple disabled>
                                     </div>
                                 </div>
                                 <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
                             </div>
+
 
                             <div class="row g-3 mb-5">
                                 <div class="col-sm-3">
@@ -194,7 +203,7 @@
 
                                 <!-- <div class="col-sm-3">
                                     <label for="brandId" class="form-label">*請選擇品牌</label>
-                                    <select class="form-select" id="brandId" required> </select>
+                                    <select class="form-select" id="brandId" disabled> </select>
                                 </div> -->
 
                                 <div class="col-sm-3">
@@ -211,6 +220,7 @@
                                     <label for="Price" class="form-label">*零件訂價</label>
                                     <input type="text" class="form-control" id="Price" disabled>
                                 </div>
+
 
                                 <div class="col-sm-3">
                                     <label for="WholesalePrice" class="form-label">*零件批發價</label>
@@ -275,12 +285,17 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between pt-5">
-                                    <button class="w-25 btn btn-primary btn-md active" type="button"
-                                        id="startBtn">開始退貨</button>
-                                    <button class="w-25 btn btn-primary btn-md" type="button"
-                                        id="completeBtn">退貨完成</button>
-                                    <button class="w-25 btn btn-primary btn-md" type="button"
-                                        id="cancelBtn">取消退貨</button>
+                                    <button class="w-25 btn btn-primary btn-md active" type="button" id="startBtn"
+                                        disabled>開始退貨</button>
+                                    <button class="w-25 btn btn-primary btn-md" type="button" id="completeBtn"
+                                        disabled>退貨完成</button>
+                                    <button class="w-25 btn btn-primary btn-md" type="button" id="cancelBtn"
+                                        disabled>取消退貨</button>
+                                </div>
+
+                                <div class="text-center w-100 pt-3">
+                                    <button id="backButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">上一頁</button>
                                 </div>
                             </div>
                         </form>
@@ -319,13 +334,19 @@
     <script src="js/main.js"></script>
     <!-- <script src="js/Public/downloadPdfFile.js"></script> -->
     <script src="js/Public/downloadFile.js"></script>
-    <script src="js/Order/unsubscribe/unsubscribeDetail.js"></script>
+    <script src="js/Order/unsubscribe/unsubscribeDetail_read.js"></script>
     <script src="js/Public/menu.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/Auth_Create.js"></script>
+    <script src="js/Public/Auth_Read.js"></script>
 
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            localStorage.removeItem("UnRId");
+            history.back();
+        });
+    </script>
 </body>
 
 </html>

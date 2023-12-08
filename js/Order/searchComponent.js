@@ -95,8 +95,10 @@ function updatePageWithData(responseData) {
 	dataTable.clear().destroy();
 
 	var data = responseData.returnData;
+	console.log(data);
 
 	table = $("#searchParts").DataTable({
+		autoWidth: false,
 		columns: [
 			{
 				render: function (data, type, row) {
@@ -125,13 +127,36 @@ function updatePageWithData(responseData) {
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "suitableCarModel" },
-			{ data: "price" },
-			{ data: "wholesalePrice" },
-			{ data: "lowestWholesalePrice" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
 			{ data: "workingHour" },
 		],
 		drawCallback: function () {
-			// handlePagePermissions(currentUser, currentUrl);
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(7).visible(false);
+				} else {
+					api.column(7).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(8).visible(false);
+				} else {
+					api.column(8).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(9).visible(false);
+				} else {
+					api.column(9).visible(true);
+				}
+			}
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
 		order: [],
@@ -246,9 +271,7 @@ $(document).ready(function () {
 	$("#selectInventory").on("change", function () {
 		selectInventoryId = $("#selectInventory").val();
 
-		// 在倉庫选择变化时，检查品牌选择是否存在并设置筛选条件
 		if (selectInventoryId) {
-			// 获取当前品牌选择的值
 			selectedBrandId = $("#selectBrand").val();
 		}
 	});
@@ -257,6 +280,9 @@ $(document).ready(function () {
 	$("#SearchInput").on("input", function () {
 		// 获取输入框的值
 		selectedsearchValue = $(this).val().trim();
+		if (selectedsearchValue) {
+			selectedBrandId = $("#selectBrand").val();
+		}
 	});
 
 	// 点击搜索按钮时触发API请求

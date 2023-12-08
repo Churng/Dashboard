@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>倉庫清單</title>
+    <title>倉庫清單/ 新增資料</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -106,7 +106,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="depotList.html">倉庫列表</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">零件資料</li>
+                                <li class="breadcrumb-item active" aria-current="page">零件資料 / 新增資料</li>
                             </ol>
                         </nav>
 
@@ -125,20 +125,7 @@
                                     <label for="statusName" class="form-label">零件狀態</label>
                                     <input type="text" class="form-control" id="statusName" placeholder="" value=""
                                         disabled>
-                                    <!-- <label for="statusName" class="form-label">零件狀態</label>
-                                    <select class="form-select" id="statusName" disabled>
-                                        <option value="">請選擇</option>
-                                        <option value="0">無</option>
-                                        <option value="1">請購中</option>
-                                        <option value="2">採購中</option>
-                                        <option value="3">取消請購</option>
-                                        <option value="4">已入庫</option>
-                                        <option value="5">申請出庫中</option>
-                                        <option value="6">等待領取</option>
-                                        <option value="7">已出庫</option>
-                                        <option value="8">已出庫</option>
-                                        <option value="9">盤點損失</option>
-                                    </select> -->
+
                                 </div>
 
                                 <div class="col-sm-6 mb-3">
@@ -326,8 +313,11 @@
     <script src="js/Public/downloadPdfFile.js"></script>
     <!-- <script src="js/Public/downloadFile.js"></script> -->
     <script src="js/Public/menu.js"></script>
-    <script src="js/Public/permissionControl.js"></script>
     <script src="js/Depot/depotDetail.js"></script>
+
+    <!-- 權限 -->
+    <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Public/Auth_Create.js"></script>
 
 </body>
 

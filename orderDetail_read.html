@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>入庫單列表</title>
+    <title>訂單資料 / 查看資料 </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -30,8 +30,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
-
 
 </head>
 
@@ -101,96 +99,135 @@
 
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row bg-light rounded p-3 mx-0">
+                <div class="row  bg-light rounded p-3 mx-0">
                     <div class="">
-                        <h3>入庫單列表</h3>
+                        <h3>訂單資料</h3>
+
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">倉庫管理 / 入庫單列表</li>
+                                <li class="breadcrumb-item"><a href="orderList.html">訂單列表</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">訂單資料 / 查看資料</li>
                             </ol>
                         </nav>
 
-                        <!-- Button trigger modal -->
-                        <div class="py-1 mb-5">
-                            <button type="button" class="btn btn btn-primary me-2" data-bs-toggle="modal"
-                                data-bs-target="#createModal" id="addButton">
-                                新增入庫單
+                        <div class="row g-3 mb-5">
+                            <div class="col-sm-3">
+                                <label for="orderNo" class="form-label">訂單序號</label>
+                                <input type="text" class="form-control" id="orderNo" placeholder="" value="" disabled>
+                            </div>
 
-                            </button>
+                            <div class="col-sm-3">
+                                <label for="orderId" class="form-label">單據序號</label>
+                                <input type="text" class="form-control" id="orderId" placeholder="" value="" disabled>
+                            </div>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="createLabel">掃描零件料號</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
+                            <div class="col-sm-3">
+                                <label for="createOperator" class="form-label">填寫人員</label>
+                                <input type="text" class="form-control" id="createOperator" placeholder="" value=""
+                                    disabled>
+                            </div>
 
-                                            <div class="col-auto">
-                                                <label for="componentId" class="visually-hidden">零件料號</label>
-                                                <input type="text" class="form-control" id="componentId"
-                                                    placeholder="請輸入零件料號查詢">
-                                            </div>
+                            <div class="col-sm-3">
+                                <label for="storeName" class="form-label">填寫門市</label>
+                                <input type="text" class="form-control" id="storeName" placeholder="" value="" disabled>
+                            </div>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">取消</button>
-                                            <button id="confirm" type="button" class="btn btn-primary">確認查詢</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+
+                        <div class="row g-3 mb-5">
+                            <div class="col-sm-4">
+                                <label for="statusName" class="form-label">單據狀態</label>
+                                <input type="text" class="form-control" id="statusName" placeholder="" value=""
+                                    disabled>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="orderAmount" class="form-label">訂單總金額</label>
+                                <input type="text" class="form-control" id="orderAmount" placeholder="" value=""
+                                    disabled>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="brandName" class="form-label">品牌</label>
+                                <input type="text" class="form-control" id="brandName" placeholder="" value="" disabled>
                             </div>
                         </div>
 
-
-                        <!-- 進入搜尋零件 -->
-
-                        <div class="row g-3 mb-4">
-                            <div class="col-sm-3">
-                                <p>開始日期</p>
-                                <input type="date" class="form-control" id="startDate">
-                            </div>
-                            <div class="col-sm-3">
-                                <p>結束日期</p>
-                                <input type="date" class="form-control" id="endDate">
+                        <div class="row g-3 mb-5">
+                            <div class="col-sm-6">
+                                <label for="orderNote" class="form-label">訂單註記</label>
+                                <input type="text" class="form-control" id="orderNote" placeholder="若無請填N/A" value=""
+                                    disabled>
                             </div>
 
-                            <div class="col-sm-3 pt-sm-4" style="margin-top: 32px;">
-                                <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
-                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                            <div class="col-sm-6 mb-3">
+                                <label for="orderRemark" class="form-label">單據備註</label>
+                                <textarea class="form-control" id="orderRemark" rows="3" placeholder="若無請填N/A"
+                                    disabled></textarea>
                             </div>
                         </div>
-
 
                         <!-- 表格 -->
-                        <div class="tableList mt-5">
+                        <div class="tableList table-order">
                             <div class="table-responsive">
-                                <table id="stockIn" class="table table-striped">
+                                <table id="orderDetail" class="display  table table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col">項目操作</th>
-                                            <th scope="col">單據序號</th>
-                                            <th scope="col">單據時間</th>
-                                            <th scope="col">填寫人員</th>
-                                            <th scope="col">零件供應商</th>
+                                            <th scope="col">選擇出庫</th>
+                                            <th scope="col">動作操作</th>
+                                            <th scope="col">零件序號</th>
                                             <th scope="col">零件料號</th>
                                             <th scope="col">零件名稱</th>
-                                            <th scope="col">品牌</th>
                                             <th scope="col">適用車型</th>
-                                            <th scope="col">訂價</th>
+                                            <th scope="col">定價</th>
                                             <th scope="col">批發價</th>
                                             <th scope="col">最低批發價</th>
                                             <th scope="col">成本</th>
                                             <th scope="col">工時（小時）</th>
-                                            <th scope="col">單據狀態</th>
+                                            <th scope="col">倉庫儲位</th>
+                                            <th scope="col">訂單明細狀態</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                    </tbody>
                                 </table>
+                            </div>
+                        </div>
+
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
+                            <button class="btn btn-primary " type="button" id="orderExecuteShip" disabled>執行出庫</button>
+                            <button class="btn btn-primary" type="button" id="orderComplete" disabled>訂單完成</button>
+                            <button class="btn btn-primary" type="button" id="orderCancel" disabled>訂單取消</button>
+                        </div>
+
+
+                        <div class="row g-3 my-5">
+                            <div class="col mb-3">
+                                <label for="orderLog" class="form-label">操作記錄</label>
+                                <textarea class="form-control" id="orderLog" rows="3" disabled></textarea>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        <h4>系統資料</h4>
+                        <div class="row g-3 mb-5">
+                            <div class="col-sm-4">
+                                <label for="BuildTime" class="form-label">建立時間</label>
+                                <input type="text" class="form-control" id="BuildTime" disabled>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="EditTime" class="form-label">修改時間</label>
+                                <input type="text" class="form-control" id="EditTime" disabled>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="EditAccount" class="form-label">修改帳號</label>
+                                <input type="text" class="form-control" id="EditAccount" disabled>
+                            </div>
+                            <div class="text-center w-100 pt-3">
+                                <button id="backButton" class="w-25 btn btn-primary btn-md" type="button">上一頁</button>
                             </div>
                         </div>
 
@@ -226,27 +263,28 @@
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
-
+    <!-- <script>
         $(document).ready(function () {
-            new DataTable('#stockIn', {
-                scrollX: true
-            });
+            new DataTable('#orderDetail');
         });
-    </script>
+
+    </script> -->
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Public/downloadPdfFile.js"></script>
-    <script src="js/WareHouse/wareHouseList.js"></script>
-    <!-- <script src="js/Public/downloadFile.js"></script> -->
     <script src="js/Public/menu.js"></script>
+    <script src="js/Order/orderDetail_read.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/Auth_List.js"></script>
+    <script src="js/Public/Auth_Read.js"></script>
 
-
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            localStorage.removeItem("orderRId");
+            history.back();
+        });
+    </script>
 </body>
 
 </html>

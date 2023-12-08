@@ -43,18 +43,13 @@ function updatePageWithData(responseData) {
 			{
 				// Buttons column
 				render: function (data, type, row) {
-					// var modifyButtonHtml = `<a href="wareHouseDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
-
-					// var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}" data-filename="${row.fileName}">刪除</button>`;
-
-					// var readButtonHtml = `<a href="wareHouseDetail_update.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
-
-					// var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 					var modifyButtonHtml = `<a href="wareHouseDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
 					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}" data-filename="${row.fileName}">刪除</button>`;
 
-					var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+					var readButtonHtml = `<a href="wareHouseDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
 					return buttonsHtml;
 				},
@@ -62,7 +57,6 @@ function updatePageWithData(responseData) {
 			{ data: "id" },
 			{ data: "createTime" },
 			{ data: "createOperator" },
-			{ data: "componentId" },
 			{ data: "componentSupplier" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
@@ -157,6 +151,12 @@ $(document).on("click", ".modify-button", function () {
 
 	localStorage.setItem("componentId", cid);
 	localStorage.setItem("wareHouseId", id);
+});
+
+// 查看詳請按鈕
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("whRId", id);
 });
 
 // Modal點擊跳轉頁面

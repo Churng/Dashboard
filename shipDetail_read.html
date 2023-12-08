@@ -106,12 +106,6 @@
                         <h3>出庫單</h3>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active" aria-current="page">出庫單列表 / 出庫單</li>
-                            </ol>
-                        </nav>
-
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="shipList.html">出庫單列表</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">出庫單 / 查看資料</li>
                             </ol>
@@ -234,6 +228,10 @@
                                 </div>
 
                             </div>
+
+                            <div class="text-center w-100 pt-3">
+                                <button id="backButton" class="w-25 btn btn-primary btn-md" type="button">上一頁</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -266,12 +264,12 @@
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             new DataTable('#stockOutPage');
         });
 
-    </script>
+    </script> -->
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
@@ -280,6 +278,14 @@
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
+    <script src="js/Public/Auth_Read.js"></script>
+
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            localStorage.removeItem("shipRNo");
+            history.back();
+        });
+    </script>
 
 </body>
 

@@ -84,6 +84,8 @@ function updatePageWithData(responseData) {
 			gowareHouseButtonHtml +=
 				'<button type="button" class="btn btn-primary text-white gowareHouse-button"  data-id="' +
 				data.id +
+				'"data-stockid="' +
+				data.stockInId +
 				'">前往入庫單</button>';
 		}
 
@@ -142,14 +144,17 @@ function updatePageWithData(responseData) {
 // 新增入庫單
 $(document).on("click", ".wareHouse-button", function () {
 	var componentId = $(this).data("componentid");
+	var notificationId = $(this).data("id");
+
 	localStorage.setItem("componentValue", componentId);
+	localStorage.setItem("notificationId", notificationId);
 	var newPageUrl = "wareHouseDetail.html";
 	window.location.href = newPageUrl;
 });
 
 // 前往入庫單
 $(document).on("click", ".gowareHouse-button", function () {
-	var wareHouseId = $(this).data("id");
+	var wareHouseId = $(this).data("stockid");
 	localStorage.setItem("wareHouseId", wareHouseId);
 	var newPageUrl = "wareHouseDetail_update.html";
 	window.location.href = newPageUrl;

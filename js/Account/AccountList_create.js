@@ -23,6 +23,7 @@ $(document).ready(function () {
 
 				const defaultOption = document.createElement("option");
 				defaultOption.text = "請選擇門市";
+				defaultOption.value = "";
 				storeList.appendChild(defaultOption);
 
 				for (let i = 0; i < responseData.returnData.length; i++) {
@@ -70,6 +71,7 @@ $(document).ready(function () {
 
 				const defaultOption = document.createElement("option");
 				defaultOption.text = "請選擇角色";
+				defaultOption.value = "";
 				rolleList.appendChild(defaultOption);
 
 				for (let i = 0; i < responseData.returnData.length; i++) {

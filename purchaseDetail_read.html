@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>零件採購單</title>
+    <title>零件採購單/ 查看資料</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -107,7 +107,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="purchaseList.html">零件採購管理</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">零件採購單</li>
+                            <li class="breadcrumb-item active" aria-current="page">零件採購單 / 查看資料</li>
                         </ol>
                     </nav>
 
@@ -148,8 +148,8 @@
 
                                 <div class="col-sm-9 mb-3">
                                     <label for="purchaseRemark" class="form-label">單據備註</label>
-                                    <textarea class="form-control" id="purchaseRemark" rows="3"
-                                        placeholder="若無請填N/A"></textarea>
+                                    <textarea class="form-control" id="purchaseRemark" rows="3" placeholder="若無請填N/A"
+                                        disabled></textarea>
                                 </div>
                             </div>
 
@@ -184,7 +184,7 @@
                                     <div class="mb-3">
                                         <div class="custom-file">
                                             <input type="file" class="form-control" name="component[]" id="fileInput"
-                                                accept="image/*" multiple>
+                                                accept="image/*" multiple disabled>
                                         </div>
                                     </div>
                                     <button id="downloadBtn" download class="btn btn-primary file-download">下載</button>
@@ -194,69 +194,69 @@
                                 <div class="row g-3 mb-5">
                                     <div class="col-sm-3">
                                         <label for="componentNumber" class="form-label">*零件料號</label>
-                                        <input type="text" class="form-control" id="componentNumber" required="">
+                                        <input type="text" class="form-control" id="componentNumber" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="P-brandId" class="form-label">*請選擇品牌</label>
-                                        <select class="form-select" id="P-brandId" required> </select>
+                                        <select class="form-select" id="P-brandId" disabled> </select>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="componentName" class="form-label">*零件名稱</label>
-                                        <input type="text" class="form-control" id="componentName" required="">
+                                        <input type="text" class="form-control" id="componentName" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="suitableModel" class="form-label">*適用車型</label>
-                                        <input type="text" class="form-control" id="suitableModel" required="">
+                                        <input type="text" class="form-control" id="suitableModel" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="Price" class="form-label">*零件訂價</label>
-                                        <input type="text" class="form-control" id="Price" required="">
+                                        <input type="text" class="form-control" id="Price" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="WholesalePrice" class="form-label">*零件批發價</label>
-                                        <input type="text" class="form-control" id="WholesalePrice" required="">
+                                        <input type="text" class="form-control" id="WholesalePrice" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="workingHour" class="form-label">*工時（小時）</label>
-                                        <input type="text" class="form-control" id="workingHour" required="">
+                                        <input type="text" class="form-control" id="workingHour" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="lowestWholesalePrice" class="form-label">*零件最低批發價</label>
-                                        <input type="text" class="form-control" id="lowestWholesalePrice" required="">
+                                        <input type="text" class="form-control" id="lowestWholesalePrice" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="supplier" class="form-label">*零件供應商</label>
-                                        <input type="text" class="form-control" id="supplier" required="">
+                                        <input type="text" class="form-control" id="supplier" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="Cost" class="form-label">*零件成本</label>
-                                        <input type="text" class="form-control" id="Cost" required="">
+                                        <input type="text" class="form-control" id="Cost" disabled>
                                     </div>
 
                                     <div class="col-sm-3">
                                         <label for="depotPosition" class="form-label">*倉庫儲位</label>
-                                        <input type="text" class="form-control" id="depotPosition" required="">
+                                        <input type="text" class="form-control" id="depotPosition" disabled>
                                     </div>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-sm-6 mb-3">
                                         <label for="description" class="form-label">零件描述</label>
-                                        <textarea class="form-control" id="description" rows="3"></textarea>
+                                        <textarea class="form-control" id="description" rows="3" disabled></textarea>
                                     </div>
 
                                     <div class="col-sm-6 mb-3">
                                         <label for="precautions" class="form-label">注意事項</label>
-                                        <textarea class="form-control" id="precautions" rows="3"></textarea>
+                                        <textarea class="form-control" id="precautions" rows="3" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -283,10 +283,8 @@
                         </div>
 
 
-                        <div class="text-center w-100 py-3">
-                            <button class="w-25 btn btn-primary btn-md" type="button" id="allPost">同意採購</button>
-
-                            <button class="w-25 btn btn-primary btn-md" type="button" id="onlyNotePost">取消採購</button>
+                        <div class="text-center w-100 pt-3">
+                            <button id="backButton" class="w-25 btn btn-primary btn-md" type="button">上一頁</button>
                         </div>
 
                     </div>
@@ -320,13 +318,23 @@
         <script src="config/api-config.js"></script>
         <script src="js/main.js"></script>
         <script src="js/Public/downloadFile.js"></script>
-        <script src="js/Order/purchase/purchaseDetail.js"></script>
+        <script src="js/Order/purchase/purchaseDetail_read.js"></script>
         <script src="js/Public/menu.js"></script>
+
+
+        <script>
+            document.getElementById("backButton").addEventListener("click", function () {
+                localStorage.removeItem("purchseRId");
+                history.back();
+            });
+        </script>
+
 
         <!-- 權限 -->
         <script src="js/Public/permissionControl.js"></script>
+        <script src="js/Public/Auth_Read.js"></script>
         <script src="js/Public/depot_Auth.js"></script>
-        <script src="js/Public/Auth_Update.js"></script>
+
 
 </body>
 

@@ -1,3 +1,46 @@
+// 取得品牌資料
+function getbrandList() {
+	// 从localStorage中获取session_id和chsm
+	// 解析JSON字符串为JavaScript对象
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	// chsm = session_id+action+'HBAdminBrandApi'
+	// 組裝菜單所需資料
+	var action = "getBrandList";
+	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
+	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
+
+	// 发送API请求以获取数据
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/brand`,
+		data: { session_id: user_session_id, action: action, chsm: chsm },
+		success: function (responseData) {
+			const brandList = document.getElementById("brandId");
+			const defaultOption = document.createElement("option");
+			defaultOption.text = "請選擇品牌";
+			brandList.appendChild(defaultOption);
+
+			for (let i = 0; i < responseData.returnData.length; i++) {
+				const brand = responseData.returnData[i];
+				const brandName = brand.brandName;
+				const brandId = brand.id;
+
+				const option = document.createElement("option");
+				option.text = brandName;
+				option.value = brandId;
+
+				brandList.appendChild(option);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+}
+
 // 取得詳細資料
 var postId;
 $(document).ready(function () {
@@ -29,39 +72,42 @@ $(document).ready(function () {
 		success: function (responseData) {
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-				const wareHouseData = responseData.returnData[0];
+				getbrandList();
+				setTimeout(function () {
+					const wareHouseData = responseData.returnData[0];
 
-				$("#componentName").val(wareHouseData.componentName);
-				$("#componentNumber").val(wareHouseData.componentNumber);
-				$("#brandId").val(wareHouseData.brandId);
+					$("#componentName").val(wareHouseData.componentName);
+					$("#componentNumber").val(wareHouseData.componentNumber);
+					$("#brandId").val(wareHouseData.brandId);
 
-				$("#purchaseAmount").val(wareHouseData.purchaseAmount);
-				$("#depotAmount").val(wareHouseData.depotAmount);
-				$("#depotPosition").val(wareHouseData.depotPosition);
+					$("#purchaseAmount").val(wareHouseData.purchaseAmount);
+					$("#depotAmount").val(wareHouseData.depotAmount);
+					$("#depotPosition").val(wareHouseData.depotPosition);
 
-				$("#Price").val(wareHouseData.price);
-				$("#Cost").val(wareHouseData.cost);
-				$("#WholesalePrice").val(wareHouseData.wholesalePrice);
-				$("#lowestWholesalePrice").val(wareHouseData.lowestWholesalePrice);
-				$("#supplier").val(wareHouseData.componentSupplier);
-				$("#workingHour").val(wareHouseData.workingHour);
-				$("#suitableModel").val(wareHouseData.suitableCarModel);
-				$("#description").val(wareHouseData.description);
-				$("#precautions").val(wareHouseData.precautions);
-				$("#lowestInventory").val(wareHouseData.lowestInventory);
+					$("#Price").val(wareHouseData.price);
+					$("#Cost").val(wareHouseData.cost);
+					$("#WholesalePrice").val(wareHouseData.wholesalePrice);
+					$("#lowestWholesalePrice").val(wareHouseData.lowestWholesalePrice);
+					$("#supplier").val(wareHouseData.componentSupplier);
+					$("#workingHour").val(wareHouseData.workingHour);
+					$("#suitableModel").val(wareHouseData.suitableCarModel);
+					$("#description").val(wareHouseData.description);
+					$("#precautions").val(wareHouseData.precautions);
+					$("#lowestInventory").val(wareHouseData.lowestInventory);
 
-				$("#BuildTime").val(wareHouseData.createTime);
-				$("#EditTime").val(wareHouseData.updateTime);
-				$("#EditAccount").val(wareHouseData.updateOperator);
+					$("#BuildTime").val(wareHouseData.createTime);
+					$("#EditTime").val(wareHouseData.updateTime);
+					$("#EditAccount").val(wareHouseData.updateOperator);
 
-				displayFileNameInInput(wareHouseData.file);
-				const myButton = document.getElementById("downloadBtn");
-				myButton.setAttribute("data-file", wareHouseData.file);
+					displayFileNameInInput(wareHouseData.file);
+					const myButton = document.getElementById("downloadBtn");
+					myButton.setAttribute("data-file", wareHouseData.file);
 
-				postId = wareHouseData.id;
+					postId = wareHouseData.id;
 
-				// 填充完毕后隐藏加载中的spinner;
-				$("#spinner").hide();
+					// 填充完毕后隐藏加载中的spinner;
+					$("#spinner").hide();
+				}, 1000);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -102,64 +148,26 @@ $(document).on("click", ".file-download", function () {
 	}
 });
 
-// 取得品牌資料
-$(document).ready(function () {
-	// 从localStorage中获取session_id和chsm
-	// 解析JSON字符串为JavaScript对象
-	const jsonStringFromLocalStorage = localStorage.getItem("userData");
-	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-	const user_session_id = gertuserData.sessionId;
-
-	// chsm = session_id+action+'HBAdminBrandApi'
-	// 組裝菜單所需資料
-	var action = "getBrandList";
-	var chsmtoGetManualList = user_session_id + action + "HBAdminBrandApi";
-	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
-
-	// 发送API请求以获取数据
-	$.ajax({
-		type: "POST",
-		url: `${apiURL}/brand`,
-		data: { session_id: user_session_id, action: action, chsm: chsm },
-		success: function (responseData) {
-			const brandList = document.getElementById("brandId");
-			const defaultOption = document.createElement("option");
-			defaultOption.text = "請選擇品牌";
-			brandList.appendChild(defaultOption);
-
-			for (let i = 0; i < responseData.returnData.length; i++) {
-				const brand = responseData.returnData[i];
-				const brandName = brand.brandName;
-				const brandId = brand.id;
-
-				const option = document.createElement("option");
-				option.text = brandName;
-				option.value = brandId;
-
-				brandList.appendChild(option);
-			}
-		},
-		error: function (error) {
-			showErrorNotification();
-		},
-	});
-});
-
 //modal取消：回到列表頁
-$(document).ready(function () {
-	$("#BackList").click(function () {
-		localStorage.removeItem("componentValue");
-		localStorage.removeItem("partId");
-		window.location.href = "wareHouseList.html";
-	});
+$(document).on("click", "#BackList", function () {
+	localStorage.removeItem("componentValue");
+	localStorage.removeItem("partId");
+	localStorage.removeItem("notificationId");
+	window.location.href = "wareHouseList.html";
 });
 
-$(document).ready(function () {
-	$("#cancel").click(function () {
-		localStorage.removeItem("componentValue");
-		localStorage.removeItem("partId");
-		window.location.href = "wareHouseList.html";
-	});
+$(document).on("click", "#cancel", function () {
+	localStorage.removeItem("componentValue");
+	localStorage.removeItem("partId");
+	localStorage.removeItem("notificationId");
+	window.location.href = "wareHouseList.html";
+});
+
+$(document).on("click", "#whList", function () {
+	localStorage.removeItem("componentValue");
+	localStorage.removeItem("partId");
+	localStorage.removeItem("notificationId");
+	window.location.href = "wareHouseList.html";
 });
 
 // 上傳POST
@@ -214,17 +222,30 @@ $(document).ready(function () {
 			updateData.componentName = getComponentName;
 			updateData.componentNumber = getComponentNumber;
 			updateData.componentSupplier = getcomponentSupplier;
-			updateData.cost = getcost;
 			// updateData.depotAmount = getdepotAmount;
 			// updateData.purchaseAmount = getpurchaseAmount;
+
+			if (typeof getprice !== "undefined") {
+				updateData.price = getprice;
+			}
+
+			if (typeof getcost !== "undefined") {
+				updateData.cost = getcost;
+			}
+
+			if (typeof getwholesalePrice !== "undefined") {
+				updateData.wholesalePrice = getwholesalePrice;
+			}
+
+			if (typeof getlowestWholesalePrice !== "undefined") {
+				updateData.lowestWholesalePrice = getlowestWholesalePrice;
+			}
+
 			updateData.depotPosition = getdepotPosition;
 			updateData.description = getdescription;
 			updateData.lowestInventory = getlowestInventory;
-			updateData.lowestWholesalePrice = getlowestWholesalePrice;
 			updateData.precautions = getprecautions;
-			updateData.price = getprice;
 			updateData.suitableCarModel = getsuitableCarModel;
-			updateData.wholesalePrice = getwholesalePrice;
 			updateData.workingHour = getworkingHour;
 			updateData.createTime = getcreateTime;
 			updateData.updateTime = getupdateTime;
@@ -276,10 +297,12 @@ function sendSecondCreate() {
 	var formData = new FormData();
 
 	var amount = $("#amount").val();
+	var notificationId = localStorage.getItem("notificationId");
 
 	var updateData = {
 		componentId: postId,
 		amount: amount,
+		notificationId: notificationId,
 	};
 
 	// 从localStorage中获取session_id和chsm
@@ -309,6 +332,7 @@ function sendSecondCreate() {
 		success: function (response) {
 			if (response.returnCode === "1") {
 				getStockIdModal(response.stockInId);
+				localStorage.removeItem("notificationId");
 				console.log(response);
 			}
 		},

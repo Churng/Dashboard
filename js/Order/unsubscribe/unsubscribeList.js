@@ -21,7 +21,7 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -41,18 +41,15 @@ function updatePageWithData(responseData) {
 	var data = responseData.returnData;
 
 	table = $("#Unsubscribe").DataTable({
+		autoWidth: false,
 		columns: [
 			{
 				render: function (data, type, row) {
-					// var modifyButtonHtml = `<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
-
-					// var readButtonHtml = `<a href="unsubscribeDetail_update.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
-
-					// var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
-
 					var modifyButtonHtml = `<a href="unsubscribeDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}" data-componentid="${row.componentId}">修改</a>`;
 
-					var buttonsHtml = modifyButtonHtml;
+					var readButtonHtml = `<a href="unsubscribeDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
 
 					return buttonsHtml;
 				},
@@ -68,14 +65,47 @@ function updatePageWithData(responseData) {
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "suitableCarModel" },
-			{ data: "price" },
-			{ data: "wholesalePrice" },
-			{ data: "lowestWholesalePrice" },
-			{ data: "cost" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
 			{ data: "workingHour" },
 		],
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
+
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(12).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(12).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(15).visible(false);
+				} else {
+					api.column(15).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(13).visible(false);
+				} else {
+					api.column(13).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(14).visible(false);
+				} else {
+					api.column(14).visible(true);
+				}
+			}
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
 		order: [],
@@ -88,6 +118,13 @@ $(document).on("click", ".modify-button", function () {
 	var UnsubscribeId = $(this).data("id");
 
 	localStorage.setItem("UnsubscribeId", JSON.stringify(UnsubscribeId));
+});
+
+// 查看詳情按鈕事件
+$(document).on("click", ".read-button", function () {
+	var UnsubscribeId = $(this).data("id");
+
+	localStorage.setItem("UnRId", JSON.stringify(UnsubscribeId));
 });
 
 //更新數據
@@ -116,7 +153,7 @@ function refreshDataList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -274,7 +311,7 @@ $(document).ready(function () {
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				if (responseData.returnCode === "1") {
-					updatePageWithData(responseData);
+					updatePageWithData(responseData, table);
 					clearDateFields();
 				} else {
 					handleApiResponse(responseData);
@@ -287,8 +324,8 @@ $(document).ready(function () {
 	}
 });
 
-// 搜尋後清空
-function clearDateFields() {
-	$("#startDate").val("");
-	$("#endDate").val("");
-}
+// // 搜尋後清空
+// function clearDateFields() {
+// 	$("#startDate").val("");
+// 	$("#endDate").val("");
+// }

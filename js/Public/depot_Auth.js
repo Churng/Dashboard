@@ -7,24 +7,20 @@ $(document).ready(function () {
 	console.log(userData);
 	console.log(userAuth);
 
-	// var priceDiv = document.getElementById("C-PriceDiv");
 	if (!userAuth.includes("price")) {
-		$("#C-Price").closest(".col-sm-3").remove();
+		$("#Price").closest(".col-sm-3").remove();
 	}
 
-	// var costDiv = document.getElementById("C-CostDiv");
 	if (!userAuth.includes("cost")) {
-		$("#C-Cost").closest(".col-sm-3").remove();
+		$("#Cost").closest(".col-sm-3").remove();
 	}
 
-	// var wholesalePriceDiv = document.getElementById("C-WholesalePriceDiv");
 	if (!userAuth.includes("wholesalePrice")) {
-		$("#C-WholesalePrice").closest(".col-sm-3").remove();
+		$("#WholesalePrice").closest(".col-sm-3").remove();
 	}
 
-	// var lowestWholesalePriceDiv = document.getElementById("C-lowestWholesalePriceDiv");
 	if (!userAuth.includes("lowestWholesalePrice")) {
-		$("#C-lowestWholesalePrice").closest(".col-sm-3").remove();
+		$("#lowestWholesalePrice").closest(".col-sm-3").remove();
 	}
 
 	function getUserAuth(itemName) {

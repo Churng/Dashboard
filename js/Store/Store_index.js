@@ -113,7 +113,7 @@ $(document).ready(function () {
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				if (responseData.returnCode === "1") {
-					updatePageWithData(responseData);
+					updatePageWithData(responseData, table);
 				} else {
 					handleApiResponse(responseData);
 				}

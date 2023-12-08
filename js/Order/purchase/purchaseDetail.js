@@ -322,7 +322,7 @@ button.addEventListener("click", function (event) {
 // 同意零件訂購：單據備註更改、零件更新
 function sendAgreeDataToAPI(event) {
 	var formData = new FormData();
-	// var getpurchase = localStorage.getItem("purchaseId");
+
 	var getcompoent = localStorage.getItem("componentId");
 
 	var getComponentName = $("#componentName").val();
@@ -365,6 +365,25 @@ function sendAgreeDataToAPI(event) {
 			fileName: fileInput.files[0].name,
 			file: fileInput.files[0].name,
 		};
+
+		if (typeof getprice !== "undefined") {
+			updateData.price = getprice;
+		}
+
+		// 檢查並設置 getcost
+		if (typeof getcost !== "undefined") {
+			updateData.cost = getcost;
+		}
+
+		// 檢查並設置 getwholesalePrice
+		if (typeof getwholesalePrice !== "undefined") {
+			updateData.wholesalePrice = getwholesalePrice;
+		}
+
+		// 檢查並設置 getlowestWholesalePrice
+		if (typeof getlowestWholesalePrice !== "undefined") {
+			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+		}
 
 		// 从localStorage中获取session_id和chsm
 		// 解析JSON字符串为JavaScript对象

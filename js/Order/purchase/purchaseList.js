@@ -41,6 +41,7 @@ function updatePageWithData(responseData) {
 	console.log(data);
 
 	table = $("#partsOrder").DataTable({
+		autoWidth: false,
 		columns: [
 			{
 				// Buttons column
@@ -49,9 +50,9 @@ function updatePageWithData(responseData) {
 
 					var deleteButtonHtml = `<button class="btn btn-danger delete-button" style="display:none" data-button-type="delete" data-id="${row.id}">刪除</button>`;
 
-					// var readButtonHtml = `<a href="manualDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+					var readButtonHtml = `<a href="purchaseDetail_read.html"  style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
 
-					var buttonsHtml = modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml + "&nbsp;" + deleteButtonHtml;
 
 					return buttonsHtml;
 				},
@@ -67,15 +68,47 @@ function updatePageWithData(responseData) {
 			{ data: "componentName" },
 			{ data: "brandName" },
 			{ data: "suitableCarModel" },
-			{ data: "price" },
-			{ data: "wholesalePrice" },
-			{ data: "lowestWholesalePrice" },
-			{ data: "cost" },
+			{ data: "price", defaultContent: "" },
+			{ data: "wholesalePrice", defaultContent: "" },
+			{ data: "lowestWholesalePrice", defaultContent: "" },
+			{ data: "cost", defaultContent: "" },
 			{ data: "workingHour" },
 			{ data: "statusName" },
 		],
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
+
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.price === "" || obj.price === undefined) {
+					api.column(11).visible(false);
+				} else {
+					api.column(11).visible(true);
+				}
+
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(14).visible(false);
+				} else {
+					api.column(14).visible(true);
+				}
+
+				if (obj.wholesalePrice === "" || obj.wholesalePrice === undefined) {
+					api.column(12).visible(false);
+				} else {
+					api.column(12).visible(true);
+				}
+
+				if (obj.lowestWholesalePrice === "" || obj.lowestWholesalePrice === undefined) {
+					api.column(13).visible(false);
+				} else {
+					api.column(13).visible(true);
+				}
+			}
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
 		order: [],
@@ -90,6 +123,12 @@ $(document).on("click", ".modify-button", function () {
 
 	localStorage.setItem("purchaseId", JSON.stringify(purchaseId));
 	localStorage.setItem("componentId", JSON.stringify(componentId));
+});
+
+// 查看詳請按鈕事件
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("purchseRId", id);
 });
 
 //更新數據

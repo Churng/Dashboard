@@ -362,6 +362,16 @@ td:first-child {
 	min-width: 200px;
 }
 
+#partsOrder th:first-child,
+#partsOrder td:first-child {
+	min-width: 220px;
+}
+
+#stockIn th:first-child,
+#stockIn td:first-child {
+	min-width: 220px;
+}
+
 /* 二 */
 #insertContent th:first-child,
 #insertContent td:first-child {
@@ -373,18 +383,8 @@ td:first-child {
 	min-width: 160px;
 }
 
-#partsOrder th:first-child,
-#partsOrder td:first-child {
-	min-width: 160px;
-}
-
 #depotList th:first-child,
 #depotList td:first-child {
-	min-width: 160px;
-}
-
-#stockIn th:first-child,
-#stockIn td:first-child {
 	min-width: 160px;
 }
 
@@ -396,6 +396,21 @@ td:first-child {
 #orderIndex th:first-child,
 #orderIndex td:first-child {
 	min-width: 100px;
+}
+
+#Unsubscribe th:first-child,
+#Unsubscribe td:first-child {
+	min-width: 160px;
+}
+
+#partsCar th:first-child,
+#partsCar td:first-child {
+	min-width: 160px;
+}
+
+#orderIndex th:first-child,
+#orderIndex td:first-child {
+	min-width: 160px;
 }
 
 /* 一 */

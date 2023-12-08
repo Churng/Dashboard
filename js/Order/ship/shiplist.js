@@ -15,43 +15,6 @@ function fetchAccountList() {
 	var chsmtoGetManualList = user_session_id + action + "HBAdminShipApi";
 	var chsm = CryptoJS.MD5(chsmtoGetManualList).toString().toLowerCase();
 
-	if (!$.fn.DataTable.isDataTable("#stockOut")) {
-		table = $("#stockOut").DataTable({
-			columns: [
-				{
-					// Buttons column
-					render: function (data, type, row) {
-						var modifyButtonHtml = `<a href="shipDetail.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-shipno="${row.shipNo}">修改</a>`;
-
-						var readButtonHtml = `<a href="shipDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-shipno="${row.shipNo}">查看詳請</a>`;
-
-						var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
-
-						return buttonsHtml;
-					},
-				},
-				{ data: "shipNo" },
-				{ data: "createTime" },
-				{ data: "createOperator" },
-				{ data: "orderNo" },
-				{ data: "storeName" },
-				{ data: "brandName" },
-				{ data: "orderNote" },
-				{ data: "totalPrice" },
-				{ data: "totalWholesalePrice" },
-				{ data: "totalLowestWholesalePrice" },
-				{ data: "totalCost" },
-				{ data: "amount" },
-				{ data: "statusName" },
-			],
-			drawCallback: function () {
-				handlePagePermissions(currentUser, currentUrl);
-			},
-			columnDefs: [{ orderable: false, targets: [0] }],
-			order: [],
-		});
-	}
-
 	// 发送API请求以获取数据
 	$.ajax({
 		type: "POST",
@@ -72,16 +35,95 @@ function fetchAccountList() {
 }
 
 // 表格填充
+var table;
 function updatePageWithData(responseData, table) {
-	table.clear().rows.add(responseData.returnData).draw();
+	var dataTable = $("#stockOut").DataTable();
+	dataTable.clear().destroy();
+	dataTable.columns().visible(true);
+
+	var data = responseData.returnData;
+
+	table = $("#stockOut").DataTable({
+		autoWidth: false,
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="shipDetail.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-shipno="${row.shipNo}">修改</a>`;
+
+					var readButtonHtml = `<a href="shipDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-shipno="${row.shipNo}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
+
+					return buttonsHtml;
+				},
+			},
+			{ data: "shipNo" },
+			{ data: "createTime" },
+			{ data: "createOperator" },
+			{ data: "orderNo" },
+			{ data: "storeName" },
+			{ data: "brandName" },
+			{ data: "orderNote" },
+			{ data: "totalPrice", defaultContent: "" },
+			{ data: "totalWholesalePrice", defaultContent: "" },
+			{ data: "totalLowestWholesalePrice", defaultContent: "" },
+			{ data: "totalCost", defaultContent: "" },
+			{ data: "amount" },
+			{ data: "statusName" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.totalPrice === "" || obj.totalPrice === undefined) {
+					api.column(8).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(8).visible(true);
+				}
+
+				if (obj.totalCost === "" || obj.totalCost === undefined) {
+					api.column(11).visible(false);
+				} else {
+					api.column(11).visible(true);
+				}
+
+				if (obj.totalWholesalePrice === "" || obj.totalWholesalePrice === undefined) {
+					api.column(9).visible(false);
+				} else {
+					api.column(9).visible(true);
+				}
+
+				if (obj.totalLowestWholesalePrice === "" || obj.totalLowestWholesalePrice === undefined) {
+					api.column(10).visible(false);
+				} else {
+					api.column(10).visible(true);
+				}
+			}
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
+	});
+
+	table.rows.add(data).draw();
 }
 
 // 修改按鈕事件
 $(document).on("click", ".modify-button", function () {
 	var shipNo = $(this).data("shipno");
-	console.log(shipNo);
-	// 存储整个数据对象到 localStorage
 	localStorage.setItem("shipNo", JSON.stringify(shipNo));
+});
+
+// 修改按鈕事件
+$(document).on("click", ".read-button", function () {
+	var shipNo = $(this).data("shipno");
+	localStorage.setItem("shipRNo", JSON.stringify(shipNo));
 });
 
 $(document).ready(function () {
