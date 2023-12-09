@@ -413,6 +413,15 @@ td:first-child {
 	min-width: 160px;
 }
 
+#accountList th:first-child,
+#accountList td:first-child {
+	min-width: 160px;
+}
+#inventory th:first-child,
+#inventory td:first-child {
+	min-width: 160px;
+}
+
 /* 一 */
 #partsManagement th:first-child,
 #partsManagement td:first-child {

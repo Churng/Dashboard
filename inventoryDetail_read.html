@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>開始盤點 / 新增盤點資料</title>
+    <title>開始盤點 / 修改盤點資料</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -23,6 +23,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="css/toastr.min.css">
     <link rel="stylesheet" href="css/spin.css">
 
@@ -107,7 +108,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="inventoryList.html">盤點列表</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">盤點資料 / 新增資料</li>
+                            <li class="breadcrumb-item active" aria-current="page">盤點資料 / 修改資料</li>
                         </ol>
                     </nav>
 
@@ -115,10 +116,11 @@
                         <div class="row g-3">
                             <div class="col-sm-4">
                                 <label for="selectdepotPosition" class="form-label">選擇儲位</label>
-                                <select class="form-select" id="selectdepotPosition" required="">
+                                <select class="form-select" id="selectdepotPosition" disabled>
                                 </select>
                                 <div class="py-3 mb-3">
-                                    <button type="button" class="btn btn btn-primary me-2" id="searchdepotPosition">
+                                    <button type="button" class="btn btn btn-primary me-2" id="searchdepotPosition"
+                                        disabled>
                                         查詢儲位
                                     </button>
                                 </div>
@@ -130,8 +132,8 @@
                         <h4>基本資料</h4>
                         <div class="row g-3 mb-3">
                             <div class="col-sm-4">
-                                <label for="parts-order-ListTime" class="form-label">盤點編號</label>
-                                <input type="text" class="form-control" id="parts-order-ListTime" disabled>
+                                <label for="inventoryId" class="form-label">盤點編號</label>
+                                <input type="text" class="form-control" id="inventoryId" disabled>
                             </div>
 
                             <div class="col-sm-4">
@@ -185,12 +187,13 @@
                                     <div class="mb-3">
                                         <div class="custom-file">
                                             <input type="file" class="form-control" name="inventory[]" id="fileInput"
-                                                accept="text/csv" multiple>
+                                                accept="text/csv" multiple disabled>
                                         </div>
                                     </div>
                                 </div>
 
-                                <button class="btn btn btn-primary" type="button" id="uploadExcel">上傳</button>
+                                <button class="btn btn btn-primary" type="button" id="uploadExcel" disabled>上傳</button>
+
                                 <div class="tableList mt-5">
                                     <div class="table-responsive parts-order-table">
                                         <table id="updateExcel" class="display  table table-striped">
@@ -214,11 +217,11 @@
 
                                 <div class="row">
                                     <div class="col-sm-4 my-3">
-                                        <label for="status" class="form-label">結果相符</label>
-                                        <select class="form-select" id="status" required="">
+                                        <label for="inventoryStatus" class="form-label">結果相符</label>
+                                        <select class="form-select" id="inventoryStatus" required="">
                                             <option value="">全部</option>
-                                            <option value="1">相符</option>
-                                            <option value="2">不相符</option>
+                                            <option value="相符">相符</option>
+                                            <option value="不相符">不相符</option>
                                         </select>
                                     </div>
                                 </div>
@@ -249,8 +252,15 @@
                                 </div>
 
                                 <div class="my-4">
-                                    <button class="btn btn btn-primary" type="button">暫存</button>
-                                    <button class="btn btn btn-primary" type="button">結束盤點</button>
+                                    <button class="btn btn btn-primary" type="button" id="updateInventoryDetailBtn"
+                                        disabled>暫存</button>
+                                    <button class="btn btn btn-primary" type="button" id="completeInventoryBtn"
+                                        disabled>結束盤點</button>
+                                </div>
+
+                                <div class="text-center w-100 pt-3">
+                                    <button id="backButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">上一頁</button>
                                 </div>
                             </div>
                         </div>
@@ -288,6 +298,10 @@
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
+    <script src="js/dataTables.buttons.min.js"></script>
+    <script src="js/buttons.bootstrap5.min.js"></script>
+    <script src="js/buttons.html5.min.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -303,13 +317,18 @@
     <script src="js/Public/create_showInfo.js"></script>
     <script src="js/Public/menu.js"></script>
     <script src="js/Public/downloadPdfFile.js"></script>
-    <script src="js/Inventory/inventory_create.js"></script>
+    <script src="js/Inventory/inventory_read.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/Auth_Create.js"></script>
-
-
+    <script src="js/Public/Auth_Read.js"></script>
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            // 使用 history.back() 方法回到上一頁
+            localStorage.removeItem("inventoryRNo");
+            history.back();
+        });
+    </script>
 </body>
 
 </html>

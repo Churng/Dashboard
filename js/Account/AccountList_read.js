@@ -99,7 +99,7 @@ function detailApiResponse(response) {
 
 async function fetchData() {
 	try {
-		var partId = localStorage.getItem("partId");
+		var partId = localStorage.getItem("AcRId");
 		const dataId = { id: partId };
 
 		const IdPost = JSON.stringify(dataId);
@@ -149,7 +149,7 @@ $(document).ready(function () {
 //上傳POST
 $(document).ready(function () {
 	var formData = new FormData();
-	var partId = localStorage.getItem("partId");
+	var partId = localStorage.getItem("AcRId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
 	uploadForm.addEventListener("submit", function (event) {
@@ -223,7 +223,7 @@ $(document).ready(function () {
 					if (response.returnCode === "1") {
 						showSuccessFileNotification();
 						setTimeout(function () {
-							localStorage.removeItem("partId");
+							localStorage.removeItem("AcRId");
 							var newPageUrl = "accountList.html";
 							window.location.href = newPageUrl;
 						}, 1000);

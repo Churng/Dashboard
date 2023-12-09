@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>帳號管理 / 修改資料 </title>
+    <title>帳號管理 / 查看資料 </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -102,7 +102,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="accountList.html">帳號管理</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">帳號 / 修改</li>
+                            <li class="breadcrumb-item active" aria-current="page">帳號 / 查看資料</li>
                         </ol>
                     </nav>
 
@@ -113,48 +113,48 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="A-account" class="form-label">*帳號</label>
-                                    <input type="text" class="form-control" id="A-account" name="account" required>
+                                    <input type="text" class="form-control" id="A-account" name="account" disabled>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-password" class="form-label">*密碼</label>
                                     <input type="password" class="form-control" id="A-password" name="password"
-                                        required>
+                                        disabled>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-userName" class="form-label">*姓名</label>
-                                    <input type="text" class="form-control" id="A-userName" name="userName" required>
+                                    <input type="text" class="form-control" id="A-userName" name="userName" disabled>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-storeName" class="form-label">所屬門市</label>
-                                    <select id="A-storeName" class="form-select" name="storeName"></select>
+                                    <select id="A-storeName" class="form-select" name="storeName" disabled></select>
                                     </select>
                                 </div>
 
 
                                 <div class="col-sm-6">
                                     <label for="A-email" class="form-label">*Email</label>
-                                    <input type="email" class="form-control" id="A-email" name="email" required>
+                                    <input type="email" class="form-control" id="A-email" name="email" disabled>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-phoneNumber" class="form-label">*手機</label>
                                     <input type="tel" class="form-control" id="A-phoneNumber" name="phoneNumber"
-                                        required>
+                                        disabled>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-authorizeName" class="form-label">角色</label>
-                                    <select class="form-select" id="A-authorizeName" name="authorizeName">
+                                    <select class="form-select" id="A-authorizeName" name="authorizeName" disabled>
                                     </select>
 
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-status" class="form-label">*狀態</label>
-                                    <select class="form-select" id="A-status" name="status" required>
+                                    <select class="form-select" id="A-status" name="status" disabled>
                                         <option value="1">正常</option>
                                         <option value="0">停用</option>
                                     </select>
@@ -180,8 +180,8 @@
                                     <input type="text" class="form-control" id="EditAccount" disabled>
                                 </div>
                                 <div class="text-center w-100 pt-3">
-                                    <button id="updateButton" class="w-25 btn btn-primary btn-md"
-                                        type="submit">儲存</button>
+                                    <button id="backButton" class="w-25 btn btn-primary btn-md"
+                                        type="button">上一頁</button>
                                 </div>
                             </div>
                         </form>
@@ -220,13 +220,18 @@
 
     <script src="js/Public/create_showInfo.js"></script>
     <script src="js/Public/menu.js"></script>
-    <script src="js/Account/AccountList_update.js"></script>
+    <script src="js/Account/AccountList_read.js"></script>
 
     <!-- 權限 -->
     <script src="js/Public/permissionControl.js"></script>
-    <script src="js/Public/Auth_Update.js"></script>
+    <script src="js/Public/Auth_Read.js"></script>
 
-
+    <script>
+        document.getElementById("backButton").addEventListener("click", function () {
+            localStorage.removeItem("AcRId");
+            history.back();
+        });
+    </script>
 </body>
 
 </html>

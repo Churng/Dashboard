@@ -160,7 +160,7 @@ $(document).ready(function () {
 			data: { session_id: user_session_id, action: action, chsm: chsm, data: postData },
 			success: function (responseData) {
 				if (responseData.returnCode === "1") {
-					updatePageWithData(responseData);
+					updatePageWithData(responseData, table);
 				} else {
 					handleApiResponse(responseData);
 				}
@@ -193,7 +193,8 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				console.log(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -209,48 +210,50 @@ $(document).ready(function () {
 	fetchAccountList();
 });
 
-// 表格填充
+var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
 	var dataTable = $("#accountList").DataTable();
-	dataTable.clear().draw();
-	dataTable.order([]).draw(false);
+	dataTable.clear().destroy();
+	var data = responseData.returnData;
 
-	// 填充API数据到表格，包括下载链接
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
+	table = $("#accountList").DataTable({
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="accountDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
 
-		var modifyButtonHtml =
-			'<a href="accountDetail_update.html" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="' +
-			data.id +
-			'">修改</a>';
+					var readButtonHtml = `<a href="accountDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
 
-		var readButtonHtml =
-			'<a href="accountDetail_update.html" style="display:none" class="btn btn-warning text-white" data-button-type="read" data-id="' +
-			data.id +
-			'">查看</a>';
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
 
-		var buttonsHtml = modifyButtonHtml + "&nbsp;" + readButtonHtml;
-
-		var statusText = data.status === "0" ? "停用" : "正常";
-
-		dataTable.row
-			.add([
-				buttonsHtml,
-				data.account,
-				data.userName,
-				data.storeName,
-				data.email,
-				data.phoneNumber,
-				data.authorizeName,
-				statusText,
-				data.createTime,
-			])
-			.draw(false);
-	}
+					return buttonsHtml;
+				},
+			},
+			{ data: "account" },
+			{ data: "userName" },
+			{ data: "storeName" },
+			{ data: "email" },
+			{ data: "phoneNumber" },
+			{ data: "authorizeName" },
+			{ data: "statusName" },
+			{ data: "createTime" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
+	});
+	table.rows.add(data).draw();
 }
 
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("partId", id);
+});
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("AcRId", id);
 });

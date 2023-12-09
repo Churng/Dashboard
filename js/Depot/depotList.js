@@ -57,8 +57,8 @@ function updatePageWithData(responseData) {
 		columns: [
 			{
 				render: function (data, type, row) {
-					var modifyButtonHtml = `<a href="depotDetail.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
-					var readButtonHtml = `<a href="depotDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+					var modifyButtonHtml = `<a href="depotComponentDetail.html" style="display:inline-block" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
+					var readButtonHtml = `<a href="depotComponentDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
 					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
 					return buttonsHtml;
 				},

@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 // 取得詳細資料
 $(document).ready(function () {
-	var partId = localStorage.getItem("inventoryNo");
+	var partId = localStorage.getItem("inventoryRNo");
 	const dataId = { inventoryNo: partId };
 	const IdPost = JSON.stringify(dataId);
 
@@ -236,13 +236,13 @@ function updatePageWithData(responseData) {
 					//盤點入庫
 					var inventoryLossButtonHtml = "";
 					if (Boolean(ifInventoryLoss) === true) {
-						inventoryLossButtonHtml += `<button class="btn btn-warning InventoryLoss-button" data-id="${row.id}">列入盤點損失</button>`;
+						inventoryLossButtonHtml += `<button class="btn btn-warning InventoryLoss-button" disabled>列入盤點損失</button>`;
 					}
 
 					// 盤點損失
 					var inventoryStockInButtonHtml = "";
 					if (Boolean(ifInventoryStockIn) === true) {
-						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" data-id="${row.id}">盤點入庫</button>`;
+						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" disabled>盤點入庫</button>`;
 					}
 
 					var buttonsHtml = inventoryLossButtonHtml + "&nbsp;" + inventoryStockInButtonHtml;

@@ -196,6 +196,7 @@ function updatePageWithData(responseData) {
 	var data = responseData.returnData;
 
 	table = $("#insertContent").DataTable({
+		autoWidth: false,
 		columns: [
 			{
 				// Buttons column
@@ -226,7 +227,7 @@ function updatePageWithData(responseData) {
 			{ data: "orderNo" },
 			{ data: "storeName" },
 			{ data: "orderNote" },
-			{ data: "cost" },
+			{ data: "cost", defaultContent: "" },
 			{ data: "depotAmount" },
 			{ data: "inventoryAmount" },
 			{ data: "statusName" },
@@ -240,7 +241,20 @@ function updatePageWithData(responseData) {
 			},
 		],
 		drawCallback: function () {
-			// handlePagePermissions(currentUser, currentUrl);
+			var api = this.api();
+
+			// 檢查每個數據對象
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+
+				// 如果對象的特定鍵的值為空，則隱藏列
+				if (obj.cost === "" || obj.cost === undefined) {
+					api.column(8).visible(false);
+				} else {
+					// 否則，顯示列
+					api.column(8).visible(true);
+				}
+			}
 		},
 		columnDefs: [{ orderable: false, targets: [0] }],
 		order: [],

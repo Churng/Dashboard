@@ -1,4 +1,3 @@
-// 列表取得
 function fetchAccountList() {
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
@@ -45,10 +44,9 @@ function updatePageWithData(responseData) {
 				render: function (data, type, row) {
 					var modifyButtonHtml = `<a href="inventoryDetail_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-inventoryno="${row.inventoryNo}">修改</a>`;
 
-					// var readButtonHtml = `<a href="manualDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+					var readButtonHtml = `<a href="inventoryDetail_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-inventoryno="${row.inventoryNo}">查看詳請</a>`;
 
-					// var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml ;
-					var buttonsHtml = modifyButtonHtml;
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
 
 					return buttonsHtml;
 				},
@@ -79,9 +77,12 @@ $(document).ready(function () {
 // 修改按鈕事件
 $(document).on("click", ".modify-button", function () {
 	var inventoryId = $(this).data("inventoryno");
-	console.log(inventoryId);
-	// 存储整个数据对象到 localStorage
 	localStorage.setItem("inventoryNo", inventoryId);
+});
+
+$(document).on("click", ".read-button", function () {
+	var inventoryrId = $(this).data("inventoryno");
+	localStorage.setItem("inventoryRNo", inventoryrId);
 });
 
 $(document).ready(function () {
