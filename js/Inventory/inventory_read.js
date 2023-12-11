@@ -103,7 +103,7 @@ $(document).ready(function () {
 				}
 
 				//下載excel
-				var downloadExcelBtn = document.getElementById("downloadExcelBtn");
+				var downloadExcelBtn = document.getElementsByClassName("buttons-csv")[0];
 				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_downloadInventoryExcel) === true) {
 						downloadExcelBtn.disabled = false;
@@ -233,6 +233,8 @@ function updatePageWithData(responseData) {
 				render: function (data, type, row) {
 					var ifInventoryLoss = row.if_inventory_loss;
 					var ifInventoryStockIn = row.if_inventory_stock_in;
+					var ifStockInDetail = row.if_stockInDetail;
+
 					//盤點入庫
 					var inventoryLossButtonHtml = "";
 					if (Boolean(ifInventoryLoss) === true) {
@@ -245,12 +247,20 @@ function updatePageWithData(responseData) {
 						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" disabled>盤點入庫</button>`;
 					}
 
-					var buttonsHtml = inventoryLossButtonHtml + "&nbsp;" + inventoryStockInButtonHtml;
+					// 查看入庫單 if_stockInDetail
+					var stockInDetailButtonHtml = "";
+					if (Boolean(ifStockInDetail) === true) {
+						stockInDetailButtonHtml += `<button class="btn btn-primary StockInDetail-button" disabled>查看入庫單</button>`;
+					}
+
+					var buttonsHtml =
+						inventoryLossButtonHtml + "&nbsp;" + inventoryStockInButtonHtml + "&nbsp;" + stockInDetailButtonHtml;
 
 					return buttonsHtml;
 				},
 			},
 			{ data: "id" },
+			{ data: "depotId" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "suitableCarModel" },

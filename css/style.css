@@ -372,11 +372,12 @@ td:first-child {
 	min-width: 220px;
 }
 
-/* 二 */
 #insertContent th:first-child,
 #insertContent td:first-child {
-	min-width: 220px;
+	min-width: 330px;
 }
+
+/* 二 */
 
 #storeInformation th:first-child,
 #storeInformation td:first-child {

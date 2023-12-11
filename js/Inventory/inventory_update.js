@@ -103,7 +103,8 @@ $(document).ready(function () {
 				}
 
 				//下載excel
-				var downloadExcelBtn = document.getElementById("downloadExcelBtn");
+				// buttons-csv
+				var downloadExcelBtn = document.getElementsByClassName("buttons-csv")[0];
 				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_downloadInventoryExcel) === true) {
 						downloadExcelBtn.disabled = false;
@@ -233,6 +234,9 @@ function updatePageWithData(responseData) {
 				render: function (data, type, row) {
 					var ifInventoryLoss = row.if_inventory_loss;
 					var ifInventoryStockIn = row.if_inventory_stock_in;
+					var ifStockInDetail = row.if_stockInDetail;
+
+					console.log(row.stockInId);
 					//盤點入庫
 					var inventoryLossButtonHtml = "";
 					if (Boolean(ifInventoryLoss) === true) {
@@ -245,12 +249,20 @@ function updatePageWithData(responseData) {
 						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" data-id="${row.id}">盤點入庫</button>`;
 					}
 
-					var buttonsHtml = inventoryLossButtonHtml + "&nbsp;" + inventoryStockInButtonHtml;
+					// 查看入庫單 if_stockInDetail
+					var stockInDetailButtonHtml = "";
+					if (Boolean(ifStockInDetail) === true) {
+						stockInDetailButtonHtml += `<button class="btn btn-primary StockInDetail-button" data-stockInid="${row.stockInId}">查看入庫單</button>`;
+					}
+
+					var buttonsHtml =
+						inventoryLossButtonHtml + "&nbsp;" + inventoryStockInButtonHtml + "&nbsp;" + stockInDetailButtonHtml;
 
 					return buttonsHtml;
 				},
 			},
 			{ data: "id" },
+			{ data: "depotId" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "suitableCarModel" },
@@ -299,6 +311,19 @@ function updatePageWithData(responseData) {
 		table.column(11).search(selectedStatus).draw();
 	});
 }
+
+// 查看入庫單
+$(document).on("click", ".StockInDetail-button", function () {
+	var wareHouseId = $(this).data("stockInid");
+	if (wareHouseId == null) {
+		showErrorWHNotification();
+		return;
+	} else {
+		localStorage.setItem("wareHouseId", wareHouseId);
+		var newPageUrl = "wareHouseDetail_update.html";
+		window.location.href = newPageUrl;
+	}
+});
 
 // Remark取值
 var changedCells;
@@ -528,11 +553,9 @@ $(document).on("click", "#completeInventoryBtn", function (e) {
 			success: function (response) {
 				showSuccessucompleteInventoryNotification();
 				if (response.returnCode === "1") {
-					console.log(response);
-					// setTimeout(function () {
-					// 	var newPageUrl = "unsubscribeDetail.html";
-					// 	window.location.href = newPageUrl;
-					// }, 3000);
+					setTimeout(function () {
+						window.location.reload();
+					}, 1000);
 				} else {
 					handleApiResponse(response);
 				}

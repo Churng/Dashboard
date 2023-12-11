@@ -177,3 +177,7 @@ function showSuccessucompleteInventoryNotification() {
 function showSuccesupdateInventoryDetailNotification() {
 	toastr.success("已成功暫存內容！", "成功");
 }
+
+function showErrorWHNotification() {
+	toastr.error("參數有誤", "警告");
+}
