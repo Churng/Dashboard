@@ -1196,8 +1196,19 @@ $(document).ready(function () {
 			formData.set("session_id", user_session_id);
 			formData.set("chsm", chsm);
 			formData.set("data", JSON.stringify(AuthDataObject));
-			formData.set("menuAuthorize", JSON.stringify(jsonData));
-			formData.set("brandIdList", JSON.stringify(formattedString));
+			// formData.set("menuAuthorize", JSON.stringify(jsonData));
+			// formData.set("brandIdList", JSON.stringify(formattedString));
+			if (jsonData && Object.keys(jsonData).length > 0) {
+				formData.set("menuAuthorize", JSON.stringify(jsonData));
+			} else {
+				formData.set("menuAuthorize", JSON.stringify({}));
+			}
+
+			if (formattedString && formattedString.length > 0) {
+				formData.set("brandIdList", JSON.stringify(formattedString));
+			} else {
+				formData.set("brandIdList", JSON.stringify([]));
+			}
 
 			// 发送文件上传请求
 			$.ajax({
