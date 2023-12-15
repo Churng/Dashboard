@@ -109,49 +109,50 @@
 
                     <div class="block-first mt-5">
                         <h4>基本資料</h4>
-                        <form class="needs-validation">
+                        <form id="uploadForm" class="needs-validation" novalidate>
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <label for="A-account" class="form-label">*帳號</label>
-                                    <input type="text" class="form-control" id="A-account" name="account">
+                                    <input type="text" class="form-control" id="A-account" name="account" required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-password" class="form-label">*密碼</label>
-                                    <input type="password" class="form-control" id="A-password" name="password">
+                                    <input type="password" class="form-control" id="A-password" name="password"
+                                        required>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="A-userName" class="form-label">*姓名</label>
-                                    <input type="text" class="form-control" id="A-userName" name="userName">
+                                    <input type="text" class="form-control" id="A-userName" name="userName" required>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="A-storeName" class="form-label">*所屬門市</label>
+                                    <label for="A-storeName" class="form-label">所屬門市</label>
                                     <select id="A-storeName" class="form-select" name="storeName"></select>
                                     </select>
                                 </div>
 
 
                                 <div class="col-sm-6">
-                                    <label for="A-email" class="form-label">*Email</label>
+                                    <label for="A-email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="A-email" name="email">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="A-phoneNumber" class="form-label">*手機</label>
+                                    <label for="A-phoneNumber" class="form-label">手機</label>
                                     <input type="tel" class="form-control" id="A-phoneNumber" name="phoneNumber">
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="A-authorizeName" class="form-label">*角色</label>
+                                    <label for="A-authorizeName" class="form-label">角色</label>
                                     <select class="form-select" id="A-authorizeName" name="authorizeName">
                                     </select>
 
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="A-status" class="form-label">*狀態</label>
+                                    <label for="A-status" class="form-label">狀態</label>
                                     <select class="form-select" id="A-status" name="status">
                                         <option value="1">正常</option>
                                         <option value="0">停業</option>
@@ -216,7 +217,6 @@
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/Public/create_showInfo.js"></script>
-    <script src="js/Store/Store_create.js"></script>
     <script src="js/Public/menu.js"></script>
     <script src="js/Account/AccountList_create.js"></script>
 

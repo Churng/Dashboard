@@ -98,72 +98,78 @@ $(document).ready(function () {
 //上傳POST
 $(document).ready(function () {
 	var formData = new FormData();
-	$("#saveButton").click(function () {
-		//取值
-		var getaccount = $("#A-account").val();
-		var getpassword = $("#A-password").val();
-		var getuserName = $("#A-userName").val();
-		var getstoreName = $("#A-storeName").find(":selected").val();
-		var getemail = $("#A-email").val();
-		var getphoneNumber = $("#A-phoneNumber").val();
-		var getauthorizeName = $("#A-authorizeName").find(":selected").val();
-		var getstatus = $("#A-status").val();
+	uploadForm.addEventListener("submit", function (event) {
+		if (uploadForm.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		} else {
+			event.preventDefault();
+			var getaccount = $("#A-account").val();
+			var getpassword = $("#A-password").val();
+			var getuserName = $("#A-userName").val();
+			var getstoreName = $("#A-storeName").find(":selected").val();
+			var getemail = $("#A-email").val();
+			var getphoneNumber = $("#A-phoneNumber").val();
+			var getauthorizeName = $("#A-authorizeName").find(":selected").val();
+			var getstatus = $("#A-status").val();
 
-		var getcreateTime = $("#BuildTime").val();
+			var getcreateTime = $("#BuildTime").val();
 
-		console.log(getstoreName, getauthorizeName);
-		var accountDataObject = {
-			account: getaccount,
-			password: getpassword,
-			storeName: getstoreName,
-			userName: getuserName,
-			email: getemail,
-			phoneNumber: getphoneNumber,
-			authorizeName: getauthorizeName,
-			status: getstatus,
-			createTime: getcreateTime,
-		};
+			var accountDataObject = {
+				account: getaccount,
+				password: getpassword,
+				storeName: getstoreName,
+				userName: getuserName,
+				email: getemail,
+				phoneNumber: getphoneNumber,
+				authorizeName: getauthorizeName,
+				status: getstatus,
+				createTime: getcreateTime,
+			};
 
-		// 从localStorage中获取session_id和chsm
-		// 解析JSON字符串为JavaScript对象
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
+			// 从localStorage中获取session_id和chsm
+			// 解析JSON字符串为JavaScript对象
+			const jsonStringFromLocalStorage = localStorage.getItem("userData");
+			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+			const user_session_id = gertuserData.sessionId;
 
-		// 组装发送文件所需数据
-		// chsm = session_id+action+'HBAdminAccountApi'
-		var action = "insertAccountDetail";
-		var chsmtoPostFile = user_session_id + action + "HBAdminAccountApi";
-		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+			// 组装发送文件所需数据
+			// chsm = session_id+action+'HBAdminAccountApi'
+			var action = "insertAccountDetail";
+			var chsmtoPostFile = user_session_id + action + "HBAdminAccountApi";
+			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
 
-		// 设置其他formData字段
-		formData.set("action", action);
-		formData.set("session_id", user_session_id);
-		formData.set("chsm", chsm);
-		formData.set("data", JSON.stringify(accountDataObject));
+			// 设置其他formData字段
+			formData.set("action", action);
+			formData.set("session_id", user_session_id);
+			formData.set("chsm", chsm);
+			formData.set("data", JSON.stringify(accountDataObject));
 
-		console.log(formData);
+			console.log(formData);
+			// 发送文件上传请求
 
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/account`,
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				if (response.returnCode === "1") {
-					showSuccessFileNotification();
-					setTimeout(function () {
-						var newPageUrl = "8-account-list.html";
-						window.location.href = newPageUrl;
-					}, 1000);
-				} else {
-					handleApiResponse(response);
-				}
-			},
-			error: function (error) {
-				showErrorFileNotification();
-			},
-		});
+			$.ajax({
+				type: "POST",
+				url: `${apiURL}/account`,
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					if (response.returnCode === "1") {
+						showSuccessFileNotification();
+						setTimeout(function () {
+							var newPageUrl = "accountList.html";
+							window.location.href = newPageUrl;
+						}, 1000);
+					} else {
+						handleApiResponse(response);
+					}
+				},
+				error: function (error) {
+					showErrorFileNotification();
+				},
+			});
+		}
+		uploadForm.classList.add("was-validated");
 	});
 });

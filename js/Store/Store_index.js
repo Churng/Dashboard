@@ -85,7 +85,7 @@ $(document).ready(function () {
 		var filterData = {};
 
 		if (!selectedShopId) {
-			fetchAccountList();
+			sendApiRequest();
 		} else {
 			var filterData = {};
 			filterData.storeType = selectedShopId;
@@ -131,6 +131,6 @@ $(document).ready(function () {
 });
 
 // 點擊按鈕時使用 fetchAccountList
-$("#allBtn").on("click", function () {
-	fetchAccountList();
-});
+// $("#allBtn").on("click", function () {
+// 	fetchAccountList();
+// });
