@@ -738,3 +738,16 @@ $(document).on("click", "#uploadExcel", function (e) {
 		}
 	});
 });
+
+//下載檔案
+
+$(document).on("click", ".file-download", function (e) {
+	e.preventDefault(); // 阻止默认链接行为
+	var fileName = $(this).data("file");
+	var apiName = "inventory";
+	if (fileName) {
+		downloadCsvFile(apiName, fileName);
+	} else {
+		showErrorFileNotification();
+	}
+});

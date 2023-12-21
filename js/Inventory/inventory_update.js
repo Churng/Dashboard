@@ -236,7 +236,6 @@ function updatePageWithData(responseData) {
 					var ifInventoryStockIn = row.if_inventory_stock_in;
 					var ifStockInDetail = row.if_stockInDetail;
 
-					console.log(row.stockInId);
 					//盤點入庫
 					var inventoryLossButtonHtml = "";
 					if (Boolean(ifInventoryLoss) === true) {
@@ -750,4 +749,17 @@ $(document).on("click", "#uploadExcel", function (e) {
 			showWarningNotification();
 		}
 	});
+});
+
+//下載檔案
+
+$(document).on("click", ".file-download", function (e) {
+	e.preventDefault(); // 阻止默认链接行为
+	var fileName = $(this).data("file");
+	var apiName = "inventory";
+	if (fileName) {
+		downloadCsvFile(apiName, fileName);
+	} else {
+		showErrorFileNotification();
+	}
 });

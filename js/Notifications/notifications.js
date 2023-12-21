@@ -181,3 +181,11 @@ function showSuccesupdateInventoryDetailNotification() {
 function showErrorWHNotification() {
 	toastr.error("參數有誤", "警告");
 }
+
+function showErrorFileNotification() {
+	toastr.warning("文件下载出錯，請重新嘗試！", "提醒");
+}
+
+function showErrorTypeNotification() {
+	toastr.error("不支持的文件類型，請下載CSV檔案", "警告");
+}

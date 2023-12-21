@@ -317,7 +317,7 @@
     <script src="js/main.js"></script>
     <script src="js/Public/create_showInfo.js"></script>
     <script src="js/Public/menu.js"></script>
-    <script src="js/Public/downloadPdfFile.js"></script>
+    <script src="js/Public/downloadCsvFile.js"></script>
     <script src="js/Inventory/inventory_read.js"></script>
 
     <!-- 權限 -->
@@ -325,7 +325,6 @@
     <script src="js/Public/Auth_Read.js"></script>
     <script>
         document.getElementById("backButton").addEventListener("click", function () {
-            // 使用 history.back() 方法回到上一頁
             localStorage.removeItem("inventoryRNo");
             history.back();
         });
