@@ -19,6 +19,7 @@ $(document).ready(function () {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
+				console.log(responseData);
 				const storeList = document.getElementById("A-storeName");
 
 				const defaultOption = document.createElement("option");
@@ -67,6 +68,7 @@ $(document).ready(function () {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
+				console.log(responseData);
 				const rolleList = document.getElementById("A-authorizeName");
 
 				const defaultOption = document.createElement("option");
@@ -107,10 +109,10 @@ $(document).ready(function () {
 			var getaccount = $("#A-account").val();
 			var getpassword = $("#A-password").val();
 			var getuserName = $("#A-userName").val();
-			var getstoreName = $("#A-storeName").find(":selected").val();
+			var getstoreId = $("#A-storeName").val();
 			var getemail = $("#A-email").val();
 			var getphoneNumber = $("#A-phoneNumber").val();
-			var getauthorizeName = $("#A-authorizeName").find(":selected").val();
+			var getauthorizeId = $("#A-authorizeName").val();
 			var getstatus = $("#A-status").val();
 
 			var getcreateTime = $("#BuildTime").val();
@@ -118,11 +120,11 @@ $(document).ready(function () {
 			var accountDataObject = {
 				account: getaccount,
 				password: getpassword,
-				storeName: getstoreName,
+				storeId: getstoreId,
 				userName: getuserName,
 				email: getemail,
 				phoneNumber: getphoneNumber,
-				authorizeName: getauthorizeName,
+				authorizeId: getauthorizeId,
 				status: getstatus,
 				createTime: getcreateTime,
 			};

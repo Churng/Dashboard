@@ -3,9 +3,9 @@ $(document).ready(function () {
 	var userData = Data.userretrunData;
 	var userAuth = getUserAuth(["零件定義資料", "零件資料", "零件採購單資料", "入庫單", "退貨單資料"]);
 
-	console.log(Data);
-	console.log(userData);
-	console.log(userAuth);
+	// console.log(Data);
+	// console.log(userData);
+	// console.log(userAuth);
 
 	if (!userAuth.includes("price")) {
 		$("#Price").closest(".col-sm-3").remove();

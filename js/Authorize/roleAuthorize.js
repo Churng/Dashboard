@@ -308,7 +308,7 @@ $(document).ready(function () {
 			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="36" data-column="wholesalePrice" disabled/>',
 			lowestWholesalePrice:
 				'<input type="checkbox" name="rowCheckbox" data-id="36" data-column="lowestWholesalePrice" disabled/>',
-			cost: '<input type="checkbox" name="rowCheckbox" data-id="36" data-column="cost" />',
+			cost: '<input type="checkbox" name="rowCheckbox" data-id="36" data-column="cost" disabled/>',
 		},
 		{
 			empty: "零件採購單列表",
@@ -481,6 +481,26 @@ $(document).ready(function () {
 			lowestWholesalePrice:
 				'<input type="checkbox" name="rowCheckbox" data-id="17" data-column="lowestWholesalePrice" />',
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="17" data-column="cost" />',
+			order_execute_ship:
+				'<input type="checkbox" name="rowCheckbox" data-id="17" data-column="order_execute_ship" disabled />',
+			order_delete_component:
+				'<input type="checkbox" name="rowCheckbox" data-id="17" data-column="order_delete_component" disabled />',
+			order_unsubscribe:
+				'<input type="checkbox" name="rowCheckbox" data-id="17" data-column="order_unsubscribe" disabled />',
+			order_complete: '<input type="checkbox" name="rowCheckbox" data-id="17" data-column="order_complete" disabled />',
+		},
+		{
+			empty: "購物車資料",
+			id: 30,
+			read: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="delete" />',
+			price: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="price" />',
+			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="wholesalePrice" />',
+			lowestWholesalePrice:
+				'<input type="checkbox" name="rowCheckbox" data-id="30" data-column="lowestWholesalePrice" />',
+			cost: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="cost" />',
 			order_execute_ship:
 				'<input type="checkbox" name="rowCheckbox" data-id="17" data-column="order_execute_ship" disabled />',
 			order_delete_component:
@@ -829,19 +849,6 @@ $(document).ready(function () {
 			lowestWholesalePrice:
 				'<input type="checkbox" name="rowCheckbox" data-id="23" data-column="lowestWholesalePrice" />',
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="cost" />',
-		},
-		{
-			empty: "購物車資料",
-			id: 30,
-			read: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="read" />',
-			insert: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="insert" />',
-			update: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="update" />',
-			delete: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="delete" />',
-			price: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="price" />',
-			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="wholesalePrice" />',
-			lowestWholesalePrice:
-				'<input type="checkbox" name="rowCheckbox" data-id="30" data-column="lowestWholesalePrice" />',
-			cost: '<input type="checkbox" name="rowCheckbox" data-id="30" data-column="cost" />',
 		},
 		{
 			empty: "入庫單報表",

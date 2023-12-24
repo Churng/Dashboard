@@ -73,10 +73,10 @@ $(document).ready(function () {
 				// var getpurchaseAmount = $("#C-purchaseAmount").val();
 				// var getdepotAmount = $("#C-depotAmount").val();
 				var getdepotPosition = $("#C-depotPosition").val();
-				var getprice = $("#C-Price").val();
-				var getcost = $("#C-Cost").val();
-				var getwholesalePrice = $("#C-WholesalePrice").val();
-				var getlowestWholesalePrice = $("#C-lowestWholesalePrice").val();
+				var getprice = $("#Price").val();
+				var getcost = $("#Cost").val();
+				var getwholesalePrice = $("#WholesalePrice").val();
+				var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
 				var getcomponentSupplier = $("#C-supplier").val();
 				var getworkingHour = $("#C-workingHour").val();
 				var getsuitableCarModel = $("#C-suitableModel").val();

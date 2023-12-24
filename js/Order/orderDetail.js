@@ -136,7 +136,7 @@ function updatePageWithData(responseData) {
 					//出庫單選取
 					var checkboxHtml = "";
 
-					if (row.status === 3) {
+					if (row.status === "3") {
 						// 如果数组不为空且第一个对象的状态值为 3，返回特定的 HTML
 						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
 					} else {

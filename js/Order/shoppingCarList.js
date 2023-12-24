@@ -374,7 +374,13 @@ $(document).ready(function () {
 				console.log(response);
 				if (response.returnCode === "1") {
 					showSuccessAddToOrderNotification();
-					refreshDataList();
+					var orderId = response.orderNo;
+					localStorage.setItem("orderNo", JSON.stringify(orderId));
+
+					setTimeout(function () {
+						var newPageUrl = "orderDetail.html";
+						window.location.href = newPageUrl;
+					}, 2000);
 				} else {
 					handleApiResponse(response);
 				}

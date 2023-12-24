@@ -297,11 +297,13 @@ function sendSecondCreate() {
 	var formData = new FormData();
 
 	var amount = $("#amount").val();
+	var remark = $("#remark").val();
 	var notificationId = localStorage.getItem("notificationId");
 
 	var updateData = {
 		componentId: postId,
 		amount: amount,
+		remark: remark,
 		notificationId: notificationId,
 	};
 
@@ -372,6 +374,9 @@ function getStockIdModal(stockInId) {
 				updatePageWithData(responseData);
 
 				setTimeout(() => {
+					// 获取按钮元素
+					const button = document.querySelector(".whModal");
+					button.removeAttribute("disabled");
 					$("#wareHouseModal").modal("show");
 				}, 1000);
 

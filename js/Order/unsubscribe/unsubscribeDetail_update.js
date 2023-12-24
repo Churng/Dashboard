@@ -45,7 +45,7 @@ $(document).ready(function () {
 				$("#unsubscribeId").val(unsubscribeData.unsubscribeId);
 
 				// 訂單
-				$("#orderId").val(unsubscribeData.orderId);
+				$("#orderId").val(unsubscribeData.orderNo);
 				$("#orderStoreName").val(unsubscribeData.orderStoreName);
 				$("#orderNote").val(unsubscribeData.orderNote);
 

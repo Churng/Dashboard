@@ -43,7 +43,9 @@ function updatePageWithData(responseData) {
 			data.id +
 			'" class="btn btn-primary text-white modify-button">修改</a>';
 
-		dataTable.row.add([modifyButtonHtml, data.authorizeName, data.storeTypeName, data.roleOrder]).draw(false);
+		dataTable.row
+			.add([modifyButtonHtml, data.authorizeName, data.storeTypeName, data.brandListName, data.roleOrder, data.remark])
+			.draw(false);
 	}
 }
 
