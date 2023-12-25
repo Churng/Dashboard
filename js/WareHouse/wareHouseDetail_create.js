@@ -299,12 +299,14 @@ function sendSecondCreate() {
 	var amount = $("#amount").val();
 	var remark = $("#remark").val();
 	var notificationId = localStorage.getItem("notificationId");
+	var notificationType = localStorage.getItem("notificationType");
 
 	var updateData = {
 		componentId: postId,
 		amount: amount,
 		remark: remark,
 		notificationId: notificationId,
+		notificationType: notificationType !== null ? notificationType : "1",
 	};
 
 	// 从localStorage中获取session_id和chsm
@@ -401,7 +403,7 @@ function updatePageWithData(responseData) {
 		var data = responseData.orderMatchData[i];
 
 		dataTable.row
-			.add([data.id, data.componentId, data.componentName, data.orderNo, data.storeName, data.orderNote])
+			.add([data.id, data.componentNumber, data.componentName, data.orderNo, data.storeName, data.orderNote])
 			.draw(false);
 	}
 }

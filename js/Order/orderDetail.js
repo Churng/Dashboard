@@ -158,7 +158,7 @@ function updatePageWithData(responseData) {
 
 					// 退貨：退貨單新增
 					var unsubButtonHtml = "";
-					if (row.status == 6 && data.statusName == "已出庫") {
+					if (row.status == 6 && row.statusName === "已出庫") {
 						if (Boolean(row.if_order_unsubscribe) === true) {
 							unsubButtonHtml += `<button  class="btn btn-warning unsubscribe-button" data-id="${row.id}">退貨</button>`;
 						}
@@ -190,7 +190,7 @@ function updatePageWithData(responseData) {
 					return buttonsHtml;
 				},
 			},
-			{ data: "componentId" },
+			{ data: "depotId" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "suitableCarModel" },

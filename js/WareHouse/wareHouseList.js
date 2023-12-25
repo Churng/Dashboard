@@ -37,6 +37,7 @@ function updatePageWithData(responseData) {
 	var dataTable = $("#stockIn").DataTable();
 	dataTable.clear().destroy();
 	var data = responseData.returnData;
+	console.log(data);
 
 	table = $("#stockIn").DataTable({
 		columns: [
@@ -57,6 +58,7 @@ function updatePageWithData(responseData) {
 			{ data: "id" },
 			{ data: "createTime" },
 			{ data: "createOperator" },
+			{ data: "amount" },
 			{ data: "componentSupplier" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },

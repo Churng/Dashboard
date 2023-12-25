@@ -24,7 +24,7 @@ function fetchStoreList() {
 					return buttonsHtml;
 				},
 			},
-			{ data: "id" },
+			{ data: "storeOrder" },
 			{ data: "storeName" },
 			{ data: "storeTypeName" },
 			{ data: "storeManager" },

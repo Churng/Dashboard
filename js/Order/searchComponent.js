@@ -107,6 +107,13 @@ function updatePageWithData(responseData) {
 				},
 			},
 			{
+				data: "id",
+				render: function (data, type, row) {
+					var goCompoentHtml = `<button class="add-shopCar btn btn-primary text-white SCbutton" data-id="${row.id}">查看零件定義</button>`;
+					return goCompoentHtml;
+				},
+			},
+			{
 				render: function (data, type, row) {
 					var downloadButtonHtml = "";
 					if (row && row.hasOwnProperty("file") && row.file !== undefined) {
@@ -256,6 +263,15 @@ $(document).ready(function () {
 			},
 		});
 	});
+});
+
+// 查看零件定義
+$(document).on("click", ".SCbutton", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("partId", id);
+
+	var newPageUrl = "componentDetail_update.html";
+	window.location.href = newPageUrl;
 });
 
 // 監聽欄位變動

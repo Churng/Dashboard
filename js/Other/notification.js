@@ -71,10 +71,12 @@ function updatePageWithData(responseData) {
 		var wareHouseButtonHtml = "";
 		if (Boolean(data.if_newStockIn) === true) {
 			wareHouseButtonHtml +=
-				'<button type="button" class="btn btn-primary text-white wareHouse-button"  data-id="' +
+				'<button type="button" class="btn btn-primary text-white wareHouse-button" data-id="' +
 				data.id +
 				'" data-componentid="' +
 				data.componentId +
+				'" data-type="' +
+				data.notificationType +
 				'">新增入庫單</button>';
 		}
 
@@ -145,9 +147,11 @@ function updatePageWithData(responseData) {
 $(document).on("click", ".wareHouse-button", function () {
 	var componentId = $(this).data("componentid");
 	var notificationId = $(this).data("id");
+	var notificationType = $(this).data("type");
 
 	localStorage.setItem("componentValue", componentId);
 	localStorage.setItem("notificationId", notificationId);
+	localStorage.setItem("notificationType", notificationType);
 	var newPageUrl = "wareHouseDetail.html";
 	window.location.href = newPageUrl;
 });

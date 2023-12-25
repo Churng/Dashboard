@@ -191,22 +191,22 @@
                                     <div class="row g-3 mb-5">
                                         <div class="col-sm-3">
                                             <label for="componentNumber" class="form-label">*零件料號</label>
-                                            <input type="text" class="form-control" id="componentNumber" required="">
+                                            <input type="text" class="form-control" id="componentNumber" disabled>
                                         </div>
 
                                         <div class="col-sm-3">
                                             <label for="brandId" class="form-label">*請選擇品牌</label>
-                                            <select class="form-select" id="brandId" required> </select>
+                                            <select class="form-select" id="brandId" disabled> </select>
                                         </div>
 
                                         <div class="col-sm-3">
                                             <label for="componentName" class="form-label">*零件名稱</label>
-                                            <input type="text" class="form-control" id="componentName" required="">
+                                            <input type="text" class="form-control" id="componentName" disabled>
                                         </div>
 
                                         <div class="col-sm-3">
                                             <label for="suitableModel" class="form-label">*適用車型</label>
-                                            <input type="text" class="form-control" id="suitableModel" required="">
+                                            <input type="text" class="form-control" id="suitableModel" disabled>
                                         </div>
 
                                         <div class="col-sm-3">
@@ -249,12 +249,14 @@
                                     <div class="row g-3">
                                         <div class="col-sm-6 mb-3">
                                             <label for="description" class="form-label">零件描述</label>
-                                            <textarea class="form-control" id="description" rows="3"></textarea>
+                                            <textarea class="form-control" id="description" rows="3"
+                                                disabled></textarea>
                                         </div>
 
                                         <div class="col-sm-6 mb-3">
                                             <label for="precautions" class="form-label">注意事項</label>
-                                            <textarea class="form-control" id="precautions" rows="3"></textarea>
+                                            <textarea class="form-control" id="precautions" rows="3"
+                                                disabled></textarea>
                                         </div>
                                     </div>
 
@@ -277,7 +279,7 @@
 
                                         <div class="text-center w-100 pt-3">
                                             <button class="w-25 btn btn-primary btn-md" type="submit">送出</button>
-                                            <button class="w-25 btn btn-primary btn-md" type="cancle">取消</button>
+                                            <button class="w-25 btn btn-primary btn-md" id="cancle">取消</button>
                                             <!-- 跳窗 -->
                                             <!-- Button trigger modal -->
                                             <button type="button" class="w-25 btn btn-primary btn-md"
