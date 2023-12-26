@@ -239,68 +239,53 @@ function sendFormDataToAPI(event) {
 	var formData = new FormData();
 	var getpurchase = localStorage.getItem("purchaseId");
 
-	const purchaseRemarkValue = document.getElementById("purchaseRemark");
+	// const purchaseRemarkValue = document.getElementById("purchaseRemark");
 
-	if (purchaseRemarkValue.value.trim() === "") {
-		purchaseRemarkValue.classList.add("is-invalid");
-		const additionalScrollPixels = 300;
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
 
-		const targetScrollPosition = purchaseRemarkValue.offsetTop - additionalScrollPixels;
+	var purchaseRemark = $("#purchaseRemark").val();
 
-		window.scroll({
-			top: targetScrollPosition,
-			behavior: "smooth",
-		});
+	var updateData = {
+		id: getpurchase,
+		remark: purchaseRemark,
+	};
 
-		event.preventDefault();
-		showWarningContentNotification();
-	} else {
-		const jsonStringFromLocalStorage = localStorage.getItem("userData");
-		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-		const user_session_id = gertuserData.sessionId;
+	// 组装发送文件所需数据
+	// chsm = session_id+action+'HBAdminPurchaseApi'
+	var action = "updatePurchaseDetail";
+	var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
+	var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
 
-		var purchaseRemark = $("#purchaseRemark").val();
+	formData.set("action", action);
+	formData.set("session_id", user_session_id);
+	formData.set("chsm", chsm);
+	formData.set("data", JSON.stringify(updateData));
 
-		var updateData = {
-			id: getpurchase,
-			remark: purchaseRemark,
-		};
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/purchase`,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			if (response.returnCode === "1") {
+				showSuccessFileNotification();
 
-		// 组装发送文件所需数据
-		// chsm = session_id+action+'HBAdminPurchaseApi'
-		var action = "updatePurchaseDetail";
-		var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
-		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-		formData.set("action", action);
-		formData.set("session_id", user_session_id);
-		formData.set("chsm", chsm);
-		formData.set("data", JSON.stringify(updateData));
-
-		$.ajax({
-			type: "POST",
-			url: `${apiURL}/purchase`,
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				if (response.returnCode === "1") {
-					showSuccessFileNotification();
-
-					setTimeout(function () {
-						localStorage.removeItem("purchaseId");
-						var newPageUrl = "purchaseList.html";
-						window.location.href = newPageUrl;
-					}, 3000);
-				} else {
-					handleApiResponse(response);
-				}
-			},
-			error: function (error) {
-				showErrorFileNotification();
-			},
-		});
-	}
+				setTimeout(function () {
+					localStorage.removeItem("purchaseId");
+					var newPageUrl = "purchaseList.html";
+					window.location.href = newPageUrl;
+				}, 3000);
+			} else {
+				handleApiResponse(response);
+			}
+		},
+		error: function (error) {
+			showErrorFileNotification();
+		},
+	});
 }
 
 // 同意訂購：監聽

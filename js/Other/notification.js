@@ -75,9 +75,7 @@ function updatePageWithData(responseData) {
 				data.id +
 				'" data-componentid="' +
 				data.componentId +
-				'" data-type="' +
-				data.notificationType +
-				'">新增入庫單</button>';
+				'" >新增入庫單</button>';
 		}
 
 		//前往入庫單

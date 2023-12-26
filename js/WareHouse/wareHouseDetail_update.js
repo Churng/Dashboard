@@ -252,7 +252,6 @@ $(document).ready(function () {
 });
 
 $(document).on("click", "#cancle", function () {
-	console.log("1212");
 	localStorage.removeItem("componentValue");
 	localStorage.removeItem("partId");
 	window.location.href = "wareHouseList.html";

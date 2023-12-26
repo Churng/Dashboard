@@ -24,12 +24,12 @@ function fetchStoreList() {
 					return buttonsHtml;
 				},
 			},
-			{ data: "storeOrder" },
 			{ data: "storeName" },
 			{ data: "storeTypeName" },
 			{ data: "storeManager" },
 			{ data: "phoneNumber" },
 			{ data: "address" },
+			{ data: "storeOrder" },
 			{ data: "statusName" },
 		],
 		drawCallback: function () {

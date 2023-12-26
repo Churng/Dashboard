@@ -149,10 +149,17 @@ function updatePageWithData(responseData) {
 
 					// 退貨：退貨單新增
 					var unsubButtonHtml = "";
-					if (row.status == 6 && data.statusName == "已出庫") {
+					if (row.status == 6 && row.statusName == "已出庫") {
 						if (Boolean(row.if_order_unsubscribe) === true) {
 							unsubButtonHtml += `<button  class="btn btn-warning unsubscribe-button" disabled>退貨</button>`;
 						}
+					}
+
+					//查看退貨單
+					// if_unsubscribeDetail: true
+					var unsubreadButtonHtml = "";
+					if (Boolean(row.if_unsubscribeDetail) === true) {
+						unsubreadButtonHtml += `<button type="button"  class="btn btn-info text-white unsubdetail-button" disabled>查看退貨單</button>`;
 					}
 
 					//查看出庫單
@@ -174,7 +181,15 @@ function updatePageWithData(responseData) {
 					}
 
 					var buttonsHtml =
-						deleteButtonHtml + "&nbsp;" + unsubButtonHtml + "&nbsp;" + shipButtonHtml + "&nbsp;" + purchaseButtonHtml;
+						deleteButtonHtml +
+						"&nbsp;" +
+						unsubButtonHtml +
+						"&nbsp;" +
+						shipButtonHtml +
+						"&nbsp;" +
+						purchaseButtonHtml +
+						"&nbsp;" +
+						unsubreadButtonHtml;
 
 					return buttonsHtml;
 				},

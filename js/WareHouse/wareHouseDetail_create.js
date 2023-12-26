@@ -299,14 +299,13 @@ function sendSecondCreate() {
 	var amount = $("#amount").val();
 	var remark = $("#remark").val();
 	var notificationId = localStorage.getItem("notificationId");
-	var notificationType = localStorage.getItem("notificationType");
 
 	var updateData = {
 		componentId: postId,
 		amount: amount,
 		remark: remark,
 		notificationId: notificationId,
-		notificationType: notificationType !== null ? notificationType : "1",
+		type: "1",
 	};
 
 	// 从localStorage中获取session_id和chsm
