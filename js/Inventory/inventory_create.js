@@ -48,12 +48,7 @@ $(document).ready(function () {
 
 //點擊下載範例
 $(document).on("click", "#downloadLink", function () {
-	const fileName = "template.csv";
-
-	const downloadURL = `${downloadURL}${fileName}`;
-
-	downloadLink.href = downloadURL;
-	downloadLink.download = fileName;
+	downloadCsvFile();
 });
 
 // 查詢儲位

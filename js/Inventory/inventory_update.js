@@ -48,12 +48,7 @@ $(document).ready(function () {
 
 //點擊下載範例
 $(document).on("click", "#downloadLink", function () {
-	const fileName = "template.csv";
-
-	const downloadURL = `${downloadURL}${fileName}`;
-
-	downloadLink.href = downloadURL;
-	downloadLink.download = fileName;
+	downloadCsvFile();
 });
 
 // 取得詳細資料
@@ -147,9 +142,9 @@ $(document).ready(function () {
 				var updateInventoryDetailBtn = document.getElementById("updateInventoryDetailBtn");
 				if (downloadExcelBtn) {
 					if (Boolean(inventoryData.if_tempSave) === true) {
-						updateInventoryDetailBtn.disabled = false;
-					} else {
 						updateInventoryDetailBtn.disabled = true;
+					} else {
+						updateInventoryDetailBtn.disabled = false;
 					}
 				}
 			} else {
@@ -234,6 +229,7 @@ function updatePageWithData(responseData) {
 				extend: "csv",
 				text: "下載EXCEL",
 				bom: true,
+				filename: "盤點結果",
 			},
 			"excel",
 		],
@@ -418,11 +414,7 @@ $(document).on("click", ".InventoryStockIn-button", function (e) {
 				console.log(response);
 				showSuccessuInventoryStockInNotification();
 				if (response.returnCode === "1") {
-					console.log(response);
-					// setTimeout(function () {
-					// 	var newPageUrl = "unsubscribeDetail.html";
-					// 	window.location.href = newPageUrl;
-					// }, 3000);
+					window.location.reload();
 				} else {
 					handleApiResponse(response);
 				}
@@ -491,11 +483,7 @@ $(document).on("click", ".InventoryLoss-button", function (e) {
 			success: function (response) {
 				showSuccessuInventoryLossNotification();
 				if (response.returnCode === "1") {
-					console.log(response);
-					// setTimeout(function () {
-					// 	var newPageUrl = "unsubscribeDetail.html";
-					// 	window.location.href = newPageUrl;
-					// }, 3000);
+					window.location.reload();
 				} else {
 					handleApiResponse(response);
 				}
