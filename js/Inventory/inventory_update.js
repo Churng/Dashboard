@@ -257,7 +257,7 @@ function updatePageWithData(responseData) {
 					// 查看入庫單 if_stockInDetail
 					var stockInDetailButtonHtml = "";
 					if (Boolean(ifStockInDetail) === true) {
-						stockInDetailButtonHtml += `<button class="btn btn-primary StockInDetail-button" data-stockInid="${row.stockInId}">查看入庫單</button>`;
+						stockInDetailButtonHtml += `<button class="btn btn-primary StockInDetail-button" data-stockinid="${row.stockInId}">查看入庫單</button>`;
 					}
 
 					var buttonsHtml =
@@ -319,7 +319,7 @@ function updatePageWithData(responseData) {
 
 // 查看入庫單
 $(document).on("click", ".StockInDetail-button", function () {
-	var wareHouseId = $(this).data("stockInid");
+	var wareHouseId = $(this).data("stockinid");
 	if (wareHouseId == null) {
 		showErrorWHNotification();
 		return;
