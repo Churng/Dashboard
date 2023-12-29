@@ -2,11 +2,10 @@ function downloadCsvFile() {
 	const fileName = "template.csv";
 	const customDownloadURL = downloadURL + fileName;
 
-	const downloadLink = document.createElement("a");
+	const downloadLink = document.getElementById("downloadLink");
 	downloadLink.href = customDownloadURL;
 	downloadLink.download = fileName;
 
-	document.body.appendChild(downloadLink);
+	// 觸發點擊事件
 	downloadLink.click();
-	document.body.removeChild(downloadLink);
 }
