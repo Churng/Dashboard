@@ -228,6 +228,20 @@ function updatePageWithData(responseData) {
 				extend: "csv",
 				text: "下載EXCEL",
 				bom: true,
+				filename: "盤點結果",
+				exportOptions: {
+					columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+					format: {
+						body: function (data, row, column, node) {
+							if (column === 12) {
+								const inputElement = $(node).find("input.editable-cell");
+								return inputElement.val();
+							} else {
+								return data;
+							}
+						},
+					},
+				},
 			},
 			"excel",
 		],
