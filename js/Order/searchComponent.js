@@ -270,7 +270,7 @@ $(document).on("click", ".SCbutton", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("partId", id);
 
-	var newPageUrl = "componentDetail_update.html";
+	var newPageUrl = "componentDetail_read.html";
 	window.location.href = newPageUrl;
 });
 

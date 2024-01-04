@@ -171,14 +171,18 @@ $(document).ready(function () {
 			var getupdateTime = $("#EditTime").val();
 			var getupdateOperator = $("#EditAccount").val();
 
-			var fileInput = $("#fileInput")[0];
+			var fileInput = document.getElementById("fileInput");
 
 			var updateData = {};
-			if (fileInput.files.length > 0) {
+
+			if (fileInput.files.length > 0 && fileInput.files[0].size > 0) {
 				for (var i = 0; i < fileInput.files.length; i++) {
-					var file = fileInput.files[i];
-					formData.append("component[]", file, file.name);
+					if (fileInput.files[i].size > 0) {
+						formData.append("component[]", fileInput.files[i]);
+					}
 				}
+				updateData.fileName = fileInput.files[0].name;
+				updateData.file = fileInput.files[0].name;
 			} else {
 				updateData.fileName = "";
 				updateData.file = "";
@@ -191,8 +195,6 @@ $(document).ready(function () {
 			// purchaseAmount: getpurchaseAmount,
 			// depotAmount: getdepotAmount,
 			updateData.depotPosition = getdepotPosition;
-			updateData.fileName = file.name;
-			updateData.file = file.name;
 
 			if (typeof getprice !== "undefined") {
 				updateData.price = getprice;

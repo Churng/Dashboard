@@ -37,14 +37,15 @@ function fetchAccountList() {
 				orderId = getOrderData.id;
 				orderNo = getOrderData.orderNo;
 
-				var getreturnData = responseData.returnData;
-
 				//禁用執行出庫按鈕
-				var allFalse = getreturnData.every(function (item) {
-					return item.if_order_execute_ship === false;
-				});
-				if (allFalse) {
+
+				if (Boolean(getOrderData.if_order_execute_ship === false)) {
 					document.getElementById("orderExecuteShip").disabled = true;
+				}
+
+				//禁用完成訂單按鈕
+				if (Boolean(getOrderData.if_order_complete === false)) {
+					document.getElementById("orderComplete").disabled = true;
 				}
 
 				// var orderComplete = document.getElementById("orderComplete");
@@ -93,7 +94,7 @@ function updateData(responseData) {
 
 	if (orderLogArray.length > 0) {
 		orderLogArray.forEach((logItem, index) => {
-			actionNotesText += `[${logItem.actionNote}\n`;
+			actionNotesText += `${logItem.actionNote}\n`;
 		});
 	}
 
@@ -134,9 +135,11 @@ function updatePageWithData(responseData) {
 				render: function (data, type, row) {
 					//checkbox顯示：狀態在庫（3）
 					//出庫單選取
+					// if_order_execute_ship
+					// 12/30改
 					var checkboxHtml = "";
 
-					if (row.status === "3") {
+					if (row.if_order_execute_ship === true) {
 						// 如果数组不为空且第一个对象的状态值为 3，返回特定的 HTML
 						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
 					} else {
@@ -150,18 +153,16 @@ function updatePageWithData(responseData) {
 					// Boolean(data.if_order_delete_component)
 					// 刪除零件：
 					var deleteButtonHtml = "";
-					if (row.status == 1 || row.status == 2 || row.status == 3 || row.status == 4 || row.status == 5) {
-						if (Boolean(row.if_order_delete_component) === true) {
-							deleteButtonHtml += `<button class="btn btn-danger delete-button" data-id="${row.id}" data-status="${row.status}">刪除零件</button>`;
-						}
+
+					if (Boolean(row.if_order_delete_component) === true) {
+						deleteButtonHtml += `<button class="btn btn-danger delete-button" data-id="${row.id}" data-status="${row.status}">刪除零件</button>`;
 					}
 
 					// 退貨：退貨單新增
 					var unsubButtonHtml = "";
-					if (row.status == 6 && row.statusName === "已出庫") {
-						if (Boolean(row.if_order_unsubscribe) === true) {
-							unsubButtonHtml += `<button  class="btn btn-warning unsubscribe-button" data-id="${row.id}">退貨</button>`;
-						}
+
+					if (Boolean(row.if_order_unsubscribe) === true) {
+						unsubButtonHtml += `<button  class="btn btn-warning unsubscribe-button" data-id="${row.id}">退貨</button>`;
 					}
 
 					//查看退貨單

@@ -41,7 +41,7 @@ function updatePageWithData(responseData) {
 		var modifyButtonHtml =
 			'<a href="roleAuthorize_update.html" data-id="' +
 			data.id +
-			'" class="btn btn-primary text-white modify-button">修改</a>';
+			'" class="btn btn-primary text-white modify-button" style="display:none">修改</a>';
 
 		dataTable.row
 			.add([modifyButtonHtml, data.authorizeName, data.storeTypeName, data.brandListName, data.roleOrder, data.remark])

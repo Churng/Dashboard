@@ -66,6 +66,7 @@ $(document).ready(function () {
 				$("#suitableModel").val(unsubscribeData.suitableCarModel);
 				$("#Price").val(unsubscribeData.price);
 				$("#WholesalePrice").val(unsubscribeData.wholesalePrice);
+				$("#Cost").val(unsubscribeData.cost);
 
 				$("#BuildTime").val(unsubscribeData.createTime);
 				$("#EditTime").val(unsubscribeData.updateTime);

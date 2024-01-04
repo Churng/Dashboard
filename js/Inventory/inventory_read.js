@@ -765,7 +765,7 @@ $(document).on("click", ".file-download", function (e) {
 	var fileName = $(this).data("file");
 	var apiName = "inventory";
 	if (fileName) {
-		downloadCsvFile(apiName, fileName);
+		downloadCsvresulteFile(apiName, fileName);
 	} else {
 		showErrorFileNotification();
 	}

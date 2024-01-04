@@ -564,7 +564,8 @@ $(document).on("click", "#completeInventoryBtn", function (e) {
 				showSuccessucompleteInventoryNotification();
 				if (response.returnCode === "1") {
 					setTimeout(function () {
-						window.location.reload();
+						var newPageUrl = "inventoryList.html";
+						window.location.href = newPageUrl;
 					}, 1000);
 				} else {
 					handleApiResponse(response);
@@ -769,7 +770,7 @@ $(document).on("click", ".file-download", function (e) {
 	var fileName = $(this).data("file");
 	var apiName = "inventory";
 	if (fileName) {
-		downloadCsvFile(apiName, fileName);
+		downloadCsvresulteFile(apiName, fileName);
 	} else {
 		showErrorFileNotification();
 	}

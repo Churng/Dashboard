@@ -213,11 +213,10 @@ $(document).ready(function () {
 });
 
 //取消
-$(document).ready(function () {
-	$("#cancel").click(function () {
-		localStorage.removeItem("depotId");
-		window.location.href = "depotList.html";
-	});
+
+$(document).on("click", "#cancel", function () {
+	localStorage.removeItem("depotId");
+	window.location.href = "depotList.html";
 });
 
 // 上傳POST
@@ -257,9 +256,11 @@ $(document).ready(function () {
 			var getupdateOperator = $("#EditAccount").val();
 
 			var updateData = {};
-			if (fileInput.files.length > 0) {
+			if (fileInput.files.length > 0 && fileInput.files[0].size > 0) {
 				for (var i = 0; i < fileInput.files.length; i++) {
-					formData.append("component[]", fileInput.files[i]);
+					if (fileInput.files[i].size > 0) {
+						formData.append("component[]", fileInput.files[i]);
+					}
 				}
 				updateData.fileName = fileInput.files[0].name;
 				updateData.file = fileInput.files[0].name;
