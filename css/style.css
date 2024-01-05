@@ -423,6 +423,11 @@ td:first-child {
 	min-width: 160px;
 }
 
+#roleList th:first-child,
+#roleList td:first-child {
+	min-width: 160px;
+}
+
 /* 一 */
 #partsManagement th:first-child,
 #partsManagement td:first-child {
@@ -431,11 +436,6 @@ td:first-child {
 
 #orderDetail th:first-child,
 #orderDetail td:first-child {
-	min-width: 70px;
-}
-
-#roleList th:first-child,
-#roleList td:first-child {
 	min-width: 70px;
 }
 

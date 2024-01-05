@@ -45,7 +45,11 @@ function updatePageWithData(responseData, table) {
 				render: function (data, type, row) {
 					var modifyButtonHtml = `<a href="roleAuthorize_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
 
-					return modifyButtonHtml;
+					var readButtonHtml = `<a href="roleAuthorize_read.html" style="display:none; margin-bottom:5px" class="btn btn-warning text-white read-button" data-button-type="read" data-id="${row.id}">查看詳請</a>`;
+
+					var buttonsHtml = readButtonHtml + "&nbsp;" + modifyButtonHtml;
+
+					return buttonsHtml;
 				},
 			},
 			{ data: "authorizeName" },
@@ -68,6 +72,13 @@ function updatePageWithData(responseData, table) {
 $(document).on("click", ".modify-button", function () {
 	var id = $(this).data("id");
 	localStorage.setItem("partId", id);
+});
+
+//詳請
+
+$(document).on("click", ".read-button", function () {
+	var id = $(this).data("id");
+	localStorage.setItem("roleRId", id);
 });
 
 //更新數據
