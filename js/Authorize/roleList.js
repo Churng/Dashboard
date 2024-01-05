@@ -18,7 +18,7 @@ $(document).ready(function () {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
@@ -30,23 +30,38 @@ $(document).ready(function () {
 });
 
 // 更新頁面按鈕
-function updatePageWithData(responseData) {
+var table;
+function updatePageWithData(responseData, table) {
 	var dataTable = $("#roleList").DataTable();
-	dataTable.clear().draw();
-	dataTable.order([]).draw(false);
+	dataTable.clear().destroy();
 
-	for (var i = 0; i < responseData.returnData.length; i++) {
-		var data = responseData.returnData[i];
+	var data = responseData.returnData;
 
-		var modifyButtonHtml =
-			'<a href="roleAuthorize_update.html" data-id="' +
-			data.id +
-			'" class="btn btn-primary text-white modify-button" style="display:none">修改</a>';
+	table = $("#roleList").DataTable({
+		autoWidth: false,
+		columns: [
+			{
+				// Buttons column
+				render: function (data, type, row) {
+					var modifyButtonHtml = `<a href="roleAuthorize_update.html" style="display:none" class="btn btn-primary text-white modify-button" data-button-type="update" data-id="${row.id}">修改</a>`;
 
-		dataTable.row
-			.add([modifyButtonHtml, data.authorizeName, data.storeTypeName, data.brandListName, data.roleOrder, data.remark])
-			.draw(false);
-	}
+					return modifyButtonHtml;
+				},
+			},
+			{ data: "authorizeName" },
+			{ data: "storeTypeName" },
+			{ data: "brandListName" },
+			{ data: "roleOrder" },
+			{ data: "remark" },
+		],
+		drawCallback: function () {
+			handlePagePermissions(currentUser, currentUrl);
+		},
+		columnDefs: [{ orderable: false, targets: [0] }],
+		order: [],
+	});
+
+	table.rows.add(data).draw();
 }
 
 // 监听修改按钮的点击事件
@@ -80,7 +95,7 @@ function refreshDataList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				updatePageWithData(responseData);
+				updatePageWithData(responseData, table);
 			} else {
 				handleApiResponse(responseData);
 			}
