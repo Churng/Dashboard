@@ -169,7 +169,7 @@
                                         <div class="mb-3">
                                             <div class="custom-file">
                                                 <input type="file" class="form-control" name="component[]"
-                                                    id="fileInput" accept="image/*" multiple>
+                                                    id="fileInput" accept="image/*" multiple disabled>
                                             </div>
                                         </div>
                                         <button id="downloadBtn" download
@@ -304,24 +304,18 @@
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
-        $(document).ready(function () {
-            new DataTable('#stockInPage');
-        });
 
-    </script>
     <script>
         document.getElementById("backButton").addEventListener("click", function () {
-            localStorage.removeItem("readStoreId");
+            localStorage.removeItem("depotReadId");
             history.back();
         });
     </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Public/downloadPdfFile.js"></script>
-    <!-- <script src="js/Public/downloadFile.js"></script> -->
     <script src="js/Public/menu.js"></script>
+    <script src="js/Public/downloadFile.js"></script>
     <script src="js/Depot/depotComponentDetail_read.js"></script>
 
 

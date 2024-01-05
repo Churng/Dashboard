@@ -62,10 +62,10 @@ $(document).ready(function () {
 });
 
 // 监听修改按钮的点击事件
-$(document).on("click", ".modify-button", function () {
-	var id = $(this).data("id");
-	localStorage.setItem("depotId", id);
-});
+// $(document).on("click", ".modify-button", function () {
+// 	var id = $(this).data("id");
+// 	localStorage.setItem("depotId", id);
+// });
 
 //取得零件資料
 function handleComponentId(id) {
@@ -157,17 +157,6 @@ function displayFileNameInInput(fileName) {
 	}
 }
 
-//下載檔案
-$(document).on("click", ".file-download", function () {
-	var fileName = $(this).data("file");
-	var apiName = "component";
-	if (fileName) {
-		downloadFile(apiName, fileName);
-	} else {
-		showErrorFileNotification();
-	}
-});
-
 // 取得品牌資料
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
@@ -217,6 +206,18 @@ $(document).ready(function () {
 $(document).on("click", "#cancel", function () {
 	localStorage.removeItem("depotId");
 	window.location.href = "depotList.html";
+});
+
+//下載檔案
+$(document).on("click", ".file-download", function () {
+	event.preventDefault();
+	var fileName = $(this).data("file");
+	var apiName = "component";
+	if (fileName) {
+		downloadFile(apiName, fileName);
+	} else {
+		showErrorFileNotification();
+	}
 });
 
 // 上傳POST

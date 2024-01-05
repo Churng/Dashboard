@@ -268,7 +268,7 @@ $(document).ready(function () {
 // 查看零件定義
 $(document).on("click", ".SCbutton", function () {
 	var id = $(this).data("id");
-	localStorage.setItem("partId", id);
+	localStorage.setItem("partRId", id);
 
 	var newPageUrl = "componentDetail_read.html";
 	window.location.href = newPageUrl;

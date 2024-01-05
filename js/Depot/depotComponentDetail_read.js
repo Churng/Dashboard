@@ -213,11 +213,10 @@ $(document).ready(function () {
 });
 
 //取消
-$(document).ready(function () {
-	$("#cancel").click(function () {
-		localStorage.removeItem("depotReadId");
-		window.location.href = "depotList.html";
-	});
+
+$(document).on("click", "#cancel", function () {
+	localStorage.removeItem("depotReadId");
+	window.location.href = "depotList.html";
 });
 
 // 上傳POST
@@ -257,9 +256,11 @@ $(document).ready(function () {
 			var getupdateOperator = $("#EditAccount").val();
 
 			var updateData = {};
-			if (fileInput.files.length > 0) {
+			if (fileInput.files.length > 0 && fileInput.files[0].size > 0) {
 				for (var i = 0; i < fileInput.files.length; i++) {
-					formData.append("component[]", fileInput.files[i]);
+					if (fileInput.files[i].size > 0) {
+						formData.append("component[]", fileInput.files[i]);
+					}
 				}
 				updateData.fileName = fileInput.files[0].name;
 				updateData.file = fileInput.files[0].name;
@@ -275,10 +276,23 @@ $(document).ready(function () {
 			// purchaseAmount: getpurchaseAmount,
 			// depotAmount: getdepotAmount,
 			updateData.depotPosition = getdepotPosition;
-			updateData.price = getprice;
-			updateData.cost = getcost;
-			updateData.wholesalePrice = getwholesalePrice;
-			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+
+			if (typeof getprice !== "undefined") {
+				updateData.price = getprice;
+			}
+
+			if (typeof getcost !== "undefined") {
+				updateData.cost = getcost;
+			}
+
+			if (typeof getwholesalePrice !== "undefined") {
+				updateData.wholesalePrice = getwholesalePrice;
+			}
+
+			if (typeof getlowestWholesalePrice !== "undefined") {
+				updateData.lowestWholesalePrice = getlowestWholesalePrice;
+			}
+
 			updateData.componentSupplier = getcomponentSupplier;
 			updateData.workingHour = getworkingHour;
 			updateData.suitableCarModel = getsuitableCarModel;
@@ -366,10 +380,12 @@ function getdepotUpdatePost() {
 		contentType: false,
 		success: function (response) {
 			if (response.returnCode === "1") {
-				showSuccessFileNotification();
-				localStorage.removeItem("depotId");
-				var newPageUrl = "depotList.html";
-				window.location.href = newPageUrl;
+				// showSuccessFileNotification();
+				// setTimeout(function () {
+				// 	localStorage.removeItem("depotReadId");
+				// 	var newPageUrl = "depotList.html";
+				// 	window.location.href = newPageUrl;
+				// }, 1000);
 			} else {
 				handleApiResponse(response);
 			}
