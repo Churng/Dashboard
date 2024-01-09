@@ -85,9 +85,8 @@ $(document).ready(function () {
 
 				console.log(responseData);
 
-				$("#inventoryId").val(inventoryData.id);
+				$("#inventoryId").val(responseData.inventoryNo);
 				$("#getPositon").val(inventoryData.depotPosition);
-				$("#getinventoryNo").val(inventoryData.inventoryNo);
 				$("#EditAccount").val(inventoryData.createOperator);
 				$("#BuildTime").val(inventoryData.createTime);
 				$("#EditTime").val(inventoryData.updateTime);
@@ -427,6 +426,7 @@ $(document).on("click", ".InventoryStockIn-button", function (e) {
 				console.log(response);
 				showSuccessuInventoryStockInNotification();
 				if (response.returnCode === "1") {
+					localStorage.setItem("reloadNeeded", "true");
 					window.location.reload();
 				} else {
 					handleApiResponse(response);
@@ -444,9 +444,7 @@ $(document).on("click", ".InventoryLoss-button", function (e) {
 	e.stopPropagation();
 	var formData = new FormData();
 	var InventoryLossButton = $(this);
-	console.log(InventoryLossButton);
 	var itemId = InventoryLossButton.data("id");
-	console.log(itemId);
 
 	var data = {
 		id: itemId,
@@ -496,6 +494,7 @@ $(document).on("click", ".InventoryLoss-button", function (e) {
 			success: function (response) {
 				showSuccessuInventoryLossNotification();
 				if (response.returnCode === "1") {
+					localStorage.setItem("reloadNeeded", "true");
 					window.location.reload();
 				} else {
 					handleApiResponse(response);
@@ -520,6 +519,25 @@ $(document).on("click", "#completeInventoryBtn", function (e) {
 	console.log(data);
 
 	var jsonData = JSON.stringify(data);
+
+	var remarkObj = [];
+
+	if (changedCells && changedCells.length > 0) {
+		for (var i = 0; i < changedCells.length; i++) {
+			var cellData = changedCells[i];
+			// var id = cellData.id;
+			var remark = cellData.remark;
+			var remarkData = {
+				[cellData.id]: remark,
+			};
+			remarkObj.push(remarkData);
+			console.log(remarkObj);
+		}
+	}
+	var mergedObj = {};
+	remarkObj.forEach((obj) => {
+		Object.assign(mergedObj, obj);
+	});
 
 	// 解绑之前的点击事件处理程序
 	$(document).off("click", ".completeInventory");
@@ -554,6 +572,8 @@ $(document).on("click", "#completeInventoryBtn", function (e) {
 		formData.set("session_id", user_session_id);
 		formData.set("chsm", chsm);
 		formData.set("data", jsonData);
+		formData.set("inventoryRemarkList", JSON.stringify(mergedObj));
+
 		$.ajax({
 			type: "POST",
 			url: `${apiURL}/inventory`,
@@ -629,7 +649,7 @@ $(document).on("click", "#updateInventoryDetailBtn", function (e) {
 			Object.assign(mergedObj, obj);
 		});
 
-		console.log(JSON.stringify(mergedObj));
+		// console.log(JSON.stringify(mergedObj));
 
 		// 从localStorage中获取session_id和chsm
 		// 解析JSON字符串为JavaScript对象
@@ -773,5 +793,55 @@ $(document).on("click", ".file-download", function (e) {
 		downloadCsvresulteFile(apiName, fileName);
 	} else {
 		showErrorFileNotification();
+	}
+});
+
+$(".nav-link").click(function () {
+	const tabId = $(this).attr("id");
+	localStorage.setItem("activeTabId", tabId); // 將點擊的 tab ID 存入 localStorage
+});
+
+// 使用事件委派綁定點擊事件，將 data-dt-idx 值存入 localStorage
+$(document).on("click", ".pagination .page-item", function () {
+	const currentPageIdx = $(this).find(".page-link").data("dt-idx");
+	console.log(currentPageIdx);
+	localStorage.setItem("currentPageIdx", currentPageIdx);
+});
+
+function handleTabs() {
+	// 檢查 localStorage 中是否有保存的 activeTabId 和 activePaginationIdx
+	const activeTabId = localStorage.getItem("activeTabId");
+
+	if (activeTabId) {
+		// 移除所有元素的 active class
+		$(".nav-link").removeClass("active");
+		$(".tab-pane").removeClass("active show");
+
+		// 添加 active class 到相應的標籤
+		document.querySelector("#" + activeTabId).classList.add("active");
+
+		// 顯示與 active 標籤相關聯的內容
+		const tabContentId = document
+			.querySelector("#" + activeTabId)
+			.getAttribute("href")
+			.substring(1);
+		document.querySelector("#" + tabContentId).classList.add("active", "show");
+	}
+
+	const currentPageIdx = localStorage.getItem("currentPageIdx");
+	if (currentPageIdx) {
+		$(".pagination .page-item").removeClass("active");
+		const activePageItem = $(".pagination .page-item")
+			.find("[data-dt-idx='" + currentPageIdx + "']")
+			.closest(".page-item");
+		activePageItem.addClass("active");
+	}
+}
+
+$(document).ready(function () {
+	const reloadNeeded = localStorage.getItem("reloadNeeded");
+	if (reloadNeeded === "true") {
+		handleTabs();
+		localStorage.removeItem("reloadNeeded"); // 刪除重新載入的標記，避免下次頁面載入時再次執行
 	}
 });

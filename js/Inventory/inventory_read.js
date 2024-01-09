@@ -85,9 +85,8 @@ $(document).ready(function () {
 
 				console.log(responseData);
 
-				$("#inventoryId").val(inventoryData.id);
+				$("#inventoryId").val(responseData.inventoryNo);
 				$("#getPositon").val(inventoryData.depotPosition);
-				$("#getinventoryNo").val(inventoryData.inventoryNo);
 				$("#EditAccount").val(inventoryData.createOperator);
 				$("#BuildTime").val(inventoryData.createTime);
 				$("#EditTime").val(inventoryData.updateTime);

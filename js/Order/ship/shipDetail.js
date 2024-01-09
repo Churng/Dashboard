@@ -140,7 +140,7 @@ function updatePageWithData(responseData) {
 	table = $("#stockOutPage").DataTable({
 		autoWidth: false,
 		columns: [
-			{ data: "componentId" },
+			{ data: "id" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "brandName" },
