@@ -85,7 +85,7 @@ $(document).ready(function () {
 
 				console.log(responseData);
 
-				$("#inventoryId").val(responseData.inventoryNo);
+				$("#inventoryId").val(inventoryData.inventoryNo);
 				$("#getPositon").val(inventoryData.depotPosition);
 				$("#EditAccount").val(inventoryData.createOperator);
 				$("#BuildTime").val(inventoryData.createTime);
@@ -221,6 +221,7 @@ function updatePageWithData(responseData) {
 
 	table = $("#insertContent").DataTable({
 		autoWidth: false,
+		stateSave: true,
 		dom: "Bfrtip",
 		buttons: [
 			"CSV",
@@ -301,7 +302,6 @@ function updatePageWithData(responseData) {
 		],
 		drawCallback: function () {
 			var api = this.api();
-
 			// 檢查每個數據對象
 			for (var i = 0; i < data.length; i++) {
 				var obj = data[i];
@@ -796,18 +796,19 @@ $(document).on("click", ".file-download", function (e) {
 	}
 });
 
+//存TabId
 $(".nav-link").click(function () {
 	const tabId = $(this).attr("id");
-	localStorage.setItem("activeTabId", tabId); // 將點擊的 tab ID 存入 localStorage
+	localStorage.setItem("activeTabId", tabId);
 });
 
-// 使用事件委派綁定點擊事件，將 data-dt-idx 值存入 localStorage
-$(document).on("click", ".pagination .page-item", function () {
-	const currentPageIdx = $(this).find(".page-link").data("dt-idx");
-	console.log(currentPageIdx);
-	localStorage.setItem("currentPageIdx", currentPageIdx);
+//存頁碼
+$(document).on("page.dt", function () {
+	var page = $("#insertContent").DataTable().page();
+	localStorage.setItem("currentPage", page);
 });
 
+//Tab停留
 function handleTabs() {
 	// 檢查 localStorage 中是否有保存的 activeTabId 和 activePaginationIdx
 	const activeTabId = localStorage.getItem("activeTabId");
@@ -827,21 +828,24 @@ function handleTabs() {
 			.substring(1);
 		document.querySelector("#" + tabContentId).classList.add("active", "show");
 	}
-
-	const currentPageIdx = localStorage.getItem("currentPageIdx");
-	if (currentPageIdx) {
-		$(".pagination .page-item").removeClass("active");
-		const activePageItem = $(".pagination .page-item")
-			.find("[data-dt-idx='" + currentPageIdx + "']")
-			.closest(".page-item");
-		activePageItem.addClass("active");
-	}
 }
 
+//頁數停留
+function handlePages() {
+	setTimeout(function () {
+		var page = localStorage.getItem("currentPage");
+		if (page) {
+			table.page(parseInt(page)).draw(false);
+		}
+	}, 1000);
+}
+
+//重新整理停留畫面
 $(document).ready(function () {
 	const reloadNeeded = localStorage.getItem("reloadNeeded");
 	if (reloadNeeded === "true") {
 		handleTabs();
-		localStorage.removeItem("reloadNeeded"); // 刪除重新載入的標記，避免下次頁面載入時再次執行
+		handlePages();
+		localStorage.removeItem("reloadNeeded");
 	}
 });
