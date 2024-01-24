@@ -71,8 +71,6 @@ function fetchAccountList() {
 //表單內資料：單據詳細資料
 function updateData(responseData) {
 	console.log(responseData);
-	// var partId = localStorage.getItem("orderNo");
-	// var partId = JSON.parse(partId);
 	const orderData = responseData.orderData;
 
 	var orderId = orderData.id;
@@ -140,8 +138,9 @@ function updatePageWithData(responseData) {
 					var checkboxHtml = "";
 
 					if (row.if_order_execute_ship === true) {
-						// 如果数组不为空且第一个对象的状态值为 3，返回特定的 HTML
-						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
+						if (row.status === "3") {
+							return `<input type="checkbox" class="executeship-button" data-id="${row.id}" checked>`;
+						}
 					} else {
 						return checkboxHtml;
 					}

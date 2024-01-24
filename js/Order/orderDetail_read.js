@@ -124,12 +124,13 @@ function updatePageWithData(responseData) {
 				// Buttons column
 				render: function (data, type, row) {
 					//checkbox顯示：狀態在庫（3）
-					//出庫單選取
+					//出庫單預設選取 1/24
 					var checkboxHtml = "";
 
-					if (row.status === 3) {
-						// 如果数组不为空且第一个对象的状态值为 3，返回特定的 HTML
-						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
+					if (row.if_order_execute_ship === true) {
+						if (row.status === "3") {
+							return `<input type="checkbox" class="executeship-button" data-id="${row.id}" checked disabled>`;
+						}
 					} else {
 						return checkboxHtml;
 					}

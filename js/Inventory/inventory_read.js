@@ -253,16 +253,16 @@ function updatePageWithData(responseData) {
 					var ifInventoryStockIn = row.if_inventory_stock_in;
 					var ifStockInDetail = row.if_stockInDetail;
 
-					//盤點入庫
+					// 盤點損失
 					var inventoryLossButtonHtml = "";
 					if (Boolean(ifInventoryLoss) === true) {
 						inventoryLossButtonHtml += `<button class="btn btn-warning InventoryLoss-button" disabled>列入盤點損失</button>`;
 					}
 
-					// 盤點損失
+					//盤點入庫
 					var inventoryStockInButtonHtml = "";
 					if (Boolean(ifInventoryStockIn) === true) {
-						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" disabled>盤點入庫</button>`;
+						inventoryStockInButtonHtml += `<button class="btn btn-primary  InventoryStockIn-button" disabled>盤盈入庫</button>`;
 					}
 
 					// 查看入庫單 if_stockInDetail
@@ -380,7 +380,7 @@ $(document).on("click", ".InventoryStockIn-button", function (e) {
 	};
 
 	toastr.warning(
-		"確定要盤點入庫嗎？<br/><br><button class='btn btn-danger InventoryStockIn'>確定</button>",
+		"確定要盤盈入庫嗎？<br/><br><button class='btn btn-danger InventoryStockIn'>確定</button>",
 		"確定入庫",
 		{
 			allowHtml: true,

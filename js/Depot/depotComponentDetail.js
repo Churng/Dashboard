@@ -37,10 +37,9 @@ $(document).ready(function () {
 				$("#statusName").val(depotData.statusName);
 				$("#remark").val(depotData.remark);
 
-				$("#orderId").val(depotData.id);
+				$("#orderNote").val(depotData.orderNote);
 				$("#storeName").val(depotData.storeName);
 				$("#orderNo").val(depotData.orderNo);
-				$("#orderNote").val(depotData.orderNote);
 
 				$("#BuildTime").val(depotData.createTime);
 				$("#EditTime").val(depotData.updateTime);
