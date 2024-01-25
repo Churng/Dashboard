@@ -635,12 +635,18 @@ $(document).on("click", "#orderCancel", function (e) {
 $(document).on("click", "#orderExecuteShip", function (e) {
 	e.stopPropagation();
 	var formData = new FormData();
-	var checkboxes = document.querySelectorAll(".executeship-button:checked");
+	// var checkboxes = document.querySelectorAll(".executeship-button:checked");
 
 	var selectedIds = [];
-	checkboxes.forEach(function (checkbox) {
-		selectedIds.push(checkbox.getAttribute("data-id"));
-	});
+	$("#orderDetail")
+		.DataTable()
+		.rows()
+		.nodes()
+		.to$()
+		.find(".executeship-button:checked")
+		.each(function () {
+			selectedIds.push($(this).attr("data-id"));
+		});
 
 	var formattedData = JSON.stringify(selectedIds);
 
