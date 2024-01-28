@@ -254,7 +254,7 @@ function sendFormDataToAPI(event) {
 
 	// 组装发送文件所需数据
 	// chsm = session_id+action+'HBAdminPurchaseApi'
-	var action = "updatePurchaseDetail";
+	var action = "deletePurchaseDetail";
 	var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
 	var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
 
@@ -270,9 +270,8 @@ function sendFormDataToAPI(event) {
 		processData: false,
 		contentType: false,
 		success: function (response) {
+			showSuccessFileNotification();
 			if (response.returnCode === "1") {
-				showSuccessFileNotification();
-
 				setTimeout(function () {
 					localStorage.removeItem("purchaseId");
 					var newPageUrl = "purchaseList.html";
@@ -283,7 +282,7 @@ function sendFormDataToAPI(event) {
 			}
 		},
 		error: function (error) {
-			showErrorFileNotification();
+			showErrorNotification();
 		},
 	});
 }
@@ -408,7 +407,7 @@ function sendAgreeDataToAPI(event) {
 			},
 		});
 	} else {
-		showWarningNotification();
+		showErrorNotification();
 	}
 }
 
