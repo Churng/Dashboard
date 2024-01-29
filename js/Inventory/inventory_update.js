@@ -289,6 +289,7 @@ function updatePageWithData(responseData) {
 			{ data: "orderNote" },
 			{ data: "cost", defaultContent: "" },
 			{ data: "depotAmount" },
+			{ data: "depotPosition" },
 			{ data: "inventoryAmount" },
 			{ data: "statusName" },
 			{

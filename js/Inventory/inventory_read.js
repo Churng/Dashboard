@@ -53,6 +53,7 @@ $(document).on("click", "#downloadLink", function () {
 
 // 取得詳細資料
 $(document).ready(function () {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("inventoryRNo");
 	const dataId = { inventoryNo: partId };
 	const IdPost = JSON.stringify(dataId);
@@ -287,6 +288,7 @@ function updatePageWithData(responseData) {
 			{ data: "orderNote" },
 			{ data: "cost", defaultContent: "" },
 			{ data: "depotAmount" },
+			{ data: "depotPosition" },
 			{ data: "inventoryAmount" },
 			{ data: "statusName" },
 			{

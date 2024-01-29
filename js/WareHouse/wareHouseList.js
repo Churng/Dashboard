@@ -70,6 +70,7 @@ function updatePageWithData(responseData) {
 			{ data: "cost" },
 			{ data: "workingHour" },
 			{ data: "statusName" },
+			{ data: "typeName" },
 		],
 		drawCallback: function () {
 			handlePagePermissions(currentUser, currentUrl);
@@ -94,6 +95,12 @@ $(document).ready(function () {
 		edateValue = $(this).val();
 	});
 
+	// 監聽狀態
+	$("#type").on("change", function () {
+		statusValue = $(this).val();
+		console.log(statusValue);
+	});
+
 	// 点击搜索按钮时触发API请求
 	$("#searchBtn").on("click", function () {
 		// 创建筛选数据对象
@@ -107,15 +114,24 @@ $(document).ready(function () {
 			filterData.etime = edateValue;
 		}
 
-		sendApiRequest(filterData);
+		if (statusValue) {
+			filterData.type = statusValue;
+		}
+
+		if (sdateValue || edateValue || statusValue) {
+			sendApiRequest(filterData);
+		} else if (!statusValue) {
+			fetchAccountList();
+			clearDateFields();
+		}
 	});
 
 	function sendApiRequest(filterData) {
+		showSpinner();
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// console.log(user_session_id);
 		// chsm = session_id+action+'HBAdminStockInApi'
 		// 組裝菜單所需資料
 		var action = "getStockInList";
@@ -134,7 +150,7 @@ $(document).ready(function () {
 			success: function (responseData) {
 				if (responseData.returnCode === "1") {
 					updatePageWithData(responseData);
-					clearDateFields();
+					hideSpinner();
 				} else {
 					handleApiResponse(responseData);
 				}
@@ -145,6 +161,11 @@ $(document).ready(function () {
 		});
 	}
 });
+
+function clearDateFields() {
+	$("#startDate").val("");
+	$("#endDate").val("");
+}
 
 // 监听修改按钮的点击事件
 $(document).on("click", ".modify-button", function () {

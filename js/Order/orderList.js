@@ -160,7 +160,6 @@ $(document).ready(function () {
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 		const user_session_id = gertuserData.sessionId;
 
-		// console.log(user_session_id);
 		// chsm = session_id+action+'HBAdminOrderApi'
 		// 組裝菜單所需資料
 		var action = "getOrderList";

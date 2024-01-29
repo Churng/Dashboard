@@ -3,6 +3,7 @@ let orderStatus;
 let orderId;
 let orderNo;
 function fetchAccountList() {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("orderRId");
 	var orderData = JSON.parse(partId);
 	const dataId = { orderNo: orderData };

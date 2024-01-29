@@ -45,6 +45,7 @@ $(document).ready(function () {
 
 // 取得詳細資料：purchase
 function fetchAccountList() {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var getpurchase = localStorage.getItem("purchseRId");
 	const dataId = { id: getpurchase };
 	const IdPost = JSON.stringify(dataId);

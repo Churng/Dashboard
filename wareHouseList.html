@@ -23,6 +23,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="css/spin.css">
 
 
     <!-- DataTable Stylesheet -->
@@ -160,12 +161,26 @@
                                 <input type="date" class="form-control" id="endDate">
                             </div>
 
-                            <div class="col-sm-3 pt-sm-4" style="margin-top: 32px;">
-                                <button id="allBtn" type="button" class="btn btn btn-primary">全部</button>
+                            <!-- <div class="col-sm-3 pt-sm-4" style="margin-top: 32px;">
+                                <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
+                            </div> -->
+                        </div>
+
+
+                        <div class="row mb-4">
+                            <div class="col-sm-3">
+                                <label for="type" class="form-label">來源類型</label>
+                                <select class="form-select" id="type" name="type" required>
+                                    <option value="">請選擇狀態</option>
+                                    <option value="1">手動入庫</option>
+                                    <option value="2">退貨</option>
+                                    <option value="3">盤盈入庫</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 pt-4" style="margin-top: 8px;">
                                 <button id="searchBtn" type="button" class="btn btn btn-success">查詢</button>
                             </div>
                         </div>
-
 
                         <!-- 表格 -->
                         <div class="tableList mt-5">
@@ -189,6 +204,7 @@
                                             <th scope="col">成本</th>
                                             <th scope="col">工時（小時）</th>
                                             <th scope="col">單據狀態</th>
+                                            <th scope="col">來源類型</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -222,19 +238,12 @@
     <script src="js/toastr.min.js"></script>
     <script src="js/Notifications/notifications.js"></script>
     <script src="js/Notifications/toastr-options.js"></script>
-
+    <script src="js/spin.js"></script>
 
     <!-- Datatable Libraries -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.js"></script>
-    <script>
 
-        $(document).ready(function () {
-            new DataTable('#stockIn', {
-                scrollX: true
-            });
-        });
-    </script>
     <!-- Template Javascript -->
     <script src="config/api-config.js"></script>
     <script src="js/main.js"></script>

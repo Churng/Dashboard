@@ -99,6 +99,7 @@ function detailApiResponse(response) {
 
 async function fetchData() {
 	try {
+		handlePageReadPermissions(currentUser, currentUrl);
 		var partId = localStorage.getItem("AcRId");
 		const dataId = { id: partId };
 

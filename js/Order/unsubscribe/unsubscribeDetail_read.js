@@ -2,6 +2,7 @@
 // update
 let unsubId = "";
 $(document).ready(function () {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("UnRId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);

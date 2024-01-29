@@ -45,6 +45,7 @@ function getbrandList() {
 let orderStatus;
 var postComponentId;
 $(document).ready(function () {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var stockValue = localStorage.getItem("whRId");
 	var IdPost = JSON.stringify({ id: stockValue });
 

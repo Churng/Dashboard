@@ -1,4 +1,5 @@
 function fetchAccountList() {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("shipRNo");
 	var getshipNo = JSON.parse(partId);
 	const dataId = { shipNo: getshipNo };

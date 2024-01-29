@@ -1069,6 +1069,7 @@ var originalBrandData = []; //品牌原始資料
 var originalMenuAuthorizeData = []; //表格選項原始資料
 var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
 $(document).ready(function () {
+	handlePageReadPermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("roleRId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
