@@ -2,13 +2,11 @@ var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 var currentUrl = window.location.href;
 function handlePageReadPermissions(currentUser, currentUrl) {
 	let currentPageAuth = null;
-	console.log(currentUrl);
 
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
 
-			console.log(page.name);
 			if (
 				(currentUrl.includes("manualDetail") && page.name === "零件手冊資料") ||
 				(currentUrl.includes("storeDetail") && page.name === "門市資料") ||
@@ -25,7 +23,7 @@ function handlePageReadPermissions(currentUser, currentUrl) {
 				(currentUrl.includes("purchaseDetail") && page.name === "零件採購單資料")
 			) {
 				currentPageAuth = page.auth;
-				if (!currentPageAuth.includes("read") || []) {
+				if (!currentPageAuth.includes("read")) {
 					document.body.style.display = "none";
 					window.history.back();
 				}
