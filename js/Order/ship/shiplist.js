@@ -69,6 +69,7 @@ function updatePageWithData(responseData, table) {
 			{ data: "totalWholesalePrice", defaultContent: "" },
 			{ data: "totalLowestWholesalePrice", defaultContent: "" },
 			{ data: "totalCost", defaultContent: "" },
+			{ data: "shipRealPrice", defaultContent: "" },
 			{ data: "amount" },
 			{ data: "statusName" },
 		],

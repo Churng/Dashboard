@@ -151,6 +151,7 @@ function updatePageWithData(responseData) {
 			{ data: "cost", defaultContent: "" },
 			{ data: "workingHour" },
 			{ data: "depotPosition" },
+			{ data: "shipRealPrice", defaultContent: "" },
 			{ data: "statusName" },
 		],
 		drawCallback: function () {
@@ -451,5 +452,6 @@ $(document).on("click", "#shipCancel", function (e) {
 });
 
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
 	fetchAccountList();
 });

@@ -116,6 +116,7 @@ function updatePageWithData(responseData) {
 			{ data: "cost", defaultContent: "" },
 			{ data: "workingHour" },
 			{ data: "depotPosition" },
+			{ data: "shipRealPrice", defaultContent: "" },
 			{ data: "statusName" },
 		],
 		drawCallback: function () {

@@ -354,7 +354,7 @@ td:first-child {
 
 #brand-management th:first-child,
 #brand-management td:first-child {
-	min-width: 200px;
+	min-width: 220px;
 }
 
 #partsManagement th:nth-child(2),

@@ -1,7 +1,6 @@
 // 列表取得：取商店ID製作選單
 $(document).ready(function () {
-	// 从localStorage中获取session_id和chsm
-	// 解析JSON字符串为JavaScript对象
+	handlePageCreatePermissions(currentUser, currentUrl);
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;

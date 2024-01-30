@@ -47,6 +47,8 @@ $(document).ready(function () {
 // update
 let unsubId = "";
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+
 	var partId = localStorage.getItem("UnsubscribeId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);

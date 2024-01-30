@@ -44,6 +44,7 @@ function getbrandList() {
 // 取得詳細資料
 var postId;
 $(document).ready(function () {
+	handlePageCreatePermissions(currentUser, currentUrl);
 	var componentValue = localStorage.getItem("componentValue");
 	var IdPost = JSON.stringify({ componentNumber: componentValue });
 

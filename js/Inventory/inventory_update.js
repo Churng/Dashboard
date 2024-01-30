@@ -53,6 +53,7 @@ $(document).on("click", "#downloadLink", function () {
 
 // 取得詳細資料
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("inventoryNo");
 	const dataId = { inventoryNo: partId };
 	const IdPost = JSON.stringify(dataId);

@@ -3,6 +3,8 @@ var currentUrl = window.location.href;
 
 function handlePageUpdatePermissions(currentUser, currentUrl) {
 	let currentPageAuth = null;
+	let pageFound = false;
+
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
 			var page = currentUser.userretrunData[i];
@@ -19,7 +21,8 @@ function handlePageUpdatePermissions(currentUser, currentUrl) {
 				(currentUrl.includes("shipDetail") && page.name === "出庫申請單") ||
 				(currentUrl.includes("inventoryDetail") && page.name === "盤點資料") ||
 				(currentUrl.includes("accountDetail") && page.name === "帳號資料") ||
-				(currentUrl.includes("purchaseDetail") && page.name === "零件採購單資料")
+				(currentUrl.includes("purchaseDetail") && page.name === "零件採購單資料") ||
+				(currentUrl.includes("roleAuthorize") && page.name === "角色權限")
 			) {
 				currentPageAuth = page.auth;
 				if (!currentPageAuth.includes("update")) {
@@ -41,11 +44,16 @@ function handlePageUpdatePermissions(currentUser, currentUrl) {
 					showButton(document.getElementById("downloadBtn"));
 				}
 
+				pageFound = true;
 				break;
 			}
 		}
 	}
-	console.log("Auth values for current page:", currentPageAuth);
+
+	if (!pageFound) {
+		document.body.style.display = "none";
+		window.history.back();
+	}
 }
 
 function hideButton(element) {

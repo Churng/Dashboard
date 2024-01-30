@@ -45,10 +45,9 @@ function getbrandList() {
 let orderStatus;
 var postComponentId;
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
 	var stockValue = localStorage.getItem("wareHouseId");
 	var IdPost = JSON.stringify({ id: stockValue });
-
-	// componetsValue = localStorage.getItem("componentId");
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象

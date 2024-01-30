@@ -1064,6 +1064,7 @@ $(document).ready(function () {
 var jsonData;
 
 $(document).ready(function () {
+	handlePageCreatePermissions(currentUser, currentUrl);
 	var selectedData = {};
 	// 取得的每一checkbox資料
 

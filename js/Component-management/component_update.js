@@ -45,6 +45,7 @@ $(document).ready(function () {
 
 // 取得詳細資料
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);

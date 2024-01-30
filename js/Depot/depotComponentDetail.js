@@ -1,6 +1,8 @@
 // 取得列表
 var componentId;
 $(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+
 	var depotId = localStorage.getItem("depotId");
 	const dataId = { id: depotId };
 	const IdPost = JSON.stringify(dataId);

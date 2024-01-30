@@ -2,6 +2,7 @@ var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 var currentUrl = window.location.href;
 function handlePageReadPermissions(currentUser, currentUrl) {
 	let currentPageAuth = null;
+	let pageFound = false;
 
 	if (currentUser.userretrunData) {
 		for (var i = 0; i < currentUser.userretrunData.length; i++) {
@@ -38,9 +39,15 @@ function handlePageReadPermissions(currentUser, currentUrl) {
 					}
 				}
 
+				pageFound = true;
 				break;
 			}
 		}
+	}
+
+	if (!pageFound) {
+		document.body.style.display = "none";
+		window.history.back();
 	}
 }
 

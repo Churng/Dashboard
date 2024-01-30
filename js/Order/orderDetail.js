@@ -3,6 +3,7 @@ let orderStatus;
 let orderId;
 let orderNo;
 function fetchAccountList() {
+	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("orderNo");
 	var orderData = JSON.parse(partId);
 	const dataId = { orderNo: orderData };
@@ -47,14 +48,6 @@ function fetchAccountList() {
 				if (Boolean(getOrderData.if_order_complete === false)) {
 					document.getElementById("orderComplete").disabled = true;
 				}
-
-				// var orderComplete = document.getElementById("orderComplete");
-				// if (orderStatus == 3 || orderStatus == 4) {
-				// 	orderComplete.disabled = true;
-				// 	return;
-				// } else {
-				// 	orderComplete.disabled = false;
-				// }
 
 				updateData(responseData);
 				updatePageWithData(responseData, table);
