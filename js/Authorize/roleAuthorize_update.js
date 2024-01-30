@@ -1058,13 +1058,15 @@ $(document).ready(function () {
 	table10.clear().rows.add(table10DataArray).draw();
 });
 
+$(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+});
 //詳細內容
 let getBrandId;
 var originalBrandData = []; //品牌原始資料
 var originalMenuAuthorizeData = []; //表格選項原始資料
 var deepCopyOfNewData = JSON.parse(JSON.stringify(originalMenuAuthorizeData));
 $(document).ready(function () {
-	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
