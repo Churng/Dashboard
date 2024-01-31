@@ -1,9 +1,12 @@
+$(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+});
+
 // 取得詳細資料
 let orderStatus;
 let orderId;
 let orderNo;
 function fetchAccountList() {
-	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("orderNo");
 	var orderData = JSON.parse(partId);
 	const dataId = { orderNo: orderData };

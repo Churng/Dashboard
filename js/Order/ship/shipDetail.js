@@ -452,6 +452,6 @@ $(document).on("click", "#shipCancel", function (e) {
 });
 
 $(document).ready(function () {
-	handlePageUpdatePermissions(currentUser, currentUrl);
 	fetchAccountList();
+	handlePageUpdatePermissions(currentUser, currentUrl);
 });

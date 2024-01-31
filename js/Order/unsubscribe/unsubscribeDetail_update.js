@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+});
+
 // 取得品牌資料
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
@@ -45,10 +49,8 @@ $(document).ready(function () {
 
 // 取得詳細資料
 // update
-let unsubId = "";
+var unsubId = "";
 $(document).ready(function () {
-	handlePageUpdatePermissions(currentUser, currentUrl);
-
 	var partId = localStorage.getItem("UnsubscribeId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
@@ -123,9 +125,9 @@ $(document).ready(function () {
 					showWarningNotification();
 				}
 
-				displayFileNameInInput(unsubscribeData.file);
-				const myButton = document.getElementById("downloadBtn");
-				myButton.setAttribute("data-file", unsubscribeData.file);
+				// displayFileNameInInput(unsubscribeData.file);
+				// const myButton = document.getElementById("downloadBtn");
+				// myButton.setAttribute("data-file", unsubscribeData.file);
 
 				const startButton = document.getElementById("startBtn");
 				if (
@@ -206,7 +208,7 @@ $(document).on("click", "#completeBtn", function (e) {
 	e.stopPropagation();
 	var formData = new FormData();
 
-	console.log(e);
+	console.log(unsubId);
 
 	// 解绑之前的点击事件处理程序
 	$(document).off("click", ".confirm-unsubscribe");
@@ -232,6 +234,8 @@ $(document).on("click", "#completeBtn", function (e) {
 		var getremark = $("#unsubscribeRemark").val();
 		updateData.id = unsubId;
 		updateData.remark = getremark;
+
+		console.log();
 
 		const jsonStringFromLocalStorage = localStorage.getItem("userData");
 		const gertuserData = JSON.parse(jsonStringFromLocalStorage);

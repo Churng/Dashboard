@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+});
+
 // 倉庫儲位帶入資料
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
@@ -53,7 +57,6 @@ $(document).on("click", "#downloadLink", function () {
 
 // 取得詳細資料
 $(document).ready(function () {
-	handlePageUpdatePermissions(currentUser, currentUrl);
 	var partId = localStorage.getItem("inventoryNo");
 	const dataId = { inventoryNo: partId };
 	const IdPost = JSON.stringify(dataId);

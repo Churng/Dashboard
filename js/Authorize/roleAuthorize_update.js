@@ -1061,6 +1061,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	handlePageUpdatePermissions(currentUser, currentUrl);
 });
+
 //詳細內容
 let getBrandId;
 var originalBrandData = []; //品牌原始資料
