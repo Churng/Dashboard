@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePageCreatePermissions(currentUser, currentUrl);
+});
+
 // 取得品牌資料
 function getbrandList() {
 	// 从localStorage中获取session_id和chsm
@@ -44,7 +48,6 @@ function getbrandList() {
 // 取得詳細資料
 var postId;
 $(document).ready(function () {
-	handlePageCreatePermissions(currentUser, currentUrl);
 	var componentValue = localStorage.getItem("componentValue");
 	var IdPost = JSON.stringify({ componentNumber: componentValue });
 
