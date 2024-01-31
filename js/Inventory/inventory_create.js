@@ -1,6 +1,9 @@
-// 倉庫儲位帶入資料
 $(document).ready(function () {
 	handlePageCreatePermissions(currentUser, currentUrl);
+});
+
+// 倉庫儲位帶入資料
+$(document).ready(function () {
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;

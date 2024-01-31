@@ -1,6 +1,9 @@
-// 取得品牌資料
 $(document).ready(function () {
 	handlePageUpdatePermissions(currentUser, currentUrl);
+});
+
+// 取得品牌資料
+$(document).ready(function () {
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;

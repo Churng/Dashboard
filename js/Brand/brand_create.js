@@ -1,7 +1,10 @@
 $(document).ready(function () {
+	handlePageCreatePermissions(currentUser, currentUrl);
+});
+
+$(document).ready(function () {
 	var formData = new FormData();
 	var uploadForm = document.getElementById("uploadForm");
-	handlePageCreatePermissions(currentUser, currentUrl);
 
 	// 添加表单提交事件监听器
 	uploadForm.addEventListener("submit", function (event) {

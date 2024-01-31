@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+});
+
 // 表格初始
 $(document).ready(function () {
 	// Data1
@@ -1056,10 +1060,6 @@ $(document).ready(function () {
 	});
 
 	table10.clear().rows.add(table10DataArray).draw();
-});
-
-$(document).ready(function () {
-	handlePageUpdatePermissions(currentUser, currentUrl);
 });
 
 //詳細內容

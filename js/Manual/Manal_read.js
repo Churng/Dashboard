@@ -1,9 +1,11 @@
-// 取得詳細資料
 $(document).ready(function () {
 	var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 	var currentUrl = window.location.href;
 	handlePageReadPermissions(currentUser, currentUrl);
+});
 
+// 取得詳細資料
+$(document).ready(function () {
 	var partId = localStorage.getItem("partRId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);

@@ -1,6 +1,8 @@
-// 取得品牌資料
 $(document).ready(function () {
 	handlePageReadPermissions(currentUser, currentUrl);
+});
+// 取得品牌資料
+$(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");

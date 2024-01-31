@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePageCreatePermissions(currentUser, currentUrl);
+});
+
 // 表格初始
 $(document).ready(function () {
 	// Data1
@@ -1064,7 +1068,6 @@ $(document).ready(function () {
 var jsonData;
 
 $(document).ready(function () {
-	handlePageCreatePermissions(currentUser, currentUrl);
 	var selectedData = {};
 	// 取得的每一checkbox資料
 

@@ -1,7 +1,10 @@
 $(document).ready(function () {
+	handlePageCreatePermissions(currentUser, currentUrl);
+});
+
+$(document).ready(function () {
 	var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 	var currentUrl = window.location.href;
-	handlePageCreatePermissions(currentUser, currentUrl);
 
 	var formData = new FormData();
 	var uploadForm = document.getElementById("uploadForm");

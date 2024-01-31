@@ -143,8 +143,8 @@ async function fetchData() {
 }
 
 $(document).ready(function () {
+	fetchData();
 	handlePageUpdatePermissions(currentUser, currentUrl);
-	fetchData(); // 調用 fetchData 函數以觸發API請求和處理
 });
 
 //上傳POST

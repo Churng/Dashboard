@@ -1,8 +1,11 @@
+$(document).ready(function () {
+	handlePageUpdatePermissions(currentUser, currentUrl);
+});
+
 // 取得詳細資料
 $(document).ready(function () {
 	var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 	var currentUrl = window.location.href;
-	handlePageUpdatePermissions(currentUser, currentUrl);
 
 	var partId = localStorage.getItem("partId");
 	const dataId = { id: partId };

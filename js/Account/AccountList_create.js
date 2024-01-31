@@ -1,6 +1,9 @@
-// 列表取得：取商店ID製作選單
 $(document).ready(function () {
 	handlePageCreatePermissions(currentUser, currentUrl);
+});
+
+// 列表取得：取商店ID製作選單
+$(document).ready(function () {
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
 	const user_session_id = gertuserData.sessionId;

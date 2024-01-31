@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePageReadPermissions(currentUser, currentUrl);
+});
+
 // 函數用於發送API請求
 function makeRequestA(url, user_session_id, action, chsm) {
 	return $.ajax({
@@ -99,7 +103,6 @@ function detailApiResponse(response) {
 
 async function fetchData() {
 	try {
-		handlePageReadPermissions(currentUser, currentUrl);
 		var partId = localStorage.getItem("AcRId");
 		const dataId = { id: partId };
 

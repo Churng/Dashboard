@@ -1,9 +1,12 @@
+$(document).ready(function () {
+	handlePageReadPermissions(currentUser, currentUrl);
+});
+
 // 取得詳細資料
 $(document).ready(function () {
 	var partId = localStorage.getItem("readStoreId");
 	const dataId = { id: partId };
 	const IdPost = JSON.stringify(dataId);
-	handlePageReadPermissions(currentUser, currentUrl);
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
