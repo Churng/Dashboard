@@ -164,7 +164,7 @@ function updatePageWithData(responseData) {
 					// if_unsubscribeDetail: true
 					var unsubreadButtonHtml = "";
 					if (Boolean(row.if_unsubscribeDetail) === true) {
-						unsubreadButtonHtml += `<button type="button"  class="btn btn-info text-white unsubdetail-button "   data-id="${row.id}"  data-unsubscribeid="${row.unsubscribeId}"
+						unsubreadButtonHtml += `<button type="button"  class="btn btn-success text-white unsubdetail-button "   data-id="${row.id}"  data-unsubscribeid="${row.unsubscribeId}"
 						>查看退貨單</button>`;
 					}
 

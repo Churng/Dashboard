@@ -164,7 +164,7 @@ function updatePageWithData(responseData) {
 					// if_unsubscribeDetail: true
 					var unsubreadButtonHtml = "";
 					if (Boolean(row.if_unsubscribeDetail) === true) {
-						unsubreadButtonHtml += `<button type="button"  class="btn btn-info text-white unsubdetail-button" disabled>查看退貨單</button>`;
+						unsubreadButtonHtml += `<button type="button"  class="btn btn-success text-white unsubdetail-button" disabled>查看退貨單</button>`;
 					}
 
 					//查看出庫單

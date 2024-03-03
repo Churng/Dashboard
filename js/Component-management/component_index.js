@@ -1,4 +1,5 @@
 //取得品牌清單、做權限篩選
+var selectedFirstBrandId;
 $(document).ready(function () {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
@@ -41,10 +42,10 @@ $(document).ready(function () {
 			if (responseData.returnData.length > 0) {
 				brandList.selectedIndex = 1;
 				// 获取选中的品牌ID
-				selectedBrandId = brandList.value;
+				selectedFirstBrandId = brandList.value;
 
 				// 触发API请求
-				sendApiRequest({ brandId: selectedBrandId });
+				sendApiRequest({ brandId: selectedFirstBrandId });
 			}
 		},
 		error: function (error) {
@@ -332,28 +333,28 @@ $(document).on("click", ".file-download", function () {
 
 // 監聽欄位變動
 $(document).ready(function () {
-	var selectedBrandId;
-
-	// 監聽品牌
-	$("#selectBrand").on("change", function () {
-		selectedBrandId = $("#selectBrand").val();
-	});
+	var selectedBrandId = "";
 
 	// 点击搜索按钮时触发API请求
 	$("#searchBtn").on("click", function () {
 		var dataTable = $("#partsManagement").DataTable();
 		dataTable.clear().draw();
 
+		selectedBrandId = $("#selectBrand").val();
+		if (selectedBrandId === "") {
+			fetchAccountList();
+			return;
+		}
+
 		// 创建筛选数据对象
 		var filterData = {};
 
-		if (!selectedBrandId) {
-			fetchAccountList();
-		} else {
-			var filterData = {};
+		if (!selectedBrandId && selectedFirstBrandId && selectedFirstBrandId !== "") {
+			filterData.brandId = selectedFirstBrandId;
+		} else if (selectedBrandId && selectedBrandId !== "") {
 			filterData.brandId = selectedBrandId;
-			sendApiRequest(filterData);
 		}
+		sendApiRequest(filterData);
 	});
 });
 

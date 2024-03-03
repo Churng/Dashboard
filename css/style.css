@@ -484,3 +484,24 @@ div.table-responsive > div.dataTables_wrapper > div.row {
 .btn-group > .btn {
 	margin-bottom: 10px;
 }
+
+#authorize-management-6 th:nth-child(3),
+#authorize-management-6 td:nth-child(3),
+#authorize-management-6 th:nth-child(4),
+#authorize-management-6 td:nth-child(4),
+#authorize-management-6 th:nth-child(5),
+#authorize-management-6 td:nth-child(5),
+#authorize-management-6 th:nth-child(6),
+#authorize-management-6 td:nth-child(6),
+#authorize-management-6 th:nth-child(9),
+#authorize-management-6 td:nth-child(9) {
+	min-width: 60px;
+}
+#authorize-management-6 th:nth-child(2),
+#authorize-management-6 td:nth-child(2),
+#authorize-management-6 th:nth-child(7),
+#authorize-management-6 td:nth-child(7),
+#authorize-management-6 th:nth-child(12),
+#authorize-management-6 td:nth-child(12) {
+	min-width: 70px;
+}

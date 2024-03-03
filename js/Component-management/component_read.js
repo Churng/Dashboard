@@ -2,7 +2,7 @@ $(document).ready(function () {
 	handlePageReadPermissions(currentUser, currentUrl);
 });
 // 取得品牌資料
-$(document).ready(function () {
+function getbrandList() {
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
@@ -44,7 +44,7 @@ $(document).ready(function () {
 			showErrorNotification();
 		},
 	});
-});
+}
 
 // 取得品牌資料
 $(document).ready(function () {
@@ -122,38 +122,41 @@ $(document).ready(function () {
 		success: function (responseData) {
 			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
-				const componentData = responseData.returnData[0];
+				getbrandList();
+				setTimeout(function () {
+					const componentData = responseData.returnData[0];
 
-				$("#C-componentName").val(componentData.componentName);
-				$("#C-componentNumber").val(componentData.componentNumber);
-				$("#C-brandId").val(componentData.brandId);
+					$("#C-componentName").val(componentData.componentName);
+					$("#C-componentNumber").val(componentData.componentNumber);
+					$("#C-brandId").val(componentData.brandId);
 
-				$("#C-purchaseAmount").val(componentData.purchaseAmount);
-				$("#C-depotAmount").val(componentData.depotAmount);
-				$("#C-depotPosition").val(componentData.depotPosition);
+					$("#C-purchaseAmount").val(componentData.purchaseAmount);
+					$("#C-depotAmount").val(componentData.depotAmount);
+					$("#C-depotPosition").val(componentData.depotPosition);
 
-				$("#Price").val(componentData.price);
-				$("#Cost").val(componentData.cost);
-				$("#WholesalePrice").val(componentData.wholesalePrice);
-				$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
+					$("#Price").val(componentData.price);
+					$("#Cost").val(componentData.cost);
+					$("#WholesalePrice").val(componentData.wholesalePrice);
+					$("#lowestWholesalePrice").val(componentData.lowestWholesalePrice);
 
-				$("#C-supplier").val(componentData.componentSupplier);
-				$("#C-workingHour").val(componentData.workingHour);
-				$("#C-suitableModel").val(componentData.suitableCarModel);
-				$("#C-description").val(componentData.description);
-				$("#C-precautions").val(componentData.precautions);
-				$("#C-lowestInventory").val(componentData.lowestInventory);
+					$("#C-supplier").val(componentData.componentSupplier);
+					$("#C-workingHour").val(componentData.workingHour);
+					$("#C-suitableModel").val(componentData.suitableCarModel);
+					$("#C-description").val(componentData.description);
+					$("#C-precautions").val(componentData.precautions);
+					$("#C-lowestInventory").val(componentData.lowestInventory);
 
-				$("#BuildTime").val(componentData.createTime);
-				$("#EditTime").val(componentData.updateTime);
-				$("#EditAccount").val(componentData.updateOperator);
+					$("#BuildTime").val(componentData.createTime);
+					$("#EditTime").val(componentData.updateTime);
+					$("#EditAccount").val(componentData.updateOperator);
 
-				displayFileNameInInput(componentData.file);
-				const myButton = document.getElementById("downloadBtn");
-				myButton.setAttribute("data-file", componentData.file);
+					displayFileNameInInput(componentData.file);
+					const myButton = document.getElementById("downloadBtn");
+					myButton.setAttribute("data-file", componentData.file);
 
-				// 填充完毕后隐藏加载中的spinner
-				$("#spinner").hide();
+					// 填充完毕后隐藏加载中的spinner
+					$("#spinner").hide();
+				}, 1000);
 			} else {
 				handleApiResponse(responseData);
 			}
