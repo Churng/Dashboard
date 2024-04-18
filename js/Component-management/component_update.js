@@ -153,129 +153,246 @@ $(document).ready(function () {
 		} else {
 			// 处理表单提交
 			event.preventDefault();
-			var partId = localStorage.getItem("partId");
-
-			//取值
-			var getComponentName = $("#C-componentName").val();
-			var getComponentNumber = $("#C-componentNumber").val();
-			var getbrandId = $("#C-brandId").val();
-			// var getpurchaseAmount = $("#C-purchaseAmount").val();
-			// var getdepotAmount = $("#C-depotAmount").val();
-			var getdepotPosition = $("#C-depotPosition").val();
-			var getprice = $("#Price").val();
-			var getcost = $("#Cost").val();
-			var getwholesalePrice = $("#WholesalePrice").val();
-			var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
-			var getcomponentSupplier = $("#C-supplier").val();
-			var getworkingHour = $("#C-workingHour").val();
-			var getsuitableCarModel = $("#C-suitableModel").val();
-			var getdescription = $("#C-description").val();
-			var getprecautions = $("#C-precautions").val();
-			var getlowestInventory = $("#C-lowestInventory").val();
-			var fileInput = document.getElementById("fileInput");
-
-			var getcreateTime = $("#BuildTime").val();
-			var getupdateTime = $("#EditTime").val();
-			var getupdateOperator = $("#EditAccount").val();
-
-			var fileInput = document.getElementById("fileInput");
-
-			var updateData = {};
 
 			if (fileInput.files.length > 0 && fileInput.files[0].size > 0) {
-				for (var i = 0; i < fileInput.files.length; i++) {
-					if (fileInput.files[i].size > 0) {
-						formData.append("component[]", fileInput.files[i]);
-					}
-				}
-				updateData.fileName = fileInput.files[0].name;
-				updateData.file = fileInput.files[0].name;
+				pushcomFileupdate();
 			} else {
-				updateData.fileName = "";
-				updateData.file = "";
+				pushcomnoFileupdate();
 			}
-
-			updateData.id = partId;
-			updateData.componentNumber = getComponentNumber;
-			updateData.brandId = getbrandId;
-			updateData.componentName = getComponentName;
-			// purchaseAmount: getpurchaseAmount,
-			// depotAmount: getdepotAmount,
-			updateData.depotPosition = getdepotPosition;
-
-			if (typeof getprice !== "undefined") {
-				updateData.price = getprice;
-			}
-
-			// 檢查並設置 getcost
-			if (typeof getcost !== "undefined") {
-				updateData.cost = getcost;
-			}
-
-			// 檢查並設置 getwholesalePrice
-			if (typeof getwholesalePrice !== "undefined") {
-				updateData.wholesalePrice = getwholesalePrice;
-			}
-
-			// 檢查並設置 getlowestWholesalePrice
-			if (typeof getlowestWholesalePrice !== "undefined") {
-				updateData.lowestWholesalePrice = getlowestWholesalePrice;
-			}
-
-			updateData.componentSupplier = getcomponentSupplier;
-			updateData.workingHour = getworkingHour;
-			updateData.suitableCarModel = getsuitableCarModel;
-			updateData.description = getdescription;
-			updateData.precautions = getprecautions;
-			updateData.lowestInventory = getlowestInventory;
-			updateData.createTime = getcreateTime;
-			updateData.updateTime = getupdateTime;
-			updateData.updateOperator = getupdateOperator;
-
-			// 从localStorage中获取session_id和chsm
-			// 解析JSON字符串为JavaScript对象
-			const jsonStringFromLocalStorage = localStorage.getItem("userData");
-			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-			const user_session_id = gertuserData.sessionId;
-
-			// 组装发送文件所需数据
-			// chsm = session_id+action+'HBAdminComponentApi'
-			var action = "updateComponentDetail";
-			var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
-			var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
-
-			// 设置其他formData字段
-			formData.set("action", action);
-			formData.set("session_id", user_session_id);
-			formData.set("chsm", chsm);
-			formData.set("data", JSON.stringify(updateData));
-
-			// 发送上传更新文件的请求
-			$.ajax({
-				type: "POST",
-				url: `${apiURL}/component`,
-				data: formData,
-				processData: false,
-				contentType: false,
-				success: function (response) {
-					if (response.returnCode === "1") {
-						showSuccessFileNotification();
-						setTimeout(function () {
-							localStorage.removeItem("partId");
-							var newPageUrl = "componentList.html";
-							window.location.href = newPageUrl;
-						}, 1000);
-					} else {
-						handleApiResponse(response);
-					}
-				},
-				error: function (error) {
-					showErrorFileNotification();
-				},
-			});
 		}
 		uploadForm.classList.add("was-validated");
 	});
+
+	function pushcomFileupdate() {
+		var partId = localStorage.getItem("partId");
+
+		//取值
+		var getComponentName = $("#C-componentName").val();
+		var getComponentNumber = $("#C-componentNumber").val();
+		var getbrandId = $("#C-brandId").val();
+		// var getpurchaseAmount = $("#C-purchaseAmount").val();
+		// var getdepotAmount = $("#C-depotAmount").val();
+		var getdepotPosition = $("#C-depotPosition").val();
+		var getprice = $("#Price").val();
+		var getcost = $("#Cost").val();
+		var getwholesalePrice = $("#WholesalePrice").val();
+		var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
+		var getcomponentSupplier = $("#C-supplier").val();
+		var getworkingHour = $("#C-workingHour").val();
+		var getsuitableCarModel = $("#C-suitableModel").val();
+		var getdescription = $("#C-description").val();
+		var getprecautions = $("#C-precautions").val();
+		var getlowestInventory = $("#C-lowestInventory").val();
+		var fileInput = document.getElementById("fileInput");
+
+		var getcreateTime = $("#BuildTime").val();
+		var getupdateTime = $("#EditTime").val();
+		var getupdateOperator = $("#EditAccount").val();
+
+		var fileInput = document.getElementById("fileInput");
+
+		var updateData = {};
+
+		for (var i = 0; i < fileInput.files.length; i++) {
+			if (fileInput.files[i].size > 0) {
+				formData.append("component[]", fileInput.files[i]);
+			}
+		}
+		updateData.fileName = fileInput.files[0].name;
+		updateData.file = fileInput.files[0].name;
+
+		updateData.id = partId;
+		updateData.componentNumber = getComponentNumber;
+		updateData.brandId = getbrandId;
+		updateData.componentName = getComponentName;
+		// purchaseAmount: getpurchaseAmount,
+		// depotAmount: getdepotAmount,
+		updateData.depotPosition = getdepotPosition;
+
+		if (typeof getprice !== "undefined") {
+			updateData.price = getprice;
+		}
+
+		// 檢查並設置 getcost
+		if (typeof getcost !== "undefined") {
+			updateData.cost = getcost;
+		}
+
+		// 檢查並設置 getwholesalePrice
+		if (typeof getwholesalePrice !== "undefined") {
+			updateData.wholesalePrice = getwholesalePrice;
+		}
+
+		// 檢查並設置 getlowestWholesalePrice
+		if (typeof getlowestWholesalePrice !== "undefined") {
+			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+		}
+
+		updateData.componentSupplier = getcomponentSupplier;
+		updateData.workingHour = getworkingHour;
+		updateData.suitableCarModel = getsuitableCarModel;
+		updateData.description = getdescription;
+		updateData.precautions = getprecautions;
+		updateData.lowestInventory = getlowestInventory;
+		updateData.createTime = getcreateTime;
+		updateData.updateTime = getupdateTime;
+		updateData.updateOperator = getupdateOperator;
+
+		// 从localStorage中获取session_id和chsm
+		// 解析JSON字符串为JavaScript对象
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		// 组装发送文件所需数据
+		// chsm = session_id+action+'HBAdminComponentApi'
+		var action = "updateComponentDetail";
+		var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
+		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+		// 设置其他formData字段
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		// 发送上传更新文件的请求
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/component`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+					setTimeout(function () {
+						localStorage.removeItem("partId");
+						var newPageUrl = "componentList.html";
+						window.location.href = newPageUrl;
+					}, 1000);
+				} else {
+					handleApiResponse(response);
+				}
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
+	}
+
+	function pushcomnoFileupdate() {
+		var partId = localStorage.getItem("partId");
+
+		//取值
+		var getComponentName = $("#C-componentName").val();
+		var getComponentNumber = $("#C-componentNumber").val();
+		var getbrandId = $("#C-brandId").val();
+		// var getpurchaseAmount = $("#C-purchaseAmount").val();
+		// var getdepotAmount = $("#C-depotAmount").val();
+		var getdepotPosition = $("#C-depotPosition").val();
+		var getprice = $("#Price").val();
+		var getcost = $("#Cost").val();
+		var getwholesalePrice = $("#WholesalePrice").val();
+		var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
+		var getcomponentSupplier = $("#C-supplier").val();
+		var getworkingHour = $("#C-workingHour").val();
+		var getsuitableCarModel = $("#C-suitableModel").val();
+		var getdescription = $("#C-description").val();
+		var getprecautions = $("#C-precautions").val();
+		var getlowestInventory = $("#C-lowestInventory").val();
+		var fileInput = document.getElementById("fileInput");
+
+		var getcreateTime = $("#BuildTime").val();
+		var getupdateTime = $("#EditTime").val();
+		var getupdateOperator = $("#EditAccount").val();
+
+		var fileInput = document.getElementById("fileInput");
+
+		var updateData = {};
+
+		updateData.fileName = "";
+		updateData.file = "";
+
+		updateData.id = partId;
+		updateData.componentNumber = getComponentNumber;
+		updateData.brandId = getbrandId;
+		updateData.componentName = getComponentName;
+		// purchaseAmount: getpurchaseAmount,
+		// depotAmount: getdepotAmount,
+		updateData.depotPosition = getdepotPosition;
+
+		if (typeof getprice !== "undefined") {
+			updateData.price = getprice;
+		}
+
+		// 檢查並設置 getcost
+		if (typeof getcost !== "undefined") {
+			updateData.cost = getcost;
+		}
+
+		// 檢查並設置 getwholesalePrice
+		if (typeof getwholesalePrice !== "undefined") {
+			updateData.wholesalePrice = getwholesalePrice;
+		}
+
+		// 檢查並設置 getlowestWholesalePrice
+		if (typeof getlowestWholesalePrice !== "undefined") {
+			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+		}
+
+		updateData.componentSupplier = getcomponentSupplier;
+		updateData.workingHour = getworkingHour;
+		updateData.suitableCarModel = getsuitableCarModel;
+		updateData.description = getdescription;
+		updateData.precautions = getprecautions;
+		updateData.lowestInventory = getlowestInventory;
+		updateData.createTime = getcreateTime;
+		updateData.updateTime = getupdateTime;
+		updateData.updateOperator = getupdateOperator;
+
+		// 从localStorage中获取session_id和chsm
+		// 解析JSON字符串为JavaScript对象
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		// 组装发送文件所需数据
+		// chsm = session_id+action+'HBAdminComponentApi'
+		var action = "updateComponentDetail";
+		var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
+		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+		// 设置其他formData字段
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		// 发送上传更新文件的请求
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/component`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+					setTimeout(function () {
+						localStorage.removeItem("partId");
+						var newPageUrl = "componentList.html";
+						window.location.href = newPageUrl;
+					}, 1000);
+				} else {
+					handleApiResponse(response);
+				}
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
+	}
 });
 
 //下載檔案

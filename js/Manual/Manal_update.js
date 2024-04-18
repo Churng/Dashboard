@@ -98,78 +98,141 @@ $(document).ready(function () {
 		} else {
 			// 处理表单提交
 			event.preventDefault();
-			var partId = localStorage.getItem("partId");
 
-			var getfileNameField = $("#fileNameField").val();
-			var getBrandName = $("#M-BrandName").val();
-			var getyear = $("#M-year").val();
-			var getapplicableType = $("#M-applicableType").val();
-			var getremark = $("#M-remark").val();
-			var fileInput = document.getElementById("fileInput");
-
-			var createTime = $("#BuildTime").val();
-			var updateTime = $("#EditTime").val();
-			var updateOperator = $("#EditAccount").val();
-
-			var updateData = {};
 			if (fileInput.files.length > 0) {
-				for (var i = 0; i < fileInput.files.length; i++) {
-					formData.append("manual[]", fileInput.files[i]);
-				}
-				updateData.fileName = fileInput.files[0].name;
-				updateData.file = fileInput.files[0].name;
+				pushFileupdate();
 			} else {
-				updateData.fileName = "";
-				updateData.file = "";
+				pushnoFileupdate();
 			}
-			updateData.id = partId;
-			updateData.fileName = getfileNameField;
-			updateData.brandName = getBrandName;
-			updateData.year = getyear;
-			updateData.applicableType = getapplicableType;
-			updateData.remark = getremark;
-			updateData.file = fileInput.files[0].name;
-
-			const jsonStringFromLocalStorage = localStorage.getItem("userData");
-			const gertuserData = JSON.parse(jsonStringFromLocalStorage);
-			const user_session_id = gertuserData.sessionId;
-
-			// 组装上传更新文件的数据
-			var action = "updateManualDetail";
-			var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
-			var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
-
-			formData.set("action", action);
-			formData.set("session_id", user_session_id);
-			formData.set("chsm", chsm);
-			formData.set("data", JSON.stringify(updateData));
-
-			// 发送上传更新文件的请求
-			$.ajax({
-				type: "POST",
-				url: `${apiURL}/manual`,
-				data: formData,
-				processData: false,
-				contentType: false,
-				success: function (response) {
-					if (response.returnCode === "1") {
-						showSuccessFileNotification();
-						setTimeout(function () {
-							localStorage.removeItem("partId");
-							var newPageUrl = "manualList.html";
-							window.location.href = newPageUrl;
-						}, 1000);
-					} else {
-						handleApiResponse(response);
-					}
-				},
-				error: function (error) {
-					showErrorFileNotification();
-				},
-			});
 		}
 		uploadForm.classList.add("was-validated");
 	});
+
+	function pushFileupdate() {
+		var partId = localStorage.getItem("partId");
+
+		var getfileNameField = $("#fileNameField").val();
+		var getBrandName = $("#M-BrandName").val();
+		var getyear = $("#M-year").val();
+		var getapplicableType = $("#M-applicableType").val();
+		var getremark = $("#M-remark").val();
+		var fileInput = document.getElementById("fileInput");
+
+		var createTime = $("#BuildTime").val();
+		var updateTime = $("#EditTime").val();
+		var updateOperator = $("#EditAccount").val();
+		var updateData = {};
+		for (var i = 0; i < fileInput.files.length; i++) {
+			formData.append("manual[]", fileInput.files[i]);
+		}
+		updateData.fileName = fileInput.files[0].name;
+		updateData.file = fileInput.files[0].name;
+
+		updateData.id = partId;
+		updateData.fileName = getfileNameField;
+		updateData.brandName = getBrandName;
+		updateData.year = getyear;
+		updateData.applicableType = getapplicableType;
+		updateData.remark = getremark;
+		updateData.file = fileInput.files[0].name;
+
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		// 组装上传更新文件的数据
+		var action = "updateManualDetail";
+		var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
+		var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
+
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		// 发送上传更新文件的请求
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/manual`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+					setTimeout(function () {
+						localStorage.removeItem("partId");
+						var newPageUrl = "manualList.html";
+						window.location.href = newPageUrl;
+					}, 1000);
+				} else {
+					handleApiResponse(response);
+				}
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
+	}
+
+	function pushnoFileupdate() {
+		var partId = localStorage.getItem("partId");
+
+		var getfileNameField = $("#fileNameField").val();
+		var getBrandName = $("#M-BrandName").val();
+		var getyear = $("#M-year").val();
+		var getapplicableType = $("#M-applicableType").val();
+		var getremark = $("#M-remark").val();
+		var fileInput = document.getElementById("fileInput");
+
+		var updateData = {};
+		updateData.fileName = getfileNameField;
+		updateData.file = "";
+
+		updateData.id = partId;
+		updateData.brandName = getBrandName;
+		updateData.year = getyear;
+		updateData.applicableType = getapplicableType;
+		updateData.remark = getremark;
+
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		// 组装上传更新文件的数据
+		var action = "updateManualDetail";
+		var chsmtoUpdateFile = user_session_id + action + "HBAdminManualApi";
+		var chsm = CryptoJS.MD5(chsmtoUpdateFile).toString().toLowerCase();
+
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		// 发送上传更新文件的请求
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/manual`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				if (response.returnCode === "1") {
+					showSuccessFileNotification();
+					setTimeout(function () {
+						localStorage.removeItem("partId");
+						var newPageUrl = "manualList.html";
+						window.location.href = newPageUrl;
+					}, 1000);
+				} else {
+					handleApiResponse(response);
+				}
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
+	}
 });
 
 // 下载檔案

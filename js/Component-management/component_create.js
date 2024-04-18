@@ -61,8 +61,14 @@ $(document).ready(function () {
 		} else {
 			event.preventDefault();
 			var fileInput = $("#fileInput")[0];
-
 			if (fileInput.files.length > 0) {
+				pushcomponentFile();
+			} else {
+				pushcomponentnoFile();
+			}
+
+			function pushcomponentFile() {
+				var fileInput = $("#fileInput")[0];
 				for (var i = 0; i < fileInput.files.length; i++) {
 					var file = fileInput.files[i];
 					formData.append("component[]", file, file.name);
@@ -72,8 +78,6 @@ $(document).ready(function () {
 				var getComponentName = $("#C-componentName").val();
 				var getComponentNumber = $("#C-componentNumber").val();
 				var getbrandId = $("#C-brandId").val();
-				// var getpurchaseAmount = $("#C-purchaseAmount").val();
-				// var getdepotAmount = $("#C-depotAmount").val();
 				var getdepotPosition = $("#C-depotPosition").val();
 				var getprice = $("#Price").val();
 				var getcost = $("#Cost").val();
@@ -153,8 +157,92 @@ $(document).ready(function () {
 						showErrorFileNotification();
 					},
 				});
-			} else {
-				showWarningNotification();
+			}
+
+			function pushcomponentnoFile() {
+				//取值
+				var getComponentName = $("#C-componentName").val();
+				var getComponentNumber = $("#C-componentNumber").val();
+				var getbrandId = $("#C-brandId").val();
+				var getdepotPosition = $("#C-depotPosition").val();
+				var getprice = $("#Price").val();
+				var getcost = $("#Cost").val();
+				var getwholesalePrice = $("#WholesalePrice").val();
+				var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
+				var getcomponentSupplier = $("#C-supplier").val();
+				var getworkingHour = $("#C-workingHour").val();
+				var getsuitableCarModel = $("#C-suitableModel").val();
+				var getdescription = $("#C-description").val();
+				var getprecautions = $("#C-precautions").val();
+				var getlowestInventory = $("#C-lowestInventory").val();
+
+				var getcreateTime = $("#BuildTime").val();
+				var getupdateTime = $("#EditTime").val();
+				var getupdateOperator = $("#EditAccount").val();
+
+				var componentDataObject = {
+					componentNumber: getComponentNumber,
+					brandId: getbrandId,
+					componentName: getComponentName,
+					// purchaseAmount: getpurchaseAmount,
+					// depotAmount: getdepotAmount,
+					depotPosition: getdepotPosition,
+					price: getprice,
+					cost: getcost,
+					wholesalePrice: getwholesalePrice,
+					lowestWholesalePrice: getlowestWholesalePrice,
+					componentSupplier: getcomponentSupplier,
+					workingHour: getworkingHour,
+					suitableCarModel: getsuitableCarModel,
+					description: getdescription,
+					precautions: getprecautions,
+					lowestInventory: getlowestInventory,
+					createTime: getcreateTime,
+					updateTime: getupdateTime,
+					updateOperator: getupdateOperator,
+					fileName: null,
+					file: null,
+				};
+
+				// 从localStorage中获取session_id和chsm
+				// 解析JSON字符串为JavaScript对象
+				const jsonStringFromLocalStorage = localStorage.getItem("userData");
+				const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+				const user_session_id = gertuserData.sessionId;
+
+				// 组装发送文件所需数据
+				// chsm = session_id+action+'HBAdminComponentApi'
+				var action = "insertComponentDetail";
+				var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
+				var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+				formData.set("action", action);
+				formData.set("session_id", user_session_id);
+				formData.set("chsm", chsm);
+				formData.set("data", JSON.stringify(componentDataObject));
+
+				// 執行POST請求
+				$.ajax({
+					type: "POST",
+					url: `${apiURL}/component`,
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						if (response.returnCode === "1") {
+							showSuccessFileNotification();
+							setTimeout(function () {
+								var newPageUrl = "componentList.html";
+								window.location.href = newPageUrl;
+							}, 1000);
+						} else {
+							handleApiResponse(response);
+						}
+					},
+					error: function (error) {
+						showErrorFileNotification();
+					},
+				});
 			}
 		}
 		uploadForm.classList.add("was-validated");
