@@ -394,6 +394,7 @@ function sendAgreeDataToAPI(event) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				showSuccessFileNotification();
 				if (response.returnCode == "1") {
 					setTimeout(function () {
 						localStorage.removeItem("purchaseId");
