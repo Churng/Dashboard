@@ -306,9 +306,7 @@ button.addEventListener("click", function (event) {
 // 同意零件訂購：單據備註更改、零件更新
 function sendAgreeDataToAPI(event) {
 	var formData = new FormData();
-
 	var getcompoent = localStorage.getItem("componentId");
-
 	var getComponentName = $("#componentName").val();
 	var getComponentNumber = $("#componentNumber").val();
 	var getbrandId = $("#P-brandId").val();
@@ -394,13 +392,8 @@ function sendAgreeDataToAPI(event) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				showSuccessFileNotification();
 				if (response.returnCode == "1") {
-					setTimeout(function () {
-						localStorage.removeItem("purchaseId");
-						var newPageUrl = "purchaseList.html";
-						window.location.href = newPageUrl;
-					}, 3000);
+					updatePurchase(purchaseId);
 				} else {
 					handleApiResponse(response);
 					return;
@@ -413,6 +406,56 @@ function sendAgreeDataToAPI(event) {
 	} else {
 		showErrorNotification();
 	}
+}
+
+function updatePurchase(purchaseId) {
+	var formData = new FormData();
+	var getpurchase = localStorage.getItem("purchaseId");
+
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	var purchaseRemark = $("#purchaseRemark").val();
+
+	var updateData = {
+		id: getpurchase,
+		remark: purchaseRemark,
+	};
+
+	// 组装发送文件所需数据
+	// chsm = session_id+action+'HBAdminPurchaseApi'
+	var action = "updatePurchaseDetail";
+	var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
+	var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+	formData.set("action", action);
+	formData.set("session_id", user_session_id);
+	formData.set("chsm", chsm);
+	formData.set("data", JSON.stringify(updateData));
+
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/purchase`,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			showSuccessFileNotification();
+			if (response.returnCode === "1") {
+				setTimeout(function () {
+					localStorage.removeItem("purchaseId");
+					var newPageUrl = "purchaseList.html";
+					window.location.href = newPageUrl;
+				}, 3000);
+			} else {
+				handleApiResponse(response);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
 }
 
 //跳轉頁面
