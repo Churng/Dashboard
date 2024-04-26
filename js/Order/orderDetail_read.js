@@ -199,7 +199,7 @@ function updatePageWithData(responseData) {
 					return buttonsHtml;
 				},
 			},
-			{ data: "componentId" },
+			{ data: "depotId" },
 			{ data: "componentNumber" },
 			{ data: "componentName" },
 			{ data: "suitableCarModel" },

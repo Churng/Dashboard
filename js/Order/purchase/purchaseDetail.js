@@ -222,9 +222,9 @@ $(document).on("click", ".file-download", function () {
 
 // 取消訂購：監聽
 var form = document.getElementById("uploadForm");
-var button = document.getElementById("onlyNotePost");
+var buttonN = document.getElementById("onlyNotePost");
 
-button.addEventListener("click", function (event) {
+buttonN.addEventListener("click", function (event) {
 	sendFormDataToAPI(function (response) {
 		if (response.success) {
 			// 验证通过且API请求成功，手动提交表单
@@ -240,8 +240,6 @@ button.addEventListener("click", function (event) {
 function sendFormDataToAPI(event) {
 	var formData = new FormData();
 	var getpurchase = localStorage.getItem("purchaseId");
-
-	// const purchaseRemarkValue = document.getElementById("purchaseRemark");
 
 	const jsonStringFromLocalStorage = localStorage.getItem("userData");
 	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
@@ -397,8 +395,11 @@ function sendAgreeDataToAPI(event) {
 			contentType: false,
 			success: function (response) {
 				if (response.returnCode == "1") {
-					sendFormDataToAPI(event);
-					localStorage.removeItem("purchaseId");
+					setTimeout(function () {
+						localStorage.removeItem("purchaseId");
+						var newPageUrl = "purchaseList.html";
+						window.location.href = newPageUrl;
+					}, 3000);
 				} else {
 					handleApiResponse(response);
 					return;
