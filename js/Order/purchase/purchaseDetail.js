@@ -124,6 +124,7 @@ function fetchAccountList() {
 }
 
 // 取得詳細資料：component
+var purchasedetail_componentId;
 function getComponentApi(id) {
 	const dataId = { id: id };
 
@@ -152,6 +153,7 @@ function getComponentApi(id) {
 			data: IdPost,
 		},
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1" && responseData.returnData.length > 0) {
 				const componentData = responseData.returnData[0];
 
@@ -178,6 +180,7 @@ function getComponentApi(id) {
 				const myButton = document.getElementById("downloadBtn");
 				myButton.setAttribute("data-file", componentData.file);
 
+				purchasedetail_componentId = componentData.id;
 				// 填充完毕后隐藏加载中的spinner
 				$("#spinner").hide();
 			} else {
@@ -292,7 +295,6 @@ var formData = new FormData();
 var button = document.getElementById("allPost");
 
 button.addEventListener("click", function (event) {
-	console.log(event);
 	sendAgreeDataToAPI(function (response) {
 		if (response.success) {
 			form.submit();
@@ -306,28 +308,35 @@ button.addEventListener("click", function (event) {
 // 同意零件訂購：單據備註更改、零件更新
 function sendAgreeDataToAPI(event) {
 	var formData = new FormData();
-	var getcompoent = localStorage.getItem("componentId");
-	var getComponentName = $("#componentName").val();
-	var getComponentNumber = $("#componentNumber").val();
-	var getbrandId = $("#P-brandId").val();
-	// var getpurchaseAmount = $("#purchaseAmount").val();
-	// var getdepotAmount = $("#depotAmount").val();
-	var getdepotPosition = $("#depotPosition").val();
-	var getprice = $("#Price").val();
-	var getcost = $("#Cost").val();
-	var getwholesalePrice = $("#WholesalePrice").val();
-	var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
-	var getcomponentSupplier = $("#supplier").val();
-	var getworkingHour = $("#workingHour").val();
-	var getsuitableCarModel = $("#suitableModel").val();
-	var getdescription = $("#description").val();
-	var getprecautions = $("#precautions").val();
-	var getlowestInventory = $("#lowestInventory").val();
 	var fileInput = document.getElementById("fileInput");
-
 	if (fileInput.files.length > 0) {
+		pushcomFileupdate();
+	} else {
+		pushcomnoFileupdate();
+	}
+
+	function pushcomFileupdate() {
+		var getcomponent = purchasedetail_componentId;
+		var getComponentName = $("#componentName").val();
+		var getComponentNumber = $("#componentNumber").val();
+		var getbrandId = $("#P-brandId").val();
+		// var getpurchaseAmount = $("#purchaseAmount").val();
+		// var getdepotAmount = $("#depotAmount").val();
+		var getdepotPosition = $("#depotPosition").val();
+		var getprice = $("#Price").val();
+		var getcost = $("#Cost").val();
+		var getwholesalePrice = $("#WholesalePrice").val();
+		var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
+		var getcomponentSupplier = $("#supplier").val();
+		var getworkingHour = $("#workingHour").val();
+		var getsuitableCarModel = $("#suitableModel").val();
+		var getdescription = $("#description").val();
+		var getprecautions = $("#precautions").val();
+		var getlowestInventory = $("#lowestInventory").val();
+		var fileInput = document.getElementById("fileInput");
+
 		var updateData = {
-			id: getcompoent,
+			id: getcomponent,
 			componentNumber: getComponentNumber,
 			brandId: getbrandId,
 			componentName: getComponentName,
@@ -392,6 +401,7 @@ function sendAgreeDataToAPI(event) {
 			processData: false,
 			contentType: false,
 			success: function (response) {
+				console.log("零件結束");
 				if (response.returnCode == "1") {
 					updatePurchase(purchaseId);
 				} else {
@@ -403,8 +413,106 @@ function sendAgreeDataToAPI(event) {
 				showErrorFileNotification();
 			},
 		});
-	} else {
-		showErrorNotification();
+	}
+
+	function pushcomnoFileupdate() {
+		var getcomponent = purchasedetail_componentId;
+		var getComponentName = $("#componentName").val();
+		var getComponentNumber = $("#componentNumber").val();
+		var getbrandId = $("#P-brandId").val();
+		// var getpurchaseAmount = $("#purchaseAmount").val();
+		// var getdepotAmount = $("#depotAmount").val();
+		var getdepotPosition = $("#depotPosition").val();
+		var getprice = $("#Price").val();
+		var getcost = $("#Cost").val();
+		var getwholesalePrice = $("#WholesalePrice").val();
+		var getlowestWholesalePrice = $("#lowestWholesalePrice").val();
+		var getcomponentSupplier = $("#supplier").val();
+		var getworkingHour = $("#workingHour").val();
+		var getsuitableCarModel = $("#suitableModel").val();
+		var getdescription = $("#description").val();
+		var getprecautions = $("#precautions").val();
+		var getlowestInventory = $("#lowestInventory").val();
+		var fileInput = document.getElementById("fileInput");
+
+		var updateData = {
+			id: getcomponent,
+			componentNumber: getComponentNumber,
+			brandId: getbrandId,
+			componentName: getComponentName,
+			// purchaseAmount: getpurchaseAmount,
+			// depotAmount: getdepotAmount,
+			depotPosition: getdepotPosition,
+			price: getprice,
+			cost: getcost,
+			wholesalePrice: getwholesalePrice,
+			lowestWholesalePrice: getlowestWholesalePrice,
+			componentSupplier: getcomponentSupplier,
+			workingHour: getworkingHour,
+			suitableCarModel: getsuitableCarModel,
+			description: getdescription,
+			precautions: getprecautions,
+			lowestInventory: getlowestInventory,
+			fileName: "",
+			file: "",
+		};
+
+		if (typeof getprice !== "undefined") {
+			updateData.price = getprice;
+		}
+
+		// 檢查並設置 getcost
+		if (typeof getcost !== "undefined") {
+			updateData.cost = getcost;
+		}
+
+		// 檢查並設置 getwholesalePrice
+		if (typeof getwholesalePrice !== "undefined") {
+			updateData.wholesalePrice = getwholesalePrice;
+		}
+
+		// 檢查並設置 getlowestWholesalePrice
+		if (typeof getlowestWholesalePrice !== "undefined") {
+			updateData.lowestWholesalePrice = getlowestWholesalePrice;
+		}
+
+		// 从localStorage中获取session_id和chsm
+		// 解析JSON字符串为JavaScript对象
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		// 组装发送文件所需数据
+		// chsm = session_id+action+'HBAdminComponentApi'
+		var action = "updateComponentDetail";
+		var chsmtoPostFile = user_session_id + action + "HBAdminComponentApi";
+		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+		// 设置其他formData字段
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("data", JSON.stringify(updateData));
+
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/component`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				console.log("零件結束");
+				if (response.returnCode == "1") {
+					updatePurchase(purchaseId);
+				} else {
+					handleApiResponse(response);
+					return;
+				}
+			},
+			error: function (error) {
+				showErrorFileNotification();
+			},
+		});
 	}
 }
 
