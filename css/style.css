@@ -362,8 +362,8 @@ td:first-child {
 	min-width: 200px;
 }
 
-#partsOrder th:first-child,
-#partsOrder td:first-child {
+#partsOrder th:nth-child(2),
+#partsOrder td:nth-child(2) {
 	min-width: 220px;
 }
 

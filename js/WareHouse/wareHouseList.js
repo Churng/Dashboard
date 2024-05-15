@@ -186,7 +186,7 @@ $(document).on("click", ".read-button", function () {
 $(document).ready(function () {
 	$("#confirm").click(function () {
 		var inputValue = $("#componentId").val();
-		localStorage.setItem("componentValue", inputValue);
+		localStorage.setItem("componentBarcodeValue", inputValue);
 		$("#createModal").modal("hide");
 
 		window.location.href = "wareHouseDetail.html";

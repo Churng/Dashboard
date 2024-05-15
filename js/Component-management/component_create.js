@@ -89,6 +89,7 @@ $(document).ready(function () {
 				var getdescription = $("#C-description").val();
 				var getprecautions = $("#C-precautions").val();
 				var getlowestInventory = $("#C-lowestInventory").val();
+				var getbarcode = $("#C-barcode").val();
 
 				var getcreateTime = $("#BuildTime").val();
 				var getupdateTime = $("#EditTime").val();
@@ -116,6 +117,7 @@ $(document).ready(function () {
 					updateOperator: getupdateOperator,
 					fileName: file.name,
 					file: file.name,
+					barcode: getbarcode,
 				};
 
 				// 从localStorage中获取session_id和chsm
@@ -175,6 +177,7 @@ $(document).ready(function () {
 				var getdescription = $("#C-description").val();
 				var getprecautions = $("#C-precautions").val();
 				var getlowestInventory = $("#C-lowestInventory").val();
+				var getbarcode = $("#C-barcode").val();
 
 				var getcreateTime = $("#BuildTime").val();
 				var getupdateTime = $("#EditTime").val();
@@ -202,6 +205,7 @@ $(document).ready(function () {
 					updateOperator: getupdateOperator,
 					fileName: null,
 					file: null,
+					barcode: getbarcode,
 				};
 
 				// 从localStorage中获取session_id和chsm

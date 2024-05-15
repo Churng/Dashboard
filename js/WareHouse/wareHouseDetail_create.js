@@ -48,8 +48,8 @@ function getbrandList() {
 // 取得詳細資料
 var postId;
 $(document).ready(function () {
-	var componentValue = localStorage.getItem("componentValue");
-	var IdPost = JSON.stringify({ componentNumber: componentValue });
+	var componentBarcodeValue = localStorage.getItem("componentBarcodeValue");
+	var IdPost = JSON.stringify({ barcode: componentBarcodeValue });
 
 	// 从localStorage中获取session_id和chsm
 	// 解析JSON字符串为JavaScript对象

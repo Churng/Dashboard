@@ -82,6 +82,8 @@ $(document).ready(function () {
 				setTimeout(function () {
 					const componentData = responseData.returnData[0];
 
+					console.log(componentData.barcode);
+
 					$("#C-componentName").val(componentData.componentName);
 					$("#C-componentNumber").val(componentData.componentNumber);
 					$("#C-brandId").val(componentData.brandId);
@@ -101,6 +103,7 @@ $(document).ready(function () {
 					$("#C-description").val(componentData.description);
 					$("#C-precautions").val(componentData.precautions);
 					$("#C-lowestInventory").val(componentData.lowestInventory);
+					$("#C-barcode").val(componentData.barcode);
 
 					$("#BuildTime").val(componentData.createTime);
 					$("#EditTime").val(componentData.updateTime);
@@ -184,6 +187,7 @@ $(document).ready(function () {
 		var getprecautions = $("#C-precautions").val();
 		var getlowestInventory = $("#C-lowestInventory").val();
 		var fileInput = document.getElementById("fileInput");
+		var getbarcode = $("#C-barcode").val();
 
 		var getcreateTime = $("#BuildTime").val();
 		var getupdateTime = $("#EditTime").val();
@@ -234,6 +238,8 @@ $(document).ready(function () {
 		updateData.description = getdescription;
 		updateData.precautions = getprecautions;
 		updateData.lowestInventory = getlowestInventory;
+		updateData.barcode = getbarcode;
+
 		updateData.createTime = getcreateTime;
 		updateData.updateTime = getupdateTime;
 		updateData.updateOperator = getupdateOperator;
@@ -302,6 +308,7 @@ $(document).ready(function () {
 		var getprecautions = $("#C-precautions").val();
 		var getlowestInventory = $("#C-lowestInventory").val();
 		var fileInput = document.getElementById("fileInput");
+		var getbarcode = $("#C-barcode").val();
 
 		var getcreateTime = $("#BuildTime").val();
 		var getupdateTime = $("#EditTime").val();
@@ -347,6 +354,8 @@ $(document).ready(function () {
 		updateData.description = getdescription;
 		updateData.precautions = getprecautions;
 		updateData.lowestInventory = getlowestInventory;
+		updateData.barcode = getbarcode;
+
 		updateData.createTime = getcreateTime;
 		updateData.updateTime = getupdateTime;
 		updateData.updateOperator = getupdateOperator;

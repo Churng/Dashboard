@@ -145,6 +145,7 @@ $(document).ready(function () {
 					$("#C-description").val(componentData.description);
 					$("#C-precautions").val(componentData.precautions);
 					$("#C-lowestInventory").val(componentData.lowestInventory);
+					$("#C-barcode").val(componentData.barcode);
 
 					$("#BuildTime").val(componentData.createTime);
 					$("#EditTime").val(componentData.updateTime);
@@ -218,6 +219,8 @@ $(document).ready(function () {
 			var getlowestInventory = $("#C-lowestInventory").val();
 			var fileInput = document.getElementById("fileInput");
 
+			var getbarcode = $("#C-barcode").val();
+
 			var getcreateTime = $("#BuildTime").val();
 			var getupdateTime = $("#EditTime").val();
 			var getupdateOperator = $("#EditAccount").val();
@@ -270,6 +273,7 @@ $(document).ready(function () {
 			updateData.createTime = getcreateTime;
 			updateData.updateTime = getupdateTime;
 			updateData.updateOperator = getupdateOperator;
+			updateData.barcode = getbarcode;
 
 			// 从localStorage中获取session_id和chsm
 			// 解析JSON字符串为JavaScript对象

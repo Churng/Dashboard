@@ -150,9 +150,17 @@
 
                     <div class="tableList mt-5">
                         <div class="table-responsive parts-order-table">
+                            <small>＊選擇所有資料</small>
+                            <div class="chooseBtn">
+                                <button type="button" class="btn btn-outline-primary" id="select-all-btn">批次選擇</button>
+                                <button type="button" class="btn btn-primary" id="update-detail-btn">同意採購</button>
+                                <button type="button" class="btn btn-danger" id="delete-detail-btn">取消採購</button>
+
+                            </div>
                             <table id="partsOrder" class="display table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">選取單據</th>
                                         <th scope="col">選取動作</th>
                                         <th scope="col">單據序號</th>
                                         <th scope="col">單據時間</th>

@@ -20,6 +20,7 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
+				console.log(responseData);
 				updatePageWithData(responseData);
 			} else {
 				handleApiResponse(responseData);
@@ -34,15 +35,27 @@ function fetchAccountList() {
 // 表格填充
 
 var table;
+var selectedIds = [];
 function updatePageWithData(responseData) {
 	var dataTable = $("#partsOrder").DataTable();
 	dataTable.clear().destroy();
 	var data = responseData.returnData;
-	console.log(data);
+	// console.log(data);
 
 	table = $("#partsOrder").DataTable({
 		autoWidth: false,
 		columns: [
+			{
+				render: function (data, type, row) {
+					if (row.statusName === "取消請購") {
+						// 如果狀態是"取消請購"，不顯示 checkbox
+						return "";
+					} else {
+						// 否則顯示 checkbox
+						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
+					}
+				},
+			},
 			{
 				// Buttons column
 				render: function (data, type, row) {
@@ -116,6 +129,169 @@ function updatePageWithData(responseData) {
 	table.rows.add(data).draw();
 }
 
+//新增批次選取
+// 批次選取按鈕的點擊事件
+$("#select-all-btn").on("click", function () {
+	var rows = table.rows({ search: "applied" }).nodes();
+	var allChecked = $(this).data("checked");
+	$('input[type="checkbox"]', rows).prop("checked", !allChecked);
+
+	if (!allChecked) {
+		// 全选，将所有ID添加到数组中
+		$('input[type="checkbox"].executeship-button', rows).each(function () {
+			var id = $(this).data("id");
+			if (!selectedIds.includes(id)) {
+				selectedIds.push(id);
+			}
+		});
+	} else {
+		// 取消全选，将所有ID从数组中移除
+		$('input[type="checkbox"].executeship-button', rows).each(function () {
+			var id = $(this).data("id");
+			var index = selectedIds.indexOf(id);
+			if (index !== -1) {
+				selectedIds.splice(index, 1);
+			}
+		});
+	}
+	$(this).data("checked", !allChecked);
+	console.log(selectedIds); // 输出选中的ID数组
+});
+//監聽checkbox更新
+$(document).on("change", 'input[type="checkbox"].executeship-button', function () {
+	var id = $(this).data("id");
+	if ($(this).is(":checked")) {
+		// 如果選中，添加ID到數組中
+		if (!selectedIds.includes(id)) {
+			selectedIds.push(id);
+		}
+	} else {
+		// 如果取消選中，從數組中移除ID
+		var index = selectedIds.indexOf(id);
+		if (index !== -1) {
+			selectedIds.splice(index, 1);
+		}
+	}
+	console.log(selectedIds);
+});
+
+//同意採購按鈕事件
+$(document).on("click", "#update-detail-btn", function () {
+	var formData = new FormData();
+
+	const jsonStringFromLocalStorage = localStorage.getItem("userData");
+	const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+	const user_session_id = gertuserData.sessionId;
+
+	var stringIds = selectedIds.map(String);
+	console.log("String IDs:", stringIds);
+	var jsonString = JSON.stringify(stringIds);
+	console.log("JSON String:", jsonString);
+
+	// 组装发送文件所需数据
+	// chsm = session_id+action+'HBAdminPurchaseApi'
+	var action = "updatePurchaseDetail";
+	var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
+	var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+	// 设置其他formData字段
+	formData.set("action", action);
+	formData.set("session_id", user_session_id);
+	formData.set("chsm", chsm);
+	formData.set("purchaseIdList", jsonString);
+
+	$.ajax({
+		type: "POST",
+		url: `${apiURL}/purchase`,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			console.log(response);
+			showSuccessFileNotification();
+			if (response.returnCode === "1") {
+				setTimeout(function () {
+					var newPageUrl = "purchaseList.html";
+					window.location.href = newPageUrl;
+				}, 3000);
+			} else {
+				handleApiResponse(response);
+			}
+		},
+		error: function (error) {
+			showErrorNotification();
+		},
+	});
+});
+
+//取消採購按鈕事件
+$(document).on("click", "#delete-detail-btn", function () {
+	var formData = new FormData();
+
+	$(document).off("click", ".confirm-delete");
+
+	toastr.options = {
+		closeButton: true,
+		timeOut: 0,
+		extendedTimeOut: 0,
+		positionClass: "toast-top-center",
+	};
+
+	toastr.warning(
+		"確定要取消請購所選單據嗎？<br/><br><button class='btn btn-danger confirm-delete'>確定</button>",
+		"確定取消",
+		{
+			allowHtml: true,
+		}
+	);
+
+	$(document).on("click", ".confirm-delete", function () {
+		const jsonStringFromLocalStorage = localStorage.getItem("userData");
+		const gertuserData = JSON.parse(jsonStringFromLocalStorage);
+		const user_session_id = gertuserData.sessionId;
+
+		var stringIds = selectedIds.map(String);
+		console.log("String IDs:", stringIds);
+		var jsonString = JSON.stringify(stringIds);
+		console.log("JSON String:", jsonString);
+
+		// 组装发送文件所需数据
+		// chsm = session_id+action+'HBAdminPurchaseApi'
+		var action = "deletePurchaseDetail";
+		var chsmtoPostFile = user_session_id + action + "HBAdminPurchaseApi";
+		var chsm = CryptoJS.MD5(chsmtoPostFile).toString().toLowerCase();
+
+		// 设置其他formData字段
+		formData.set("action", action);
+		formData.set("session_id", user_session_id);
+		formData.set("chsm", chsm);
+		formData.set("purchaseIdList", jsonString);
+
+		$.ajax({
+			type: "POST",
+			url: `${apiURL}/purchase`,
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				console.log(response);
+				showSuccessFileNotification();
+				if (response.returnCode === "1") {
+					setTimeout(function () {
+						var newPageUrl = "purchaseList.html";
+						window.location.href = newPageUrl;
+					}, 3000);
+				} else {
+					handleApiResponse(response);
+				}
+			},
+			error: function (error) {
+				showErrorNotification();
+			},
+		});
+	});
+});
+
 // 修改按鈕事件
 $(document).on("click", ".modify-button", function () {
 	var purchaseId = $(this).data("id");
@@ -156,7 +332,6 @@ function refreshDataList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			handleApiResponse(responseData);
-			// console.log(responseData);
 			updatePageWithData(responseData, table);
 		},
 		error: function (error) {
@@ -247,12 +422,6 @@ $(document).on("click", ".delete-button", function () {
 $(document).ready(function () {
 	fetchAccountList();
 });
-
-// 搜尋後清空
-// function clearDateFields() {
-// 	$("#startDate").val("");
-// 	$("#endDate").val("");
-// }
 
 //取得門市資料
 $(document).ready(function () {
