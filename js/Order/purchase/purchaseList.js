@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	handlePagePurchaseListBtnPermissions(currentUser, currentUrl);
+});
+
 // 取得列表
 function fetchAccountList() {
 	// 从localStorage中获取session_id和chsm
@@ -20,7 +24,6 @@ function fetchAccountList() {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			if (responseData.returnCode === "1") {
-				console.log(responseData);
 				updatePageWithData(responseData);
 			} else {
 				handleApiResponse(responseData);
@@ -184,9 +187,7 @@ $(document).on("click", "#update-detail-btn", function () {
 	const user_session_id = gertuserData.sessionId;
 
 	var stringIds = selectedIds.map(String);
-	console.log("String IDs:", stringIds);
 	var jsonString = JSON.stringify(stringIds);
-	console.log("JSON String:", jsonString);
 
 	// 组装发送文件所需数据
 	// chsm = session_id+action+'HBAdminPurchaseApi'
@@ -444,7 +445,6 @@ $(document).ready(function () {
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
 			const storeList = document.getElementById("purchaseStore");
-			console.log(responseData);
 			const defaultOption = document.createElement("option");
 			defaultOption.text = "請選擇門市";
 			defaultOption.value = "";
