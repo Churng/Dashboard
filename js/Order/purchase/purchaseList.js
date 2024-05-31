@@ -23,6 +23,7 @@ function fetchAccountList() {
 		url: `${apiURL}/purchase`,
 		data: { session_id: user_session_id, action: action, chsm: chsm },
 		success: function (responseData) {
+			console.log(responseData);
 			if (responseData.returnCode === "1") {
 				updatePageWithData(responseData);
 			} else {
@@ -50,11 +51,9 @@ function updatePageWithData(responseData) {
 		columns: [
 			{
 				render: function (data, type, row) {
-					if (row.statusName === "取消請購") {
-						// 如果狀態是"取消請購"，不顯示 checkbox
+					if (!row.if_purchase_execute_approve && !row.if_purchase_execute_cancel) {
 						return "";
 					} else {
-						// 否則顯示 checkbox
 						return `<input type="checkbox" class="executeship-button" data-id="${row.id}">`;
 					}
 				},
