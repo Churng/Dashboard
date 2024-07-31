@@ -794,6 +794,9 @@ $(document).ready(function () {
 	var columnsData10 = [
 		{ data: "empty", title: "#" },
 		{ data: "read", title: "查看詳情" },
+		{ data: "insert", title: "新增" },
+		{ data: "update", title: "修改" },
+		{ data: "delete", title: "刪除" },
 		{ data: "price", title: "訂價" },
 		{ data: "wholesalePrice", title: "批發價" },
 		{ data: "lowestWholesalePrice", title: "最低批發價" },
@@ -802,19 +805,25 @@ $(document).ready(function () {
 
 	var table10Data = [
 		{
-			empty: "盤點報表",
-			id: 40,
+			empty: "出入庫管理",
+			id: 20,
 			read: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="read" />',
-			price: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="price"/>',
-			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="wholesalePrice"/>',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="insert" disabled/>',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="update" disabled/>',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="delete" disabled/>',
+			price: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="price" disabled/>',
+			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="wholesalePrice" disabled/>',
 			lowestWholesalePrice:
-				'<input type="checkbox" name="rowCheckbox" data-id="20" data-column="lowestWholesalePrice"/>',
+				'<input type="checkbox" name="rowCheckbox" data-id="20" data-column="lowestWholesalePrice" disabled/>',
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="20" data-column="cost" />',
 		},
 		{
-			empty: "訂單報表",
-			id: 41,
+			empty: "倉庫清單",
+			id: 21,
 			read: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="delete" />',
 			price: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="price" />',
 			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="wholesalePrice" />',
 			lowestWholesalePrice:
@@ -822,9 +831,11 @@ $(document).ready(function () {
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="21" data-column="cost" />',
 		},
 		{
-			empty: "入庫單報表",
-			id: 42,
+			empty: "訂單報表",
 			read: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="delete" />',
 			price: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="price" />',
 			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="wholesalePrice" />',
 			lowestWholesalePrice:
@@ -832,9 +843,11 @@ $(document).ready(function () {
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="22" data-column="cost" />',
 		},
 		{
-			empty: "出庫單報表",
-			id: 43,
+			empty: "採購單報表",
 			read: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="delete" />',
 			price: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="price" />',
 			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="wholesalePrice" />',
 			lowestWholesalePrice:
@@ -842,9 +855,12 @@ $(document).ready(function () {
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="23" data-column="cost" />',
 		},
 		{
-			empty: "退貨單報表",
-			id: 44,
+			empty: "入庫單報表",
+			id: 31,
 			read: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="delete" />',
 			price: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="price" />',
 			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="wholesalePrice" />',
 			lowestWholesalePrice:
@@ -852,14 +868,30 @@ $(document).ready(function () {
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="31" data-column="cost" />',
 		},
 		{
-			empty: "零件採購單報表",
-			id: 45,
+			empty: "出庫單報表",
+			id: 32,
 			read: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="delete" />',
 			price: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="price" />',
 			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="wholesalePrice" />',
 			lowestWholesalePrice:
 				'<input type="checkbox" name="rowCheckbox" data-id="32" data-column="lowestWholesalePrice" />',
 			cost: '<input type="checkbox" name="rowCheckbox" data-id="32" data-column="cost" />',
+		},
+		{
+			empty: "退貨單報表",
+			id: 33,
+			read: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="read" />',
+			insert: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="insert" />',
+			update: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="update" />',
+			delete: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="delete" />',
+			price: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="price" />',
+			wholesalePrice: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="wholesalePrice" />',
+			lowestWholesalePrice:
+				'<input type="checkbox" name="rowCheckbox" data-id="33" data-column="lowestWholesalePrice" />',
+			cost: '<input type="checkbox" name="rowCheckbox" data-id="33" data-column="cost" />',
 		},
 	];
 
