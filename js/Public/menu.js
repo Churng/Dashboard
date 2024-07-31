@@ -27,6 +27,7 @@ function generateMenu(data, parentId) {
 		盤點作業: "fas fa-table me-2",
 		帳號管理: "fa fa-th me-2",
 		零件採購管理: "far fa-folder me-2",
+		報表管理: "fas fa-table me-2",
 	};
 
 	parentItems.forEach((parentItem) => {
