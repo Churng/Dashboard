@@ -451,6 +451,37 @@ td:first-child {
 	min-width: 320px;
 }
 
+/* Report */
+#inventoryReport th:first-child,
+#inventoryReport td:first-child {
+	min-width: 100px;
+}
+
+#orderIndexReport th:first-child,
+#orderIndexReport td:first-child {
+	min-width: 100px;
+}
+
+#stockInReport th:first-child,
+#stockInReport td:first-child {
+	min-width: 100px;
+}
+
+#stockOutReport th:first-child,
+#stockOutReport td:first-child {
+	width: 100px !important;
+}
+
+#UnsubscribeReport th:first-child,
+#UnsubscribeReport td:first-child {
+	min-width: 100px;
+}
+
+#partsOrderReport th:first-child,
+#partsOrderReport td:first-child {
+	min-width: 100px;
+}
+
 .remove-link-decoration {
 	text-decoration: none !important;
 }
