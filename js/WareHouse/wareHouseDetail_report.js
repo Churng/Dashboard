@@ -114,15 +114,6 @@ $(document).ready(function () {
 
 				brandList.appendChild(option);
 			}
-
-			if (responseData.returnData.length > 0) {
-				brandList.selectedIndex = 1;
-				// 获取选中的品牌ID
-				selectedBrandId = brandList.value;
-
-				// 触发API请求
-				// sendApiRequest({ brandId: selectedBrandId });
-			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -130,7 +121,7 @@ $(document).ready(function () {
 	});
 });
 
-// 表格填充'
+// 表格填充
 var table;
 function updatePageWithData(responseData) {
 	// 清空表格数据
@@ -139,6 +130,8 @@ function updatePageWithData(responseData) {
 	var data = responseData.returnData;
 
 	table = $("#stockInReport").DataTable({
+		autoWidth: false,
+		responsive: true,
 		columns: [
 			{
 				render: function (data, type, row) {

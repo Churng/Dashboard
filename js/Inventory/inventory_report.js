@@ -39,7 +39,6 @@ function updatePageWithData(responseData) {
 
 	table = $("#inventoryReport").DataTable({
 		autoWidth: false,
-
 		responsive: true,
 		columns: [
 			{

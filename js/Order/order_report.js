@@ -114,15 +114,6 @@ $(document).ready(function () {
 
 				brandList.appendChild(option);
 			}
-
-			if (responseData.returnData.length > 0) {
-				brandList.selectedIndex = 1;
-				// 获取选中的品牌ID
-				selectedBrandId = brandList.value;
-
-				// 触发API请求
-				sendApiRequest({ brandId: selectedBrandId });
-			}
 		},
 		error: function (error) {
 			showErrorNotification();
@@ -140,6 +131,7 @@ function updatePageWithData(responseData) {
 
 	table = $("#orderIndexReport").DataTable({
 		autoWidth: false,
+		responsive: true,
 		columns: [
 			{
 				render: function (data, type, row) {
