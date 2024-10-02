@@ -329,8 +329,9 @@ $(document).ready(function () {
 					if (responseData.returnData.length > 0) {
 						updatePageWithData(responseData);
 						hideSpinner();
-						clearDateFields();
+						// clearDateFields();
 					} else {
+						hideSpinner();
 						shownoDataNotification();
 					}
 				} else {
